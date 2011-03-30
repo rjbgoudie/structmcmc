@@ -1,0 +1,19 @@
+citHeader("To cite the package 'structmcmc' please use:")
+
+citEntry(entry="Manual",
+         title = "structmcmc: A Package for structural inference of Bayesian networks",
+         author = personList(as.person("Robert J. B. Goudie")), 
+         year         = 2008,
+         note         = paste("Version 1.1. Project home page at http://github.com/rbtgde/structmcmc"),
+         address      = "Warwick, UK",
+         url          = "http://github.com/rbtgde/structmcmc",
+         
+         textVersion = 
+         paste("Robert J. B. Goudie (2008) ", 
+               "structmcmc: A Package for structural inference of Bayesian networks. ",
+               "Version 1.1. Project home page at http://github.com/rbtgde/structmcmc ",
+               "URL http://github.com/rbtgde/structmcmc",
+               sep="")
+         )
+
+citFooter("Please cite 'structmcmc' it in all papers where it is used.")

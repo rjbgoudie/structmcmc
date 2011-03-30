@@ -1,0 +1,20 @@
+Package: structmcmc
+Type: Package
+Title: Structural inference for Bayesian Networks and Variable
+    Selection.
+Version: 1.1
+Author: Robert Goudie <r.j.b.goudie@warwick.ac.uk>
+Maintainer: Robert Goudie <r.j.b.goudie@warwick.ac.uk>
+Description: Structural inference for Bayesian Networks and Variable
+    Selection.
+Depends: R (>= 2.9), parental
+Imports: MASS, lattice, coda, reshape, nnet, zoo, plyr, parental,
+    memoise, digest
+Suggests: gRain
+License: GPL-3
+Collate: 'constraints.R' 'cross-validation.R' 'diagnostics.R'
+    'mcmc-bigflips.R' 'mcmc-gibbs.R' 'mcmc-grzeg.R' 'mcmc-mh.R'
+    'mcmc-mj.R' 'mcmc-pt.R' 'mcmc.R' 'param-bayes.R' 'param-ml.R'
+    'parents-table.R' 'post-exact.R' 'post-mcmc.R' 'post.R' 'priors.R'
+    'query.R' 'routes.R' 'score-bic.R' 'score-multdir.R'
+    'score-zellner.R' 'score.R' 'structural.R' 'utils.R' 'utils.rjbg.R'

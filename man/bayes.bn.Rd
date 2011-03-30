@@ -1,0 +1,15 @@
+\name{bayes.bn}
+\alias{bayes.bn}
+\title{Bayesian posterior parameter estimates...}
+\usage{\method{bayes}{bn} (x, data, nodes=seq_along(x), prior="qi", ...)}
+\description{Bayesian posterior parameter estimates}
+\details{A wrapper around \code{\link{ml}}.
+
+This is the probability. This is also the expectation. See
+Neapolitean p379.}
+\value{As \code{\link{ml}}}
+\arguments{\item{x}{The Bayesian Network. An object of class 'bn'}
+\item{data}{A data frame}
+\item{nodes}{A subset of 1, ..., \code{nNodes(x)}. A numeric vector.}
+\item{prior}{Only \code{"qi"} is implemented at the moment}
+\item{...}{Further arguments, passed to \code{\link{ml}}}}
