@@ -1,0 +1,17 @@
+# Part of the "structural" package, http://github.com/rjbgoudie/structural
+# 
+# This software is distributed under the GPL-3 license.  It is free,
+# open source, and has the attribution requirements (GPL Section 7) in
+#   http://github.com/rjbgoudie/structural
+# 
+# Note that it is required that attributions are retained with each function.
+#
+# Copyright 2008 Robert J. B. Goudie, University of Warwick
+
+#' The structmcmc package.
+#'
+#' @import zoo MASS lattice coda reshape nnet plyr parental memoise digest
+#' @docType package
+#' @name structmcmc
+#' @aliases structmcmc package-structmcmc
+NULL
