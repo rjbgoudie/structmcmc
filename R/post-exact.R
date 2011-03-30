@@ -1,8 +1,8 @@
-# Part of the "structural" package, http://github.com/rbtgde/structural
+# Part of the "structmcmc" package, http://github.com/rbtgde/structmcmc
 # 
 # This software is distributed under the GPL-3 license.  It is free,
 # open source, and has the attribution requirements (GPL Section 7) in
-#   http://github.com/rbtgde/structural
+#   http://github.com/rbtgde/structmcmc
 # 
 # Note that it is required that attributions are retained with each function.
 #
