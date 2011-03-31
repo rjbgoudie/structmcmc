@@ -16,18 +16,29 @@
 #' @param routes The routes matrix of the network
 #' @param adjacency The adjacency matrix of the network
 #' @param constraintT The transpose of a constraint matrix
+#' @param maxNumberParents Integer of length 1. The maximum number of
+#'   parents of any node.
 #' @return A numeric of length 1. The log number of neighbouring graphs.
 #' @export
-logNumMHNeighbours <- function(routes, adjacency, constraintT){
-  # an edge i -> j can be added or flipped if currentNetwork[[2]][j, i] == 0
-  # an edge i -> j can be flipped if currentNetwork[[4]] == 1 and
-  # currentNetwork[[2]]) == 1. ie if an edge exists and there are no other 
-  # routes from i --> j.
-  # add or remove is done in T-space
-  # flip is done in normal space
-  toggleable <- whichEdgesTogglable(routes, constraintT)
-  flippable <- whichEdgesFlippable(routes, adjacency, constraintT)
-  log(length(adjacency[flippable | toggleable]))
+logNumMHNeighbours <- function(routes,
+                               adjacency,
+                               constraintT,
+                               maxNumberParents = Inf){
+  removable <- transposeEdgeIsRemovable(routes      = routes,
+                                        adjacency   = adjacency,
+                                        constraintT = constraintT)
+  addable <- transposeEdgeIsAddable(routes           = routes,
+                                    adjacency        = adjacency,
+                                    constraintT      = constraintT,
+                                    maxNumberParents = maxNumberParents)
+  flippable <- edgeIsFlippable(routes           = routes,
+                               adjacency        = adjacency,
+                               constraintT      = constraintT,
+                               maxNumberParents = maxNumberParents)
+  # Note that flippable is the edge itself, not the transpose
+  # So an edge i -> j that is flippable will also count under j -> i
+  # for removable.
+  log(length(adjacency[flippable | addable | removable]))
 }
 
 #' Find togglable edges
@@ -36,13 +47,66 @@ logNumMHNeighbours <- function(routes, adjacency, constraintT){
 #' introducing a cycle into the graph
 #'
 #' @param routes The routes matrix of the network
+#' @param adjacency The adjacency matrix of the network
 #' @param constraintT The transpose of a constraint matrix
 #' @return A logical matrix of the same dimension as the supplied matrices, 
 #'   with entries indicating whether the corresponding edge can be added or 
-#'   removed without introducing a cycle.
+#'   removed without introducing a cycle. NOTE THIS IS TRANSPOSE OF EXPECTED
 #' @export
-whichEdgesTogglable <- function(routes, constraintT){
-  routes == 0 & constraintT == 0
+transposeEdgeIsRemovable <- function(routes, adjacency, constraintT){
+  routes == 0 & t(adjacency) == 1 & constraintT == 0
+}
+
+#' Find togglable edges
+#'
+#' Finds "edge-locations" in the graph that can be added or removed without
+#' introducing a cycle into the graph
+#'
+#' @param routes The routes matrix of the network
+#' @param adjacency The adjacency matrix of the network
+#' @param constraintT The transpose of a constraint matrix
+#' @param maxNumberParents Integer of length 1. The maximum number of
+#'   parents of any node.
+#' @return A logical matrix of the same dimension as the supplied matrices, 
+#'   with entries indicating whether the corresponding edge can be added or 
+#'   removed without introducing a cycle. NOTE THIS IS TRANSPOSE OF EXPECTED
+#' @export
+transposeEdgeIsAddable <- function(routes,
+                                   adjacency,
+                                   constraintT,
+                                   maxNumberParents){
+  addable <- routes == 0 & t(adjacency) == 0 & constraintT == 0
+  canAddMoreParents <- colSums(adjacency) < maxNumberParents
+  addable[!canAddMoreParents, ] <- F
+  addable
+}
+
+#' Find togglable edges
+#'
+#' Finds "edge-locations" in the graph that can be added or removed without
+#' introducing a cycle into the graph
+#'
+#' @param routes The routes matrix of the network
+#' @param adjacency The adjacency matrix of the network
+#' @param constraintT The transpose of a constraint matrix
+#' @param maxNumberParents Integer of length 1. The maximum number of
+#'   parents of any node.
+#' @return A logical matrix of the same dimension as the supplied matrices, 
+#'   with entries indicating whether the corresponding edge can be added or 
+#'   removed without introducing a cycle. NOTE THIS IS TRANSPOSE OF EXPECTED
+#' @export
+transposeEdgeIsTogglable <- function(routes,
+                                     adjacency,
+                                     constraintT,
+                                     maxNumberParents = Inf){
+  removable <- transposeEdgeIsRemovable(routes      = routes,
+                                        adjacency   = adjacency,
+                                        constraintT = constraintT)
+  addable <- transposeEdgeIsAddable(routes           = routes,
+                                    adjacency        = adjacency,
+                                    constraintT      = constraintT,
+                                    maxNumberParents = maxNumberParents)
+  removable + addable == T
 }
 
 #' Find flippable edges
@@ -53,12 +117,17 @@ whichEdgesTogglable <- function(routes, constraintT){
 #' @param routes The routes matrix of the network
 #' @param adjacency The adjacency matrix of the network
 #' @param constraintT The transpose of a constraint matrix
+#' @param maxNumberParents Integer of length 1. The maximum number of
+#'   parents of any node.
 #' @return A logical matrix of the same dimension as the supplied matrices, 
 #'   with entries indicating whether the corresponding edge can be flipped
-#'   without introducing a cycle.
+#'   without introducing a cycle. NOTE THIS IS TRANSPOSE OF EXPECTED
 #' @export
-whichEdgesFlippable <- function(routes, adjacency, constraintT){
-  routes == 1 & adjacency == 1 & constraintT == 0
+edgeIsFlippable <- function(routes, adjacency, constraintT, maxNumberParents){
+  flippable <- routes == 1 & adjacency == 1 & constraintT == 0
+  canAddMoreParents <- colSums(adjacency) < maxNumberParents
+  flippable[!canAddMoreParents, ] <- F
+  flippable
 }
 
 #' Create a MCMC sampler for Bayesian Networks.
@@ -88,6 +157,8 @@ whichEdgesFlippable <- function(routes, adjacency, constraintT){
 #'     \item{0}{if the edge i -> j is not constrained.}
 #'   }
 #'   The diagonal of constraint must be all 0.
+#' @param maxNumberParents Integer of length 1. The maximum number of
+#'   parents of any node.
 #' @param verbose A logical of length 1, indicating whether verbose
 #'  output should be printed.
 #' @param keepTape A logical of length 1, indicating whether a full log
@@ -102,6 +173,7 @@ BNSampler <- function(data,
                       logScoreFUN = defaultLogScoreFUN(),
                       logScoreParameters = list(hyperparameters = "qi"),
                       constraint  = NULL,
+                      maxNumberParents = Inf,
                       verbose     = F,
                       keepTape    = F){
   stopifnot("bn"                  %in% class(initial),
@@ -109,6 +181,8 @@ BNSampler <- function(data,
             ncol(as.matrix(data)) ==   length(initial),
             is.function(prior),
             return                %in% c("network", "contingency", "sha256"),
+            inherits(maxNumberParents, "numeric") ||
+              inherits(maxNumberParents, "integer"),
             is.logical(keepTape),
             length(keepTape)      ==   1)
 
@@ -241,11 +315,15 @@ BNSampler <- function(data,
     nMHProposals <<- nMHProposals + 1
 
     # count the number of proposals and select one
-    canAddOrRemove <- whichEdgesTogglable(routes      = currentNetwork[[2]],
-                                          constraintT = constraintT)
-    canFlip <- whichEdgesFlippable(routes      = currentNetwork[[2]],
-                                   adjacency   = currentNetwork[[4]],
-                                   constraintT = constraintT)
+    canAddOrRemove <- transposeEdgeIsTogglable(
+                        routes           = currentNetwork[[2]],
+                        adjacency        = currentNetwork[[4]],
+                        constraintT      = constraintT,
+                        maxNumberParents = maxNumberParents)
+    canFlip <- edgeIsFlippable(routes           = currentNetwork[[2]],
+                               adjacency        = currentNetwork[[4]],
+                               constraintT      = constraintT,
+                               maxNumberParents = maxNumberParents)
 
     nonCycleInducing <- which(canAddOrRemove, arr.ind = T)
     nonCycleInducingFlips <- which(canFlip, arr.ind = T)
