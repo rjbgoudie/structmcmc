@@ -21,17 +21,22 @@
 #' @param banned A list of numeric vectors. Each component is a numeric 
 #'   vector containing the nodes that must be excluded from every parent 
 #'   set for this node.
+#' @param verbose A logical of length 1, indicating whether verbose output
+#'   should be printed.
 #' @return A list of matrices of the form returned by 
 #'   \code{enumerateParentsTableNode}.
 #' @export
 enumerateParentsTable <- function(numberOfNodes,
-                     maxNumberParents,
-                     required,
-                     banned){
+                                  maxNumberParents,
+                                  required,
+                                  banned,
+                                  verbose = F){
   nodesSeq <- seq_len(numberOfNodes)
   
-  progress <- create_progress_bar("text")
-  progress$init(numberOfNodes)
+  if (isTRUE(verbose)){
+    progress <- create_progress_bar("text")
+    progress$init(numberOfNodes)
+  }
   
   parentsTables <- vector("list", numberOfNodes)
   for (node in nodesSeq){
@@ -41,10 +46,14 @@ enumerateParentsTable <- function(numberOfNodes,
                                maxNumberParents = maxNumberParents,
                                required         = required[[node]],
                                banned           = banned[[node]])
-    progress$step()
+    if (isTRUE(verbose)){
+      progress$step()
+    }
   }
-  progress$term()
-  progress <- create_progress_bar("text")
+  if (isTRUE(verbose)){
+    progress$term()
+    progress <- create_progress_bar("text")
+  }
   parentsTables
 }
 
@@ -108,18 +117,23 @@ enumerateParentsTableNode <- function(node,
 #'   \code{logScoreFUN}.
 #' @param prior  function that returns the prior score of the
 #'   supplied bn.
+#' @param verbose A logical of length 1, indicating whether verbose output
+#'   should be printed.
 #' @return List of numeric vectors of scores.
 #' @export
 scoreParentsTable <- function(parentsTables,
-                     logScoreOfflineFUN,
-                     logScoreParameters,
-                     prior){
+                              logScoreOfflineFUN,
+                              logScoreParameters,
+                              prior,
+                              verbose = F){
   numberOfNodes <- length(parentsTables)
   numberOfRows <- sapply(parentsTables, nrow)
   totalNumberRows <- sum(numberOfRows)
   nodesSeq <- seq_len(numberOfNodes)
-  progress <- txtProgressBar(max = totalNumberRows, style = 3)
-  setTxtProgressBar(progress, 0)
+  if (isTRUE(verbose)){
+    progress <- txtProgressBar(max = totalNumberRows, style = 3)
+    setTxtProgressBar(progress, 0)
+  }
   
   scoresList <- vector("list", numberOfNodes)
   for (node in nodesSeq){
@@ -129,10 +143,14 @@ scoreParentsTable <- function(parentsTables,
                           logScoreOfflineFUN = logScoreOfflineFUN,
                           logScoreParameters = logScoreParameters,
                           prior              = prior)
-    new <- getTxtProgressBar(progress) + numberOfRows[[node]]
-    setTxtProgressBar(progress, new)
+    if (isTRUE(verbose)){
+      new <- getTxtProgressBar(progress) + numberOfRows[[node]]
+      setTxtProgressBar(progress, new)
+    }
   }
-  close(progress)
+  if (isTRUE(verbose)){
+    close(progress)
+  }
   scoresList
 }
 

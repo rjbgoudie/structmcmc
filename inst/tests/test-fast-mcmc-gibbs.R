@@ -29,7 +29,9 @@ test_that("2-node Bayesian Network", {
   numberOfSamples <- 50000
 
   expectedTable <- data.frame(expected = expected * numberOfSamples)
-  row.names(expectedTable) <- lapply(fam, function(network) paste(network, sep = "", collapse = ","))
+  row.names(expectedTable) <- lapply(fam, function(network){
+    paste(network, sep = "", collapse = ",")
+  })
 
   empty <- list(c(),c(),c())
 
@@ -37,19 +39,16 @@ test_that("2-node Bayesian Network", {
     1/length(fam)
   }
 
-  sampler <- BNGibbsSampler(theData, bn(integer(0), integer(0), integer(0)), priorFlat, maxNumberParents = 2)
-  samples <- lapply(seq_len(numberOfBurnIn), function(i){
-    if (i %% 1000 == 0){
-      cat(i, ", ")
-    }
-    sampler(i)
-  })
-  samples <- lapply(seq_len(numberOfSamples), function(i){
-    if (i %% 1000 == 0){
-      cat(i, ", ")
-    }
-    sampler(i)
-  })
+  initial <- bn(integer(0), integer(0), integer(0))
+  sampler <- BNGibbsSampler(data             = theData,
+                            initial          = initial,
+                            prior            = priorFlat,
+                            maxNumberParents = 2)
+
+  samples <- draw(sampler,
+                  numberOfSamples,
+                  burnin = numberOfBurnIn,
+                  verbose = F)
   outTable <- table(factor(unlist(lapply(samples,function(l){
     paste(l,sep = "",collapse = ",")}))))
 
@@ -81,7 +80,10 @@ test_that("4-node example", {
                        prior            = function(x) 1,
                        maxNumberParents = 3)
 
-  samples <- draw(sampler, numberOfSamples, burnin = numberOfBurnIn)
+  samples <- draw(sampler,
+                  numberOfSamples,
+                  burnin = numberOfBurnIn,
+                  verbose = F)
   mpost <- bnpostmcmc(sampler, samples)
 
   ep(epost)

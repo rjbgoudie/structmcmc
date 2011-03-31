@@ -2,7 +2,7 @@
 \alias{scoreParentsTable}
 \title{Score a node-level parentsTable...}
 \usage{scoreParentsTable(parentsTables, logScoreOfflineFUN,
-    logScoreParameters, prior)}
+    logScoreParameters, prior, verbose=F)}
 \description{Score a node-level parentsTable}
 \details{Computes the scores of all the Bayesian Networks, with parent sets 
 corresponding to each row of a single component of a \code{parentsTable}.}
@@ -14,4 +14,6 @@ of a Bayesian Network.}
 \item{logScoreParameters}{A list of parameters that are passed to
 \code{logScoreFUN}.}
 \item{prior}{function that returns the prior score of the
-supplied bn.}}
+supplied bn.}
+\item{verbose}{A logical of length 1, indicating whether verbose output
+should be printed.}}

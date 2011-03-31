@@ -281,13 +281,15 @@ BNGibbsSampler <- function(data,
     parentsTables <- enumerateParentsTable(numberOfNodes,
                                            maxNumberParents,
                                            required,
-                                           banned)
+                                           banned,
+                                           verbose = verbose)
   }
   if (missing(scoresParents)){
     scoresParents <- scoreParentsTable(parentsTables,
                                        logScoreOfflineFUN,
                                        logScoreParameters,
-                                       prior)
+                                       prior,
+                                       verbose = verbose)
   }
   
 
