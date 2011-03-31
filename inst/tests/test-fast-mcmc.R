@@ -767,6 +767,53 @@ test_that("Using Prior for indegree constraint", {
              is_within(8, 10))
 })
 
+test_that("Proper indegree constraint", {
+  set.seed(9501)
+  x1 <- as.factor(c(1, 1, 0, 1, 0, 0, 1, 0, 1, 0))
+  x2 <- as.factor(c(0, 1, 0, 1, 0, 1, 1, 0, 1, 0))
+  x3 <- as.factor(c(0, 1, 1, 1, 0, 1, 1, 0, 1, 0))
+  dat <- data.frame(x1 = x1, x2 = x2,  x3 = x3)
+
+  nSamples <- 850
+  prior <- function(net){
+    1
+  }
+
+  bnspace <- enumerateBNSpace(3)
+  lsmd <- logScoreMultDir(bnspace, data = dat, hyperparameters = "qi")
+  data.frame(lsmd, as.character(bnspace))
+
+  whichTwoParents <- c(3, 9, 11, 12, 13, 18, 20, 21, 24)
+  # allowed graphs are
+  data.frame(lsmd, as.character(bnspace))[-whichTwoParents, ]
+
+  # so probs should be, given flat prior
+  normalisingConstant <- logsumexp(lsmd[-whichTwoParents])
+  expectedProbs <- exp(lsmd[-whichTwoParents] - normalisingConstant)
+  expectedNums <- expectedProbs * nSamples
+  data.frame(gr = as.character(bnspace)[-whichTwoParents], expectedNums)
+
+  initial <- bn(integer(0), integer(0), integer(0))
+  sampler1 <- BNSampler(dat,
+                        initial,
+                        prior,
+                        maxNumberParents = 1)
+  samples1 <- draw(sampler1, nSamples, verbose = F)
+  samples1 <- draw(sampler1, nSamples, verbose = F)
+
+  outTable <- table(factor(unlist(lapply(samples1, function(l){
+    paste(l, sep = "", collapse = ",")}))))
+
+  expect_that(as.vector(outTable["2,3,integer(0)"]),
+              is_within(157, 20))
+
+  expect_that(as.vector(outTable["integer(0),1,2"]),
+              is_within(157, 20))
+
+ expect_that(as.vector(outTable["integer(0),1,1"]),
+             is_within(8, 10))
+})
+
 test_that("Mode-jumping with constraint", {
   set.seed(310)
   x1 <- as.factor(c(1, 1, 0, 1, 0, 0, 1, 0, 1, 0))
