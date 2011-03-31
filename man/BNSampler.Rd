@@ -4,7 +4,7 @@
 \usage{BNSampler(data, initial, prior, return="network",
     logScoreFUN=defaultLogScoreFUN(),
     logScoreParameters=list(hyperparameters = "qi"), constraint,
-    verbose=F, keepTape=F)}
+    maxNumberParents=Inf, verbose=F, keepTape=F)}
 \description{Create a MCMC sampler for Bayesian Networks.}
 \details{The sampler samples Bayesian Networks (ie models).}
 \value{A function, which when called draws the next sample of the MCMC.}
@@ -31,6 +31,8 @@ constraints to the sample space. The (i, j) element is:
 \item{0}{if the edge i -> j is not constrained.}
 }
 The diagonal of constraint must be all 0.}
+\item{maxNumberParents}{Integer of length 1. The maximum number of
+parents of any node.}
 \item{verbose}{A logical of length 1, indicating whether verbose
 output should be printed.}
 \item{keepTape}{A logical of length 1, indicating whether a full log
