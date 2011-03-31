@@ -10,6 +10,21 @@
 
 context("MCMC BN Sampling (Fast Tests)")
 
+test_that("Simple test", {
+  set.seed(9501)
+  dat <- data.frame(x1 = as.factor(c(1, 1, 0, 1, 0, 0, 1, 0, 1, 0)),
+                    x2 = as.factor(c(0, 1, 0, 1, 0, 1, 1, 0, 1, 0)),
+                    x3 = as.factor(c(0, 1, 1, 1, 0, 1, 1, 0, 1, 0)))
+
+  mcmc <- posterior(data = dat, method = "mh-mcmc")
+  exact <- posterior(data = dat, method = "exact")
+  
+  epmcmc <- ep(mcmc)
+  epexact <- ep(exact)
+
+  expect_that(max(epmcmc - epexact) < 0.004, is_true())
+})
+
 test_that("2-node Bayesian Network", {
   x1 <- as.factor(c(1, 1, 0, 1))
   x2 <- as.factor(c(0, 1, 0, 1))

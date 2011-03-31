@@ -8,25 +8,118 @@
 #
 # Copyright 2008 Robert J. B. Goudie, University of Warwick
 
-#' method name
+#' Posterior distribution on Bayesian networks
 #'
-#' method description
+#' Use one of a number of methods to get the posterior distribution
 #'
-#' @param dat ...
-#' @param method ...
-#' #' @export
-posterior <- function(dat, method = "mcmc"){
-  stopifnot(class(dat) == "data.frame",
-            method     == "mcmc")
+#' @param data The data.
+#' @param method One of "exact", "mh-mcmc", "gibbs", "mj-mcmc"
+#' @param prior A function that returns the prior score of the
+#'                       supplied bn.
+#' @param logScoreFUN A list of three elements:
+#'                         offline: A function that computes the logScore
+#'                                  of a Bayesian Network
+#'                         online:  A function that incrementally computes
+#'                                  the logScore of a Bayesian Network
+#'                         prepare: A function that prepares the data, and
+#'                                  any further pre-computation required by
+#'                                  the logScore functions.
+#' @param logScoreParameters A list of parameters that are passed to
+#'                       logScoreFUN.
+#' @param constraint A matrix of dimension ncol(data) x ncol(data) giving
+#'                       constraints to the sample space.
+#'                       The (i, j) element is
+#'                         1  if the edge i -> j is required
+#'                         -1 if the edge i -> is excluded.
+#'                         0  if the edge i -> j is not constrained.
+#'                       The diagonal of constraint must be all 0.
+#' @param maxNumberParents Integer of length 1. The maximum number of
+#'   parents of any node.
+#' @param nSamples The number of samples to be draw (only applies to MCMC)
+#' @param nBurnin The number of samples to discard from the beginning of
+#'   the sample.
+#' @param initial An object of class 'bn'. The starting value of the
+#'                       MCMC.
+#' @param verbose A logical. Should a progress bar be displayed?
+#' @return Either a \code{bnpost} or a \code{bnpostmcmc} object.
+#' @export
+posterior <- function(data,
+                      method             = "mh-mcmc",
+                      prior              = function(x) 1,
+                      logScoreFUN        = defaultLogScoreFUN(),
+                      logScoreParameters = list(hyperparameters = "qi"),
+                      constraint         = NULL,
+                      maxNumberParents   = Inf,
+                      nSamples           = 50000,
+                      nBurnin            = 10000,
+                      initial,
+                      verbose            = F){
+  methods <- c("exact", "mh-mcmc", "gibbs", "mj-mcmc")
+  stopifnot(class(data) ==   "data.frame",
+            method      %in% methods)
 
-  nVar <- ncol(dat)
-  nSamples <- 25000
-  prior <- function(net) 1
-  initial <- empty(nVar, class = "bn")
+  nVar <- ncol(data)
 
-  sampler <- BNSampler(dat, initial, prior)
-  samples <- draw(sampler, nSamples, verbose = F)
-  mpost <- bnpostmcmc(samples, dat)
+  if (method == "exact"){
+    bnspace <- enumerateBNSpace(nVar)
+
+    if (!is.null(constraint)){
+      bnspace <- Filter(satisfiesConstraint, bnspace)
+    }
+
+    logScoreOfflineFUN <- logScoreFUN$offline
+    prepareDataFUN <- logScoreFUN$prepare
+    logScoreParameters <- prepareDataFUN(data,
+                                         logScoreParameters,
+                                         checkInput = F)
+
+    if (isTRUE(verbose)){
+      progress <- create_progress_bar("text")
+      progress$init(length(bnspace))
+    }
+    
+    lsmd <- sapply(bnspace, function(x){
+      if (isTRUE(verbose)){
+        progress$step()
+      }
+      logScoreOfflineFUN(x                  = x,
+                         logScoreParameters = logScoreParameters)
+    })
+    
+    if (isTRUE(verbose)){
+      progress$term()
+    }
+
+    logpriors <- log(sapply(bnspace, prior))
+    logScore <- lsmd + logpriors
+    
+    bnpost(bnspace     = bnspace,
+           logScore    = logScore,
+           data        = data,
+           logScoreFUN = function(x) stop("error"))
+  } else if (method == "mh-mcmc"){
+    if (missing(initial)){
+      initial <- empty(nVar, class = "bn")
+    }
+
+    sampler <- BNSampler(data               = data,
+                         initial            = initial,
+                         prior              = prior,
+                         logScoreFUN        = logScoreFUN,
+                         logScoreParameters = logScoreParameters,
+                         constraint         = constraint,
+                         maxNumberParents   = maxNumberParents,
+                         verbose            = verbose)
+    samples <- draw(sampler = sampler,
+                    n       = nSamples,
+                    burnin  = nBurnin,
+                    verbose = verbose)
+    bnpostmcmc(sampler     = sampler,
+               samples     = samples,
+               logScoreFUN = logScoreFUN)
+  } else {
+    stop("Not implemented")
+  }
 }
 
 #' method name
