@@ -25,9 +25,40 @@ logNumMHNeighbours <- function(routes, adjacency, constraintT){
   # routes from i --> j.
   # add or remove is done in T-space
   # flip is done in normal space
-  canAddOrRemove <- routes == 0 & constraintT == 0
-  canFlip <- routes == 1 & adjacency == 1 & constraintT == 0
-  log(length(adjacency[canAddOrRemove | canFlip]))
+  toggleable <- whichEdgesTogglable(routes, constraintT)
+  flippable <- whichEdgesFlippable(routes, adjacency, constraintT)
+  log(length(adjacency[flippable | toggleable]))
+}
+
+#' Find togglable edges
+#'
+#' Finds "edge-locations" in the graph that can be added or removed without
+#' introducing a cycle into the graph
+#'
+#' @param routes The routes matrix of the network
+#' @param constraintT The transpose of a constraint matrix
+#' @return A logical matrix of the same dimension as the supplied matrices, 
+#'   with entries indicating whether the corresponding edge can be added or 
+#'   removed without introducing a cycle.
+#' @export
+whichEdgesTogglable <- function(routes, constraintT){
+  routes == 0 & constraintT == 0
+}
+
+#' Find flippable edges
+#'
+#' Finds edges in the graph whose direction can be reversed ("flipped")
+#' without introducing a cycle into the graph.
+#'
+#' @param routes The routes matrix of the network
+#' @param adjacency The adjacency matrix of the network
+#' @param constraintT The transpose of a constraint matrix
+#' @return A logical matrix of the same dimension as the supplied matrices, 
+#'   with entries indicating whether the corresponding edge can be flipped
+#'   without introducing a cycle.
+#' @export
+whichEdgesFlippable <- function(routes, adjacency, constraintT){
+  routes == 1 & adjacency == 1 & constraintT == 0
 }
 
 #' Create a MCMC sampler for Bayesian Networks.
@@ -210,10 +241,11 @@ BNSampler <- function(data,
     nMHProposals <<- nMHProposals + 1
 
     # count the number of proposals and select one
-    canAddOrRemove <- currentNetwork[[2]] == 0 & constraintT == 0
-    canFlip <- currentNetwork[[2]] == 1 &
-               currentNetwork[[4]] == 1 &
-               constraintT == 0
+    canAddOrRemove <- whichEdgesTogglable(routes      = currentNetwork[[2]],
+                                          constraintT = constraintT)
+    canFlip <- whichEdgesFlippable(routes      = currentNetwork[[2]],
+                                   adjacency   = currentNetwork[[4]],
+                                   constraintT = constraintT)
 
     nonCycleInducing <- which(canAddOrRemove, arr.ind = T)
     nonCycleInducingFlips <- which(canFlip, arr.ind = T)
