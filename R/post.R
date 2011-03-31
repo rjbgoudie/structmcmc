@@ -460,8 +460,8 @@ ep.parental.list <- function(x, nbin = 1, start = 1, end = length(x),
 #' @param verbose A logical indicating whether progress should be shown.
 #' @param ... Further arguments passed to
 #'   \code{\link{ep.parental.contingency}}
-#' @return A matrix of class 'ep' with entry (i,j) containing the probability of
-#'  an edge from node i --> j
+#' @return A matrix of class 'ep' with entry (i,j) containing the probability
+#'   of an edge from node i --> j
 #' @S3method ep table
 #' @method ep table
 ep.table <- function(x, verbose = F, ...){
@@ -575,7 +575,8 @@ ep.parental.contingency <- function(x, FUN, verbose = F, ...){
 #' @param x An object of class "bnpostmcmc" or "bnpost"
 #' @param top Optionally provide pre-computed top(x)
 #'
-#' @return A plot of the top graph, with their marginal likelihoods (without priors)
+#' @return A plot of the top graph, with their marginal likelihoods (without
+#'   priors)
 #' @S3method plot bnpostmcmc
 #' @method plot bnpostmcmc
 plot.bnpostmcmc <- plot.bnpost <- function(x, top = NULL, ...){
@@ -1387,13 +1388,7 @@ rocplot <- function(true,
          scales       = list(at = scalesAt),
          auto.key     = T,
          par.settings = simpleTheme(pch = 3:10),
-         panel = panel.superpose, # function(groups, ...){
-         # #           browser()
-         #            wh <- as.numeric(as.factor(rocdata$type))
-         #            browser()
-         # #           panel.superpose(..., groups = rocdata$estimate, col = trellis.par.get("superpose.line")$col[wh])
-         #            panel.superpose(...)
-         #          },
+         panel = panel.superpose,
          panel.groups = function(x, y, ...){
            panel.xyplot(x, y, groups = rocdata$estimate, ...)
          },
