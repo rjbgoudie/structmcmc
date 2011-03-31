@@ -10,7 +10,7 @@
 
 #' Posterior distribution on Bayesian networks
 #'
-#' Use one of a number of methods to get the posterior distribution
+#' Use one of a number of methods to get the posterior distribution.
 #'
 #' @param data The data.
 #' @param method One of "exact", "mh-mcmc", "gibbs", "mj-mcmc"
@@ -52,74 +52,202 @@ posterior <- function(data,
                       maxNumberParents   = Inf,
                       nSamples           = 50000,
                       nBurnin            = 10000,
-                      initial,
+                      initial            = NULL,
                       verbose            = F){
   methods <- c("exact", "mh-mcmc", "gibbs", "mj-mcmc")
   stopifnot(class(data) ==   "data.frame",
             method      %in% methods)
 
-  nVar <- ncol(data)
-
   if (method == "exact"){
-    bnspace <- enumerateBNSpace(nVar)
-
-    if (!is.null(constraint)){
-      bnspace <- Filter(satisfiesConstraint, bnspace)
-    }
-
-    logScoreOfflineFUN <- logScoreFUN$offline
-    prepareDataFUN <- logScoreFUN$prepare
-    logScoreParameters <- prepareDataFUN(data,
-                                         logScoreParameters,
-                                         checkInput = F)
-
-    if (isTRUE(verbose)){
-      progress <- create_progress_bar("text")
-      progress$init(length(bnspace))
-    }
-    
-    lsmd <- sapply(bnspace, function(x){
-      if (isTRUE(verbose)){
-        progress$step()
-      }
-      logScoreOfflineFUN(x                  = x,
-                         logScoreParameters = logScoreParameters)
-    })
-    
-    if (isTRUE(verbose)){
-      progress$term()
-    }
-
-    logpriors <- log(sapply(bnspace, prior))
-    logScore <- lsmd + logpriors
-    
-    bnpost(bnspace     = bnspace,
-           logScore    = logScore,
-           data        = data,
-           logScoreFUN = function(x) stop("error"))
+    exactposterior(data,
+                   prior,
+                   logScoreFUN,
+                   logScoreParameters,
+                   constraint,
+                   maxNumberParents,
+                   verbose)
   } else if (method == "mh-mcmc"){
-    if (missing(initial)){
-      initial <- empty(nVar, class = "bn")
-    }
-
-    sampler <- BNSampler(data               = data,
-                         initial            = initial,
-                         prior              = prior,
-                         logScoreFUN        = logScoreFUN,
-                         logScoreParameters = logScoreParameters,
-                         constraint         = constraint,
-                         maxNumberParents   = maxNumberParents,
-                         verbose            = verbose)
-    samples <- draw(sampler = sampler,
-                    n       = nSamples,
-                    burnin  = nBurnin,
-                    verbose = verbose)
-    bnpostmcmc(sampler     = sampler,
-               samples     = samples,
-               logScoreFUN = logScoreFUN)
+    mcmcposterior(sampler = BNSampler,
+                  data,
+                  prior,
+                  logScoreFUN,
+                  logScoreParameters,
+                  constraint,
+                  maxNumberParents,
+                  nSamples,
+                  nBurnin,
+                  initial,
+                  verbose)
+  } else if (method == "gibbs") {
+    mcmcposterior(sampler = BNGibbsSampler,
+                  data,
+                  prior,
+                  logScoreFUN,
+                  logScoreParameters,
+                  constraint,
+                  maxNumberParents,
+                  nSamples,
+                  nBurnin,
+                  initial,
+                  verbose)
+  } else if (method == "mj-mcmc") {
+    mcmcposterior(sampler = BNSamplerMJ,
+                  data,
+                  prior,
+                  logScoreFUN,
+                  logScoreParameters,
+                  constraint,
+                  maxNumberParents,
+                  nSamples,
+                  nBurnin,
+                  initial,
+                  verbose)
   } else {
     stop("Not implemented")
   }
+}
+
+#' Posterior distribution on Bayesian networks
+#'
+#' Use one of a number of methods to get the posterior distribution
+#'
+#' @param data The data.
+#' @param prior A function that returns the prior score of the
+#'                       supplied bn.
+#' @param logScoreFUN A list of three elements:
+#'                         offline: A function that computes the logScore
+#'                                  of a Bayesian Network
+#'                         online:  A function that incrementally computes
+#'                                  the logScore of a Bayesian Network
+#'                         prepare: A function that prepares the data, and
+#'                                  any further pre-computation required by
+#'                                  the logScore functions.
+#' @param logScoreParameters A list of parameters that are passed to
+#'                       logScoreFUN.
+#' @param constraint A matrix of dimension ncol(data) x ncol(data) giving
+#'                       constraints to the sample space.
+#'                       The (i, j) element is
+#'                         1  if the edge i -> j is required
+#'                         -1 if the edge i -> is excluded.
+#'                         0  if the edge i -> j is not constrained.
+#'                       The diagonal of constraint must be all 0.
+#' @param maxNumberParents Integer of length 1. The maximum number of
+#'   parents of any node.
+#' @param verbose A logical. Should a progress bar be displayed?
+#' @return A \code{bnpost} object.
+#' @export
+exactposterior <- function(data,
+                           prior,
+                           logScoreFUN,
+                           logScoreParameters,
+                           constraint,
+                           maxNumberParents,
+                           verbose){
+  nVar <- ncol(data)
+  bnspace <- enumerateBNSpace(nVar)
+
+  if (!is.null(constraint)){
+    bnspace <- Filter(satisfiesConstraint, bnspace)
+  }
+
+  logScoreOfflineFUN <- logScoreFUN$offline
+  prepareDataFUN <- logScoreFUN$prepare
+  logScoreParameters <- prepareDataFUN(data,
+                                       logScoreParameters,
+                                       checkInput = F)
+
+  if (isTRUE(verbose)){
+    progress <- create_progress_bar("text")
+    progress$init(length(bnspace))
+  }
+  
+  lsmd <- sapply(bnspace, function(x){
+    if (isTRUE(verbose)){
+      progress$step()
+    }
+    logScoreOfflineFUN(x                  = x,
+                       logScoreParameters = logScoreParameters)
+  })
+  
+  if (isTRUE(verbose)){
+    progress$term()
+  }
+
+  logpriors <- log(sapply(bnspace, prior))
+  logScore <- lsmd + logpriors
+  
+  bnpost(bnspace     = bnspace,
+         logScore    = logScore,
+         data        = data,
+         logScoreFUN = function(x) stop("error"))
+}
+
+#' Posterior distribution on Bayesian networks
+#'
+#' Use MCMC to approximate the posterior distribution
+#'
+#' @param sampler A BNSampler. eg BNSampler or BNGibbsSampler etc
+#' @param data The data.
+#' @param prior A function that returns the prior score of the
+#'                       supplied bn.
+#' @param logScoreFUN A list of three elements:
+#'                         offline: A function that computes the logScore
+#'                                  of a Bayesian Network
+#'                         online:  A function that incrementally computes
+#'                                  the logScore of a Bayesian Network
+#'                         prepare: A function that prepares the data, and
+#'                                  any further pre-computation required by
+#'                                  the logScore functions.
+#' @param logScoreParameters A list of parameters that are passed to
+#'                       logScoreFUN.
+#' @param constraint A matrix of dimension ncol(data) x ncol(data) giving
+#'                       constraints to the sample space.
+#'                       The (i, j) element is
+#'                         1  if the edge i -> j is required
+#'                         -1 if the edge i -> is excluded.
+#'                         0  if the edge i -> j is not constrained.
+#'                       The diagonal of constraint must be all 0.
+#' @param maxNumberParents Integer of length 1. The maximum number of
+#'   parents of any node.
+#' @param nSamples The number of samples to be draw (only applies to MCMC)
+#' @param nBurnin The number of samples to discard from the beginning of
+#'   the sample.
+#' @param initial An object of class 'bn'. The starting value of the
+#'                       MCMC.
+#' @param verbose A logical. Should a progress bar be displayed?
+#' @return A \code{bnpostmcmc} object.
+#' @export
+mcmcposterior <- function(sampler = BNSampler,
+                          data,
+                          prior,
+                          logScoreFUN,
+                          logScoreParameters,
+                          constraint,
+                          maxNumberParents,
+                          nSamples,
+                          nBurnin,
+                          initial,
+                          verbose){
+  nVar <- ncol(data)
+  if (is.null(initial)){
+    initial <- empty(nVar, class = "bn")
+  }
+
+  sampler <- sampler(data               = data,
+                     initial            = initial,
+                     prior              = prior,
+                     logScoreFUN        = logScoreFUN,
+                     logScoreParameters = logScoreParameters,
+                     constraint         = constraint,
+                     maxNumberParents   = maxNumberParents,
+                     verbose            = verbose)
+  samples <- draw(sampler = sampler,
+                  n       = nSamples,
+                  burnin  = nBurnin,
+                  verbose = verbose)
+  bnpostmcmc(sampler     = sampler,
+             samples     = samples,
+             logScoreFUN = logScoreFUN)
 }
 
 #' method name
