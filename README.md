@@ -17,7 +17,7 @@ An interface to [`gRain`][cran:gRain] is also included to allow its probability 
 # Discrete data
 Each random variable has a Multinomial distribution, with the conjugate Dirichlet priors.
 
-```R
+``` r
 # Multinomial-Dirichlet model
 x1 <- factor(c(1, 1, 0, 0, 1, 1, 0, 1, 0))
 x2 <- factor(c(1, 0, 1, 1, 0, 1, 1, 0, 0))
