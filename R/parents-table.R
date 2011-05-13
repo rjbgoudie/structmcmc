@@ -182,11 +182,11 @@ scoreParentsTableNode <- function(node,
   while (i <= nr){
     parents <- parentsTable[i, ]
     parents <- parents[!is.na(parents)]
-    scores[i] <- localLogScoreMultDir(node               = node,
-                                      parents            = parents,
-                                      logScoreParameters = logScoreParameters,
-                                      cache              = new.env(),
-                                      checkInput         = F)
+    scores[i] <- logScoreOfflineFUN(node               = node,
+                                    parents            = parents,
+                                    logScoreParameters = logScoreParameters,
+                                    cache              = new.env(),
+                                    checkInput         = F)
     scores[i] <- log(prior(parents)) + scores[i]
     i <- i + 1
   }
