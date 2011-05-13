@@ -465,7 +465,8 @@ test_that("MJ", {
   prior <- function(net) 1
   initial <- bn(integer(0), integer(0), integer(0))
 
-  modes <- bnspace[c(1,21,25)]
+  # get "[][1][1]"  "[][1,3][]" "[][][]"
+  modes <- bnspace[c(15, 11, 1)]
   class(modes) <- c("bn.list", "parental.list")
   sampler1 <- BNSamplerMJ(dat,
                         initial,
@@ -848,19 +849,19 @@ test_that("Mode-jumping with constraint", {
   data.frame(lsmd, as.character(bnspace))
 
   # allowed graphs are
-  # 14 == [3][1][]
-  # 17 == [3][3][]
-  # 20 == [3][1,3][]
-  # 23 == [3][][]
-  data.frame(lsmd, as.character(bnspace))[c(14, 17, 20, 23), ]
+  # 6 == [3][1][]
+  # 9 == [3][3][]
+  # 12 == [3][1,3][]
+  # 3 == [3][][]
+  data.frame(lsmd, as.character(bnspace))[c(6, 9, 12, 3), ]
 
   # so probs should be, given flat prior
-  normalisingConstant <- logsumexp(lsmd[c(14, 17, 20, 23)])
-  expectedProbs <- exp(lsmd[c(14, 17, 20, 23)] - normalisingConstant)
+  normalisingConstant <- logsumexp(lsmd[c(6, 9, 12, 3)])
+  expectedProbs <- exp(lsmd[c(6, 9, 12, 3)] - normalisingConstant)
   expectedNums <- expectedProbs * nSamples
-  data.frame(gr = as.character(bnspace)[c(14, 17, 20, 23)], expectedNums)
+  data.frame(gr = as.character(bnspace)[c(6, 9, 12, 3)], expectedNums)
 
-  modes <- bnspace[c(20, 23)]
+  modes <- bnspace[c(12, 3)]
   class(modes) <- c("bn.list", "parental.list")
   sampler1 <- BNSamplerMJ(dat,
                         initial,
