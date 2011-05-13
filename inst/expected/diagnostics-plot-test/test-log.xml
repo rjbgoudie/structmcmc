@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<qcPlotExprResult>
+ <info>
+  <OS>unix</OS>
+  <Rver>R version 2.11.1 (2010-05-31)</Rver>
+  <date>2011-01-18 14:05:24</date>
+  <call>
+   <![CDATA[
+   eval(quoted_code, env)   ]]>
+  </call>
+  <directory>/Volumes/Buster/library/structural/inst/test-data/diagnostics-plot-test</directory>
+  <logFilename>test-log.xml</logFilename>
+ </info>
+ <plots type="png">
+  <warnings>Start/end not implemented</warnings>
+  <error/>
+  <plot>test-1.png</plot>
+ </plots>
+</qcPlotExprResult>

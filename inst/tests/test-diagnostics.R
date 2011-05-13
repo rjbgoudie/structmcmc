@@ -166,16 +166,15 @@ test_that("cumep", {
 
   plots <- c(paste("print(xyplot(cumep(", serialised, ", nbin = 5)))"))
 
-  controlfile <- file.path("", "Volumes", "Buster", "library",
-                           "structural", "inst", "test-data",
-                           "diagnostics-plot-control")
-
+  controlfile <- system.file("inst", "expected",
+                             "diagnostics-plot-test",
+                             package = "structmcmc")
   controlfn <- function(){
     # run this function to generate the controls
-    # first cd into struct-dag-inf2/tests
+    # first cd into structmcmc/tests
     # then run this function
     currentwd <- getwd()
-    #setwd("/Volumes/buster.stats.warwick.ac.uk/library/struct-dag-inf2/tests")
+    #setwd("structmcmc/tests")
     library(graphicsQC)
     set.seed(301)
     plotcontrol <- plotExpr(plots,
@@ -188,9 +187,9 @@ test_that("cumep", {
   }
 
   if (require(graphicsQC) & R.version$os == "darwin9.8.0"){
-    testfile <- file.path("", "Volumes", "Buster", "library",
-                             "structural", "inst", "test-data",
-                             "diagnostics-plot-test")
+    testfile <- system.file("inst", "expected",
+                            "diagnostics-plot-test",
+                            package = "structmcmc")
     # generate test data
     set.seed(301)
     plottest <- plotExpr(plots,
