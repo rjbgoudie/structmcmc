@@ -1,7 +1,7 @@
 \name{posterior}
 \alias{posterior}
 \title{Posterior distribution on Bayesian networks...}
-\usage{posterior(data, method="mh-mcmc", prior=function(x) 1,
+\usage{posterior(data, method="mc3", prior=function(x) 1,
     logScoreFUN=defaultLogScoreFUN(),
     logScoreParameters=list(hyperparameters = "qi"), constraint,
     maxNumberParents=Inf, nSamples=50000, nBurnin=10000, initial,
@@ -10,17 +10,21 @@
 \details{Use one of a number of methods to get the posterior distribution.}
 \value{Either a \code{bnpost} or a \code{bnpostmcmc} object.}
 \arguments{\item{data}{The data.}
-\item{method}{One of "exact", "mh-mcmc", "gibbs", "mj-mcmc"}
+\item{method}{One of "exact", "mc3", "gibbs", "mj-mcmc". "mh-mcmc" is a 
+synonym of "mc3".}
 \item{prior}{A function that returns the prior score of the
 supplied bn.}
-\item{logScoreFUN}{A list of three elements:
-offline: A function that computes the logScore
-of a Bayesian Network
-online:  A function that incrementally computes
-the logScore of a Bayesian Network
-prepare: A function that prepares the data, and
-any further pre-computation required by
-the logScore functions.}
+\item{logScoreFUN}{A list of four elements:
+\describe{
+\item{offline}{A function that computes the logScore of a Bayesian 
+Network}
+\item{online}{A function that incrementally computes the logScore of a 
+Bayesian Network}
+\item{local}{A function that computes the local logScore of a 
+Bayesian Network}
+\item{prepare}{A function that prepares the data, and any further 
+pre-computation required by the logScore functions.}
+}}
 \item{logScoreParameters}{A list of parameters that are passed to
 logScoreFUN.}
 \item{constraint}{A matrix of dimension ncol(data) x ncol(data) giving

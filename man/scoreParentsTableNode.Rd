@@ -1,7 +1,7 @@
 \name{scoreParentsTableNode}
 \alias{scoreParentsTableNode}
 \title{Score a node-level parentsTable...}
-\usage{scoreParentsTableNode(node, parentsTable, logScoreOfflineFUN,
+\usage{scoreParentsTableNode(node, parentsTable, logScoreLocalFUN,
     logScoreParameters, prior)}
 \description{Score a node-level parentsTable}
 \details{Computes the local scores of all the Bayesian Networks, with node 
@@ -11,7 +11,7 @@ component of a \code{parentsTable}.}
 \arguments{\item{node}{A node. A numeric vector of length 1.}
 \item{parentsTable}{A component of a \code{parentsTable}, of the form 
 created by \code{enumerateParentsTable()}.}
-\item{logScoreOfflineFUN}{A function that computes the logScore
+\item{logScoreLocalFUN}{A function that computes the local logScore
 of a Bayesian Network.}
 \item{logScoreParameters}{A list of parameters that are passed to
 \code{logScoreFUN}.}

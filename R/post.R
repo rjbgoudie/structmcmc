@@ -13,17 +13,21 @@
 #' Use one of a number of methods to get the posterior distribution.
 #'
 #' @param data The data.
-#' @param method One of "exact", "mh-mcmc", "gibbs", "mj-mcmc"
+#' @param method One of "exact", "mc3", "gibbs", "mj-mcmc". "mh-mcmc" is a 
+#'   synonym of "mc3".
 #' @param prior A function that returns the prior score of the
 #'                       supplied bn.
-#' @param logScoreFUN A list of three elements:
-#'                         offline: A function that computes the logScore
-#'                                  of a Bayesian Network
-#'                         online:  A function that incrementally computes
-#'                                  the logScore of a Bayesian Network
-#'                         prepare: A function that prepares the data, and
-#'                                  any further pre-computation required by
-#'                                  the logScore functions.
+#' @param logScoreFUN A list of four elements:
+#'   \describe{
+#'     \item{offline}{A function that computes the logScore of a Bayesian 
+#'                    Network}
+#'     \item{online}{A function that incrementally computes the logScore of a 
+#'                   Bayesian Network}
+#'     \item{local}{A function that computes the local logScore of a 
+#'                  Bayesian Network}
+#'     \item{prepare}{A function that prepares the data, and any further 
+#'                    pre-computation required by the logScore functions.}
+#'   }
 #' @param logScoreParameters A list of parameters that are passed to
 #'                       logScoreFUN.
 #' @param constraint A matrix of dimension ncol(data) x ncol(data) giving
@@ -44,7 +48,7 @@
 #' @return Either a \code{bnpost} or a \code{bnpostmcmc} object.
 #' @export
 posterior <- function(data,
-                      method             = "mh-mcmc",
+                      method             = "mc3",
                       prior              = function(x) 1,
                       logScoreFUN        = defaultLogScoreFUN(),
                       logScoreParameters = list(hyperparameters = "qi"),
@@ -54,7 +58,7 @@ posterior <- function(data,
                       nBurnin            = 10000,
                       initial            = NULL,
                       verbose            = F){
-  methods <- c("exact", "mh-mcmc", "gibbs", "mj-mcmc")
+  methods <- c("exact", "mc3", "mh-mcmc", "gibbs", "mj-mcmc")
   stopifnot(class(data) ==   "data.frame",
             method      %in% methods)
 
@@ -66,7 +70,7 @@ posterior <- function(data,
                    constraint,
                    maxNumberParents,
                    verbose)
-  } else if (method == "mh-mcmc"){
+  } else if (method == "mc3" || method == "mh-mcmc"){
     mcmcposterior(sampler = BNSampler,
                   data,
                   prior,
@@ -114,14 +118,17 @@ posterior <- function(data,
 #' @param data The data.
 #' @param prior A function that returns the prior score of the
 #'                       supplied bn.
-#' @param logScoreFUN A list of three elements:
-#'                         offline: A function that computes the logScore
-#'                                  of a Bayesian Network
-#'                         online:  A function that incrementally computes
-#'                                  the logScore of a Bayesian Network
-#'                         prepare: A function that prepares the data, and
-#'                                  any further pre-computation required by
-#'                                  the logScore functions.
+#' @param logScoreFUN A list of four elements:
+#'   \describe{
+#'     \item{offline}{A function that computes the logScore of a Bayesian 
+#'                    Network}
+#'     \item{online}{A function that incrementally computes the logScore of a 
+#'                   Bayesian Network}
+#'     \item{local}{A function that computes the local logScore of a 
+#'                  Bayesian Network}
+#'     \item{prepare}{A function that prepares the data, and any further 
+#'                    pre-computation required by the logScore functions.}
+#'   }
 #' @param logScoreParameters A list of parameters that are passed to
 #'                       logScoreFUN.
 #' @param constraint A matrix of dimension ncol(data) x ncol(data) giving
@@ -190,14 +197,17 @@ exactposterior <- function(data,
 #' @param data The data.
 #' @param prior A function that returns the prior score of the
 #'                       supplied bn.
-#' @param logScoreFUN A list of three elements:
-#'                         offline: A function that computes the logScore
-#'                                  of a Bayesian Network
-#'                         online:  A function that incrementally computes
-#'                                  the logScore of a Bayesian Network
-#'                         prepare: A function that prepares the data, and
-#'                                  any further pre-computation required by
-#'                                  the logScore functions.
+#' @param logScoreFUN A list of four elements:
+#'   \describe{
+#'     \item{offline}{A function that computes the logScore of a Bayesian 
+#'                    Network}
+#'     \item{online}{A function that incrementally computes the logScore of a 
+#'                   Bayesian Network}
+#'     \item{local}{A function that computes the local logScore of a 
+#'                  Bayesian Network}
+#'     \item{prepare}{A function that prepares the data, and any further 
+#'                    pre-computation required by the logScore functions.}
+#'   }
 #' @param logScoreParameters A list of parameters that are passed to
 #'                       logScoreFUN.
 #' @param constraint A matrix of dimension ncol(data) x ncol(data) giving

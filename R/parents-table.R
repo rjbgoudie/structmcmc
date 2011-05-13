@@ -111,7 +111,7 @@ enumerateParentsTableNode <- function(node,
 #'
 #' @param parentsTables A component of a \code{parentsTables}, of the form 
 #'   created by \code{enumerateParentsTable()}.
-#' @param logScoreOfflineFUN A function that computes the logScore
+#' @param logScoreLocalFUN A function that computes the local logScore 
 #'   of a Bayesian Network.
 #' @param logScoreParameters A list of parameters that are passed to
 #'   \code{logScoreFUN}.
@@ -122,7 +122,7 @@ enumerateParentsTableNode <- function(node,
 #' @return List of numeric vectors of scores.
 #' @export
 scoreParentsTable <- function(parentsTables,
-                              logScoreOfflineFUN,
+                              logScoreLocalFUN,
                               logScoreParameters,
                               prior,
                               verbose = F){
@@ -140,7 +140,7 @@ scoreParentsTable <- function(parentsTables,
     scoresList[[node]] <- scoreParentsTableNode(
                           node               = node,
                           parentsTable       = parentsTables[[node]],
-                          logScoreOfflineFUN = logScoreOfflineFUN,
+                          logScoreLocalFUN   = logScoreLocalFUN,
                           logScoreParameters = logScoreParameters,
                           prior              = prior)
     if (isTRUE(verbose)){
@@ -163,7 +163,7 @@ scoreParentsTable <- function(parentsTables,
 #' @param node A node. A numeric vector of length 1.
 #' @param parentsTable A component of a \code{parentsTable}, of the form 
 #'   created by \code{enumerateParentsTable()}.
-#' @param logScoreOfflineFUN A function that computes the logScore
+#' @param logScoreLocalFUN A function that computes the local logScore
 #'   of a Bayesian Network.
 #' @param logScoreParameters A list of parameters that are passed to
 #'   \code{logScoreFUN}.
@@ -173,7 +173,7 @@ scoreParentsTable <- function(parentsTables,
 #' @export
 scoreParentsTableNode <- function(node,
                                   parentsTable,
-                                  logScoreOfflineFUN,
+                                  logScoreLocalFUN,
                                   logScoreParameters,
                                   prior){
   i <- 0
@@ -182,11 +182,11 @@ scoreParentsTableNode <- function(node,
   while (i <= nr){
     parents <- parentsTable[i, ]
     parents <- parents[!is.na(parents)]
-    scores[i] <- logScoreOfflineFUN(node               = node,
-                                    parents            = parents,
-                                    logScoreParameters = logScoreParameters,
-                                    cache              = new.env(),
-                                    checkInput         = F)
+    scores[i] <- logScoreLocalFUN(node               = node,
+                                  parents            = parents,
+                                  logScoreParameters = logScoreParameters,
+                                  cache              = new.env(),
+                                  checkInput         = F)
     scores[i] <- log(prior(parents)) + scores[i]
     i <- i + 1
   }

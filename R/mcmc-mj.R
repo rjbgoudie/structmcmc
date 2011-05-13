@@ -113,12 +113,14 @@ whichGraphsNotNeighbours <- function(x, logScores, verbose = F, head){
 #' @param initial An object of class 'bn'. The starting value of the MCMC.
 #' @param prior A function that returns the prior score of the supplied bn.
 #' @param return Either "network" or "contingency".
-#' @param logScoreFUN A list of three elements:
+#' @param logScoreFUN A list of four elements:
 #'   \describe{
 #'     \item{offline}{A function that computes the logScore of a Bayesian 
 #'                    Network}
 #'     \item{online}{A function that incrementally computes the logScore of a 
 #'                   Bayesian Network}
+#'     \item{local}{A function that computes the local logScore of a 
+#'                  Bayesian Network}
 #'     \item{prepare}{A function that prepares the data, and any further 
 #'                    pre-computation required by the logScore functions.}
 #'   }
