@@ -157,3 +157,64 @@ queryFinding <- function(x, node, nodeWithState, nodeState, FUN, ...){
                     type   = "marginal")[[1]]
   FUN(tab, ...)
 }
+
+#' Get marginal probabilities, given an intervention
+#'
+#' Get the marginal probability of a node, when each other node (separately)
+#' has been conditioned upon each of its levels.
+#'
+#' @param net A BN. A "parental" object.
+#' @param estimate A list giving the Bayes parameter estimates. Of the form 
+#'   created by \code{bayes()}.
+#' @param node An integer or a name of a column of \code{dat}
+#' @param dat A data frame, with columns corresponding to the Bayes Net
+#'   in \code{grain}.
+#' @param FUN a function that is applied to the output of
+#'   \code{\link[gRain]{querygrain}}. The first argument should accept
+#'   the result of \code{\link[gRain]{querygrain}} FOR A PARTICULAR NODE.
+#'   (Usaully \code{querygrain} returns a list, since it may provide the
+#'   distribution of a number of nodes at once. Here, we remove that list.)
+#'   Any other arguments are passed \code{...}
+#' @param ... Passed to \code{FUN}
+#' @return A list, with a component for each node of the Bayes Net (apart
+#'   from the node \code{node}). Each component is a list, corresponding to
+#'   the named level. These components contain the result of applying
+#'   result of applying \code{FUN} to the result of \code{querygrain}.
+#' @export
+marginalGivenIntervention <- function(net,
+                                      node,
+                                      dat,
+                                      FUN = identity,
+                                      ...){
+  stopifnot("bn"         %in% class(net),
+            class(node)  %in% c("numeric", "character"),
+            length(node) ==   1,
+            class(dat)   ==   "data.frame",
+            class(FUN)   ==   "function")
+  if (class(node) == "numeric"){
+    node <- names(dat)[node]
+  }
+  nodeID <- which(names(dat) == node)
+  ll <- lapply(dat, levels)[-nodeID]
+  nn <- names(dat)[-nodeID]
+  names(ll) <- nn
+  out <- lapply(seq_along(nn), function(i){
+    nodeWithState <- nn[i]
+    net[[i]] <- integer(0)
+    estimate <- bayes(net, dat, prior = "qi")
+    x <- as.grain(estimate, net, dat)
+    
+    thisNodeLevels <- ll[[nodeWithState]]
+    result <- lapply(thisNodeLevels, function(nodeState){
+      queryFinding(x             = x,
+                   node          = node,
+                   nodeWithState = nodeWithState,
+                   nodeState     = nodeState,
+                   FUN           = FUN)
+    })
+    names(result) <- thisNodeLevels
+    result
+  })
+  names(out) <- nn
+  out
+}
