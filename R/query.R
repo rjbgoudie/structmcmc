@@ -164,8 +164,6 @@ queryFinding <- function(x, node, nodeWithState, nodeState, FUN, ...){
 #' has been conditioned upon each of its levels.
 #'
 #' @param net A BN. A "parental" object.
-#' @param estimate A list giving the Bayes parameter estimates. Of the form 
-#'   created by \code{bayes()}.
 #' @param node An integer or a name of a column of \code{dat}
 #' @param dat A data frame, with columns corresponding to the Bayes Net
 #'   in \code{grain}.
