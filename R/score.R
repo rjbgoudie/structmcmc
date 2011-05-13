@@ -17,5 +17,6 @@
 defaultLogScoreFUN <- function(){
   list(offline = logScoreMultDirOffline,
        online  = logScoreMultDirIncremental,
+       local  = localLogScoreMultDir,
        prepare = logScoreMultDirPrepare)
 }

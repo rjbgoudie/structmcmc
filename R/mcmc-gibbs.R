@@ -208,14 +208,17 @@ samplePair <- function(currentNetwork,
 #' @param prior A function that returns the prior score of the
 #'                       supplied bn.
 #' @param return Either "network" or "contingency".
-#' @param logScoreFUN A list of three elements:
-#'                         offline: A function that computes the logScore
-#'                                  of a Bayesian Network
-#'                         online:  A function that incrementally computes
-#'                                  the logScore of a Bayesian Network
-#'                         prepare: A function that prepares the data, and
-#'                                  any further pre-computation required by
-#'                                  the logScore functions.
+#' @param logScoreFUN A list of four elements:
+#'   \describe{
+#'     \item{offline}{A function that computes the logScore of a Bayesian 
+#'                    Network}
+#'     \item{online}{A function that incrementally computes the logScore of a 
+#'                   Bayesian Network}
+#'     \item{local}{A function that computes the local logScore of a 
+#'                  Bayesian Network}
+#'     \item{prepare}{A function that prepares the data, and any further 
+#'                    pre-computation required by the logScore functions.}
+#'   }
 #' @param logScoreParameters A list of parameters that are passed to
 #'                       logScoreFUN.
 #' @param constraint A matrix of dimension ncol(data) x ncol(data) giving
@@ -267,7 +270,7 @@ BNGibbsSampler <- function(data,
   nodesSeq <- seq_len(numberOfNodes)
 
   # Set up for fast computation of logScore
-  logScoreOfflineFUN <- logScoreFUN$offline
+  logScoreLocalFUN <- logScoreFUN$local
   prepareDataFUN <- logScoreFUN$prepare
   logScoreParameters <- prepareDataFUN(data,
                                        logScoreParameters,
@@ -286,7 +289,7 @@ BNGibbsSampler <- function(data,
   }
   if (missing(scoresParents)){
     scoresParents <- scoreParentsTable(parentsTables,
-                                       logScoreOfflineFUN,
+                                       logScoreLocalFUN,
                                        logScoreParameters,
                                        prior,
                                        verbose = verbose)
