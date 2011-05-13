@@ -10,8 +10,6 @@ from the node \code{node}). Each component is a list, corresponding to
 the named level. These components contain the result of applying
 result of applying \code{FUN} to the result of \code{querygrain}.}
 \arguments{\item{net}{A BN. A "parental" object.}
-\item{estimate}{A list giving the Bayes parameter estimates. Of the form 
-created by \code{bayes()}.}
 \item{node}{An integer or a name of a column of \code{dat}}
 \item{dat}{A data frame, with columns corresponding to the Bayes Net
 in \code{grain}.}
