@@ -54,6 +54,7 @@ routesRemoveEdges <- function(x, i, j){
 #'
 #' @param x A routes matrix
 #' @param node A node
+#' @export
 nonDescendants <- function(x, node){
   .Internal(which(x[node, ] == 0))
 }

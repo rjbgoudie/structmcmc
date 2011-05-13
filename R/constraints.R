@@ -33,7 +33,7 @@ setupConstraint <- function(constraint, initial){
   }
 }
 
-#' #' method name
+#' method name
 #'
 #' method description
 #'
