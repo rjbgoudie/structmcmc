@@ -1300,7 +1300,7 @@ rocplot <- function(true,
   haveMAPs <- !missing(maps)
   haveBNPMLs <- !missing(bnpmls)
   haveEPs <- !missing(eps)
-  
+
   stopifnot("bn" %in% class(true),
             !haveMAPs   || inherits(maps, "bn.list"),
             !haveBNPMLs || inherits(bnpmls, "bnpostmcmc.list"),
@@ -1310,12 +1310,21 @@ rocplot <- function(true,
             inherits(verbose, "logical"))
   if (haveMAPs){
     mapsNames <- names(maps)
+    if (is.null(mapsNames)){
+      mapsNames <- paste("MAP", seq_along(maps))
+    }
   }
   if (haveBNPMLs){
     bnpmlsNames <- names(bnpmls)
+    if (is.null(bnpmlsNames)){
+      bnpmlsNames <- paste("BN Post", seq_along(bnpmls))
+    }
   }
   if (haveEPs){
     epsNames <- names(eps)
+    if (is.null(epsNames)){
+      epsNames <- paste("EP", seq_along(eps))
+    }
   }
 
   if (use.cpdags){
@@ -1376,16 +1385,17 @@ rocplot <- function(true,
   }
 
   rocdata[, "estimate"] <- factor(rocdata[, "estimate"])
-  
+
   trimName <- function(x){
     lens <- sapply(x, nchar)
     substr(x, 1, lens - 2)
   }
-  
+
   typeChar <- as.character(rocdata[, "estimate"])
   rocdata[, "type"] <- trimName(typeChar)
-  ll <- c("Gibbs", "M-H", "REV", "Xie")
+  ll <- c("Gibbs", "M-H", "REV", "Xie", "EP", "BN Post", "MAP")
   rocdata[, "type"] <- factor(rocdata[, "type"], levels = ll)
+  rocdata[, "type"] <- factor(rocdata[, "type"])
 
   scalesAt <- c(0, seq_len(length(true) * (length(true) - 1)))
 
