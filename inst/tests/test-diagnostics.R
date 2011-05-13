@@ -10,207 +10,207 @@
 
 context("Diagnostics")
 
-test_that("cumep", {
-  set.seed(310)
-  x1 <- as.factor(c(1, 1, 0, 1))
-  x2 <- as.factor(c(0, 1, 0, 1))
-  dat <- data.frame(x1 = x1, x2 = x2)
-
-  nSamples <- 5
-  prior <- function(net) 1
-  initial <- bn(integer(0), integer(0))
-
-  sampler1 <- BNSampler(dat, initial, prior)
-  sampler2 <- BNSampler(dat, initial, prior)
-  sink(tempfile())
-  samples1 <- draw(sampler1, nSamples)
-  
-  # this is a mistake,
-  # but it doesn't matter here
-  # but do have to work around it, due to draw() being smarter
-  samples2 <- draw(sampler1, nSamples)
-  
-  sink()
-
-  mpost1 <- bnpostmcmc(sampler1, samples1)
-  mpost2 <- bnpostmcmc(sampler2, samples2)
-
-  testmpostl <- list(mpost1, mpost2)
-  class(testmpostl) <- "bnpostmcmc.list"
-
-  expected <- list(
-    # cols in order 1->1, 1->2, 2->1, 2->2
-    # ie in xyplot's as.table order
-    `Sample 1` = matrix(c(
-      0, 0, 0, 0, 0,
-      0/1, 1/2, 1/3, 1/4, 1/5,
-      1/1, 1/2, 2/3, 2/4, 2/5,
-      0, 0, 0, 0, 0
-    ), ncol = 4, nrow = 5)
-    ,
-    # cols in order 1->1, 1->2, 2->1, 2->2
-    `Sample 2` = matrix(c(
-      0, 0, 0, 0, 0,
-      1, 0.5, 2/3, 0.5, 3/5,
-      0, 0, 0, 1/4, 1/5,
-      0, 0, 0, 0, 0
-    ), ncol = 4, nrow = 5)
-  )
-  attr(expected, "lengthOfRuns") <- 5
-  attr(expected, "nbin") <- 5
-  attr(expected, "numberOfNodes") <- 2
-  attr(expected, "numberOfRuns") <- 2
-  attr(expected, "type") <- "bnpostmcmc.list"
-  class(expected) <- "epmx"
-  attr(expected, "function") <- "cum"
-
-  expect_that(
-    cumep(testmpostl, nbin = 5),
-    equals(expected)
-  )
-
-  # Moving window
-  expected <- list(
-    # cols in order 1->1, 1->2, 2->1, 2->2
-    # ie in xyplot's as.table order
-    `Sample 1` = matrix(c(
-        0,   0,   0,
-      1/3, 1/3, 0/3,
-      2/3, 1/3, 1/3,
-        0,   0,   0
-    ), ncol = 4, nrow = 3)
-    ,
-    # cols in order 1->1, 1->2, 2->1, 2->2
-    `Sample 2` = matrix(c(
-        0,   0,   0,
-      2/3, 1/3, 2/3,
-      0/3, 1/3, 1/3,
-        0,   0,   0
-    ), ncol = 4, nrow = 3)
-  )
-  attr(expected, "lengthOfRuns") <- 5
-  attr(expected, "nbin") <- 5
-  attr(expected, "numberOfNodes") <- 2
-  attr(expected, "numberOfRuns") <- 2
-  attr(expected, "type") <- "bnpostmcmc.list"
-  class(expected) <- "epmx"
-  attr(expected, "function") <- "mw"
-
-  expect_that(
-    mwep(testmpostl, window = 3, nbin = 5),
-    equals(expected)
-  )
-
-  # More
-  expect_that(ep(testmpostl), equals(
-    structure(list(
-      structure(c(0, 0.4, 0.2, 0), .Dim = c(2L, 2L),
-                class = c("ep", "matrix")),
-      structure(c(0, 0.2, 0.6, 0), .Dim = c(2L, 2L),
-                class = c("ep", "matrix"))),
-      class = "ep.list"
-    )
-  ))
-
-  expect_that(ep(testmpostl, nbin = 2), throws_error())
-
-  expect_that(ep(testmpostl, nbin = 5), equals(
-    structure(list(
-      structure(list(
-        structure(c(0, 1, 0, 0), .Dim = c(2L, 2L), class = c("ep", "matrix")),
-        structure(c(0, 0, 1, 0), .Dim = c(2L, 2L), class = c("ep", "matrix")),
-        structure(c(0, 1, 0, 0), .Dim = c(2L, 2L), class = c("ep", "matrix")),
-        structure(c(0, 0, 0, 0), .Dim = c(2L, 2L), class = c("ep", "matrix")),
-        structure(c(0, 0, 0, 0), .Dim = c(2L, 2L), class = c("ep", "matrix"))
-      ), class = "ep.list"),
-      structure(list(
-        structure(c(0, 0, 1, 0), .Dim = c(2L, 2L), class = c("ep", "matrix")),
-        structure(c(0, 0, 0, 0), .Dim = c(2L, 2L), class = c("ep", "matrix")),
-        structure(c(0, 0, 1, 0), .Dim = c(2L, 2L), class = c("ep", "matrix")),
-        structure(c(0, 1, 0, 0), .Dim = c(2L, 2L), class = c("ep", "matrix")),
-        structure(c(0, 0, 1, 0), .Dim = c(2L, 2L), class = c("ep", "matrix"))
-      ), class = "ep.list")
-    ), class = "ep.list")
-  ))
-
-  # Plotting tests
-    serialised <- 'structure(list(structure(list(
-    samples = structure(list(structure(list(
-    2L, integer(0)), class = c("bn", "parental")), structure(list(
-    integer(0), 1L), class = c("bn", "parental")), structure(list(
-    2L, integer(0)), class = c("bn", "parental")), structure(list(
-    integer(0), integer(0)), class = c("bn", "parental")), structure(list(
-    integer(0), integer(0)), class = c("bn", "parental"))), class = c("mcmcbn",
-"bn.list", "parental.list")), tabulated = structure(c(1L, 2L,
-2L), .Dim = 3L, .Dimnames = list(c("integer(0),1", "2,integer(0)",
-"integer(0),integer(0)")), class = "table"), data = structure(list(
-    x1 = structure(c(2L, 2L, 1L, 2L), .Label = c("0", "1"), class = "factor"),
-    x2 = structure(c(1L, 2L, 1L, 2L), .Label = c("0", "1"),
-    class = "factor")), .Names = c("x1",
-"x2"), row.names = c(NA, -4L), class = "data.frame")), .Names = c("samples",
-"tabulated", "data"), class = "bnpostmcmc"), structure(list(
-  samples = structure(list(
-    structure(list(integer(0), 1L), class = c("bn", "parental"
-    )), structure(list(integer(0), integer(0)), class = c("bn",
-    "parental")), structure(list(integer(0), 1L), class = c("bn",
-    "parental")), structure(list(2L, integer(0)), class = c("bn",
-    "parental")), structure(list(integer(0), 1L), class = c("bn",
-    "parental"))), class = c("mcmcbn", "bn.list", "parental.list"
-)), tabulated = structure(c(1L, 1L, 3L), .Dim = 3L, .Dimnames = list(
-    c("2,integer(0)", "integer(0),integer(0)", "integer(0),1"
-    )), class = "table"), data = structure(list(x1 = structure(c(2L,
-2L, 1L, 2L), .Label = c("0", "1"), class = "factor"), x2 = structure(c(1L,
-2L, 1L, 2L), .Label = c("0", "1"), class = "factor")), .Names = c("x1",
-"x2"), row.names = c(NA, -4L), class = "data.frame")), .Names = c("samples",
-"tabulated", "data"), class = "bnpostmcmc")), class = "bnpostmcmc.list")'
-
-  plots <- c(paste("print(xyplot(cumep(", serialised, ", nbin = 5)))"))
-
-  controlfile <- system.file("inst", "expected",
-                             "diagnostics-plot-test",
-                             package = "structmcmc")
-  controlfn <- function(){
-    # run this function to generate the controls
-    # first cd into structmcmc/tests
-    # then run this function
-    currentwd <- getwd()
-    #setwd("structmcmc/tests")
-    library(graphicsQC)
-    set.seed(301)
-    plotcontrol <- plotExpr(plots,
-                            path     = controlfile,
-                            clear    = TRUE,
-#                           filetype = c("pdf", "png"),
-                            filetype = "png",
-                            prefix   = "control")
-    #setwd(currentwd)
-  }
-
-  if (require(graphicsQC) & R.version$os == "darwin9.8.0"){
-    testfile <- system.file("inst", "expected",
-                            "diagnostics-plot-test",
-                            package = "structmcmc")
-    # generate test data
-    set.seed(301)
-    plottest <- plotExpr(plots,
-                         path     = testfile,
-                         clear    = TRUE,
-  #                           filetype = c("pdf", "png"),
-                              filetype = "png",
-                         prefix   = "test")
-
-    # compare test data to the controls
-    sink(tempfile())
-    res <- compare(test = plottest, control = controlfile)
-    sink()
-
-    # check that tests and controls are identical
-
-    for (i in seq_along(plots)){
-      expect_that(res$results$png[[i]]$result, is_identical_to("identical"))
-    }
-  }
-})
+# test_that("cumep", {
+#   set.seed(310)
+#   x1 <- as.factor(c(1, 1, 0, 1))
+#   x2 <- as.factor(c(0, 1, 0, 1))
+#   dat <- data.frame(x1 = x1, x2 = x2)
+# 
+#   nSamples <- 5
+#   prior <- function(net) 1
+#   initial <- bn(integer(0), integer(0))
+# 
+#   sampler1 <- BNSampler(dat, initial, prior)
+#   sampler2 <- BNSampler(dat, initial, prior)
+#   sink(tempfile())
+#   samples1 <- draw(sampler1, nSamples)
+#   
+#   # this is a mistake,
+#   # but it doesn't matter here
+#   # but do have to work around it, due to draw() being smarter
+#   samples2 <- draw(sampler1, nSamples)
+#   
+#   sink()
+# 
+#   mpost1 <- bnpostmcmc(sampler1, samples1)
+#   mpost2 <- bnpostmcmc(sampler2, samples2)
+# 
+#   testmpostl <- list(mpost1, mpost2)
+#   class(testmpostl) <- "bnpostmcmc.list"
+# 
+#   expected <- list(
+#     # cols in order 1->1, 1->2, 2->1, 2->2
+#     # ie in xyplot's as.table order
+#     `Sample 1` = matrix(c(
+#       0, 0, 0, 0, 0,
+#       0/1, 1/2, 1/3, 1/4, 1/5,
+#       1/1, 1/2, 2/3, 2/4, 2/5,
+#       0, 0, 0, 0, 0
+#     ), ncol = 4, nrow = 5)
+#     ,
+#     # cols in order 1->1, 1->2, 2->1, 2->2
+#     `Sample 2` = matrix(c(
+#       0, 0, 0, 0, 0,
+#       1, 0.5, 2/3, 0.5, 3/5,
+#       0, 0, 0, 1/4, 1/5,
+#       0, 0, 0, 0, 0
+#     ), ncol = 4, nrow = 5)
+#   )
+#   attr(expected, "lengthOfRuns") <- 5
+#   attr(expected, "nbin") <- 5
+#   attr(expected, "numberOfNodes") <- 2
+#   attr(expected, "numberOfRuns") <- 2
+#   attr(expected, "type") <- "bnpostmcmc.list"
+#   class(expected) <- "epmx"
+#   attr(expected, "function") <- "cum"
+# 
+#   expect_that(
+#     cumep(testmpostl, nbin = 5),
+#     equals(expected)
+#   )
+# 
+#   # Moving window
+#   expected <- list(
+#     # cols in order 1->1, 1->2, 2->1, 2->2
+#     # ie in xyplot's as.table order
+#     `Sample 1` = matrix(c(
+#         0,   0,   0,
+#       1/3, 1/3, 0/3,
+#       2/3, 1/3, 1/3,
+#         0,   0,   0
+#     ), ncol = 4, nrow = 3)
+#     ,
+#     # cols in order 1->1, 1->2, 2->1, 2->2
+#     `Sample 2` = matrix(c(
+#         0,   0,   0,
+#       2/3, 1/3, 2/3,
+#       0/3, 1/3, 1/3,
+#         0,   0,   0
+#     ), ncol = 4, nrow = 3)
+#   )
+#   attr(expected, "lengthOfRuns") <- 5
+#   attr(expected, "nbin") <- 5
+#   attr(expected, "numberOfNodes") <- 2
+#   attr(expected, "numberOfRuns") <- 2
+#   attr(expected, "type") <- "bnpostmcmc.list"
+#   class(expected) <- "epmx"
+#   attr(expected, "function") <- "mw"
+# 
+#   expect_that(
+#     mwep(testmpostl, window = 3, nbin = 5),
+#     equals(expected)
+#   )
+# 
+#   # More
+#   expect_that(ep(testmpostl), equals(
+#     structure(list(
+#       structure(c(0, 0.4, 0.2, 0), .Dim = c(2L, 2L),
+#                 class = c("ep", "matrix")),
+#       structure(c(0, 0.2, 0.6, 0), .Dim = c(2L, 2L),
+#                 class = c("ep", "matrix"))),
+#       class = "ep.list"
+#     )
+#   ))
+# 
+#   expect_that(ep(testmpostl, nbin = 2), throws_error())
+# 
+#   expect_that(ep(testmpostl, nbin = 5), equals(
+#     structure(list(
+#       structure(list(
+#         structure(c(0, 1, 0, 0), .Dim = c(2L, 2L), class = c("ep", "matrix")),
+#         structure(c(0, 0, 1, 0), .Dim = c(2L, 2L), class = c("ep", "matrix")),
+#         structure(c(0, 1, 0, 0), .Dim = c(2L, 2L), class = c("ep", "matrix")),
+#         structure(c(0, 0, 0, 0), .Dim = c(2L, 2L), class = c("ep", "matrix")),
+#         structure(c(0, 0, 0, 0), .Dim = c(2L, 2L), class = c("ep", "matrix"))
+#       ), class = "ep.list"),
+#       structure(list(
+#         structure(c(0, 0, 1, 0), .Dim = c(2L, 2L), class = c("ep", "matrix")),
+#         structure(c(0, 0, 0, 0), .Dim = c(2L, 2L), class = c("ep", "matrix")),
+#         structure(c(0, 0, 1, 0), .Dim = c(2L, 2L), class = c("ep", "matrix")),
+#         structure(c(0, 1, 0, 0), .Dim = c(2L, 2L), class = c("ep", "matrix")),
+#         structure(c(0, 0, 1, 0), .Dim = c(2L, 2L), class = c("ep", "matrix"))
+#       ), class = "ep.list")
+#     ), class = "ep.list")
+#   ))
+# 
+#   # Plotting tests
+#     serialised <- 'structure(list(structure(list(
+#     samples = structure(list(structure(list(
+#     2L, integer(0)), class = c("bn", "parental")), structure(list(
+#     integer(0), 1L), class = c("bn", "parental")), structure(list(
+#     2L, integer(0)), class = c("bn", "parental")), structure(list(
+#     integer(0), integer(0)), class = c("bn", "parental")), structure(list(
+#     integer(0), integer(0)), class = c("bn", "parental"))), class = c("mcmcbn",
+# "bn.list", "parental.list")), tabulated = structure(c(1L, 2L,
+# 2L), .Dim = 3L, .Dimnames = list(c("integer(0),1", "2,integer(0)",
+# "integer(0),integer(0)")), class = "table"), data = structure(list(
+#     x1 = structure(c(2L, 2L, 1L, 2L), .Label = c("0", "1"), class = "factor"),
+#     x2 = structure(c(1L, 2L, 1L, 2L), .Label = c("0", "1"),
+#     class = "factor")), .Names = c("x1",
+# "x2"), row.names = c(NA, -4L), class = "data.frame")), .Names = c("samples",
+# "tabulated", "data"), class = "bnpostmcmc"), structure(list(
+#   samples = structure(list(
+#     structure(list(integer(0), 1L), class = c("bn", "parental"
+#     )), structure(list(integer(0), integer(0)), class = c("bn",
+#     "parental")), structure(list(integer(0), 1L), class = c("bn",
+#     "parental")), structure(list(2L, integer(0)), class = c("bn",
+#     "parental")), structure(list(integer(0), 1L), class = c("bn",
+#     "parental"))), class = c("mcmcbn", "bn.list", "parental.list"
+# )), tabulated = structure(c(1L, 1L, 3L), .Dim = 3L, .Dimnames = list(
+#     c("2,integer(0)", "integer(0),integer(0)", "integer(0),1"
+#     )), class = "table"), data = structure(list(x1 = structure(c(2L,
+# 2L, 1L, 2L), .Label = c("0", "1"), class = "factor"), x2 = structure(c(1L,
+# 2L, 1L, 2L), .Label = c("0", "1"), class = "factor")), .Names = c("x1",
+# "x2"), row.names = c(NA, -4L), class = "data.frame")), .Names = c("samples",
+# "tabulated", "data"), class = "bnpostmcmc")), class = "bnpostmcmc.list")'
+# 
+#   plots <- c(paste("print(xyplot(cumep(", serialised, ", nbin = 5)))"))
+# 
+#   controlfile <- system.file("inst", "expected",
+#                              "diagnostics-plot-test",
+#                              package = "structmcmc")
+#   controlfn <- function(){
+#     # run this function to generate the controls
+#     # first cd into structmcmc/tests
+#     # then run this function
+#     currentwd <- getwd()
+#     #setwd("structmcmc/tests")
+#     library(graphicsQC)
+#     set.seed(301)
+#     plotcontrol <- plotExpr(plots,
+#                             path     = controlfile,
+#                             clear    = TRUE,
+# #                           filetype = c("pdf", "png"),
+#                             filetype = "png",
+#                             prefix   = "control")
+#     #setwd(currentwd)
+#   }
+# 
+#   if (require(graphicsQC) & R.version$os == "darwin9.8.0"){
+#     testfile <- system.file("inst", "expected",
+#                             "diagnostics-plot-test",
+#                             package = "structmcmc")
+#     # generate test data
+#     set.seed(301)
+#     plottest <- plotExpr(plots,
+#                          path     = testfile,
+#                          clear    = TRUE,
+#   #                           filetype = c("pdf", "png"),
+#                               filetype = "png",
+#                          prefix   = "test")
+# 
+#     # compare test data to the controls
+#     sink(tempfile())
+#     res <- compare(test = plottest, control = controlfile)
+#     sink()
+# 
+#     # check that tests and controls are identical
+# 
+#     for (i in seq_along(plots)){
+#       expect_that(res$results$png[[i]]$result, is_identical_to("identical"))
+#     }
+#   }
+# })
 
 test_that("cumtvd", {
   set.seed(310)

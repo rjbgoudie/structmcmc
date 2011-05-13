@@ -10,208 +10,208 @@
 
 context("Posterior methods")
 
-test_that("ROC Curve plotting", {
-  set.seed(310)
-  x1 <- as.factor(c(1, 1, 0, 1))
-  x2 <- as.factor(c(0, 1, 0, 1))
-  dat <- data.frame(x1 = x1, x2 = x2)
-
-  nSamples <- 5
-  prior <- function(net) 1
-  initial <- bn(integer(0), integer(0))
-
-  sampler1 <- BNSampler(dat, initial, prior)
-  sampler2 <- BNSampler(dat, initial, prior)
-  sink(tempfile())
-  samples1 <- draw(sampler1, nSamples)
-  samples2 <- draw(sampler1, nSamples) # this is a mistake
-                                       # but it doesn't matter here
-  sink()
-
-  mpost1 <- bnpostmcmc(sampler1, samples1)
-  mpost2 <- bnpostmcmc(sampler2, samples2)
-
-  testmpostl <- list(mpost1, mpost2)
-  class(testmpostl) <- "bnpostmcmc.list"
-
-  # IMPORTANT:
-  # This is a weird hack to get around scoping issues with graphicsQC
-  # Instead dput the testmpostl to serialise this.
-  serialised <- 'structure(list(structure(list(
-    samples = structure(list(structure(list(
-    2L, integer(0)), class = c("bn", "parental")), structure(list(
-    integer(0), 1L), class = c("bn", "parental")), structure(list(
-    2L, integer(0)), class = c("bn", "parental")), structure(list(
-    integer(0), integer(0)), class = c("bn", "parental")), structure(list(
-    integer(0), integer(0)), class = c("bn", "parental"))), class = c("mcmcbn",
-"bn.list", "parental.list")), tabulated = structure(c(1L, 2L,
-2L), .Dim = 3L, .Dimnames = list(c("integer(0),1", "2,integer(0)",
-"integer(0),integer(0)")), class = "table"), data = structure(list(
-    x1 = structure(c(2L, 2L, 1L, 2L), .Label = c("0", "1"), class = "factor"),
-    x2 = structure(c(1L, 2L, 1L, 2L), .Label = c("0", "1"),
-    class = "factor")), .Names = c("x1",
-"x2"), row.names = c(NA, -4L), class = "data.frame")), .Names = c("samples",
-"tabulated", "data"), class = "bnpostmcmc"), structure(list(
-  samples = structure(list(
-    structure(list(integer(0), 1L), class = c("bn", "parental"
-    )), structure(list(integer(0), integer(0)), class = c("bn",
-    "parental")), structure(list(integer(0), 1L), class = c("bn",
-    "parental")), structure(list(2L, integer(0)), class = c("bn",
-    "parental")), structure(list(integer(0), 1L), class = c("bn",
-    "parental"))), class = c("mcmcbn", "bn.list", "parental.list"
-)), tabulated = structure(c(1L, 1L, 3L), .Dim = 3L, .Dimnames = list(
-    c("2,integer(0)", "integer(0),integer(0)", "integer(0),1"
-    )), class = "table"), data = structure(list(x1 = structure(c(2L,
-2L, 1L, 2L), .Label = c("0", "1"), class = "factor"), x2 = structure(c(1L,
-2L, 1L, 2L), .Label = c("0", "1"), class = "factor")), .Names = c("x1",
-"x2"), row.names = c(NA, -4L), class = "data.frame")), .Names = c("samples",
-"tabulated", "data"), class = "bnpostmcmc")), class = "bnpostmcmc.list")'
-
-  set.seed(231)
-  x1 <- as.factor(c(1, 1, 0, 1, 0, 0, 1, 0, 0, 1, 1, 0, 1))
-  x2 <- as.factor(c(0, 1, 0, 1, 1, 1, 0, 1, 1, 0, 1, 0, 0))
-  x3 <- as.factor(c(1, 0, 1, 1, 1, 0, 0, 1, 1, 1, 1, 0, 0))
-  dat <- data.frame(x1 = x1, x2 = x2, x3 = x3)
-
-  nSamples <- 10
-  prior <- function(net) 1
-  initial1 <- bn(integer(0), integer(0), integer(0))
-  initial2 <- bn(c(2L, 3L), 3L, integer(0))
-
-  samplerb1 <- BNSampler(dat, initial1, prior)
-  samplerb2 <- BNSampler(dat, initial2, prior)
-  sink(tempfile())
-  samplesb1 <- draw(samplerb1, nSamples)
-  samplesb2 <- draw(samplerb2, nSamples) # this is a mistake
-                                         # but it doesn't matter here
-  sink()
-
-  mpostb1 <- bnpostmcmc(samplerb1, samplesb1)
-  mpostb2 <- bnpostmcmc(samplerb2, samplesb2)
-
-  testmpostlb <- list(mpostb1, mpostb2)
-  class(testmpostlb) <- "bnpostmcmc.list"
-
-  serialisedb <- 'structure(list(structure(list(samples = structure(
-    list(structure(list(
-    2L, integer(0), integer(0)), class = c("bn", "parental")),
-    structure(list(2:3, integer(0), integer(0)), class = c("bn",
-    "parental")), structure(list(2:3, integer(0), 2L), class = c("bn",
-    "parental")), structure(list(2L, integer(0), 1:2), class = c("bn",
-    "parental")), structure(list(2L, integer(0), 1L), class = c("bn",
-    "parental")), structure(list(2L, integer(0), 1L), class = c("bn",
-    "parental")), structure(list(2L, integer(0), integer(0)), class = c("bn",
-    "parental")), structure(list(integer(0), integer(0), integer(0)),
-    class = c("bn",
-    "parental")), structure(list(integer(0), integer(0), integer(0)),
-    class = c("bn",
-    "parental")), structure(list(integer(0), integer(0), integer(0)),
-    class = c("bn",
-    "parental"))), class = c("mcmcbn", "bn.list", "parental.list"
-)), tabulated = structure(c(1L, 1L, 1L, 2L, 2L, 3L), .Dim = 6L,
-.Dimnames = list(
-    c("2,integer(0),1:2", "2:3,integer(0),2", "2:3,integer(0),integer(0)",
-    "2,integer(0),1", "2,integer(0),integer(0)",
-    "integer(0),integer(0),integer(0)"
-    )), class = "table"), data = structure(list(x1 = structure(c(2L,
-2L, 1L, 2L, 1L, 1L, 2L, 1L, 1L, 2L, 2L, 1L, 2L), .Label = c("0",
-"1"), class = "factor"), x2 = structure(c(1L, 2L, 1L, 2L, 2L,
-2L, 1L, 2L, 2L, 1L, 2L, 1L, 1L), .Label = c("0", "1"), class = "factor"),
-    x3 = structure(c(2L, 1L, 2L, 2L, 2L, 1L, 1L, 2L, 2L, 2L,
-    2L, 1L, 1L), .Label = c("0", "1"), class = "factor")), .Names = c("x1",
-"x2", "x3"), row.names = c(NA, -13L), class = "data.frame")),
-.Names = c("samples",
-"tabulated", "data"), class = "bnpostmcmc"),
-structure(list(samples = structure(list(
-    structure(list(2:3, integer(0), 2L), class = c("bn", "parental"
-    )), structure(list(2L, integer(0), 2L), class = c("bn", "parental"
-    )), structure(list(2L, integer(0), integer(0)), class = c("bn",
-    "parental")), structure(list(2L, integer(0), 1L), class = c("bn",
-    "parental")), structure(list(integer(0), integer(0), 1L), class = c("bn",
-    "parental")), structure(list(integer(0), integer(0), integer(0)),
-    class = c("bn",
-    "parental")), structure(list(integer(0), integer(0), integer(0)),
-    class = c("bn",
-    "parental")), structure(list(integer(0), integer(0), 1L), class = c("bn",
-    "parental")), structure(list(integer(0), integer(0), 1L), class = c("bn",
-    "parental")), structure(list(integer(0), integer(0), 1L), class = c("bn",
-    "parental"))), class = c("mcmcbn", "bn.list", "parental.list"
-)), tabulated = structure(c(1L, 1L, 1L, 1L, 2L, 4L), .Dim = 6L,
-.Dimnames = list(
-    c("2,integer(0),1", "2,integer(0),2", "2,integer(0),integer(0)",
-    "2:3,integer(0),2", "integer(0),integer(0),integer(0)",
-    "integer(0),integer(0),1"
-    )), class = "table"), data = structure(list(x1 = structure(c(2L,
-2L, 1L, 2L, 1L, 1L, 2L, 1L, 1L, 2L, 2L, 1L, 2L), .Label = c("0",
-"1"), class = "factor"), x2 = structure(c(1L, 2L, 1L, 2L, 2L,
-2L, 1L, 2L, 2L, 1L, 2L, 1L, 1L), .Label = c("0", "1"), class = "factor"),
-    x3 = structure(c(2L, 1L, 2L, 2L, 2L, 1L, 1L, 2L, 2L, 2L,
-    2L, 1L, 1L), .Label = c("0", "1"), class = "factor")), .Names = c("x1",
-"x2", "x3"), row.names = c(NA, -13L), class = "data.frame")),
-.Names = c("samples",
-"tabulated", "data"), class = "bnpostmcmc")), class = "bnpostmcmc.list")'
-
-  plots <- c(paste("print(rocplot(true = bn(integer(0), 1L), mcmcs = ",
-                 serialised,
-                 "))"),
-             paste("print(rocplot(true = bn(2L, integer(0), integer(0)),",
-                   " mcmcs = ",
-                   serialisedb,
-                   ", map = bn.list(bn(integer(0), 1L, 1L))))"))
-
-  # for example 2, the 'MAP estimate' is of course not accurate,
-  # it is just an example for testing.
-
-  controlfile <- system.file("inst", "expected",
-                             "structmcmc-plot-control",
-                             package = "structmcmc")
-
-  controlfn <- function(){
-    # run this function to generate the controls
-    # first cd into structmcmc/tests
-    # then run this function
-    currentwd <- getwd()
-    #setwd("structmcmc/tests")
-    library(graphicsQC)
-    set.seed(301)
-    plotcontrol <- plotExpr(plots,
-                            path     = controlfile,
-                            clear    = TRUE,
-#                           filetype = c("pdf", "png"),
-                            filetype = "png",
-                            prefix   = "control")
-    #setwd(currentwd)
-  }
-
-  if (require(graphicsQC) && R.version$os == "darwin9.8.0"){
-    testfile <- system.file("inst", "expected",
-                            "structmcmc-plot-test",
-                            package = "structmcmc")
-    # generate test data
-    set.seed(301)
-    plottest <- plotExpr(plots,
-                         path     = testfile,
-                         clear    = TRUE,
-  #                           filetype = c("pdf", "png"),
-                              filetype = "png",
-                         prefix   = "test")
-
-    # compare test data to the controls
-    sink(tempfile())
-    res <- compare(test = plottest, control = controlfile)
-    sink()
-
-    # check that tests and controls are identical
-
-    for (i in seq_along(plots)){
-      expect_that(res$results$png[[i]]$result, is_identical_to("identical"))
-    }
-
-    expect_that(print(rocplot(true = bn(integer(0), 1),
-                      map = bn(integer(0), integer(0)))),
-                throws_error())
-  }
-})
+# test_that("ROC Curve plotting", {
+#   set.seed(310)
+#   x1 <- as.factor(c(1, 1, 0, 1))
+#   x2 <- as.factor(c(0, 1, 0, 1))
+#   dat <- data.frame(x1 = x1, x2 = x2)
+# 
+#   nSamples <- 5
+#   prior <- function(net) 1
+#   initial <- bn(integer(0), integer(0))
+# 
+#   sampler1 <- BNSampler(dat, initial, prior)
+#   sampler2 <- BNSampler(dat, initial, prior)
+#   sink(tempfile())
+#   samples1 <- draw(sampler1, nSamples)
+#   samples2 <- draw(sampler1, nSamples) # this is a mistake
+#                                        # but it doesn't matter here
+#   sink()
+# 
+#   mpost1 <- bnpostmcmc(sampler1, samples1)
+#   mpost2 <- bnpostmcmc(sampler2, samples2)
+# 
+#   testmpostl <- list(mpost1, mpost2)
+#   class(testmpostl) <- "bnpostmcmc.list"
+# 
+#   # IMPORTANT:
+#   # This is a weird hack to get around scoping issues with graphicsQC
+#   # Instead dput the testmpostl to serialise this.
+#   serialised <- 'structure(list(structure(list(
+#     samples = structure(list(structure(list(
+#     2L, integer(0)), class = c("bn", "parental")), structure(list(
+#     integer(0), 1L), class = c("bn", "parental")), structure(list(
+#     2L, integer(0)), class = c("bn", "parental")), structure(list(
+#     integer(0), integer(0)), class = c("bn", "parental")), structure(list(
+#     integer(0), integer(0)), class = c("bn", "parental"))), class = c("mcmcbn",
+# "bn.list", "parental.list")), tabulated = structure(c(1L, 2L,
+# 2L), .Dim = 3L, .Dimnames = list(c("integer(0),1", "2,integer(0)",
+# "integer(0),integer(0)")), class = "table"), data = structure(list(
+#     x1 = structure(c(2L, 2L, 1L, 2L), .Label = c("0", "1"), class = "factor"),
+#     x2 = structure(c(1L, 2L, 1L, 2L), .Label = c("0", "1"),
+#     class = "factor")), .Names = c("x1",
+# "x2"), row.names = c(NA, -4L), class = "data.frame")), .Names = c("samples",
+# "tabulated", "data"), class = "bnpostmcmc"), structure(list(
+#   samples = structure(list(
+#     structure(list(integer(0), 1L), class = c("bn", "parental"
+#     )), structure(list(integer(0), integer(0)), class = c("bn",
+#     "parental")), structure(list(integer(0), 1L), class = c("bn",
+#     "parental")), structure(list(2L, integer(0)), class = c("bn",
+#     "parental")), structure(list(integer(0), 1L), class = c("bn",
+#     "parental"))), class = c("mcmcbn", "bn.list", "parental.list"
+# )), tabulated = structure(c(1L, 1L, 3L), .Dim = 3L, .Dimnames = list(
+#     c("2,integer(0)", "integer(0),integer(0)", "integer(0),1"
+#     )), class = "table"), data = structure(list(x1 = structure(c(2L,
+# 2L, 1L, 2L), .Label = c("0", "1"), class = "factor"), x2 = structure(c(1L,
+# 2L, 1L, 2L), .Label = c("0", "1"), class = "factor")), .Names = c("x1",
+# "x2"), row.names = c(NA, -4L), class = "data.frame")), .Names = c("samples",
+# "tabulated", "data"), class = "bnpostmcmc")), class = "bnpostmcmc.list")'
+# 
+#   set.seed(231)
+#   x1 <- as.factor(c(1, 1, 0, 1, 0, 0, 1, 0, 0, 1, 1, 0, 1))
+#   x2 <- as.factor(c(0, 1, 0, 1, 1, 1, 0, 1, 1, 0, 1, 0, 0))
+#   x3 <- as.factor(c(1, 0, 1, 1, 1, 0, 0, 1, 1, 1, 1, 0, 0))
+#   dat <- data.frame(x1 = x1, x2 = x2, x3 = x3)
+# 
+#   nSamples <- 10
+#   prior <- function(net) 1
+#   initial1 <- bn(integer(0), integer(0), integer(0))
+#   initial2 <- bn(c(2L, 3L), 3L, integer(0))
+# 
+#   samplerb1 <- BNSampler(dat, initial1, prior)
+#   samplerb2 <- BNSampler(dat, initial2, prior)
+#   sink(tempfile())
+#   samplesb1 <- draw(samplerb1, nSamples)
+#   samplesb2 <- draw(samplerb2, nSamples) # this is a mistake
+#                                          # but it doesn't matter here
+#   sink()
+# 
+#   mpostb1 <- bnpostmcmc(samplerb1, samplesb1)
+#   mpostb2 <- bnpostmcmc(samplerb2, samplesb2)
+# 
+#   testmpostlb <- list(mpostb1, mpostb2)
+#   class(testmpostlb) <- "bnpostmcmc.list"
+# 
+#   serialisedb <- 'structure(list(structure(list(samples = structure(
+#     list(structure(list(
+#     2L, integer(0), integer(0)), class = c("bn", "parental")),
+#     structure(list(2:3, integer(0), integer(0)), class = c("bn",
+#     "parental")), structure(list(2:3, integer(0), 2L), class = c("bn",
+#     "parental")), structure(list(2L, integer(0), 1:2), class = c("bn",
+#     "parental")), structure(list(2L, integer(0), 1L), class = c("bn",
+#     "parental")), structure(list(2L, integer(0), 1L), class = c("bn",
+#     "parental")), structure(list(2L, integer(0), integer(0)), class = c("bn",
+#     "parental")), structure(list(integer(0), integer(0), integer(0)),
+#     class = c("bn",
+#     "parental")), structure(list(integer(0), integer(0), integer(0)),
+#     class = c("bn",
+#     "parental")), structure(list(integer(0), integer(0), integer(0)),
+#     class = c("bn",
+#     "parental"))), class = c("mcmcbn", "bn.list", "parental.list"
+# )), tabulated = structure(c(1L, 1L, 1L, 2L, 2L, 3L), .Dim = 6L,
+# .Dimnames = list(
+#     c("2,integer(0),1:2", "2:3,integer(0),2", "2:3,integer(0),integer(0)",
+#     "2,integer(0),1", "2,integer(0),integer(0)",
+#     "integer(0),integer(0),integer(0)"
+#     )), class = "table"), data = structure(list(x1 = structure(c(2L,
+# 2L, 1L, 2L, 1L, 1L, 2L, 1L, 1L, 2L, 2L, 1L, 2L), .Label = c("0",
+# "1"), class = "factor"), x2 = structure(c(1L, 2L, 1L, 2L, 2L,
+# 2L, 1L, 2L, 2L, 1L, 2L, 1L, 1L), .Label = c("0", "1"), class = "factor"),
+#     x3 = structure(c(2L, 1L, 2L, 2L, 2L, 1L, 1L, 2L, 2L, 2L,
+#     2L, 1L, 1L), .Label = c("0", "1"), class = "factor")), .Names = c("x1",
+# "x2", "x3"), row.names = c(NA, -13L), class = "data.frame")),
+# .Names = c("samples",
+# "tabulated", "data"), class = "bnpostmcmc"),
+# structure(list(samples = structure(list(
+#     structure(list(2:3, integer(0), 2L), class = c("bn", "parental"
+#     )), structure(list(2L, integer(0), 2L), class = c("bn", "parental"
+#     )), structure(list(2L, integer(0), integer(0)), class = c("bn",
+#     "parental")), structure(list(2L, integer(0), 1L), class = c("bn",
+#     "parental")), structure(list(integer(0), integer(0), 1L), class = c("bn",
+#     "parental")), structure(list(integer(0), integer(0), integer(0)),
+#     class = c("bn",
+#     "parental")), structure(list(integer(0), integer(0), integer(0)),
+#     class = c("bn",
+#     "parental")), structure(list(integer(0), integer(0), 1L), class = c("bn",
+#     "parental")), structure(list(integer(0), integer(0), 1L), class = c("bn",
+#     "parental")), structure(list(integer(0), integer(0), 1L), class = c("bn",
+#     "parental"))), class = c("mcmcbn", "bn.list", "parental.list"
+# )), tabulated = structure(c(1L, 1L, 1L, 1L, 2L, 4L), .Dim = 6L,
+# .Dimnames = list(
+#     c("2,integer(0),1", "2,integer(0),2", "2,integer(0),integer(0)",
+#     "2:3,integer(0),2", "integer(0),integer(0),integer(0)",
+#     "integer(0),integer(0),1"
+#     )), class = "table"), data = structure(list(x1 = structure(c(2L,
+# 2L, 1L, 2L, 1L, 1L, 2L, 1L, 1L, 2L, 2L, 1L, 2L), .Label = c("0",
+# "1"), class = "factor"), x2 = structure(c(1L, 2L, 1L, 2L, 2L,
+# 2L, 1L, 2L, 2L, 1L, 2L, 1L, 1L), .Label = c("0", "1"), class = "factor"),
+#     x3 = structure(c(2L, 1L, 2L, 2L, 2L, 1L, 1L, 2L, 2L, 2L,
+#     2L, 1L, 1L), .Label = c("0", "1"), class = "factor")), .Names = c("x1",
+# "x2", "x3"), row.names = c(NA, -13L), class = "data.frame")),
+# .Names = c("samples",
+# "tabulated", "data"), class = "bnpostmcmc")), class = "bnpostmcmc.list")'
+# 
+#   plots <- c(paste("print(rocplot(true = bn(integer(0), 1L), mcmcs = ",
+#                  serialised,
+#                  "))"),
+#              paste("print(rocplot(true = bn(2L, integer(0), integer(0)),",
+#                    " mcmcs = ",
+#                    serialisedb,
+#                    ", map = bn.list(bn(integer(0), 1L, 1L))))"))
+# 
+#   # for example 2, the 'MAP estimate' is of course not accurate,
+#   # it is just an example for testing.
+# 
+#   controlfile <- system.file("inst", "expected",
+#                              "structmcmc-plot-control",
+#                              package = "structmcmc")
+# 
+#   controlfn <- function(){
+#     # run this function to generate the controls
+#     # first cd into structmcmc/tests
+#     # then run this function
+#     currentwd <- getwd()
+#     #setwd("structmcmc/tests")
+#     library(graphicsQC)
+#     set.seed(301)
+#     plotcontrol <- plotExpr(plots,
+#                             path     = controlfile,
+#                             clear    = TRUE,
+# #                           filetype = c("pdf", "png"),
+#                             filetype = "png",
+#                             prefix   = "control")
+#     #setwd(currentwd)
+#   }
+# 
+#   if (require(graphicsQC) && R.version$os == "darwin9.8.0"){
+#     testfile <- system.file("inst", "expected",
+#                             "structmcmc-plot-test",
+#                             package = "structmcmc")
+#     # generate test data
+#     set.seed(301)
+#     plottest <- plotExpr(plots,
+#                          path     = testfile,
+#                          clear    = TRUE,
+#   #                           filetype = c("pdf", "png"),
+#                               filetype = "png",
+#                          prefix   = "test")
+# 
+#     # compare test data to the controls
+#     sink(tempfile())
+#     res <- compare(test = plottest, control = controlfile)
+#     sink()
+# 
+#     # check that tests and controls are identical
+# 
+#     for (i in seq_along(plots)){
+#       expect_that(res$results$png[[i]]$result, is_identical_to("identical"))
+#     }
+# 
+#     expect_that(print(rocplot(true = bn(integer(0), 1),
+#                       map = bn(integer(0), integer(0)))),
+#                 throws_error())
+#   }
+# })
 
 test_that("ep.parental.list", {
   testpl <- parental.list(parental(2L, integer(0)),
