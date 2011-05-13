@@ -162,16 +162,16 @@ structure(list(samples = structure(list(
   # for example 2, the 'MAP estimate' is of course not accurate,
   # it is just an example for testing.
 
-  controlfile <- file.path("", "Volumes", "Buster", "library",
-                           "structural", "inst", "test-data",
-                           "struct-dag-inf2-plot-control")
+  controlfile <- system.file("inst", "expected",
+                             "structmcmc-plot-control",
+                             package = "structmcmc")
 
   controlfn <- function(){
     # run this function to generate the controls
-    # first cd into struct-dag-inf2/tests
+    # first cd into structmcmc/tests
     # then run this function
     currentwd <- getwd()
-    setwd("/Volumes/cluster/library/struct-dag-inf2/tests")
+    #setwd("structmcmc/tests")
     library(graphicsQC)
     set.seed(301)
     plotcontrol <- plotExpr(plots,
@@ -180,13 +180,13 @@ structure(list(samples = structure(list(
 #                           filetype = c("pdf", "png"),
                             filetype = "png",
                             prefix   = "control")
-    setwd(currentwd)
+    #setwd(currentwd)
   }
 
   if (require(graphicsQC) && R.version$os == "darwin9.8.0"){
-    testfile <- file.path("", "Volumes", "Buster", "library",
-                             "structural", "inst", "test-data",
-                             "struct-dag-inf2-plot-test")
+    testfile <- system.file("inst", "expected",
+                            "structmcmc-plot-test",
+                            package = "structmcmc")
     # generate test data
     set.seed(301)
     plottest <- plotExpr(plots,
@@ -361,9 +361,9 @@ test_that("roc with bnpost", {
   eppost <- ep(post)
 
   rocplot(true = bn(integer(0), c(1,3), integer(0)),
-          eps = eppost)
+          eps = ep.list(eppost))
   rocplot(true = bn(integer(0), integer(0), 2),
-          eps = eppost)
+          eps = ep.list(eppost))
   anep <- matrix(rnorm(9), 3, 3)
   class(anep) <- c("ep", "matrix")
   rocplot(true = bn(integer(0), integer(0), 2),

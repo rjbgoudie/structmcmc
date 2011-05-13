@@ -1,0 +1,61 @@
+<?xml version="1.0"?>
+<qcCompareExprResult>
+ <info>
+  <OS>unix</OS>
+  <Rver>R version 2.11.1 (2010-05-31)</Rver>
+  <date>Fri Dec 10 15:32:23 2010</date>
+  <call>
+   <![CDATA[
+   compare(test = plottest, control = controlfile)   ]]>
+  </call>
+  <path>/Volumes/Buster/library/structural/inst/test-data/struct-dag-inf2-plot-test</path>
+  <testDirectory>/Volumes/Buster/library/structural/inst/test-data/struct-dag-inf2-plot-test</testDirectory>
+  <controlDirectory>/Volumes/Buster/library/structural/inst/test-data/struct-dag-inf2-plot-control</controlDirectory>
+  <logFilename>test+control-compareExprLog.xml</logFilename>
+ </info>
+ <testInfo>
+  <OS>unix</OS>
+  <Rver>R version 2.11.1 (2010-05-31)</Rver>
+  <date>2010-12-10 15:32:23</date>
+  <call>
+   <![CDATA[
+   eval(quoted_code, env)   ]]>
+  </call>
+  <directory>/Volumes/Buster/library/structural/inst/test-data/struct-dag-inf2-plot-test</directory>
+  <logFilename>test-log.xml</logFilename>
+ </testInfo>
+ <controlInfo>
+  <OS>unix</OS>
+  <Rver>R version 2.10.1 (2009-12-14)</Rver>
+  <date>2010-06-23 19:46:59</date>
+  <call>
+   <![CDATA[
+   plotExpr(plots, path = controlfile, clear = TRUE, filetype = c("pdf", 
+    "png"), prefix = "control")   ]]>
+  </call>
+  <directory>/Volumes/Buster/library/structural/inst/test-data/struct-dag-inf2-plot-control</directory>
+  <logFilename>control-log.xml</logFilename>
+ </controlInfo>
+ <compare type="pdf"/>
+ <compare type="png">
+  <comparison controlFile="/Volumes/Buster/library/structural/inst/test-data/struct-dag-inf2-plot-control/control-1.png" testFile="/Volumes/Buster/library/structural/inst/test-data/struct-dag-inf2-plot-test/test-1.png">
+   <result>identical</result>
+   <diffFile></diffFile>
+   <diffPlot></diffPlot>
+  </comparison>
+  <comparison controlFile="/Volumes/Buster/library/structural/inst/test-data/struct-dag-inf2-plot-control/control-2.png" testFile="/Volumes/Buster/library/structural/inst/test-data/struct-dag-inf2-plot-test/test-2.png">
+   <result>identical</result>
+   <diffFile></diffFile>
+   <diffPlot></diffPlot>
+  </comparison>
+ </compare>
+ <unpaired>
+  <test/>
+  <control>
+   <pdf>
+    <plot>control-1.pdf</plot>
+    <plot>control-2.pdf</plot>
+   </pdf>
+  </control>
+ </unpaired>
+</qcCompareExprResult>

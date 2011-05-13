@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<qcPlotExprResult>
+ <info>
+  <OS>unix</OS>
+  <Rver>R version 2.10.1 (2009-12-14)</Rver>
+  <date>2010-06-23 20:14:15</date>
+  <call>
+   <![CDATA[
+   plotExpr(plots, path = controlfile, clear = TRUE, filetype = c("pdf", 
+    "png"), prefix = "control")   ]]>
+  </call>
+  <directory>/Volumes/Buster/library/structural/inst/test-data/diagnostics-plot-control</directory>
+  <logFilename>control-log.xml</logFilename>
+ </info>
+ <plots type="pdf">
+  <warnings/>
+  <error/>
+  <plot>control-1.pdf</plot>
+ </plots>
+ <plots type="png">
+  <warnings/>
+  <error/>
+  <plot>control-1.png</plot>
+ </plots>
+</qcPlotExprResult>
