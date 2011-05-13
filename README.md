@@ -11,10 +11,9 @@ Interfaces to a number of other `R` packages for Bayesian networks are available
 
 Basic operation, discrete data
 ------------------------------
+[View script as file](https://gist.github.com/970279)
 
 Each random variable has a Multinomial distribution, with the conjugate Dirichlet priors.
-
-(The following script is also available as a [single file gist](https://gist.github.com/970279), for simpler copying-and-pasting)
 
 Data must be supplied as a [`data.frame`][rdoc:data.frame] with `p` columns (corresponding to `p` random variables) and `n` columns (corresponding to the `n` samples). Each column must be a [`factor`][rdoc:factor] variable.
 
@@ -29,7 +28,7 @@ Draw samples from the posterior using MC<sup>3</sup>.
 
 ``` r
 set.seed(1234)
-mcmc <- posterior(data = x, method = "mh-mcmc")
+mcmc <- posterior(data = x, "mc3")
 ```
 
 Compute and plot estimated edge probabilities given by the MCMC run
@@ -45,19 +44,20 @@ Since this is a problem with `p = 3`, we can compute the posterior edge probabil
 exact <- posterior(x, "exact")
 epexact <- ep(exact)
 levelplot(epexact)
-
 ```
 
 Comparing multiple MCMC runs
 
 ``` r
-mcmc2 <- posterior(x, "mh-mcmc")
+mcmc2 <- posterior(x, "mc3")
 epmcmc2 <- ep(mcmc2)
 levelplot(epmcmc2)
 
 levelplot(ep.list(exact = epexact, mcmc = epmcmc))
 
 cumep(list(mcmc, mcmc2))
+
+rocplot()
 ```
 
 Basic operation, continuous data
