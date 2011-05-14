@@ -34,8 +34,8 @@ enumerateParentsTable <- function(numberOfNodes,
   nodesSeq <- seq_len(numberOfNodes)
   
   if (isTRUE(verbose)){
-    progress <- create_progress_bar("text")
-    progress$init(numberOfNodes)
+    progress <- txtProgressBar(max = numberOfNodes, style = 3)
+    setTxtProgressBar(progress, 0)
   }
   
   parentsTables <- vector("list", numberOfNodes)
@@ -47,12 +47,11 @@ enumerateParentsTable <- function(numberOfNodes,
                                required         = required[[node]],
                                banned           = banned[[node]])
     if (isTRUE(verbose)){
-      progress$step()
+      setTxtProgressBar(progress, node)
     }
   }
   if (isTRUE(verbose)){
-    progress$term()
-    progress <- create_progress_bar("text")
+    close(progress)
   }
   parentsTables
 }

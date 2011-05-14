@@ -278,15 +278,21 @@ logScoreMultDir.bn.list <- function(x,
             all(unlist(lapply(data, class)) ==   "factor"),
             "bn.list"                       %in% class(x))
   if (verbose){
-    progress <- create_progress_bar("text")
-    progress$init(length(x))
+    progress <- txtProgressBar(max = length(x), style = 3)
+     setTxtProgressBar(progress, 0)
+     prog <- 0
   }
-  unlist(lapply(x, function(bn){
+  out <- unlist(lapply(x, function(bn){
     if (verbose){
-      progress$step()
+      prog <<- prog + 1
+      setTxtProgressBar(progress, prog)
     }
     logScoreMultDir(bn, data, cache, hyperparameters = hyperparameters)
   }))
+  if (verbose){
+    close(progress)
+  }
+  out
 }
 #' Convert a data frame to the appropriate format for the fast/incremental
 #' logScoreMultDir functions, and return as part of the logScoreParameters

@@ -162,10 +162,12 @@ test_that("10-node Bayesian Network", {
   # 
   # numberOfSamples <- 100
   # 
-  # progress <- create_progress_bar("text")
-  # progress$init(numberOfSamples)
+  # progress <- txtProgressBar(max = numberOfSamples, style = 3)
+  # setTxtProgressBar(progress, 0)
+  # prog <- 0
   # samples <- lapply(seq_len(numberOfSamples), function(i){
-  #   progress$step()
+  #   prog <<- prog + 1
+  #   setTxtProgressBar(progress, prog)
   #   sampler(i)
   # })
   # outTable <- table(factor(unlist(lapply(samples,function(l){
