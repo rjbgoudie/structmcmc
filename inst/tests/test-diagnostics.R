@@ -237,11 +237,13 @@ test_that("cumtvd", {
   testmpostl <- list(mpost1, mpost2)
   class(testmpostl) <- "bnpostmcmc.list"
 
-    bnspace <- enumerateBNSpace(2, allowCyclic = TRUE)
+  bnspace <- enumerateBNSpace(2, allowCyclic = TRUE)
   bnspace <- filterCyclic(bnspace)
   lsmd <- logScoreMultDir(bnspace, data = dat, hyperparameters = "qi")
   post <- bnpost(bnspace = bnspace, data = dat, logScore = lsmd)
 
+  # integer(0),1          2,integer(0) integer(0),integer(0) 
+  #    0.3260870             0.3260870             0.3478261 
   pgp <- gp(post)
 
   expect_that(
@@ -250,11 +252,11 @@ test_that("cumtvd", {
       unname(c(
       # these computed by hand
       # because we know the samples (due to set.seed)
-      1 - pgp[1] + pgp[2] + pgp[3],
-      0.5 - pgp[1] + pgp[2] + 0.5 - pgp[3],
-      abs(2/3 - pgp[1]) + abs(0 - pgp[2]) + abs(1/3 - pgp[3]),
-      abs(2/4 - pgp[1]) + abs(1/4 - pgp[2]) + abs(1/4 - pgp[3]),
-      abs(3/5 - pgp[1]) + abs(1/5 - pgp[2]) + abs(1/5 - pgp[3])
+      1 - pgp[3] + pgp[2] + pgp[1],
+      0.5 - pgp[3] + pgp[2] + 0.5 - pgp[1],
+      abs(2/3 - pgp[3]) + abs(0 - pgp[2]) + abs(1/3 - pgp[1]),
+      abs(2/4 - pgp[3]) + abs(1/4 - pgp[2]) + abs(1/4 - pgp[1]),
+      abs(3/5 - pgp[3]) + abs(1/5 - pgp[2]) + abs(1/5 - pgp[1])
       ))
     )
   )
