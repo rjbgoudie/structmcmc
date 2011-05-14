@@ -166,8 +166,7 @@ context("Diagnostics")
 # 
 #   plots <- c(paste("print(xyplot(cumep(", serialised, ", nbin = 5)))"))
 # 
-#   controlfile <- system.file("inst", "expected",
-#                              "diagnostics-plot-test",
+#   controlfile <- system.file("tests", "data", "diagnostics-plot-test",
 #                              package = "structmcmc")
 #   controlfn <- function(){
 #     # run this function to generate the controls
@@ -187,8 +186,7 @@ context("Diagnostics")
 #   }
 # 
 #   if (require(graphicsQC) & R.version$os == "darwin9.8.0"){
-#     testfile <- system.file("inst", "expected",
-#                             "diagnostics-plot-test",
+#     testfile <- system.file("tests", "data", "diagnostics-plot-test",
 #                             package = "structmcmc")
 #     # generate test data
 #     set.seed(301)

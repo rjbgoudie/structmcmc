@@ -162,8 +162,7 @@ context("Posterior methods")
 #   # for example 2, the 'MAP estimate' is of course not accurate,
 #   # it is just an example for testing.
 # 
-#   controlfile <- system.file("inst", "expected",
-#                              "structmcmc-plot-control",
+#   controlfile <- system.file("tests", "data", "structmcmc-plot-control",
 #                              package = "structmcmc")
 # 
 #   controlfn <- function(){
@@ -184,8 +183,7 @@ context("Posterior methods")
 #   }
 # 
 #   if (require(graphicsQC) && R.version$os == "darwin9.8.0"){
-#     testfile <- system.file("inst", "expected",
-#                             "structmcmc-plot-test",
+#     testfile <- system.file("tests", "data", "structmcmc-plot-test",
 #                             package = "structmcmc")
 #     # generate test data
 #     set.seed(301)
