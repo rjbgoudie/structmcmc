@@ -164,20 +164,22 @@ exactposterior <- function(data,
                                        checkInput = F)
 
   if (isTRUE(verbose)){
-    progress <- create_progress_bar("text")
-    progress$init(length(bnspace))
+    progress <- txtProgressBar(max = length(bnspace), style = 3)
+    setTxtProgressBar(progress, 0)
   }
+  prog <- 0
   
   lsmd <- sapply(bnspace, function(x){
     if (isTRUE(verbose)){
-      progress$step()
+      prog <<- prog + 1
+      setTxtProgressBar(progress, prog)
     }
     logScoreOfflineFUN(x                  = x,
                        logScoreParameters = logScoreParameters)
   })
   
   if (isTRUE(verbose)){
-    progress$term()
+    close(progress)
   }
 
   logpriors <- log(sapply(bnspace, prior))
@@ -541,8 +543,9 @@ ep.parental.contingency <- function(x, FUN, verbose = F, ...){
   res <- matrix(0, ncol = numberOfNodes, nrow = numberOfNodes)
   # loop over each cell of the edge probabilities matrix
   if (verbose){
-    progress <- create_progress_bar("text")
-    progress$init(numberOfNodes^2)
+    progress <- txtProgressBar(max = numberOfNodes^2, style = 3)
+    setTxtProgressBar(progress, 0)
+    prog <- 0
   }
   
   # t <- system.time({
@@ -552,12 +555,13 @@ ep.parental.contingency <- function(x, FUN, verbose = F, ...){
   #     res[tails, head] <- res[tails, head] + counts[i]
   #   }
   #   # if (verbose){
-  #   #   progress$step()
+  #   #   prog <<- prog + 1
+  #   #   setTxtProgressBar(progress, prog)
   #   # }
   # }})
   # 
   # browser()
-
+  
   for (head in nodeSeq){
     thishead <- lapply(tablebn, "[[", head)
     lenhead <- sapply(thishead, length)
@@ -566,11 +570,14 @@ ep.parental.contingency <- function(x, FUN, verbose = F, ...){
     for (tail in nodeSeq){
       res[tail, head] <- sum(counthead[thishead == tail])
       if (verbose){
-        progress$step()
+        prog <<- prog + 1
+        setTxtProgressBar(progress, prog)
       }
     }
   }
-  if (verbose) cat("\n")
+  if (verbose){
+    close(progress)
+  }
   
   res <- res/lengthOfRuns
   class(res) <- c("ep", "matrix")
@@ -1117,16 +1124,21 @@ parentalToCPDAG <- function(x, verbose = T){
   class(bnlist) <- c("bn.list", "parental.list")
 
   if (verbose){
-    progress <- create_progress_bar("text")
-    progress$init(length(bnlist))
+    progress <- txtProgressBar(max = length(bnlist), style = 3)
+    setTxtProgressBar(progress, 0)
+    prog <- 0
   }
 
   bnlistcp <- lapply(bnlist, function(y){
     if (verbose){
-      progress$step()
+      prog <<- prog + 1
+      setTxtProgressBar(progress, prog)
     }
     as.cpdag(y)
   })
+  if (verbose){
+    close(progress)
+  }
 
   # convert back to parental.list for ep(x, method = "tabulate")
   class(bnlistcp) <- "parental.list"

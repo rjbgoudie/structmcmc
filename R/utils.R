@@ -111,4 +111,3 @@ matrix2 <- function(data, nrow, ncol)
 whichNum <- function(col, x, i){
   which(x[, col] == i)
 }
-
