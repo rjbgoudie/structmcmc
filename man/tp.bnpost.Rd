@@ -5,6 +5,7 @@
 \description{Transition probabilities.}
 \details{Computes the matrix transition probabilities for the specified sampler.}
 \value{A matrix of transition probabilities.}
+\seealso{\code{\link{tp}}}
 \arguments{\item{x}{An object of class "bnpost"}
 \item{sampler}{Which sampler to use. Only "mh" for Metropolis-Hastings
 is implemented}
