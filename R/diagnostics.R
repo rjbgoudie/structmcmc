@@ -163,8 +163,7 @@ cumep.bnpostmcmc.list <- cumep.list <- function(x, ...){
   res
 }
 
-# moving window
-#' method name
+#' Moving window mean.
 #'
 #' method description
 #'

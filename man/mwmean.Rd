@@ -1,8 +1,8 @@
 \name{mwmean}
 \alias{mwmean}
-\title{method name...}
+\title{Moving window mean.}
 \usage{mwmean(x, ...)}
-\description{method name}
+\description{Moving window mean.}
 \details{method description}
 \arguments{\item{x}{...}
 \item{...}{Further arguments passed to method}}
