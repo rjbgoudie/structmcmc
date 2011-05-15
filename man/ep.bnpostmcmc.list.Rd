@@ -4,6 +4,7 @@
 \usage{\method{ep}{bnpostmcmc.list} (x, start, end, ...)}
 \description{Posterior edge probabilities.}
 \details{method description}
+\seealso{\code{\link{ep}}, \code{\link{ep.bnpostmcmc}}}
 \arguments{\item{x}{...}
 \item{start}{...}
 \item{end}{...}

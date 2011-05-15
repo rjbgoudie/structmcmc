@@ -26,6 +26,10 @@
 #'                    pre-computation required by the logScore functions.}
 #'   }
 #' @export
+#' @seealso \code{\link{bnpost}}, \code{\link{bnpostmcmc.list}}.
+#'   \code{\link{length.bnpostmcmc}}, \code{\link{top.bnpostmcmc}}, 
+#'   \code{\link{map.bnpostmcmc}}, \code{\link{logScoreMultDir.bnpostmcmc}},
+#'   \code{\link{gp.bnpostmcmc}}, \code{\link{ep.bnpostmcmc}}
 bnpostmcmc <- function(sampler, samples, logScoreFUN){
   stopifnot(class(sampler) ==   "function",
             "bn.list"      %in% class(samples))
@@ -67,6 +71,8 @@ bnpostmcmc <- function(sampler, samples, logScoreFUN){
 #' @S3method bnpostmcmc list
 #' @method bnpostmcmc list
 #' @export
+#' @seealso \code{\link{bnpostmcmc}}, \code{\link{gp.bnpostmcmc.list}},
+#'   \code{\link{ep.bnpostmcmc.list}}
 bnpostmcmc.list <- function(...){
   x <- list(...)
   class(x) <- "bnpostmcmc.list"
@@ -83,6 +89,7 @@ bnpostmcmc.list <- function(...){
 #' @return The number of samples in x
 #' @S3method length bnpostmcmc
 #' @method length bnpostmcmc
+#' @seealso \code{\link{bnpostmcmc}}.
 length.bnpostmcmc <- function(x, ...){
   stopifnot(class(x) == "bnpostmcmc")
   length(x$samples)
@@ -111,6 +118,7 @@ length.bnpostmcmc <- function(x, ...){
 #'     commonly encountered graphs
 #' @S3method top bnpostmcmc
 #' @method top bnpostmcmc
+#' @seealso \code{\link{top}}
 top.bnpostmcmc <- function(x, head = 10, ...){
   stopifnot(class(x) == "bnpostmcmc",
             is.wholenumber(head) || is.infinite(head),
@@ -149,6 +157,7 @@ top.bnpostmcmc <- function(x, head = 10, ...){
 #'   commonly) encountered
 #' @S3method map bnpostmcmc
 #' @method map bnpostmcmc
+#' @seealso \code{\link{map}}
 map.bnpostmcmc <- function(x, ...){
   stopifnot(class(x) == "bnpostmcmc")
   top(x, head = 1)
@@ -194,6 +203,7 @@ map.bnpostmcmc <- function(x, ...){
 #'   MCMC if head == Inf.
 #' @S3method logScoreMultDir bnpostmcmc
 #' @method logScoreMultDir bnpostmcmc
+#' @seealso \code{\link{logScoreMultDir}}
 logScoreMultDir.bnpostmcmc <- function(x, sampler, data,
                                        sort.by   = "posterior",
                                        head      = Inf,
@@ -245,6 +255,7 @@ logScoreMultDir.bnpostmcmc <- function(x, sampler, data,
 #' @param ... Further arguments (unused)
 #' @S3method gp bnpostmcmc
 #' @method gp bnpostmcmc
+#' @seealso \code{\link{gp}}, \code{\link{gp.bnpostmcmc.list}}
 gp.bnpostmcmc <- function(x, logNetworkPriors, start, end, nbin = 1,
                           log = F, pretty = F, levels = NULL, ...){
   warning("does not handle priors, nor logging")
@@ -316,6 +327,7 @@ gp.bnpostmcmc <- function(x, logNetworkPriors, start, end, nbin = 1,
 #' @param ... Further arguments passed to method
 #' @S3method gp bnpostmcmc.list
 #' @method gp bnpostmcmc.list
+#' @seealso \code{\link{gp}}, \code{\link{gp.bnpostmcmc}}
 gp.bnpostmcmc.list <- function(x, ...){
   stopifnot(class(x) == "bnpostmcmc.list")
   lapply(x, gp, ...)
@@ -344,6 +356,7 @@ gp.bnpostmcmc.list <- function(x, ...){
 #'     each of the nbin bins into which the parental.list was split
 #' @S3method ep bnpostmcmc
 #' @method ep bnpostmcmc
+#' @seealso \code{\link{ep}}, \code{\link{ep.bnpostmcmc.list}}
 ep.bnpostmcmc <- function(x, nbin = 1, start, end, method = "flatten",
                           verbose = F, ...){
   stopifnot(class(x) == "bnpostmcmc",
@@ -393,6 +406,7 @@ ep.bnpostmcmc <- function(x, nbin = 1, start, end, method = "flatten",
 #' @param ... further arguments
 #' @S3method ep bnpostmcmc.list
 #' @method ep bnpostmcmc.list
+#' @seealso \code{\link{ep}}, \code{\link{ep.bnpostmcmc}}
 ep.bnpostmcmc.list <- function(x, start, end, ...){
   stopifnot(class(x) == "bnpostmcmc.list")
   if (!missing(start) || !missing(end)){

@@ -10,5 +10,6 @@ encountered graph,
 OR an object of class 'bn.list' containing a list of the equally most-
 commonly encountered graphs (if two or more were equally most-
 commonly) encountered}
+\seealso{\code{\link{map}}}
 \arguments{\item{x}{An object of class 'bnpostmcmc'}
 \item{...}{Further arguments (unused)}}

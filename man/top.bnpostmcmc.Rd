@@ -16,6 +16,7 @@ commonly) encountered
 if head > 1:
 an object of class 'bn.list' containing a list of the equally most-
 commonly encountered graphs}
+\seealso{\code{\link{top}}}
 \arguments{\item{x}{An object of class 'bnpostmcmc'}
 \item{head}{The top head graphs will be returned. If the 'head'th
 most-commonly encountered graph ties in frequency with other

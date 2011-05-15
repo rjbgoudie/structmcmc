@@ -12,6 +12,7 @@ an edge from node i --> j
 if nbin > 1:
 A list of class ep.list, containing matrices as described above for
 each of the nbin bins into which the parental.list was split}
+\seealso{\code{\link{ep}}, \code{\link{ep.bnpostmcmc.list}}}
 \arguments{\item{x}{An object of class 'bnpostmcmc'}
 \item{nbin}{A numberic vector of length 1 specifying the number of bins
 into which to divide the MCMC samples. The edge probabilities
