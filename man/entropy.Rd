@@ -4,6 +4,6 @@
 \usage{entropy(x, ...)}
 \description{Entropy.}
 \details{method description}
-\seealso{\code{\link{entrop.bnpost}}}
+\seealso{\code{\link{entropy.bnpost}}}
 \arguments{\item{x}{...}
 \item{...}{Further arguments passed to method}}

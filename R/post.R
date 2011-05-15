@@ -311,7 +311,7 @@ ep <- function(x, ...){
 #' @param x ...
 #' @param ... Further arguments passed to method
 #' @export
-#' @seealso \code{\link{entrop.bnpost}}
+#' @seealso \code{\link{entropy.bnpost}}
 entropy <- function(x, ...){
   UseMethod("entropy")
 }
@@ -628,8 +628,7 @@ ep.parental.contingency <- function(x, FUN, verbose = F, ...){
 #' @S3method plot bnpostmcmc
 #' @method plot bnpostmcmc
 #' @seealso \code{\link{levelplot.bnpostmcmc}},
-#'   \code{\link{levelplot.bnpost}}, \code{\link{bnpostmcmc}},
-#'   \code{\link{bnpost}}
+#'   \code{\link{bnpostmcmc}}, \code{\link{bnpost}}
 plot.bnpostmcmc <- plot.bnpost <- function(x, top = NULL, ...){
   if (is.null(top)){
     top <- top(x)
@@ -665,7 +664,7 @@ bf.bnpostmcmc <- bf.bnpost <- function(bn1, bn2, data, ...){
 #'
 #' @S3method levelplot bnpostmcmc
 #' @method levelplot bnpostmcmc
-#' @seealso \code{\link{plot.bnpostmcmc}}, \code{\link{plot.bnpost}}
+#' @seealso \code{\link{plot.bnpostmcmc}}
 levelplot.bnpostmcmc <- levelplot.bnpost <- function(x){
   stopifnot(class(x) %in% c("bnpostmcmc", "bnpost"))
   levelplot(ep(x))

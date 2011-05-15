@@ -28,23 +28,22 @@
 #' 
 #' # Compute and plot estimated edge probabilities
 #' epmcmc <- ep(mcmc)
-#' levelplot(epmcmc)
 #' 
 #' # Exact evaluation by exhaustive enumeration
 #' exact <- posterior(x, "exact")
 #' epexact <- ep(exact)
-#' levelplot(epexact)
 #' 
 #' # Comparing multiple MCMC runs
 #' mcmc2 <- posterior(x, "mh-mcmc")
 #' epmcmc2 <- ep(mcmc2)
-#' levelplot(epmcmc2)
-#' 
-#' levelplot(ep.list(exact = epexact, mcmc = epmcmc))
-#' 
-#' cumep(list(mcmc, mcmc2))
 NULL
 
+#' Internal function.
+#' 
+#' @param libname ...
+#' @param pkgname ...
+#' @name internal-onload 
+#' @aliases internal-onload .onLoad
 .onLoad <- function(libname, pkgname){
   cat("copyright (c) 2008, Robert J. B. Goudie, University of Warwick\n")
   cat('For citation information, type citation("structmcmc").\n')
