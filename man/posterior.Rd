@@ -9,6 +9,8 @@
 \description{Posterior distribution on Bayesian networks.}
 \details{Use one of a number of methods to get the posterior distribution.}
 \value{Either a \code{bnpost} or a \code{bnpostmcmc} object.}
+\seealso{For more control, use the MCMC sampler directly, 
+e.g. \code{\link{BNSampler}}.}
 \arguments{\item{data}{The data.}
 \item{method}{One of "exact", "mc3", "gibbs", "mj-mcmc". "mh-mcmc" is a 
 synonym of "mc3".}
@@ -42,3 +44,11 @@ the sample.}
 \item{initial}{An object of class 'bn'. The starting value of the
 MCMC.}
 \item{verbose}{A logical. Should a progress bar be displayed?}}
+\examples{x1 <- factor(c("a", "a", "g", "c", "c", "a", "g", "a", "a"))
+x2 <- factor(c(2, 2, 4, 3, 1, 4, 4, 4, 1))
+x3 <- factor(c(FALSE, FALSE, TRUE, FALSE, TRUE, TRUE, FALSE, FALSE, TRUE))
+x <- data.frame(x1 = x1, x2 = x2, x3 = x3)
+
+set.seed(1234)
+mcmc <- posterior(data = x, "mc3")
+ep(mcmc)}
