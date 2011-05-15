@@ -348,7 +348,9 @@ xyplot.epmx <- function(x){
       main = main,
       panel = function(x, y, ...){
         if (current.row() == current.column()){
-          diag.panel.splom(varname = current.row(), limits = c(0, 1), draw = F)
+          diag.panel.splom(varname = current.row(),
+                           limits  = c(0, 1),
+                           draw    = F)
         }
         else {
           for (i in seq(from = 0, to = 1, by = 0.1)){
