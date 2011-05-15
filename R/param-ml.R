@@ -15,6 +15,7 @@
 #' @param x An object
 #' @param ... Further arguments passed to method
 #' @export
+#' @seealso \code{\link{ml.bn}}
 ml <- function (x, ...) {
   UseMethod("ml")
 }
@@ -46,6 +47,7 @@ ml <- function (x, ...) {
 #'   levels of the relevant node.
 #' @S3method ml bn
 #' @method ml bn
+#' @seealso \code{\link{ml}}
 ml.bn <- function(x,
                   data,
                   nodes = seq_along(x),
@@ -118,6 +120,7 @@ ml.bn <- function(x,
 #' @param nodes ...
 #' @param cache ...
 #' @export
+#' @seealso \code{\link{ml}}, \code{\link{bayes}}
 getNijkCounts <- function(data, bn, nodes = seq_along(bn),
                           cache = new.env(hash = T)){
   getNodeNijkCounts <- function(data, node, parents, cache){

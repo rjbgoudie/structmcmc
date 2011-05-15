@@ -15,6 +15,7 @@
 #' @param x An object
 #' @param ... Further arguments passed to method
 #' @export
+#' @seealso \code{\link{bayes.bn}}, \code{\link{ml}}
 bayes <- function (x, ...) {
   UseMethod("bayes")
 }
