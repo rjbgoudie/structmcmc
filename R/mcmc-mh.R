@@ -168,6 +168,22 @@ edgeIsFlippable <- function(routes, adjacency, constraintT, maxNumberParents){
 #'   can be very memory-intensive.
 #' @return A function, which when called draws the next sample of the MCMC.
 #' @export
+#' @examples
+#' x1 <- factor(c("a", "a", "g", "c", "c", "a", "g", "a", "a"))
+#' x2 <- factor(c(2, 2, 4, 3, 1, 4, 4, 4, 1))
+#' x3 <- factor(c(FALSE, FALSE, TRUE, FALSE, TRUE, TRUE, FALSE, FALSE, TRUE))
+#' x <- data.frame(x1 = x1, x2 = x2, x3 = x3)
+#' 
+#' initial <- empty(3, "bn")
+#' prior <- function(x){
+#'  1
+#' }
+#' 
+#' sampler <- BNSampler(data = x, initial = initial, prior = prior)
+#' samples <- draw(sampler, n = 100, burnin = 10)
+#' 
+#' x <- bnpostmcmc(sampler, samples)
+#' ep(x)
 BNSampler <- function(data,
                       initial,
                       prior,
