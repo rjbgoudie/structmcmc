@@ -16,6 +16,16 @@
 #' @param ... Further arguments passed to method
 #' @export
 #' @seealso \code{\link{bayes.bn}}, \code{\link{ml}}
+#' @examples
+#' d <- data.frame(
+#'   a = factor(c(1, rep(3, 2), rep(1, 7))),
+#'   b = factor(c(2, rep(1, 2), 3, 3, rep(2, 5))),
+#'   c = factor(c(2, rep(2, 3), rep(1, 6))),
+#'   d = factor(c(1:3, 2:3, 1, 1, 3:2, 2))
+#' )
+#' 
+#' net <- bn(integer(0), integer(0), integer(0), c(1, 2, 3))
+#' bayes(net, d, prior = "qi")
 bayes <- function (x, ...) {
   UseMethod("bayes")
 }
@@ -35,6 +45,16 @@ bayes <- function (x, ...) {
 #' @return As \code{\link{ml}}
 #' @S3method bayes bn
 #' @method bayes bn
+#' @examples
+#' d <- data.frame(
+#'   a = factor(c(1, rep(3, 2), rep(1, 7))),
+#'   b = factor(c(2, rep(1, 2), 3, 3, rep(2, 5))),
+#'   c = factor(c(2, rep(2, 3), rep(1, 6))),
+#'   d = factor(c(1:3, 2:3, 1, 1, 3:2, 2))
+#' )
+#' 
+#' net <- bn(integer(0), integer(0), integer(0), c(1, 2, 3))
+#' bayes(net, d, prior = "qi")
 bayes.bn <- function(x,
                   data,
                   nodes = seq_along(x),

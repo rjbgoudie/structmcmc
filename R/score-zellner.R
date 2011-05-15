@@ -90,6 +90,10 @@ localLogScoreZellner <- function(node,
 #' @param ... Further arguments passed to method
 #' @export
 #' @seealso \code{\link{logScoreZellner.bn}}
+#' @examples
+#' data <- cbind(c(-10, -2), c(-11, -4))
+#' net <- bn(integer(0), 1)
+#' logScoreZellner(net, data)
 logScoreZellner <- function(x, ...){
   UseMethod("logScoreZellner")
 }
@@ -115,6 +119,10 @@ logScoreZellner <- function(x, ...){
 #' @method logScoreZellner bn
 #' @seealso \code{\link{logScoreZellner}},
 #'   \code{\link{logScoreZellner.bn.list}}
+#' @examples
+#' data <- cbind(c(-10, -2), c(-11, -4))
+#' net <- bn(integer(0), 1)
+#' logScoreZellner(net, data)
 logScoreZellner.bn <- function(x,
                                data,
                                cache      = new.env(hash = T),

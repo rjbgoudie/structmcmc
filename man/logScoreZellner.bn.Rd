@@ -20,3 +20,6 @@ for this data.}
 \item{checkInput}{A logical of length 1, specifying whether to check the
 inputs to the function.}
 \item{...}{Further arguments, currently unused}}
+\examples{data <- cbind(c(-10, -2), c(-11, -4))
+net <- bn(integer(0), 1)
+logScoreZellner(net, data)}

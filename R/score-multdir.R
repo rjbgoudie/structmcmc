@@ -153,6 +153,12 @@ localLogScoreMultDir <- function(node,
 #'   \code{\link{logScoreMultDir.bn.list}},
 #'   \code{\link{logScoreMultDirOffline}},
 #'   \code{\link{logScoreMultDirIncremental}}
+#' @examples
+#' x1 <- factor(c(1, 1, 0, 1, 0, 0, 1, 0, 1, 0))
+#' x2 <- factor(c(0, 1, 0, 1, 0, 1, 1, 0, 1, 0))
+#' x3 <- factor(c(0, 1, 1, 1, 0, 1, 1, 0, 1, 0))
+#' data <- data.frame(x1 = x1, x2 = x2,  x3 = x3)
+#' logScoreMultDir(bn(integer(0), 1, 2), data)
 logScoreMultDir <- function(x, ...){
   UseMethod("logScoreMultDir")
 }
@@ -185,6 +191,12 @@ logScoreMultDir <- function(x, ...){
 #' @method logScoreMultDir bn
 #' @seealso \code{\link{logScoreMultDir}},
 #'   \code{\link{logScoreMultDir.bn.list}}
+#' @examples
+#' x1 <- factor(c(1, 1, 0, 1, 0, 0, 1, 0, 1, 0))
+#' x2 <- factor(c(0, 1, 0, 1, 0, 1, 1, 0, 1, 0))
+#' x3 <- factor(c(0, 1, 1, 1, 0, 1, 1, 0, 1, 0))
+#' data <- data.frame(x1 = x1, x2 = x2,  x3 = x3)
+#' logScoreMultDir(bn(c(), c(1), c(2)), data)
 logScoreMultDir.bn <- function(x,
                                data,
                                cache           = new.env(hash = T),
@@ -412,6 +424,25 @@ logScoreMultDirPrepare <- function(data, logScoreParameters, checkInput = T){
 #' @export
 #' @seealso \code{\link{logScoreMultDir}},
 #'   \code{\link{logScoreMultDirOffline}}
+#' @examples
+#' x1 <- factor(c(1, 1, 0, 1, 0, 0, 1, 0, 1, 0))
+#' x2 <- factor(c(0, 1, 0, 1, 0, 1, 1, 0, 1, 0))
+#' x3 <- factor(c(0, 1, 1, 1, 0, 1, 1, 0, 1, 0))
+#' data <- data.frame(x1 = x1, x2 = x2,  x3 = x3)
+#' 
+#' n1 <- bn(numeric(0), 1, 2)
+#' n2 <- bn(numeric(0), 1, numeric(0))
+#' 
+#' logScoreMultDir(n1, data)
+#' logScoreMultDir(n2, data)
+#' 
+#' data <- data.frame(lapply(data, as.factor))
+#' data <- data.matrix(data) - 1
+#' cc <- new.env(hash = TRUE, size = 10000L)
+#' nl <- apply(data, 2, function(i) length(unique(i)))
+#' names(nl) <- seq_along(n1)
+#' lsp <- list(data = data, nl = nl, hyperparameters = "qi")
+#' logScoreMultDirIncremental(n1, n2, 3, lsp, cc)
 logScoreMultDirIncremental <- function(currentBN,
                                        proposalBN,
                                        heads,
