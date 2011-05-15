@@ -5,6 +5,7 @@
     verbose)}
 \description{Draw samples from a MCMC sampler, by step count.}
 \details{Draws a specific number of samples from an MCMC sampler.}
+\seealso{\code{\link{draw}}, \code{\link{drawSamplesByTime}}}
 \arguments{\item{sampler}{A sampler object}
 \item{n}{The number of samples to draw.}
 \item{burnin}{The number of samples to discard from the beginning of

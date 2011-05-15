@@ -39,6 +39,8 @@
 #'   option can be very memory-intensive.
 #' @return A function, which when called draws the next sample of the MCMC.
 #' @export
+#' @seealso \code{\link{BNSampler}}, \code{\link{BNSamplerPT}},
+#'   \code{\link{BNSamplerMJ}}, \code{\link{BNSamplerGrzeg}}
 BNSamplerBigFlips <- function(data,
                       initial,
                       prior,

@@ -21,6 +21,7 @@
 #' @param verbose ...
 #' @param currentNetwork BUG found by R-check
 #' @export
+#' @seealso \code{\link{BNSamplerPT}}, \code{\link{draw}}
 drawPT <- function(samplers,
                    data,
                    n,
@@ -131,6 +132,9 @@ drawPT <- function(samplers,
 #' @param temp ...
 #' @param cache ...
 #' @export
+#' @seealso \code{\link{drawPT}}. \code{\link{BNSampler}},
+#'   \code{\link{BNSamplerMJ}}, \code{\link{BNGibbsSampler}},
+#'   \code{\link{BNSamplerBigFlips}}, \code{\link{BNSamplerGrzeg}}
 BNSamplerPT <- function(data,
                       initial,
                       prior,

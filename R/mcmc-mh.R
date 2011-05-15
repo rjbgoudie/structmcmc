@@ -20,6 +20,7 @@
 #'   parents of any node.
 #' @return A numeric of length 1. The log number of neighbouring graphs.
 #' @export
+#' @seealso \code{\link{BNSampler}}
 logNumMHNeighbours <- function(routes,
                                adjacency,
                                constraintT,
@@ -53,6 +54,8 @@ logNumMHNeighbours <- function(routes,
 #'   with entries indicating whether the corresponding edge can be added or 
 #'   removed without introducing a cycle. NOTE THIS IS TRANSPOSE OF EXPECTED
 #' @export
+#' @seealso \code{\link{BNSampler}}, \code{\link{transposeEdgeIsAddable}},
+#'   \code{\link{transposeEdgeIsTogglable}}, \code{\link{edgeIsFlippable}}
 transposeEdgeIsRemovable <- function(routes, adjacency, constraintT){
   routes == 0 & t(adjacency) == 1 & constraintT == 0
 }
@@ -71,6 +74,8 @@ transposeEdgeIsRemovable <- function(routes, adjacency, constraintT){
 #'   with entries indicating whether the corresponding edge can be added or 
 #'   removed without introducing a cycle. NOTE THIS IS TRANSPOSE OF EXPECTED
 #' @export
+#' @seealso \code{\link{BNSampler}}, \code{\link{transposeEdgeIsRemovable}},
+#'   \code{\link{transposeEdgeIsTogglable}}, \code{\link{edgeIsFlippable}}
 transposeEdgeIsAddable <- function(routes,
                                    adjacency,
                                    constraintT,
@@ -95,6 +100,8 @@ transposeEdgeIsAddable <- function(routes,
 #'   with entries indicating whether the corresponding edge can be added or 
 #'   removed without introducing a cycle. NOTE THIS IS TRANSPOSE OF EXPECTED
 #' @export
+#' @seealso \code{\link{BNSampler}}, \code{\link{transposeEdgeIsAddable}},
+#'   \code{\link{transposeEdgeIsRemovable}}, \code{\link{edgeIsFlippable}}
 transposeEdgeIsTogglable <- function(routes,
                                      adjacency,
                                      constraintT,
@@ -123,6 +130,9 @@ transposeEdgeIsTogglable <- function(routes,
 #'   with entries indicating whether the corresponding edge can be flipped
 #'   without introducing a cycle. NOTE THIS IS TRANSPOSE OF EXPECTED
 #' @export
+#' @seealso \code{\link{BNSampler}}, \code{\link{transposeEdgeIsAddable}},
+#'   \code{\link{transposeEdgeIsRemovable}},
+#'   \code{\link{transposeEdgeIsTogglable}}
 edgeIsFlippable <- function(routes, adjacency, constraintT, maxNumberParents){
   flippable <- routes == 1 & adjacency == 1 & constraintT == 0
   canAddMoreParents <- colSums(adjacency) < maxNumberParents
@@ -168,6 +178,8 @@ edgeIsFlippable <- function(routes, adjacency, constraintT, maxNumberParents){
 #'   can be very memory-intensive.
 #' @return A function, which when called draws the next sample of the MCMC.
 #' @export
+#' @seealso \code{\link{draw}}. \code{\link{BNSamplerMJ}},
+#'   \code{\link{BNSamplerPT}}, \code{\link{BNGibbsSampler}}.
 #' @examples
 #' x1 <- factor(c("a", "a", "g", "c", "c", "a", "g", "a", "a"))
 #' x2 <- factor(c(2, 2, 4, 3, 1, 4, 4, 4, 1))

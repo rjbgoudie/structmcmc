@@ -10,6 +10,10 @@
 \details{Create a MCMC sampler for Bayesian Networks. The sampler samples Bayesian
 Networks (ie models).}
 \value{A function, which when called draws the next sample of the MCMC.}
+\seealso{\code{\link{BNSampler}}, \code{\link{BNSamplerBigFlips}}, 
+\code{\link{BNSamplerPT}}, \code{\link{BNSamplerMJ}},
+\code{\link{BNSamplerGrzeg}}. Internally uses 
+\code{\link{samplePair}} and \code{\link{sampleNode}}.}
 \arguments{\item{data}{The data.}
 \item{initial}{An object of class 'bn'. The starting value of the
 MCMC.}

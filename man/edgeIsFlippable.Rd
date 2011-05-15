@@ -8,6 +8,9 @@ without introducing a cycle into the graph.}
 \value{A logical matrix of the same dimension as the supplied matrices, 
 with entries indicating whether the corresponding edge can be flipped
 without introducing a cycle. NOTE THIS IS TRANSPOSE OF EXPECTED}
+\seealso{\code{\link{BNSampler}}, \code{\link{transposeEdgeIsAddable}},
+\code{\link{transposeEdgeIsRemovable}},
+\code{\link{transposeEdgeIsTogglable}}}
 \arguments{\item{routes}{The routes matrix of the network}
 \item{adjacency}{The adjacency matrix of the network}
 \item{constraintT}{The transpose of a constraint matrix}

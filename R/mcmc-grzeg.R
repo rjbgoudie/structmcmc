@@ -81,7 +81,7 @@ localPartitionFunction <- function(currentNetwork,
 
 #' Undocumented.
 #'
-#' method description
+#' method description. Not tested.
 #'
 #' @param data ...
 #' @param initial ...
@@ -105,6 +105,10 @@ localPartitionFunction <- function(currentNetwork,
 #' @param keepTape ...
 #' @param grzeg ...
 #' @export
+#' @seealso \code{\link{BNSampler}}, \code{\link{BNSamplerPT}},
+#'   \code{\link{BNSamplerMJ}}, \code{\link{BNGibbsSampler}}.
+#'   Internally uses \code{\link{localPartitionFunction}}, and 
+#'   \code{\link{scoreParents}}.
 BNSamplerGrzeg <- function(data,
                       initial,
                       prior,

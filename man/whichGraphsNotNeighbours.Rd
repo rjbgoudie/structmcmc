@@ -7,6 +7,7 @@
 graphs are removed according to a heuristic involving scores.}
 \value{A numeric vector, giving the indicies \code{x} which are 
 not neighbours.}
+\seealso{\code{\link{BNSamplerMJ}}}
 \arguments{\item{x}{A list of graphs}
 \item{logScores}{A numeric vector containing the log score of the 
 corresponding graph in \code{x}}

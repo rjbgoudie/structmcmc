@@ -25,6 +25,9 @@
 #'   \code{thin = 3}, every third sample will be kept.
 #' @param verbose A logical. Should a progress bar be displayed?
 #' @export
+#' @seealso \code{\link{drawSamplesByTime}},
+#'   \code{\link{drawSamplesByStepCount}}. \code{\link{BNSampler}},
+#'   \code{\link{BNGibbsSampler}}, \code{\link{BNSamplerMJ}}
 draw <- function(sampler, n = F, time = F, burnin = 0, thin = 1, verbose = T){
   stopifnot(identical(n, F) || inherits(n, c("integer", "numeric")),
             identical(n, F) || is.wholenumber(n),
@@ -83,6 +86,7 @@ draw <- function(sampler, n = F, time = F, burnin = 0, thin = 1, verbose = T){
 #' @param samplesIncrement The size by which the samples should be
 #'   incremented.
 #' @export
+#' @seealso \code{\link{draw}}, \code{\link{drawSamplesByStepCount}}
 drawSamplesByTime <- function(sampler,
                               time,
                               burnin,
@@ -144,6 +148,7 @@ drawSamplesByTime <- function(sampler,
 #'   \code{thin = 3}, every third sample will be kept.
 #' @param verbose A logical. Should a progress bar be displayed?
 #' @export
+#' @seealso \code{\link{draw}}, \code{\link{drawSamplesByTime}}
 drawSamplesByStepCount <- function(sampler,
                                    n,
                                    burnin,

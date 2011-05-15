@@ -21,6 +21,7 @@
 #' @return A numeric vector, giving the indicies \code{x} which are 
 #'   not neighbours.
 #' @export
+#' @seealso \code{\link{BNSamplerMJ}}
 whichGraphsNotNeighbours <- function(x, logScores, verbose = F, head){
   stopifnot("parental.list"     %in% class(x),
             class(logScores)  == "numeric",
@@ -153,6 +154,10 @@ whichGraphsNotNeighbours <- function(x, logScores, verbose = F, head){
 #'   can be very memory-intensive.
 #' @return A function, which when called draws the next sample of the MCMC.
 #' @export
+#' @seealso \code{\link{BNSampler}}, \code{\link{BNGibbsSampler}},
+#'   \code{\link{BNSamplerPT}}, \code{\link{BNSamplerGrzeg}},
+#'   \code{\link{BNSamplerBigFlips}}. Internally uses 
+#'   \code{\link{whichGraphsNotNeighbours}}
 BNSamplerMJ <- function(data,
                         initial,
                         prior,

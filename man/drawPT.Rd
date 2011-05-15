@@ -5,6 +5,7 @@
     currentNetwork)}
 \description{Undocumented.}
 \details{method description}
+\seealso{\code{\link{BNSamplerPT}}, \code{\link{draw}}}
 \arguments{\item{samplers}{...}
 \item{data}{...}
 \item{n}{...}
