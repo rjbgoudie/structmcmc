@@ -7,6 +7,7 @@
 \details{Returns the number of acyclic graphs that can be formed by adding, 
 removing or flipping a single edge of the current network}
 \value{A numeric of length 1. The log number of neighbouring graphs.}
+\seealso{\code{\link{BNSampler}}}
 \arguments{\item{routes}{The routes matrix of the network}
 \item{adjacency}{The adjacency matrix of the network}
 \item{constraintT}{The transpose of a constraint matrix}

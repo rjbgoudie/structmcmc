@@ -8,6 +8,9 @@
     T, size = 10000L))}
 \description{Undocumented.}
 \details{method description}
+\seealso{\code{\link{drawPT}}. \code{\link{BNSampler}},
+\code{\link{BNSamplerMJ}}, \code{\link{BNGibbsSampler}},
+\code{\link{BNSamplerBigFlips}}, \code{\link{BNSamplerGrzeg}}}
 \arguments{\item{data}{...}
 \item{initial}{...}
 \item{prior}{...}

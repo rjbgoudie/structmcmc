@@ -7,7 +7,11 @@
     modejumping=F, verbose=F, keepTape=F,
     grzeg=list(grzegMoveProbability = 0.5))}
 \description{Undocumented.}
-\details{method description}
+\details{method description. Not tested.}
+\seealso{\code{\link{BNSampler}}, \code{\link{BNSamplerPT}},
+\code{\link{BNSamplerMJ}}, \code{\link{BNGibbsSampler}}.
+Internally uses \code{\link{localPartitionFunction}}, and 
+\code{\link{scoreParents}}.}
 \arguments{\item{data}{...}
 \item{initial}{...}
 \item{prior}{...}

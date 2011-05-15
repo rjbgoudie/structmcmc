@@ -5,6 +5,7 @@
     samplesIncrement=10000)}
 \description{Draw samples from a MCMC sampler, by time.}
 \details{Draws samples from an MCMC sampler for a specified number of seconds.}
+\seealso{\code{\link{draw}}, \code{\link{drawSamplesByStepCount}}}
 \arguments{\item{sampler}{A sampler object}
 \item{time}{The number of seconds to spend drawing samples.}
 \item{burnin}{The number of samples to discard from the beginning of

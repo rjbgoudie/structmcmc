@@ -7,6 +7,7 @@
 \details{Sample from posterior distribution on graph, conditional on
 all the edges, except those that go into node \code{node}.}
 \value{Returns the sampled network. A \code{currentNetwork} object.}
+\seealso{\code{\link{BNGibbsSampler}}, \code{\link{samplePair}}}
 \arguments{\item{currentNetwork}{A \code{currentNetwork} object}
 \item{numberOfNodes}{The number of nodes in the network. A numeric vector 
 of length 1.}

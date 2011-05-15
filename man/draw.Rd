@@ -6,6 +6,9 @@
 \details{Draws samples from an MCMC sampler. The length of the run can be specified
 either by the number of samples to be drawn, or the length of time that
 the sampler runs.}
+\seealso{\code{\link{drawSamplesByTime}},
+\code{\link{drawSamplesByStepCount}}. \code{\link{BNSampler}},
+\code{\link{BNGibbsSampler}}, \code{\link{BNSamplerMJ}}}
 \arguments{\item{sampler}{A sampler object}
 \item{n}{The number of samples to draw. Set this to \code{FALSE} if
 using the \code{time} argument.}

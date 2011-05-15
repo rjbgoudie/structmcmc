@@ -8,6 +8,7 @@
 all the edges, except for those corresponding to the parents sets of 
 two nodes.}
 \value{Returns the sampled network. A \code{currentNetwork} object.}
+\seealso{\code{\link{BNGibbsSampler}}, \code{\link{sampleNode}}}
 \arguments{\item{currentNetwork}{A \code{currentNetwork} object}
 \item{numberOfNodes}{The number of nodes in the network. A numeric vector 
 of length 1.}

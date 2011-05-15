@@ -11,6 +11,8 @@ Networks (ie models).
 
 .....}
 \value{A function, which when called draws the next sample of the MCMC.}
+\seealso{\code{\link{BNSampler}}, \code{\link{BNSamplerPT}},
+\code{\link{BNSamplerMJ}}, \code{\link{BNSamplerGrzeg}}}
 \arguments{\item{data}{The data.}
 \item{initial}{An object of class 'bn'. The starting value of the MCMC.}
 \item{prior}{A function that returns the prior score of the supplied

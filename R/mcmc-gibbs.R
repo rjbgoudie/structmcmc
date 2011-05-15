@@ -28,6 +28,7 @@
 #'   \code{getRowsThatContain()}
 #' @return Returns the sampled network. A \code{currentNetwork} object.
 #' @export
+#' @seealso \code{\link{BNGibbsSampler}}, \code{\link{samplePair}}
 sampleNode <- function(currentNetwork,
                        numberOfNodes,
                        nodesSeq,
@@ -89,6 +90,7 @@ sampleNode <- function(currentNetwork,
 #'   \code{getRowsThatContain()}
 #' @return Returns the sampled network. A \code{currentNetwork} object.
 #' @export
+#' @seealso \code{\link{BNGibbsSampler}}, \code{\link{sampleNode}}
 samplePair <- function(currentNetwork,
                        numberOfNodes,
                        nodesSeq,
@@ -244,6 +246,10 @@ samplePair <- function(currentNetwork,
 #'   \code{scoreParentsTable()}
 #' @return A function, which when called draws the next sample of the MCMC.
 #' @export
+#' @seealso \code{\link{BNSampler}}, \code{\link{BNSamplerBigFlips}}, 
+#'   \code{\link{BNSamplerPT}}, \code{\link{BNSamplerMJ}},
+#'   \code{\link{BNSamplerGrzeg}}. Internally uses 
+#'   \code{\link{samplePair}} and \code{\link{sampleNode}}.
 BNGibbsSampler <- function(data,
                            initial,
                            prior,
