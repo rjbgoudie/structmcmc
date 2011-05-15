@@ -23,3 +23,15 @@ are computed separately for each bin.}
 \item{verbose}{...}
 \item{...}{Further arguments passed to ep.parental.list() for method =
 "flatten", or ep.table() for method = "tabulate"}}
+\examples{x1 <- factor(c(1, 1, 0, 1))
+x2 <- factor(c(0, 1, 0, 1))
+dat <- data.frame(x1 = x1, x2 = x2)
+
+prior <- function(net) 1
+initial <- bn(c(), c())
+
+sampler <- BNSampler(dat, initial, prior)
+samples <- draw(sampler, n = 50)
+mpost <- bnpostmcmc(sampler, samples)
+
+ep(mpost)}

@@ -3,5 +3,18 @@
 \title{Levelplot of posterior edge probabilities.}
 \usage{\method{levelplot}{ep.list} (eplist)}
 \description{Levelplot of posterior edge probabilities.}
-\details{method description}
-\arguments{\item{eplist}{...}}
+\details{Plot a \code{\link[lattice]{levelplot}} displaying the edge probabilities.}
+\arguments{\item{eplist}{An \code{ep.list} object. A list of edge probability
+matrices}}
+\examples{x1 <- factor(c(1, 1, 0, 1))
+x2 <- factor(c(0, 1, 0, 1))
+x <- data.frame(x1 = x1, x2 = x2)
+
+exact <- posterior(data = x, "exact")
+mcmc <- posterior(data = x, "mc3", nSamples = 500, nBurnin = 100)
+
+myep1 <- ep(exact)
+myep2 <- ep(mcmc)
+if (require(lattice)){
+levelplot(ep.list(myep1, myep2))
+}}
