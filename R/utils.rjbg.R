@@ -19,6 +19,7 @@
 #'   levels are integers stored as characters. e.g. factor(c("3", "2", "3"))
 #' @return The data.frame with columns converted to integers
 #' @export
+#' @seealso \code{\link{intAsFDF}}
 fdfAsInt <- function(x, useLevelNames = T){
   stopifnot(
     class(x) == "data.frame",
@@ -44,6 +45,7 @@ fdfAsInt <- function(x, useLevelNames = T){
 #' @param x an object of class \code{data.frame}
 #' @return The data.frame with columns converted to factors
 #' @export
+#' @seealso \code{\link{fdfAsInt}}
 intAsFDF <- function(x){
   stopifnot(
     class(x) == "data.frame",
