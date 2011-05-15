@@ -28,6 +28,8 @@
 #'   queries involving conditioning, use \code{\link[gRain]{setFinding}}
 #'   before running \code{querygrain}.
 #' @export
+#' @seealso \code{\link{marginalGivenOthers}},
+#'   \code{\link{marginalGivenIntervention}}, \code{\link{queryFinding}}
 as.grain <- function(x, net, dat){
   stopifnot(class(x)   ==   "list",
             "bn"       %in% class(net),
@@ -91,6 +93,8 @@ as.grain <- function(x, net, dat){
 #'   the named level. These components contain the result of applying
 #'   result of applying \code{FUN} to the result of \code{querygrain}.
 #' @export
+#' @seealso \code{\link{marginalGivenIntervention}},
+#'   \code{\link{as.grain}}, \code{\link{queryFinding}}
 marginalGivenOthers <- function(x, node, dat, FUN = identity, ...){
   stopifnot("grain"      %in% class(x),
             class(node)  %in% c("numeric", "character"),
@@ -141,6 +145,8 @@ marginalGivenOthers <- function(x, node, dat, FUN = identity, ...){
 #' @param ... Passed to \code{FUN}
 #' @return The result of \code{FUN}
 #' @export
+#' @seealso \code{\link{as.grain}}, \code{\link{marginalGivenOthers}},
+#'   \code{\link{marginalGivenIntervention}}
 queryFinding <- function(x, node, nodeWithState, nodeState, FUN, ...){
   stopifnot("grain"               %in% class(x),
             class(node)           ==   "character",
@@ -179,6 +185,8 @@ queryFinding <- function(x, node, nodeWithState, nodeState, FUN, ...){
 #'   the named level. These components contain the result of applying
 #'   result of applying \code{FUN} to the result of \code{querygrain}.
 #' @export
+#' @seealso \code{\link{marginalGivenOthers}}, \code{\link{as.grain}},
+#'   \code{\link{queryFinding}}
 marginalGivenIntervention <- function(net,
                                       node,
                                       dat,

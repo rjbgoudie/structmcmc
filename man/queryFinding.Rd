@@ -6,6 +6,8 @@
 \details{Query a finding, and apply \code{FUN}. Just a wrapper around
 \code{\link[gRain]{setFinding}} and \code{\link[gRain]{querygrain}}.}
 \value{The result of \code{FUN}}
+\seealso{\code{\link{as.grain}}, \code{\link{marginalGivenOthers}},
+\code{\link{marginalGivenIntervention}}}
 \arguments{\item{x}{A grain}
 \item{node}{Character vector of length 1. The node whose marginal
 distribution is required.}
