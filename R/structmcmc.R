@@ -10,7 +10,7 @@
 
 #' The structmcmc package.
 #'
-#' @import parental lattice MASS zoo digest nnet reshape
+#' @import parental lattice digest
 #' @docType package
 #' @name structmcmc
 #' @aliases structmcmc package-structmcmc
