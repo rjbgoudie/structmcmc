@@ -8,6 +8,7 @@ number of routes from i to j in some directed graph.
 
 This function updates the routes matrix to account for the deletion of
 an edge from i to j in the directed graph}
+\seealso{\code{\link{routesAddEdges}}, \code{\link{nonDescendants}}}
 \arguments{\item{x}{A routes matrix}
 \item{i}{The nodes from which the removed edge emanates}
 \item{j}{The node that the removed edge goes to. ONLY ONE NODE HERE}}

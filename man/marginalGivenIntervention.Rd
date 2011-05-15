@@ -9,6 +9,8 @@ has been conditioned upon each of its levels.}
 from the node \code{node}). Each component is a list, corresponding to
 the named level. These components contain the result of applying
 result of applying \code{FUN} to the result of \code{querygrain}.}
+\seealso{\code{\link{marginalGivenOthers}}, \code{\link{as.grain}},
+\code{\link{queryFinding}}}
 \arguments{\item{net}{A BN. A "parental" object.}
 \item{node}{An integer or a name of a column of \code{dat}}
 \item{dat}{A data frame, with columns corresponding to the Bayes Net

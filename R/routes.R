@@ -20,6 +20,7 @@
 #' @param i The nodes from which the added edge emanates
 #' @param j The node that the added edge goes to. ONLY ONE NODE HERE
 #' @export
+#' @seealso \code{\link{routesRemoveEdges}}, \code{\link{nonDescendants}}
 routesAddEdges <- function(x, i, j){
   if (length(i) > 0){
     x + rowSums(x[, i, drop = F]) * x[rep(j, dim(x)[1]), ]
@@ -40,6 +41,7 @@ routesAddEdges <- function(x, i, j){
 #' @param i The nodes from which the removed edge emanates
 #' @param j The node that the removed edge goes to. ONLY ONE NODE HERE
 #' @export
+#' @seealso \code{\link{routesAddEdges}}, \code{\link{nonDescendants}}
 routesRemoveEdges <- function(x, i, j){
   if (length(i) > 0){
     x - rowSums(x[, i, drop = F]) * x[rep(j, dim(x)[1]), ]
@@ -55,6 +57,7 @@ routesRemoveEdges <- function(x, i, j){
 #' @param x A routes matrix
 #' @param node A node
 #' @export
+#' @seealso \code{\link{routesAddEdges}}, \code{\link{routesRemoveEdges}}
 nonDescendants <- function(x, node){
   .Internal(which(x[node, ] == 0))
 }
