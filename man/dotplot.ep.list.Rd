@@ -5,7 +5,7 @@
 \description{Dotplot of list of posterior edge probabilities.}
 \details{method description}
 \seealso{\code{\link{dotplot.ep}}}
-\arguments{\item{eplist}{...}
+\arguments{\item{eplist}{A *NAMED* list of edge probability matrices.}
 \item{subsetBy}{...}
 \item{head}{...}
 \item{...}{Further arguments passed to method}}
@@ -19,5 +19,5 @@ mcmc <- posterior(data = x, "mc3", nSamples = 500, nBurnin = 100)
 myep1 <- ep(exact)
 myep2 <- ep(mcmc)
 if (require(lattice)){
-dotplot(ep.list(myep1, myep2))
+dotplot(ep.list(Exact = myep1, MCMC = myep2))
 }}
