@@ -9,3 +9,12 @@ at a given level. The inequality is >=. Note this may well be cyclic.}
 \seealso{\code{\link{ep}}}
 \arguments{\item{ep}{A matrix of class ep}
 \item{threshold}{The value at which to threshold the matrix}}
+\examples{x1 <- factor(c(1, 1, 0, 1))
+x2 <- factor(c(0, 1, 0, 1))
+x <- data.frame(x1 = x1, x2 = x2)
+
+exact <- posterior(data = x, "exact")
+
+myep <- ep(exact)
+parentalFromEPThreshold(myep, 0.2)
+parentalFromEPThreshold(myep, 0.4)}

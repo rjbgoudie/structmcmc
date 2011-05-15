@@ -27,3 +27,17 @@ which to plot the graphs given by MCMC and PC-MCMC estimates}
 converted to CPDAGs before computing the ROC curves.}
 \item{verbose}{A logical indicating whether to show progress bars etc.}
 \item{...}{Further arguments}}
+\examples{x1 <- factor(c(1, 1, 0, 1, 1, 1))
+x2 <- factor(c(0, 1, 0, 1, 0, 1))
+x3 <- factor(c(0, 1, 0, 0, 0, 0))
+x <- data.frame(x1 = x1, x2 = x2, x3 = x3)
+
+exact <- posterior(x, "exact")
+eppost <- ep(exact)
+rocplot(true = bn(integer(0), c(1,3), integer(0)),
+eps = ep.list(eppost))
+
+mcmc <- posterior(x, "mc3", nSamples = 1000, nBurnin = 100)
+rocplot(true = bn(integer(0), c(1,3), integer(0)),
+eps = ep.list(eppost),
+bnpmls = bnpostmcmc.list(mcmc))}

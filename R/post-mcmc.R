@@ -357,6 +357,19 @@ gp.bnpostmcmc.list <- function(x, ...){
 #' @S3method ep bnpostmcmc
 #' @method ep bnpostmcmc
 #' @seealso \code{\link{ep}}, \code{\link{ep.bnpostmcmc.list}}
+#' @examples
+#' x1 <- factor(c(1, 1, 0, 1))
+#' x2 <- factor(c(0, 1, 0, 1))
+#' dat <- data.frame(x1 = x1, x2 = x2)
+#' 
+#' prior <- function(net) 1
+#' initial <- bn(c(), c())
+#' 
+#' sampler <- BNSampler(dat, initial, prior)
+#' samples <- draw(sampler, n = 50)
+#' mpost <- bnpostmcmc(sampler, samples)
+#' 
+#' ep(mpost)
 ep.bnpostmcmc <- function(x, nbin = 1, start, end, method = "flatten",
                           verbose = F, ...){
   stopifnot(class(x) == "bnpostmcmc",
@@ -407,6 +420,23 @@ ep.bnpostmcmc <- function(x, nbin = 1, start, end, method = "flatten",
 #' @S3method ep bnpostmcmc.list
 #' @method ep bnpostmcmc.list
 #' @seealso \code{\link{ep}}, \code{\link{ep.bnpostmcmc}}
+#' @examples
+#' x1 <- factor(c(1, 1, 0, 1))
+#' x2 <- factor(c(0, 1, 0, 1))
+#' dat <- data.frame(x1 = x1, x2 = x2)
+#' 
+#' prior <- function(net) 1
+#' initial <- bn(c(), c())
+#' sampler <- BNSampler(dat, initial, prior)
+#' samples <- draw(sampler, n = 50)
+#' mpost <- bnpostmcmc(sampler, samples)
+#' 
+#' initial <- bn(c(), c(1))
+#' sampler2 <- BNSampler(dat, initial, prior)
+#' samples2 <- draw(sampler2, n = 50)
+#' mpost2 <- bnpostmcmc(sampler2, samples2)
+#' 
+#' ep(bnpostmcmc.list(mpost, mpost2))
 ep.bnpostmcmc.list <- function(x, start, end, ...){
   stopifnot(class(x) == "bnpostmcmc.list")
   if (!missing(start) || !missing(end)){

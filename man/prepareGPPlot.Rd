@@ -4,4 +4,4 @@
 \usage{prepareGPPlot(gplist)}
 \description{Internal function.}
 \details{method description}
-\arguments{\item{gplist}{...}}
+\arguments{\item{gplist}{An \code{gp.list} object}}

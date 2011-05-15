@@ -50,5 +50,5 @@ x3 <- factor(c(FALSE, FALSE, TRUE, FALSE, TRUE, TRUE, FALSE, FALSE, TRUE))
 x <- data.frame(x1 = x1, x2 = x2, x3 = x3)
 
 set.seed(1234)
-mcmc <- posterior(data = x, "mc3")
+mcmc <- posterior(data = x, "mc3", nSamples = 500, nBurnin = 100)
 ep(mcmc)}

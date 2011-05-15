@@ -56,7 +56,7 @@
 #' x <- data.frame(x1 = x1, x2 = x2, x3 = x3)
 #' 
 #' set.seed(1234)
-#' mcmc <- posterior(data = x, "mc3")
+#' mcmc <- posterior(data = x, "mc3", nSamples = 500, nBurnin = 100)
 #' ep(mcmc)
 posterior <- function(data,
                       method             = "mc3",
@@ -292,14 +292,35 @@ gp <- function(x, ...){
 
 #' Posterior edge probabilities.
 #'
-#' method description
+#' Compute the posterior edge probabilities, as given by the supplied
+#' object.
 #'
-#' @param x ...
-#' @param ... Further arguments passed to method
+#' @param x An object
+#' @param ... Further arguments, passed to method
 #' @export
 #' @seealso \code{\link{ep.bnpostmcmc.list}}, \code{\link{ep.parental.list}}, 
 #'   \code{\link{ep.bnpost}}, \code{\link{ep.table}},
 #'   \code{\link{ep.parental.contingency}}
+#' @examples
+#' x1 <- factor(c(1, 1, 0, 1))
+#' x2 <- factor(c(0, 1, 0, 1))
+#' dat <- data.frame(x1 = x1, x2 = x2)
+#' 
+#' prior <- function(net) 1
+#' initial <- bn(c(), c())
+#' 
+#' sampler <- BNSampler(dat, initial, prior)
+#' samples <- draw(sampler, n = 50)
+#' mpost <- bnpostmcmc(sampler, samples)
+#' 
+#' ep(mpost)
+#' 
+#' initial <- bn(c(), c(1))
+#' sampler2 <- BNSampler(dat, initial, prior)
+#' samples2 <- draw(sampler2, n = 50)
+#' mpost2 <- bnpostmcmc(sampler2, samples2)
+#' 
+#' ep(bnpostmcmc.list(mpost, mpost2))
 ep <- function(x, ...){
   UseMethod("ep")
 }
@@ -690,13 +711,23 @@ prepareLevelPlot <- function(ep){
 
 #' Levelplot of posterior edge probabilities.
 #'
-#' method description
+#' Plot a \code{\link[lattice]{levelplot}} displaying the edge probabilities.
 #'
-#' @param ep ...
-#'
+#' @param ep An object of class \code{ep}. A matrix of edge probabilities.
 #' @S3method levelplot ep
 #' @method levelplot ep
 #' @seealso \code{\link{levelplot.ep.list}}, \code{\link{dotplot.ep}}
+#' @examples
+#' x1 <- factor(c(1, 1, 0, 1))
+#' x2 <- factor(c(0, 1, 0, 1))
+#' x <- data.frame(x1 = x1, x2 = x2)
+#' 
+#' exact <- posterior(data = x, "exact")
+#' 
+#' myep <- ep(exact)
+#' if (require(lattice)){
+#'   levelplot(myep)
+#' }
 levelplot.ep <- function(ep){
   data <- prepareLevelPlot(ep)
 
@@ -715,11 +746,25 @@ levelplot.ep <- function(ep){
 
 #' Levelplot of posterior edge probabilities.
 #'
-#' method description
+#' Plot a \code{\link[lattice]{levelplot}} displaying the edge probabilities.
 #'
-#' @param eplist ...
+#' @param eplist An \code{ep.list} object. A list of edge probability
+#'   matrices
 #' @S3method levelplot ep.list
 #' @method levelplot ep.list
+#' @examples
+#' x1 <- factor(c(1, 1, 0, 1))
+#' x2 <- factor(c(0, 1, 0, 1))
+#' x <- data.frame(x1 = x1, x2 = x2)
+#' 
+#' exact <- posterior(data = x, "exact")
+#' mcmc <- posterior(data = x, "mc3", nSamples = 500, nBurnin = 100)
+#' 
+#' myep1 <- ep(exact)
+#' myep2 <- ep(mcmc)
+#' if (require(lattice)){
+#'   levelplot(ep.list(myep1, myep2))
+#' }
 levelplot.ep.list <- function(eplist){
   dfs <- lapply(eplist, prepareLevelPlot)
   data <- do.call("make.groups", dfs)
@@ -769,6 +814,17 @@ shrinkep <- function(ep){
 #' @S3method dotplot ep
 #' @method dotplot ep
 #' @seealso \code{\link{levelplot.ep}}, \code{\link{dotplot.ep.list}}
+#' @examples
+#' x1 <- factor(c(1, 1, 0, 1))
+#' x2 <- factor(c(0, 1, 0, 1))
+#' x <- data.frame(x1 = x1, x2 = x2)
+#' 
+#' exact <- posterior(data = x, "exact")
+#' 
+#' myep <- ep(exact)
+#' if (require(lattice)){
+#'   dotplot(myep)
+#' }
 dotplot.ep <- function(ep, head = 30, ...){
   epdata <- data.frame(method = c(), ep = c(), name = c())
 
@@ -809,6 +865,17 @@ dotplot.ep <- function(ep, head = 30, ...){
 #' @param ... Further arguments passed to method
 #' @export
 #' @seealso \code{\link{ep}}
+#' @examples
+#' x1 <- factor(c(1, 1, 0, 1))
+#' x2 <- factor(c(0, 1, 0, 1))
+#' x <- data.frame(x1 = x1, x2 = x2)
+#' 
+#' exact <- posterior(data = x, "exact")
+#' mcmc <- posterior(data = x, "mc3", nSamples = 500, nBurnin = 100)
+#' 
+#' myep1 <- ep(exact)
+#' myep2 <- ep(mcmc)
+#' ep.list(myep1, myep2)
 ep.list <- function(...){
   out <- list(...)
   class(out) <- "ep.list"
@@ -826,6 +893,19 @@ ep.list <- function(...){
 #' @S3method dotplot ep.list
 #' @method dotplot ep.list
 #' @seealso \code{\link{dotplot.ep}}
+#' @examples
+#' x1 <- factor(c(1, 1, 0, 1))
+#' x2 <- factor(c(0, 1, 0, 1))
+#' x <- data.frame(x1 = x1, x2 = x2)
+#' 
+#' exact <- posterior(data = x, "exact")
+#' mcmc <- posterior(data = x, "mc3", nSamples = 500, nBurnin = 100)
+#' 
+#' myep1 <- ep(exact)
+#' myep2 <- ep(mcmc)
+#' if (require(lattice)){
+#'   dotplot(ep.list(myep1, myep2))
+#' }
 dotplot.ep.list <- function(eplist, subsetBy = "Exact", head = 30, ...){
   epTypes <- names(eplist)
 
@@ -877,7 +957,7 @@ dotplot.ep.list <- function(eplist, subsetBy = "Exact", head = 30, ...){
 #'
 #' method description
 #'
-#' @param gplist ...
+#' @param gplist An \code{gp.list} object
 prepareGPPlot <- function(gplist){
   if (class(gplist) == "gp.list"){
 
@@ -915,6 +995,17 @@ prepareGPPlot <- function(gplist){
 #' @S3method dotplot gp
 #' @method dotplot gp
 #' @seealso \code{\link{xyplot.gp}}
+#' @examples
+#' x1 <- factor(c(1, 1, 0, 1))
+#' x2 <- factor(c(0, 1, 0, 1))
+#' x <- data.frame(x1 = x1, x2 = x2)
+#' 
+#' exact <- posterior(data = x, "exact")
+#' 
+#' mygp <- gp(exact)
+#' if (require(lattice)){
+#'   dotplot(mygp)
+#' }
 dotplot.gp <- function(gp, head = 30, ...){
   gpdata <- prepareGPPlot(gp)
 
@@ -950,6 +1041,17 @@ dotplot.gp <- function(gp, head = 30, ...){
 #' @S3method xyplot gp
 #' @method xyplot gp
 #' @seealso \code{\link{dotplot.gp}}
+#' @examples
+#' x1 <- factor(c(1, 1, 0, 1))
+#' x2 <- factor(c(0, 1, 0, 1))
+#' x <- data.frame(x1 = x1, x2 = x2)
+#' 
+#' exact <- posterior(data = x, "exact")
+#' 
+#' mygp <- gp(exact)
+#' if (require(lattice)){
+#'   xyplot(mygp)
+#' }
 xyplot.gp <- function(gp, head = 30, ...){
   gpdata <- prepareGPPlot(gp)
 
@@ -987,6 +1089,17 @@ xyplot.gp <- function(gp, head = 30, ...){
 #'
 #' @param ... Further arguments passed to method
 #' @export
+#' @examples
+#' x1 <- factor(c(1, 1, 0, 1))
+#' x2 <- factor(c(0, 1, 0, 1))
+#' x <- data.frame(x1 = x1, x2 = x2)
+#' 
+#' exact <- posterior(data = x, "exact")
+#' mcmc <- posterior(data = x, "mc3", nSamples = 500, nBurnin = 100)
+#' 
+#' mygp1 <- gp(exact)
+#' mygp2 <- gp(mcmc)
+#' gp.list(myep1, myep2)
 gp.list <- function(...){
   out <- list(...)
   class(out) <- "gp.list"
@@ -1004,6 +1117,17 @@ gp.list <- function(...){
 #' @S3method dotplot gp.list
 #' @method dotplot gp.list
 #' @seealso \code{\link{xyplot.gp.list}}, \code{\link{dotplot.gp}}
+#' @examples
+#' x1 <- factor(c(1, 1, 0, 1))
+#' x2 <- factor(c(0, 1, 0, 1))
+#' x <- data.frame(x1 = x1, x2 = x2)
+#' 
+#' exact <- posterior(data = x, "exact")
+#' mcmc <- posterior(data = x, "mc3", nSamples = 500, nBurnin = 100)
+#' 
+#' mygp1 <- gp(exact)
+#' mygp2 <- gp(mcmc)
+#' dotplot(gp.list(myep1, myep2))
 dotplot.gp.list <- function(gplist, subsetBy = "Exact", head = 30, ...){
   gpdata <- prepareGPPlot(gplist)
 
@@ -1048,6 +1172,17 @@ dotplot.gp.list <- function(gplist, subsetBy = "Exact", head = 30, ...){
 #' @S3method xyplot gp.list
 #' @method xyplot gp.list
 #' @seealso \code{\link{dotplot.gp.list}}, \code{\link{xyplot.gp}}
+#' @examples
+#' x1 <- factor(c(1, 1, 0, 1))
+#' x2 <- factor(c(0, 1, 0, 1))
+#' x <- data.frame(x1 = x1, x2 = x2)
+#' 
+#' exact <- posterior(data = x, "exact")
+#' mcmc <- posterior(data = x, "mc3", nSamples = 500, nBurnin = 100)
+#' 
+#' mygp1 <- gp(exact)
+#' mygp2 <- gp(mcmc)
+#' xyplot(gp.list(myep1, myep2))
 xyplot.gp.list <- function(gplist, head = 30,
                            scales = list(x = list(rot = 90)),
                            highlight = NULL, ...){
@@ -1117,6 +1252,15 @@ xyplot.gp.list <- function(gplist, head = 30,
 #' @S3method summary gp
 #' @method summary gp
 #' @seealso \code{\link{gp}}
+#' @examples
+#' x1 <- factor(c(1, 1, 0, 1))
+#' x2 <- factor(c(0, 1, 0, 1))
+#' x <- data.frame(x1 = x1, x2 = x2)
+#' 
+#' exact <- posterior(data = x, "exact")
+#' 
+#' mygp <- gp(exact)
+#' summary(mygp)
 summary.gp <- function(object, ...){
   data.frame(
     graph = as.character(as.parental(names(object)), pretty = T),
@@ -1134,6 +1278,16 @@ summary.gp <- function(object, ...){
 #' @return An object of class parental
 #' @export
 #' @seealso \code{\link{ep}}
+#' @examples
+#' x1 <- factor(c(1, 1, 0, 1))
+#' x2 <- factor(c(0, 1, 0, 1))
+#' x <- data.frame(x1 = x1, x2 = x2)
+#' 
+#' exact <- posterior(data = x, "exact")
+#' 
+#' myep <- ep(exact)
+#' parentalFromEPThreshold(myep, 0.2)
+#' parentalFromEPThreshold(myep, 0.4)
 parentalFromEPThreshold <- function(ep, threshold){
   stopifnot("ep"              %in% class(ep),
             class(threshold)  ==   "numeric",
@@ -1357,6 +1511,21 @@ as.roc.ep.list <- function(x, true, thresholds, labels, verbose, ...){
 #' @return A lattice object, containing the ROC plot
 #' @export
 #' @seealso \code{\link{as.roc}}
+#' @examples
+#' x1 <- factor(c(1, 1, 0, 1, 1, 1))
+#' x2 <- factor(c(0, 1, 0, 1, 0, 1))
+#' x3 <- factor(c(0, 1, 0, 0, 0, 0))
+#' x <- data.frame(x1 = x1, x2 = x2, x3 = x3)
+#' 
+#' exact <- posterior(x, "exact")
+#' eppost <- ep(exact)
+#' rocplot(true = bn(integer(0), c(1,3), integer(0)),
+#'         eps = ep.list(eppost))
+#' 
+#' mcmc <- posterior(x, "mc3", nSamples = 1000, nBurnin = 100)
+#' rocplot(true = bn(integer(0), c(1,3), integer(0)),
+#'         eps = ep.list(eppost),
+#'         bnpmls = bnpostmcmc.list(mcmc))
 rocplot <- function(true,
                     maps,
                     bnpmls,
@@ -1496,7 +1665,7 @@ rocplot <- function(true,
 #' @export
 #' @seealso \code{\link{xyplot.cumtvd}}, \code{\link{cumtvd.list}}
 cumtvd <- function(exactgp, bnpostmcmclist, start = 1, end,
-                   nbin = floor((start-end)/100)){
+                   nbin = floor((start - end)/100)){
   stopifnot(class(bnpostmcmclist) == "bnpostmcmc.list")
   if (missing(end)){
     end <- length(bnpostmcmclist[[1]]$samples)
