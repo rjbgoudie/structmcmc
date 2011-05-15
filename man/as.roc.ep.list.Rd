@@ -13,6 +13,7 @@
 contain the number of true and false positives respectively. Rows
 correspond to the supplied thresholds, for each element of the supplied
 \code{ep.list}.}
+\seealso{\code{\link{as.roc.ep}}}
 \arguments{\item{x}{A list of matrices of class \code{ep} of edge probabilities}
 \item{true}{A \code{bn}. The true graph.}
 \item{thresholds}{A numeric vector of thresholds.}

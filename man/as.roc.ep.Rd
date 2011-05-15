@@ -12,6 +12,7 @@ and \code{\link{as.roc.parental.list}}.}
 \code{fp}. The first contains the supplied label; the latter two
 contain the number of true and false positives respectively. Rows
 correspond to the supplied thresholds.}
+\seealso{\code{\link{as.roc.ep.list}}}
 \arguments{\item{x}{A matrix of class \code{ep} of edge probabilities}
 \item{true}{A \code{bn}. The true graph.}
 \item{thresholds}{A numeric vector of thresholds.}

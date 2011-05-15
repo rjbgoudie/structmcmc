@@ -11,6 +11,7 @@ table must simply be a numeric vector. The first component must be named
 \code{parental.list}, and the second \code{contingency}.}
 \value{A matrix of class 'ep' with entry (i,j) containing the
 probability of an edge from node \code{i} to \code{j}}
+\seealso{\code{\link{ep}}}
 \arguments{\item{x}{An object of class \code{parental.contingency}, of the form
 desribed in the Details section.}
 \item{FUN}{A function to be applied to the samples before the edge

@@ -11,6 +11,7 @@ edge probability matrices see \code{\link{as.roc.ep}} and
 \value{A data frame, with columns \code{estimate}, \code{tp}, and
 \code{fp}. The first contains the supplied label; the latter two
 contain the number of true and false positives respectively}
+\seealso{\code{\link{as.roc.parental}}}
 \arguments{\item{x}{The object to be prepared for an ROC plot}
 \item{true}{A \code{bn}. The true graph.}
 \item{labels}{A vector of labels}

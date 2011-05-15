@@ -4,6 +4,7 @@
 \usage{\method{dotplot}{ep} (ep, head=30, ...)}
 \description{Dotplot of posterior edge probabilities.}
 \details{method description}
+\seealso{\code{\link{levelplot.ep}}, \code{\link{dotplot.ep.list}}}
 \arguments{\item{ep}{...}
 \item{head}{...}
 \item{...}{Further arguments passed to method}}

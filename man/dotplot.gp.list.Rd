@@ -4,6 +4,7 @@
 \usage{\method{dotplot}{gp.list} (gplist, subsetBy="Exact", head=30, ...)}
 \description{Dotplot of posterior graph probabilities.}
 \details{method description}
+\seealso{\code{\link{xyplot.gp.list}}, \code{\link{dotplot.gp}}}
 \arguments{\item{gplist}{...}
 \item{subsetBy}{...}
 \item{head}{...}
