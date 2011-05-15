@@ -6,4 +6,5 @@
 \details{Returns a xyplot of the cumulative edge probabilities through time
 for bnpostmcmc.list and bvspostmcmc.list}
 \value{...}
+\seealso{\code{\link{epmx}}}
 \arguments{\item{x}{...}}

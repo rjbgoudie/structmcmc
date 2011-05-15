@@ -15,6 +15,8 @@
 #' @param x ...
 #' @param ... Further arguments passed to method
 #' @export
+#' @seealso \code{\link{epmx.bnpostmcmc.list}}, \code{\link{xyplot.epmx}},
+#'   \code{\link{splom.bnpostmcmc.list}}
 epmx <- function(x, ...){
   UseMethod("epmx")
 }
@@ -39,6 +41,8 @@ epmx <- function(x, ...){
 #' @return An object of class "epmx", a matrix of the form described above.
 #' @S3method epmx bnpostmcmc.list
 #' @method epmx bnpostmcmc.list
+#' @seealso \code{\link{epmx}}, \code{\link{xyplot.epmx}},
+#'   \code{\link{splom.bnpostmcmc.list}}
 epmx.bnpostmcmc.list <- epmx.list <- function(x,
                                  nbin    = floor((end - start)/100),
                                  start   = 1,
@@ -113,6 +117,7 @@ epmx.bnpostmcmc.list <- epmx.list <- function(x,
 #' @param x ...
 #' @param ... Further arguments passed to method
 #' @export
+#' @seealso \code{\link{cummean.matrix}}
 cummean <- function(x, ...){
   UseMethod("cummean")
 }
@@ -128,6 +133,7 @@ cummean <- function(x, ...){
 #' @return A matrix of the same dimension as x, with the cumulative values.
 #' @S3method cummean matrix
 #' @method cummean matrix
+#' @seealso \code{\link{cummean}}
 cummean.matrix <- function(x, ...){
   1/(seq_len(nrow(x))) * apply(x, 2, cumsum)
 }
@@ -139,6 +145,7 @@ cummean.matrix <- function(x, ...){
 #' @param x ...
 #' @param ... Further arguments passed to method
 #' @export
+#' @seealso \code{\link{cumep.bnpostmcmc.list}}
 cumep <- function(x, ...){
   UseMethod("cumep")
 }
@@ -153,6 +160,7 @@ cumep <- function(x, ...){
 #' @S3method cumep list
 #' @method cumep bnpostmcmc.list
 #' @method cumep list
+#' @seealso \code{\link{cumep}}
 cumep.bnpostmcmc.list <- cumep.list <- function(x, ...){
 
   res <- epmx(x, ...)
@@ -170,6 +178,7 @@ cumep.bnpostmcmc.list <- cumep.list <- function(x, ...){
 #' @param x ...
 #' @param ... Further arguments passed to method
 #' @export
+#' @seealso \code{\link{mwmean.matrix}}
 mwmean <- function(x, ...){
   UseMethod("mwmean")
 }
@@ -186,6 +195,7 @@ mwmean <- function(x, ...){
 #' @return A matrix of the same dimension as x, with the moving window values.
 #' @S3method mwmean matrix
 #' @method mwmean matrix
+#' @seealso \code{\link{mwmean}}
 mwmean.matrix <- function(x, window, ...){
   if (require(zoo)){
     unname(as.matrix(rollapply(as.zoo(x), window, mean)))
@@ -199,6 +209,7 @@ mwmean.matrix <- function(x, window, ...){
 #' @param x ...
 #' @param ... Further arguments passed to method
 #' @export
+#' @seealso \code{\link{mwep.bnpostmcmc.list}}
 mwep <- function(x, ...){
   UseMethod("mwep")
 }
@@ -214,6 +225,7 @@ mwep <- function(x, ...){
 #' @S3method mwep list
 #' @method mwep bnpostmcmc.list
 #' @method mwep list
+#' @seealso \code{\link{mwep}}
 mwep.bnpostmcmc.list <- mwep.list <- function(x, window = 10, ...){
   res <- epmx(x, ...)
   at <- attributes(res)
@@ -233,6 +245,7 @@ mwep.bnpostmcmc.list <- mwep.list <- function(x, window = 10, ...){
 #' @return ...
 #' @S3method xyplot epmx
 #' @method xyplot epmx
+#' @seealso \code{\link{epmx}}
 xyplot.epmx <- function(x){
 
   stopifnot(class(x) == "epmx")
@@ -364,6 +377,7 @@ xyplot.epmx <- function(x){
 #' @S3method splom list
 #' @method splom bnpostmcmc.list
 #' @method splom list
+#' @seealso \code{\link{epmx}}, \code{\link{xyplot.epmx}}, \code{\link{splom}}
 splom.bnpostmcmc.list <- splom.list <- function(x, start = 1, end, plot = F){
   stopifnot(class(x) == "bnpostmcmc.list" ||
                 class(x) == "list",
