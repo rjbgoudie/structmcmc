@@ -28,6 +28,17 @@
 #' @seealso \code{\link{drawSamplesByTime}},
 #'   \code{\link{drawSamplesByStepCount}}. \code{\link{BNSampler}},
 #'   \code{\link{BNGibbsSampler}}, \code{\link{BNSamplerMJ}}
+#' @examples
+#' set.seed(310)
+#' x1 <- factor(c(1, 1, 0, 1))
+#' x2 <- factor(c(0, 1, 0, 1))
+#' dat <- data.frame(x1 = x1, x2 = x2)
+#' 
+#' prior <- function(net) 1
+#' initial <- bn(c(), c())
+#' 
+#' sampler <- BNSampler(dat, initial, prior)
+#' samples <- draw(sampler, n = 5)
 draw <- function(sampler, n = F, time = F, burnin = 0, thin = 1, verbose = T){
   stopifnot(identical(n, F) || inherits(n, c("integer", "numeric")),
             identical(n, F) || is.wholenumber(n),
@@ -87,6 +98,17 @@ draw <- function(sampler, n = F, time = F, burnin = 0, thin = 1, verbose = T){
 #'   incremented.
 #' @export
 #' @seealso \code{\link{draw}}, \code{\link{drawSamplesByStepCount}}
+#' @examples
+#' set.seed(310)
+#' x1 <- factor(c(1, 1, 0, 1))
+#' x2 <- factor(c(0, 1, 0, 1))
+#' dat <- data.frame(x1 = x1, x2 = x2)
+#' 
+#' prior <- function(net) 1
+#' initial <- bn(c(), c())
+#' 
+#' sampler <- BNSampler(dat, initial, prior)
+#' samples <- draw(sampler, time = 15)
 drawSamplesByTime <- function(sampler,
                               time,
                               burnin,
@@ -149,6 +171,17 @@ drawSamplesByTime <- function(sampler,
 #' @param verbose A logical. Should a progress bar be displayed?
 #' @export
 #' @seealso \code{\link{draw}}, \code{\link{drawSamplesByTime}}
+#' @examples
+#' set.seed(310)
+#' x1 <- factor(c(1, 1, 0, 1))
+#' x2 <- factor(c(0, 1, 0, 1))
+#' dat <- data.frame(x1 = x1, x2 = x2)
+#' 
+#' prior <- function(net) 1
+#' initial <- bn(c(), c())
+#' 
+#' sampler <- BNSampler(dat, initial, prior)
+#' samples <- draw(sampler, n = 100)
 drawSamplesByStepCount <- function(sampler,
                                    n,
                                    burnin,

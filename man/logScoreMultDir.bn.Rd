@@ -27,3 +27,8 @@ for this data.}
 \item{checkInput}{A logical of length 1, specifying whether to check the
 inputs to the function.}
 \item{...}{Further arguments, currently unused}}
+\examples{x1 <- factor(c(1, 1, 0, 1, 0, 0, 1, 0, 1, 0))
+x2 <- factor(c(0, 1, 0, 1, 0, 1, 1, 0, 1, 0))
+x3 <- factor(c(0, 1, 1, 1, 0, 1, 1, 0, 1, 0))
+data <- data.frame(x1 = x1, x2 = x2,  x3 = x3)
+logScoreMultDir(bn(c(), c(1), c(2)), data)}

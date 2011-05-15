@@ -40,3 +40,21 @@ Either "qi", "one", or "point9"}
 for this data.}
 \item{checkInput}{A logical of length 1, specifying whether to check the
 inputs to the function.}}
+\examples{x1 <- factor(c(1, 1, 0, 1, 0, 0, 1, 0, 1, 0))
+x2 <- factor(c(0, 1, 0, 1, 0, 1, 1, 0, 1, 0))
+x3 <- factor(c(0, 1, 1, 1, 0, 1, 1, 0, 1, 0))
+data <- data.frame(x1 = x1, x2 = x2,  x3 = x3)
+
+n1 <- bn(numeric(0), 1, 2)
+n2 <- bn(numeric(0), 1, numeric(0))
+
+logScoreMultDir(n1, data)
+logScoreMultDir(n2, data)
+
+data <- data.frame(lapply(data, as.factor))
+data <- data.matrix(data) - 1
+cc <- new.env(hash = TRUE, size = 10000L)
+nl <- apply(data, 2, function(i) length(unique(i)))
+names(nl) <- seq_along(n1)
+lsp <- list(data = data, nl = nl, hyperparameters = "qi")
+logScoreMultDirIncremental(n1, n2, 3, lsp, cc)}

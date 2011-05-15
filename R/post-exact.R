@@ -31,6 +31,17 @@
 #'   \code{\link{map.bnpost}}, \code{\link{gp.bnpost}},
 #'   \code{\link{entropy.bnpost}}, \code{\link{tp.bnpost}},
 #'   \code{\link{eht.bnpost}}
+#' @examples
+#' x1 <- factor(c(1, 1, 0, 1))
+#' x2 <- factor(c(0, 1, 0, 1))
+#' dat <- data.frame(x1 = x1, x2 = x2)
+#' 
+#' bnspace <- enumerateBNSpace(2)
+#' lsmd <- logScoreMultDir(bnspace, data = dat, hyperparameters = "qi")
+#' post <- bnpost(bnspace = bnspace, logScore = lsmd, data = dat)
+#' 
+#' gp(post)
+#' ep(post)
 bnpost <- function(bnspace, logScore, data, logScoreFUN = logScoreMultDir){
   stopifnot(class(bnspace)     == c("bn.list", "parental.list"),
             class(logScore)    == "numeric",
@@ -56,6 +67,16 @@ bnpost <- function(bnspace, logScore, data, logScoreFUN = logScoreMultDir){
 #' @S3method top bnpost
 #' @method top bnpost
 #' @seealso \code{\link{top}}, \code{\link{map.bnpost}}
+#' @examples
+#' x1 <- factor(c(1, 1, 0, 1))
+#' x2 <- factor(c(0, 1, 0, 1))
+#' dat <- data.frame(x1 = x1, x2 = x2)
+#' 
+#' bnspace <- enumerateBNSpace(2)
+#' lsmd <- logScoreMultDir(bnspace, data = dat, hyperparameters = "qi")
+#' post <- bnpost(bnspace = bnspace, logScore = lsmd, data = dat)
+#' 
+#' top(post)
 top.bnpost <- function(x, head = 10, ...){
   logScore <- x$logScore
   names(logScore) <- as.character(x$bnspace)
@@ -83,6 +104,16 @@ top.bnpost <- function(x, head = 10, ...){
 #' @S3method map bnpost
 #' @method map bnpost
 #' @seealso \code{\link{map}}, \code{\link{top.bnpost}}
+#' @examples
+#' x1 <- factor(c(1, 1, 0, 1))
+#' x2 <- factor(c(0, 1, 0, 1))
+#' dat <- data.frame(x1 = x1, x2 = x2)
+#' 
+#' bnspace <- enumerateBNSpace(2)
+#' lsmd <- logScoreMultDir(bnspace, data = dat, hyperparameters = "qi")
+#' post <- bnpost(bnspace = bnspace, logScore = lsmd, data = dat)
+#' 
+#' map(post)
 map.bnpost <- function(x, ...){
   top(x, head = 1)
 }
@@ -99,6 +130,17 @@ map.bnpost <- function(x, ...){
 #' @S3method gp bnpost
 #' @method gp bnpost
 #' @seealso \code{\link{gp}}, \code{\link{ep.bnpost}}
+#' @examples
+#' x1 <- factor(c(1, 1, 0, 1))
+#' x2 <- factor(c(0, 1, 0, 1))
+#' dat <- data.frame(x1 = x1, x2 = x2)
+#' 
+#' bnspace <- enumerateBNSpace(2)
+#' lsmd <- logScoreMultDir(bnspace, data = dat, hyperparameters = "qi")
+#' post <- bnpost(bnspace = bnspace, logScore = lsmd, data = dat)
+#' 
+#' gp(post)
+#' ep(post)
 gp.bnpost <- function(x, logNetworkPriors, log = F, pretty = F, ...){
   logScore <- x$logScore
   family <- x$bnspace
@@ -132,6 +174,17 @@ gp.bnpost <- function(x, logNetworkPriors, log = F, pretty = F, ...){
 #' @S3method ep bnpost
 #' @method ep bnpost
 #' @seealso \code{\link{ep}}, \code{\link{gp.bnpost}}
+#' @examples
+#' x1 <- factor(c(1, 1, 0, 1))
+#' x2 <- factor(c(0, 1, 0, 1))
+#' dat <- data.frame(x1 = x1, x2 = x2)
+#' 
+#' bnspace <- enumerateBNSpace(2)
+#' lsmd <- logScoreMultDir(bnspace, data = dat, hyperparameters = "qi")
+#' post <- bnpost(bnspace = bnspace, logScore = lsmd, data = dat)
+#' 
+#' gp(post)
+#' ep(post)
 ep.bnpost <- function(x, ...){
   logScore <- x$logScore
   family <- x$bnspace
@@ -181,6 +234,16 @@ ep.bnpost <- function(x, ...){
 #' @S3method entropy bnpost
 #' @method entropy bnpost
 #' @seealso \code{\link{entropy}}
+#' @examples
+#' x1 <- factor(c(1, 1, 0, 1))
+#' x2 <- factor(c(0, 1, 0, 1))
+#' dat <- data.frame(x1 = x1, x2 = x2)
+#' 
+#' bnspace <- enumerateBNSpace(2)
+#' lsmd <- logScoreMultDir(bnspace, data = dat, hyperparameters = "qi")
+#' post <- bnpost(bnspace = bnspace, logScore = lsmd, data = dat)
+#' 
+#' entropy(post)
 entropy.bnpost <- function(x, logNetworkPriors, ...){
   logScore <- x$logScore
   family <- x$bnspace
@@ -211,6 +274,16 @@ entropy.bnpost <- function(x, logNetworkPriors, ...){
 #' @S3method tp bnpost
 #' @method tp bnpost
 #' @seealso \code{\link{tp}}
+#' @examples
+#' x1 <- factor(c(1, 1, 0, 1))
+#' x2 <- factor(c(0, 1, 0, 1))
+#' dat <- data.frame(x1 = x1, x2 = x2)
+#' 
+#' bnspace <- enumerateBNSpace(2)
+#' lsmd <- logScoreMultDir(bnspace, data = dat, hyperparameters = "qi")
+#' post <- bnpost(bnspace = bnspace, logScore = lsmd, data = dat)
+#' 
+#' tp(post)
 tp.bnpost <- function(x, sampler = "mh", allowFlips = T, verbose = F, ...){
   stopifnot(class(x) == "bnpost",
             sampler == "mh",

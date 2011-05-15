@@ -16,6 +16,15 @@
 #' @param ... Further arguments passed to method
 #' @export
 #' @seealso \code{\link{ml.bn}}
+#' @examples
+#' d <- data.frame(
+#'   a = factor(c(1, rep(3,2), rep(1, 7))),
+#'   b = factor(c(2, rep(1, 4), rep(2, 5))),
+#'   c = factor(c(2, rep(2, 3), rep(1, 6)))
+#' )
+#' 
+#' net <- bn(integer(0), integer(0), c(1,2))
+#' ml(net, d)
 ml <- function (x, ...) {
   UseMethod("ml")
 }

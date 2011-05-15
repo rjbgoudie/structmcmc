@@ -21,3 +21,13 @@ output by \code{\link{ml}}}
 \item{net}{a Bayesian Network. An object of class 'bn'}
 \item{dat}{A data.frame with factors in columns. The columns should
 correspond to the nodes of net, and the parameters of x.}}
+\examples{d <- data.frame(
+a = factor(c(1, rep(3,2), rep(1, 7))),
+b = factor(c(2, rep(1, 4), rep(2, 5))),
+c = factor(c(2, rep(2, 3), rep(1, 6)))
+)
+
+net <- bn(integer(0), integer(0), c(1,2))
+out <- ml(net, d)
+
+as.grain(out, net, d)}

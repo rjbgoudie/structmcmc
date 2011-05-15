@@ -9,5 +9,4 @@
 \item{data}{...}
 \item{nodes}{...}
 \item{mlcache}{...}
-\item{nijkcache}{...
-#'}}
+\item{nijkcache}{...}}
