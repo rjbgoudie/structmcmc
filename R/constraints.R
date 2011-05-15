@@ -15,6 +15,8 @@
 #' @param constraint ..
 #' @param initial ..
 #' @export
+#' @seealso \code{\link{satisfiesConstraint}},
+#'   \code{\link{enforceForbiddenConstraint}}
 setupConstraint <- function(constraint, initial){
   numberOfNodes <- nNodes(initial)
   if (is.null(constraint)){
@@ -39,7 +41,9 @@ setupConstraint <- function(constraint, initial){
 #'
 #' @param x ...
 #' @param constraint ...
-#' #' @export
+#' @export
+#' @seealso \code{\link{setupConstraint}},
+#'   \code{\link{enforceForbiddenConstraint}}
 satisfiesConstraint <- function(x, constraint){
   stopifnot("parental" %in% class(x),
             class(constraint) == "matrix",
@@ -78,6 +82,7 @@ satisfiesConstraint <- function(x, constraint){
 #' @param x ...
 #' @param constraint ...
 #' @export
+#' @seealso \code{\link{satisfiesConstraint}}, \code{\link{setupConstraint}}
 enforceForbiddenConstraint <- function(x, constraint){
   stopifnot("parental" %in% class(x),
             class(constraint) == "matrix",

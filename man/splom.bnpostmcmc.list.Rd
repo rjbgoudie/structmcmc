@@ -3,6 +3,7 @@
 \title{Scatterplot matrix of edge probabilities between runs.}
 \description{Scatterplot matrix of edge probabilities between runs.}
 \details{method description}
+\seealso{\code{\link{epmx}}, \code{\link{xyplot.epmx}}, \code{\link{splom}}}
 \arguments{\item{x}{...}
 \item{start}{...}
 \item{end}{...}
