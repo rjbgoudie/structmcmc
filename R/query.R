@@ -8,7 +8,7 @@
 #
 # Copyright 2008 Robert J. B. Goudie, University of Warwick
 
-#' Convert to grain
+#' Convert to grain.
 #'
 #' This is an interface to the package \pkg{gRain}. We supply a Bayesian
 #' Network, its parameters, and the raw data. An object of class 'grain'
@@ -70,7 +70,7 @@ as.grain <- function(x, net, dat){
   }
 }
 
-#' Get all marginal probabilities
+#' Get all marginal probabilities.
 #'
 #' Get the marginal probability of a node, when each other node (separately)
 #' has been conditioned upon each of its levels.
@@ -120,7 +120,7 @@ marginalGivenOthers <- function(x, node, dat, FUN = identity, ...){
   out
 }
 
-#' Query an independence network, given a finding
+#' Query an independence network, given a finding.
 #'
 #' Query a finding, and apply \code{FUN}. Just a wrapper around
 #' \code{\link[gRain]{setFinding}} and \code{\link[gRain]{querygrain}}.
@@ -158,7 +158,7 @@ queryFinding <- function(x, node, nodeWithState, nodeState, FUN, ...){
   FUN(tab, ...)
 }
 
-#' Get marginal probabilities, given an intervention
+#' Get marginal probabilities, given an intervention.
 #'
 #' Get the marginal probability of a node, when each other node (separately)
 #' has been conditioned upon each of its levels.

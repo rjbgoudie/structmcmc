@@ -1,9 +1,9 @@
 \name{drawSamplesByStepCount}
 \alias{drawSamplesByStepCount}
-\title{Draw samples from a MCMC sampler, by step count...}
+\title{Draw samples from a MCMC sampler, by step count.}
 \usage{drawSamplesByStepCount(sampler, n, burnin, burninleft, lengthout, thin,
     verbose)}
-\description{Draw samples from a MCMC sampler, by step count}
+\description{Draw samples from a MCMC sampler, by step count.}
 \details{Draws a specific number of samples from an MCMC sampler.}
 \arguments{\item{sampler}{A sampler object}
 \item{n}{The number of samples to draw.}

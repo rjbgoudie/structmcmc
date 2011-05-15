@@ -1,8 +1,8 @@
 \name{ep.parental.contingency}
 \alias{ep.parental.contingency}
-\title{Computes the edge probabilities...}
+\title{Posterior edge probabilities.}
 \usage{\method{ep}{parental.contingency} (x, FUN, verbose=F, ...)}
-\description{Computes the edge probabilities}
+\description{Posterior edge probabilities.}
 \details{Computes the edge probabilities from a \code{parental.contingency},
 which is a list, whose first component is \code{parental.list}, and
 whose second component is a contingency table of counts of the

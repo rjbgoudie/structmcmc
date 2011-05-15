@@ -1,8 +1,8 @@
 \name{tp}
 \alias{tp}
-\title{method name...}
+\title{Transition probabilities.}
 \usage{tp(x, ...)}
-\description{method name}
+\description{Transition probabilities.}
 \details{method description}
 \arguments{\item{x}{...}
 \item{...}{Further arguments passed to method}}

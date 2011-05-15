@@ -8,7 +8,7 @@
 #
 # Copyright 2008 Robert J. B. Goudie, University of Warwick
 
-#' method name
+#' Number of unique.
 #'
 #' method description
 #'
@@ -17,6 +17,9 @@
 nunique <- function(x){
   length(unique(x))
 }
+
+#' Local Normal Log marginal likelihood.
+#' 
 #' Compute the LOCAL log marginal likelihood of the supplied
 #' Bayesian Networks. ie the contribution to the log marginal liklihood from
 #' one individual node.
@@ -75,7 +78,8 @@ localLogScoreZellner <- function(node,
     (cache[[id]] <- out)
   }
 }
-#' method name
+
+#' Normal Log marginal likelihood.
 #'
 #' method description
 #'
@@ -85,6 +89,9 @@ localLogScoreZellner <- function(node,
 logScoreZellner <- function(x, ...){
   UseMethod("logScoreZellner")
 }
+
+#' Normal Log marginal likelihood.
+#' 
 #' Compute the log marginal likelihood of the supplied Bayesian Network.
 #'
 #' The data is scored as continuous, using a form of the Zellner Prior.
@@ -128,6 +135,9 @@ logScoreZellner.bn <- function(x,
                          cache              = cache)
   }), F, F)))
 }
+
+#' Normal Log marginal likelihood (offline).
+#' 
 #' Compute the log marginal likelihood of the supplied Bayesian Network.
 #'
 #' This function is an alternative interface to logScoreZellner.
@@ -171,6 +181,9 @@ logScoreZellnerOffline <- function(x,
                          checkInput         = F)
   }), F, F)))
 }
+
+#' Normal Log marginal likelihood.
+#' 
 #' Compute the log marginal likelihood of the supplied Bayesian Networks.
 #'
 #' The data is scored as continuous, using a form of the Zellner Prior.
@@ -199,6 +212,9 @@ logScoreZellner.bn.list <- function(x,
     logScoreZellner(bn, data, cache)
   }))
 }
+
+#' Internal functions.
+#' 
 #' Convert a data frame to the appropriate format for the fast/incremental
 #' logScoreZellner functions, and return as part of the logScoreParameters
 #' list.
@@ -228,6 +244,9 @@ logScoreZellnerPrepare <- function(data,
   nl <- apply(data, 2, nunique)
   modifyList(logScoreParameters, val = list(data = data, nl = nl))
 }
+
+#' Normal Log marginal likelihood (online).
+#' 
 #' Compute the difference in log marginal likelihood of the supplied
 #' Bayesian Networks, quickly.
 #'

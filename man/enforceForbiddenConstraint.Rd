@@ -1,8 +1,8 @@
 \name{enforceForbiddenConstraint}
 \alias{enforceForbiddenConstraint}
-\title{method name...}
+\title{Undocumented.}
 \usage{enforceForbiddenConstraint(x, constraint)}
-\description{method name}
+\description{Undocumented.}
 \details{method description}
 \arguments{\item{x}{...}
 \item{constraint}{...}}

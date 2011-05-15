@@ -1,11 +1,13 @@
 \name{logScoreMultDirIncremental}
 \alias{logScoreMultDirIncremental}
-\title{Compute the difference in log marginal likelihood of the supplied...}
+\title{Multinomial-Dirichlet Log marginal likelihood (online).}
 \usage{logScoreMultDirIncremental(currentBN, proposalBN, heads,
     logScoreParameters, cache, checkInput=T)}
-\description{Compute the difference in log marginal likelihood of the supplied
-Bayesian Networks, quickly.}
-\details{This is a fast, incremental version of logScoreMultDir.
+\description{Multinomial-Dirichlet Log marginal likelihood (online).}
+\details{Compute the difference in log marginal likelihood of the supplied
+Bayesian Networks, quickly.
+
+This is a fast, incremental version of logScoreMultDir.
 
 *** NOTE: THIS REQUIRES A MATRIX RATHER THAN A DATA FRAME ***
 

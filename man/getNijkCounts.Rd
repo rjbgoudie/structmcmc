@@ -1,8 +1,8 @@
 \name{getNijkCounts}
 \alias{getNijkCounts}
-\title{method name...}
+\title{Undocumented.}
 \usage{getNijkCounts(data, bn, nodes=seq_along(bn), cache=new.env(hash = T))}
-\description{method name}
+\description{Undocumented.}
 \details{method description}
 \arguments{\item{data}{...}
 \item{bn}{...}

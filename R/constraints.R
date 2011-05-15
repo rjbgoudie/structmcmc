@@ -8,7 +8,7 @@
 #
 # Copyright 2008 Robert J. B. Goudie, University of Warwick
 
-#' Setup constraint
+#' Setup constraint.
 #'
 #' ...
 #'
@@ -33,7 +33,7 @@ setupConstraint <- function(constraint, initial){
   }
 }
 
-#' method name
+#' Undocumented.
 #'
 #' method description
 #'
@@ -71,7 +71,7 @@ satisfiesConstraint <- function(x, constraint){
   satisfiesConstraint
 }
 
-#' method name
+#' Undocumented.
 #'
 #' method description
 #'
@@ -95,7 +95,7 @@ enforceForbiddenConstraint <- function(x, constraint){
 }
 
 
-#' Resample a pair of nodes together
+#' Resample a pair of nodes together.
 #'
 #' 
 #'
@@ -107,7 +107,7 @@ getRequiredFromConstraint <- function(constraint){
   lapply(nodesSeq, whichNum, x = constraint, i = 1)
 }
 
-#' Resample a pair of nodes together
+#' Resample a pair of nodes together.
 #'
 #' 
 #'

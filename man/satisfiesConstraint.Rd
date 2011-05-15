@@ -1,8 +1,8 @@
 \name{satisfiesConstraint}
 \alias{satisfiesConstraint}
-\title{method name...}
+\title{Undocumented.}
 \usage{satisfiesConstraint(x, constraint)}
-\description{method name}
+\description{Undocumented.}
 \details{method description}
 \arguments{\item{x}{...}
 \item{constraint}{...

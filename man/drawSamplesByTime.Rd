@@ -1,9 +1,9 @@
 \name{drawSamplesByTime}
 \alias{drawSamplesByTime}
-\title{Draw samples from a MCMC sampler, by time...}
+\title{Draw samples from a MCMC sampler, by time.}
 \usage{drawSamplesByTime(sampler, time, burnin, burninleft, thin, verbose,
     samplesIncrement=10000)}
-\description{Draw samples from a MCMC sampler, by time}
+\description{Draw samples from a MCMC sampler, by time.}
 \details{Draws samples from an MCMC sampler for a specified number of seconds.}
 \arguments{\item{sampler}{A sampler object}
 \item{time}{The number of seconds to spend drawing samples.}

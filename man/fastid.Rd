@@ -1,7 +1,7 @@
 \name{fastid}
 \alias{fastid}
-\title{method name...}
+\title{Fast ID of a graph.}
 \usage{fastid(id)}
-\description{method name}
+\description{Fast ID of a graph.}
 \details{method description}
 \arguments{\item{id}{...}}

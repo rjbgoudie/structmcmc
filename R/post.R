@@ -8,7 +8,7 @@
 #
 # Copyright 2008 Robert J. B. Goudie, University of Warwick
 
-#' Posterior distribution on Bayesian networks
+#' Posterior distribution on Bayesian networks.
 #'
 #' Use one of a number of methods to get the posterior distribution.
 #'
@@ -111,7 +111,7 @@ posterior <- function(data,
   }
 }
 
-#' Posterior distribution on Bayesian networks
+#' Posterior distribution on Bayesian networks.
 #'
 #' Use one of a number of methods to get the posterior distribution
 #'
@@ -191,7 +191,7 @@ exactposterior <- function(data,
          logScoreFUN = function(x) stop("error"))
 }
 
-#' Posterior distribution on Bayesian networks
+#' Posterior distribution on Bayesian networks.
 #'
 #' Use MCMC to approximate the posterior distribution
 #'
@@ -262,7 +262,7 @@ mcmcposterior <- function(sampler = BNSampler,
              logScoreFUN = logScoreFUN)
 }
 
-#' method name
+#' Posterior graph probabilities.
 #'
 #' method description
 #'
@@ -273,7 +273,7 @@ gp <- function(x, ...){
   UseMethod("gp")
 }
 
-#' method name
+#' Posterior edge probabilities.
 #'
 #' method description
 #'
@@ -284,7 +284,7 @@ ep <- function(x, ...){
   UseMethod("ep")
 }
 
-#' method name
+#' Entropy.
 #'
 #' method description
 #'
@@ -295,7 +295,7 @@ entropy <- function(x, ...){
   UseMethod("entropy")
 }
 
-#' method name
+#' Maximum aposteriori graph.
 #'
 #' method description
 #'
@@ -306,7 +306,7 @@ map <- function(x, ...){
   UseMethod("map")
 }
 
-#' method name
+#' Top posterior graph.
 #'
 #' method description
 #'
@@ -317,7 +317,7 @@ top <- function(x, ...){
   UseMethod("top")
 }
 
-#' method name
+#' Bayes Factor.
 #'
 #' method description
 #'
@@ -330,6 +330,8 @@ bf <- function(bn1, bn2, data, ...){
   UseMethod("bf")
 }
 
+#' Posterior edge probabilities.
+#' 
 #' Calculate edge probabilities given a list of
 #' parental graphs (of class parental.list)
 #'
@@ -489,7 +491,7 @@ ep.table <- function(x, verbose = F, ...){
   ep(pc, verbose = verbose, ...)
 }
 
-#' Computes the edge probabilities
+#' Posterior edge probabilities.
 #' 
 #' Computes the edge probabilities from a \code{parental.contingency},
 #' which is a list, whose first component is \code{parental.list}, and
@@ -584,6 +586,8 @@ ep.parental.contingency <- function(x, FUN, verbose = F, ...){
   res
 }
 
+#' Plot top graphs.
+#' 
 #' Plot the the top() Bayesian Networks from a posterior distribution.
 #' The top graphs are those with the highest score with respect to the
 #' posterior distribution, which for converged MCMC will be most commonly
@@ -606,7 +610,7 @@ plot.bnpostmcmc <- plot.bnpost <- function(x, top = NULL, ...){
   grplot(top, ...)
 }
 
-#' method name
+#' Bayes Factors.
 #'
 #' method description
 #'
@@ -622,7 +626,7 @@ bf.bnpostmcmc <- bf.bnpost <- function(bn1, bn2, data, ...){
   logScoreMultDir(bnl, data, ...)
 }
 
-#' method name
+#' Levelplot of BN Posterior from MCMC.
 #'
 #' method description
 #'
@@ -635,7 +639,7 @@ levelplot.bnpostmcmc <- levelplot.bnpost <- function(x){
   levelplot(ep(x))
 }
 
-#' method name
+#' Internal function
 #'
 #' method description
 #'
@@ -652,7 +656,7 @@ prepareLevelPlot <- function(ep){
   data
 }
 
-#' method name
+#' Levelplot of posterior edge probabilities.
 #'
 #' method description
 #'
@@ -676,7 +680,7 @@ levelplot.ep <- function(ep){
   )
 }
 
-#' method name
+#' Levelplot of posterior edge probabilities.
 #'
 #' method description
 #'
@@ -703,7 +707,7 @@ levelplot.ep.list <- function(eplist){
   )
 }
 
-#' method name
+#' Internal function.
 #'
 #' method description
 #'
@@ -722,7 +726,7 @@ shrinkep <- function(ep){
   ep
 }
 
-#' method name
+#' Dotplot of posterior edge probabilities.
 #'
 #' method description
 #'
@@ -764,7 +768,7 @@ dotplot.ep <- function(ep, head = 30, ...){
   )
 }
 
-#' method name
+#' List of posterior edge probabilities.
 #'
 #' method description
 #'
@@ -776,7 +780,7 @@ ep.list <- function(...){
   out
 }
 
-#' method name
+#' Dotplot of list of posterior edge probabilities.
 #'
 #' method description
 #'
@@ -833,7 +837,7 @@ dotplot.ep.list <- function(eplist, subsetBy = "Exact", head = 30, ...){
   )
 }
 
-#' method name
+#' Internal function.
 #'
 #' method description
 #'
@@ -865,7 +869,7 @@ prepareGPPlot <- function(gplist){
   }
 }
 
-#' method name
+#' Dotplot of posterior graph probabilities.
 #'
 #' method description
 #'
@@ -899,7 +903,7 @@ dotplot.gp <- function(gp, head = 30, ...){
   )
 }
 
-#' method name
+#' Scatterplot of posterior graph probabilities.
 #'
 #' method description
 #'
@@ -939,7 +943,7 @@ xyplot.gp <- function(gp, head = 30, ...){
   )
 }
 
-#' method name
+#' List of posterior graph probabilities.
 #'
 #' method description
 #'
@@ -951,7 +955,7 @@ gp.list <- function(...){
   out
 }
 
-#' method name
+#' Dotplot of posterior graph probabilities.
 #'
 #' method description
 #'
@@ -993,7 +997,7 @@ dotplot.gp.list <- function(gplist, subsetBy = "Exact", head = 30, ...){
   )
 }
 
-#' method name
+#' Scatterplot of posterior graph probablities.
 #'
 #' method description
 #'
@@ -1064,7 +1068,7 @@ xyplot.gp.list <- function(gplist, head = 30,
   )
 }
 
-#' method name
+#' Summary of posterior graph probabilities.
 #'
 #' method description
 #'
@@ -1079,6 +1083,8 @@ summary.gp <- function(object, ...){
   )
 }
 
+#' Threshold posterior edge probabilities.
+#' 
 #' Return the parental given by thresholding a edge probability matrix
 #' at a given level. The inequality is >=. Note this may well be cyclic.
 #'
@@ -1102,7 +1108,7 @@ parentalFromEPThreshold <- function(ep, threshold){
   as.parental(edgelist, type = "edgelist", n)
 }
 
-#' Convert parental.list to CPDAGs
+#' Convert 'parental list' to CPDAGs.
 #'
 #' A wrapper for \code{\link[parental]{as.cpdag}} that routes around the
 #' issue that the parental.list is not of class \code{bn.list} etc.
@@ -1145,7 +1151,7 @@ parentalToCPDAG <- function(x, verbose = T){
   bnlistcp
 }
 
-#' Prepare data for plotting in a ROC plot
+#' Prepare data for plotting in a ROC plot.
 #'
 #' Converts MCMC samples, edge probability matrices etc to a data frame
 #' ready for plotting as ROC curves.
@@ -1163,7 +1169,7 @@ as.roc <- function(x, ...){
   UseMethod("as.roc")
 }
 
-#' Prepare a parental for a ROC plot
+#' Prepare a parental for a ROC plot.
 #'
 #' Compares two graphs, one of which is the true graph, and computes the
 #' number of true and false positives.
@@ -1189,7 +1195,7 @@ as.roc.parental <- function(x, true, label, ...){
              fp   = fp)
 }
 
-#' Prepare a parental list for a ROC plot
+#' Prepare a parental list for a ROC plot.
 #'
 #' Compares a list of graphs \code{x} to a true graph \code{true}, and
 #' returns the number of true and false positives.
@@ -1215,7 +1221,7 @@ as.roc.parental.list <- function(x, true, labels, verbose, ...){
   do.call("rbind", out)
 }
 
-#' Prepare an edge probability matrix for a ROC plot
+#' Prepare an edge probability matrix for a ROC plot.
 #'
 #' Compares an edge probability matrices \code{x} to a true graph
 #' \code{true}, and returns the number of true and false positives.
@@ -1246,7 +1252,7 @@ as.roc.ep <- function(x, true, thresholds, label, verbose, ...){
   rocdata
 }
 
-#' Prepare an list of edge probability matrix for a ROC plot
+#' Prepare an list of edge probability matrix for a ROC plot.
 #'
 #' Compares a list of edge probability matrices \code{x} to a true graph
 #' \code{true}, and returns the number of true and false positives.
@@ -1275,7 +1281,7 @@ as.roc.ep.list <- function(x, true, thresholds, labels, verbose, ...){
   do.call("rbind", out)
 }
 
-#' Plot an ROC curve
+#' Plot an ROC curve.
 #' 
 #' Print a ROC curve given a variety of estimation methods.
 #' 
@@ -1427,7 +1433,7 @@ rocplot <- function(true,
          ...)
 }
 
-#' method name
+#' Cumulative total variation distance.
 #'
 #' method description
 #'
@@ -1507,7 +1513,7 @@ cumtvd <- function(exactgp, bnpostmcmclist, start = 1, end,
   out
 }
 
-#' method name
+#' Plot cumulative total variation distance.
 #'
 #' method description
 #'
@@ -1543,7 +1549,7 @@ xyplot.cumtvd <- function(cumtvd){
   )
 }
 
-#' method name
+#' List of cumulative total variation distance.
 #'
 #' method description
 #'
@@ -1555,7 +1561,7 @@ cumtvd.list <- function(...){
   cumtvdlist
 }
 
-#' method name
+#' Plot of cumulative total variation distance.
 #'
 #' method description
 #'

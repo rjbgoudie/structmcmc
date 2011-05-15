@@ -1,8 +1,8 @@
 \name{dotplot.ep}
 \alias{dotplot.ep}
-\title{method name...}
+\title{Dotplot of posterior edge probabilities.}
 \usage{\method{dotplot}{ep} (ep, head=30, ...)}
-\description{method name}
+\description{Dotplot of posterior edge probabilities.}
 \details{method description}
 \arguments{\item{ep}{...}
 \item{head}{...}

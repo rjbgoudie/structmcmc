@@ -1,7 +1,7 @@
 \name{logsumexp}
 \alias{logsumexp}
-\title{method name...}
+\title{Undocumented.}
 \usage{logsumexp(a)}
-\description{method name}
+\description{Undocumented.}
 \details{method description}
 \arguments{\item{a}{...}}

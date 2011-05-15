@@ -1,8 +1,8 @@
 \name{gp}
 \alias{gp}
-\title{method name...}
+\title{Posterior graph probabilities.}
 \usage{gp(x, ...)}
-\description{method name}
+\description{Posterior graph probabilities.}
 \details{method description}
 \arguments{\item{x}{...}
 \item{...}{Further arguments passed to method}}

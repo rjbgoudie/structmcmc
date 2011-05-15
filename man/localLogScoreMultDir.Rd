@@ -1,12 +1,14 @@
 \name{localLogScoreMultDir}
 \alias{localLogScoreMultDir}
-\title{Compute the LOCAL log marginal likelihood of the supplied...}
+\title{Local Multinomial-Dirichlet Log marginal likelihood.}
 \usage{localLogScoreMultDir(node, parents, logScoreParameters, cache,
     checkInput=T)}
-\description{Compute the LOCAL log marginal likelihood of the supplied
+\description{Local Multinomial-Dirichlet Log marginal likelihood.}
+\details{Compute the LOCAL log marginal likelihood of the supplied
 Bayesian Networks. ie the contribution to the log marginal liklihood from
-one individual node.}
-\details{The data must be discrete. The conditional distributions of each
+one individual node.
+
+The data must be discrete. The conditional distributions of each
 random variable, conditional on its parents are assumed to be
 multinomial, with Dirichlet priors for the parameters.
 

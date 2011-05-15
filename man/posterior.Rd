@@ -1,12 +1,12 @@
 \name{posterior}
 \alias{posterior}
-\title{Posterior distribution on Bayesian networks...}
+\title{Posterior distribution on Bayesian networks.}
 \usage{posterior(data, method="mc3", prior=function(x) 1,
     logScoreFUN=defaultLogScoreFUN(),
     logScoreParameters=list(hyperparameters = "qi"), constraint,
     maxNumberParents=Inf, nSamples=50000, nBurnin=10000, initial,
     verbose=F)}
-\description{Posterior distribution on Bayesian networks}
+\description{Posterior distribution on Bayesian networks.}
 \details{Use one of a number of methods to get the posterior distribution.}
 \value{Either a \code{bnpost} or a \code{bnpostmcmc} object.}
 \arguments{\item{data}{The data.}

@@ -1,8 +1,8 @@
 \name{conductance}
 \alias{conductance}
-\title{method name...}
+\title{Conductance.}
 \usage{conductance(x, states)}
-\description{method name}
+\description{Conductance.}
 \details{method description}
 \arguments{\item{x}{...}
 \item{states}{...}}

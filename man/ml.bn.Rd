@@ -1,9 +1,9 @@
 \name{ml.bn}
 \alias{ml.bn}
-\title{Maximum likelihood estimates for parameters of a BN...}
+\title{Maximum likelihood estimates for parameters of a BN.}
 \usage{\method{ml}{bn} (x, data, nodes=seq_along(x), regularisation=NaN,
     cache=new.env(hash = T), ...)}
-\description{Maximum likelihood estimates for parameters of a BN}
+\description{Maximum likelihood estimates for parameters of a BN.}
 \details{Computes the maximum likelihood estimates for the parameters of a
 Bayesian Network. These are just the proportions of each category for
 each configuration of the parents of a node in the Bayesian Network.

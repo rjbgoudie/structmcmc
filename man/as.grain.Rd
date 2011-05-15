@@ -1,8 +1,8 @@
 \name{as.grain}
 \alias{as.grain}
-\title{Convert to grain...}
+\title{Convert to grain.}
 \usage{as.grain(x, net, dat)}
-\description{Convert to grain}
+\description{Convert to grain.}
 \details{This is an interface to the package \pkg{gRain}. We supply a Bayesian
 Network, its parameters, and the raw data. An object of class 'grain'
 is returned. This object can be queried

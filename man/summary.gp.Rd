@@ -1,8 +1,8 @@
 \name{summary.gp}
 \alias{summary.gp}
-\title{method name...}
+\title{Summary of posterior graph probabilities.}
 \usage{\method{summary}{gp} (object, ...)}
-\description{method name}
+\description{Summary of posterior graph probabilities.}
 \details{method description}
 \arguments{\item{object}{...}
 \item{...}{Further arguments passed to method}}

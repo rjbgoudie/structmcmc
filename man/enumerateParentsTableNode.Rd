@@ -1,9 +1,9 @@
 \name{enumerateParentsTableNode}
 \alias{enumerateParentsTableNode}
-\title{Table of all possible parents of a node...}
+\title{Table of all possible parents of a node.}
 \usage{enumerateParentsTableNode(node, numberOfNodes, maxNumberParents,
     required, banned)}
-\description{Table of all possible parents of a node}
+\description{Table of all possible parents of a node.}
 \details{Creates a matrix, with each row being a parent set.
 The is is created subject to the supplied indegree restriction, and the 
 the supplied \code{required} and \code{banned} restrictions.}

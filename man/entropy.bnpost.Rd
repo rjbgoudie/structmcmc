@@ -1,8 +1,8 @@
 \name{entropy.bnpost}
 \alias{entropy.bnpost}
-\title{method name...}
+\title{Entropy.}
 \usage{\method{entropy}{bnpost} (x, logNetworkPriors, ...)}
-\description{method name}
+\description{Entropy.}
 \details{method description}
 \arguments{\item{x}{...}
 \item{logNetworkPriors}{...}

@@ -1,8 +1,8 @@
 \name{map.bnpost}
 \alias{map.bnpost}
-\title{method name...}
+\title{Maximum aposteriori graph.}
 \usage{\method{map}{bnpost} (x, ...)}
-\description{method name}
+\description{Maximum aposteriori graph.}
 \details{method description}
 \arguments{\item{x}{...}
 \item{...}{Further arguments (unused)}}

@@ -1,8 +1,8 @@
 \name{top}
 \alias{top}
-\title{method name...}
+\title{Top posterior graph.}
 \usage{top(x, ...)}
-\description{method name}
+\description{Top posterior graph.}
 \details{method description}
 \arguments{\item{x}{...}
 \item{...}{Further arguments passed to method}}

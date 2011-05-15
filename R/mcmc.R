@@ -8,7 +8,7 @@
 #
 # Copyright 2008 Robert J. B. Goudie, University of Warwick
 
-#' Draw samples from a MCMC sampler
+#' Draw samples from a MCMC sampler.
 #'
 #' Draws samples from an MCMC sampler. The length of the run can be specified
 #' either by the number of samples to be drawn, or the length of time that
@@ -68,7 +68,7 @@ draw <- function(sampler, n = F, time = F, burnin = 0, thin = 1, verbose = T){
 }
 
 
-#' Draw samples from a MCMC sampler, by time
+#' Draw samples from a MCMC sampler, by time.
 #'
 #' Draws samples from an MCMC sampler for a specified number of seconds.
 #'
@@ -130,7 +130,7 @@ drawSamplesByTime <- function(sampler,
   samples
 }
 
-#' Draw samples from a MCMC sampler, by step count
+#' Draw samples from a MCMC sampler, by step count.
 #'
 #' Draws a specific number of samples from an MCMC sampler.
 #'

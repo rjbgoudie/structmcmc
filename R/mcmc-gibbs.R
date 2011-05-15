@@ -8,7 +8,7 @@
 #
 # Copyright 2008 Robert J. B. Goudie, University of Warwick
 
-#' Sample the parents of a single node
+#' Sample the parents of a single node (Gibbs sampler).
 #'
 #' Sample from posterior distribution on graph, conditional on
 #' all the edges, except those that go into node \code{node}.
@@ -68,7 +68,7 @@ sampleNode <- function(currentNetwork,
   currentNetwork
 }
 
-#' Sample the parents of a pair of nodes
+#' Sample the parents of a pair of nodes (Gibbs sampler).
 #'
 #' Sample from posterior distribution on graph, conditional on
 #' all the edges, except for those corresponding to the parents sets of 
@@ -197,7 +197,7 @@ samplePair <- function(currentNetwork,
   currentNetwork
 }
 
-#' Gibbs sampler for Bayesian Networks
+#' Gibbs sampler for Bayesian Networks.
 #'
 #' Create a MCMC sampler for Bayesian Networks. The sampler samples Bayesian
 #' Networks (ie models).

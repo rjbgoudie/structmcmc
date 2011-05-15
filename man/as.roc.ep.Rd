@@ -1,8 +1,8 @@
 \name{as.roc.ep}
 \alias{as.roc.ep}
-\title{Prepare an edge probability matrix for a ROC plot...}
+\title{Prepare an edge probability matrix for a ROC plot.}
 \usage{\method{as.roc}{ep} (x, true, thresholds, label, verbose, ...)}
-\description{Prepare an edge probability matrix for a ROC plot}
+\description{Prepare an edge probability matrix for a ROC plot.}
 \details{Compares an edge probability matrices \code{x} to a true graph
 \code{true}, and returns the number of true and false positives.}
 \seealso{For lists of edge probability matrices, see

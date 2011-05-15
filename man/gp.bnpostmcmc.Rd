@@ -1,9 +1,9 @@
 \name{gp.bnpostmcmc}
 \alias{gp.bnpostmcmc}
-\title{method name...}
+\title{Posterior graph probabilities.}
 \usage{\method{gp}{bnpostmcmc} (x, logNetworkPriors, start, end, nbin=1,
     log=F, pretty=F, levels, ...)}
-\description{method name}
+\description{Posterior graph probabilities.}
 \details{method description}
 \arguments{\item{x}{...}
 \item{logNetworkPriors}{...}

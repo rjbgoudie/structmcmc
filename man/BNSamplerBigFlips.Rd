@@ -1,13 +1,15 @@
 \name{BNSamplerBigFlips}
 \alias{BNSamplerBigFlips}
-\title{Create a MCMC sampler for Bayesian Networks.}
+\title{Big flips MCMC sampler for Bayesian networks.}
 \usage{BNSamplerBigFlips(data, initial, prior, return="network",
     logScoreFUN=defaultLogScoreFUN(),
     logScoreParameters=list(hyperparameters = "qi"), verbose=F,
     keepTape=F)}
-\description{Create a MCMC sampler for Bayesian Networks. The sampler samples Bayesian
-Networks (ie models).}
-\details{.....}
+\description{Big flips MCMC sampler for Bayesian networks.}
+\details{Create a MCMC sampler for Bayesian Networks. The sampler samples Bayesian
+Networks (ie models).
+
+.....}
 \value{A function, which when called draws the next sample of the MCMC.}
 \arguments{\item{data}{The data.}
 \item{initial}{An object of class 'bn'. The starting value of the MCMC.}

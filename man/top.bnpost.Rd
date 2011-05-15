@@ -1,8 +1,8 @@
 \name{top.bnpost}
 \alias{top.bnpost}
-\title{method name...}
+\title{Top graph from BN Posterior.}
 \usage{\method{top}{bnpost} (x, head=10, ...)}
-\description{method name}
+\description{Top graph from BN Posterior.}
 \details{method description}
 \arguments{\item{x}{...}
 \item{head}{...}

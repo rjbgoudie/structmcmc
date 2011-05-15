@@ -1,12 +1,14 @@
 \name{localLogScoreZellner}
 \alias{localLogScoreZellner}
-\title{Compute the LOCAL log marginal likelihood of the supplied...}
+\title{Local Normal Log marginal likelihood.}
 \usage{localLogScoreZellner(node, parents, logScoreParameters, cache,
     checkInput=T)}
-\description{Compute the LOCAL log marginal likelihood of the supplied
+\description{Local Normal Log marginal likelihood.}
+\details{Compute the LOCAL log marginal likelihood of the supplied
 Bayesian Networks. ie the contribution to the log marginal liklihood from
-one individual node.}
-\details{The data is scored as continuous, using a form of the Zellner Prior.}
+one individual node.
+
+The data is scored as continuous, using a form of the Zellner Prior.}
 \value{A numeric vector of length 1, giving the log marginal likelihood.
 The environment 'cache' will also be updated because its scope is
 global.}

@@ -1,8 +1,8 @@
 \name{logScoreMultDir}
 \alias{logScoreMultDir}
-\title{method name...}
+\title{Multinomial-Dirichlet Log marginal likelihood.}
 \usage{logScoreMultDir(x, ...)}
-\description{method name}
+\description{Multinomial-Dirichlet Log marginal likelihood.}
 \details{method description}
 \arguments{\item{x}{...}
 \item{...}{Further arguments passed to method}}

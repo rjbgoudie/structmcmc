@@ -1,12 +1,12 @@
 \name{BNGibbsSampler}
 \alias{BNGibbsSampler}
-\title{Gibbs sampler for Bayesian Networks...}
+\title{Gibbs sampler for Bayesian Networks.}
 \usage{BNGibbsSampler(data, initial, prior, return="network",
     logScoreFUN=defaultLogScoreFUN(),
     logScoreParameters=list(hyperparameters = "qi"), constraint,
     maxNumberParents, moveprobs=c(0.9, 0.1, 0), verbose=F, keepTape=F,
     parentsTables, scoresParents)}
-\description{Gibbs sampler for Bayesian Networks}
+\description{Gibbs sampler for Bayesian Networks.}
 \details{Create a MCMC sampler for Bayesian Networks. The sampler samples Bayesian
 Networks (ie models).}
 \value{A function, which when called draws the next sample of the MCMC.}

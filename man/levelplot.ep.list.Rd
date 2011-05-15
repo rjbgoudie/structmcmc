@@ -1,7 +1,7 @@
 \name{levelplot.ep.list}
 \alias{levelplot.ep.list}
-\title{method name...}
+\title{Levelplot of posterior edge probabilities.}
 \usage{\method{levelplot}{ep.list} (eplist)}
-\description{method name}
+\description{Levelplot of posterior edge probabilities.}
 \details{method description}
 \arguments{\item{eplist}{...}}

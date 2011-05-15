@@ -1,8 +1,8 @@
 \name{whichNum}
 \alias{whichNum}
-\title{Find rows satisfying equality...}
+\title{Find rows satisfying equality.}
 \usage{whichNum(col, x, i)}
-\description{Find rows satisfying equality}
+\description{Find rows satisfying equality.}
 \details{Find which rows in column \code{col} of a matrix \code{x} are equal to 
 \code{i}.
 

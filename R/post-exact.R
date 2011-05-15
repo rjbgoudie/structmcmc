@@ -8,7 +8,7 @@
 #
 # Copyright 2008 Robert J. B. Goudie, University of Warwick
 
-#' method name
+#' BN Exact Posterior.
 #'
 #' method description
 #'
@@ -42,7 +42,7 @@ bnpost <- function(bnspace, logScore, data, logScoreFUN = logScoreMultDir){
   out
 }
 
-#' method name
+#' Top graph from BN Posterior.
 #'
 #' method description
 #'
@@ -69,7 +69,7 @@ top.bnpost <- function(x, head = 10, ...){
   out
 }
 
-#' method name
+#' Maximum aposteriori graph.
 #'
 #' method description
 #'
@@ -81,7 +81,7 @@ map.bnpost <- function(x, ...){
   top(x, head = 1)
 }
 
-#' method name
+#' Posterior graph probaiblities.
 #'
 #' method description
 #'
@@ -116,7 +116,7 @@ gp.bnpost <- function(x, logNetworkPriors, log = F, pretty = F, ...){
   }
 }
 
-#' method name
+#' Posterior edge probabilities.
 #'
 #' method description
 #'
@@ -163,7 +163,7 @@ ep.bnpost <- function(x, ...){
   out
 }
 
-#' method name
+#' Entropy.
 #'
 #' method description
 #'
@@ -187,6 +187,8 @@ entropy.bnpost <- function(x, logNetworkPriors, ...){
   -sum(exp(lgp) * lgp)
 }
 
+#' Transition probabilities.
+#' 
 #' Computes the matrix transition probabilities for the specified sampler.
 #'
 #' @param x An object of class "bnpost"
@@ -237,7 +239,7 @@ tp.bnpost <- function(x, sampler = "mh", allowFlips = T, verbose = F, ...){
   alpha
 }
 
-#' method name
+#' Hitting probability.
 #'
 #' method description
 #'
@@ -248,7 +250,7 @@ hp <- function(x, ...){
   UseMethod("hp")
 }
 
-#' method name
+#' Expected hitting time.
 #'
 #' method description
 #'
@@ -259,6 +261,8 @@ eht <- function(x, ...){
   UseMethod("eht")
 }
 
+#' Expected hitting time.
+#' 
 #' Computes the expected hitting times to the posterior modal graph from
 #' the top 'head' other graphs.
 #'
@@ -308,7 +312,7 @@ eht.bnpost <- function(x, head = 5, tp = NULL, ...){
   solve(alpha, vec)[wh]
 }
 
-#' method name
+#' Transition probabilities.
 #'
 #' method description
 #'
@@ -319,7 +323,7 @@ tp <- function(x, ...){
   UseMethod("tp")
 }
 
-#' method name
+#' Conductance.
 #'
 #' method description
 #'

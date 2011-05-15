@@ -1,5 +1,5 @@
 \name{defaultLogScoreFUN}
 \alias{defaultLogScoreFUN}
-\title{method name...}
-\description{method name}
+\title{Multinomial-Dirichlet Log marginal likelihood.}
+\description{Multinomial-Dirichlet Log marginal likelihood.}
 \details{method description}

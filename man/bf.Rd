@@ -1,8 +1,8 @@
 \name{bf}
 \alias{bf}
-\title{method name...}
+\title{Bayes Factor.}
 \usage{bf(bn1, bn2, data, ...)}
-\description{method name}
+\description{Bayes Factor.}
 \details{method description}
 \arguments{\item{bn1}{A bn}
 \item{bn2}{A bn}

@@ -1,8 +1,8 @@
 \name{intersect2}
 \alias{intersect2}
-\title{Fast, dangerous set intersect...}
+\title{Fast, dangerous set intersect.}
 \usage{intersect2(x, y)}
-\description{Fast, dangerous set intersect}
+\description{Fast, dangerous set intersect.}
 \details{A fast, simple version of \code{intersect}.
 This version does not handle factors.
 

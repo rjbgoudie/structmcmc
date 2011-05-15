@@ -1,8 +1,8 @@
 \name{epmx}
 \alias{epmx}
-\title{method name...}
+\title{Edge probabilties matrix.}
 \usage{epmx(x, ...)}
-\description{method name}
+\description{Edge probabilties matrix.}
 \details{method description}
 \arguments{\item{x}{...}
 \item{...}{Further arguments passed to method}}

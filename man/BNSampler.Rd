@@ -1,11 +1,11 @@
 \name{BNSampler}
 \alias{BNSampler}
-\title{Create a MCMC sampler for Bayesian Networks.}
+\title{Create a MCMC sampler (MC^3) for Bayesian Networks.}
 \usage{BNSampler(data, initial, prior, return="network",
     logScoreFUN=defaultLogScoreFUN(),
     logScoreParameters=list(hyperparameters = "qi"), constraint,
     maxNumberParents=Inf, verbose=F, keepTape=F)}
-\description{Create a MCMC sampler for Bayesian Networks.}
+\description{Create a MCMC sampler (MC^3) for Bayesian Networks.}
 \details{The sampler samples Bayesian Networks (ie models).}
 \value{A function, which when called draws the next sample of the MCMC.}
 \arguments{\item{data}{The data.}

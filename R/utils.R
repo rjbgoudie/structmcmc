@@ -8,7 +8,7 @@
 #
 # Copyright 2008 Robert J. B. Goudie, University of Warwick
 
-#' Check validity of start and end
+#' Check validity of start and end.
 #'
 #' Checks if start and end are valid as start and end points
 #' for taking a window (a subset, e.g. to remove burn-in) in a MCMC run
@@ -27,7 +27,7 @@ validStartEnd <- function(start, end, length){
   )
 }
 
-#' Fast, dangerous row sums
+#' Fast, dangerous row sums.
 #' 
 #' A fast, simple version of \code{rowSums}.
 #' This version only handles matrices.
@@ -47,7 +47,7 @@ rowSums2 <- function(x){
   z
 }
 
-#' Fast, dangerous set difference
+#' Fast, dangerous set difference.
 #' 
 #' A fast, simple version of \code{setdiff}.
 #' This version does not handle factors.
@@ -61,7 +61,7 @@ setdiff3 <- function(x, y){
   x[.Internal(match(x, y, 0L, NULL)) == 0L]
 }
 
-#' Fast, dangerous set intersect
+#' Fast, dangerous set intersect.
 #' 
 #' A fast, simple version of \code{intersect}.
 #' This version does not handle factors.
@@ -77,7 +77,7 @@ intersect2 <- function(x, y){
                    fromLast      = F))
 }
 
-#' Fast, dangerous matrix generation
+#' Fast, dangerous matrix generation.
 #' 
 #' A fast, simple version of \code{matrix}.
 #' 
@@ -96,7 +96,7 @@ matrix2 <- function(data, nrow, ncol)
   .Internal(matrix(data, nrow, ncol, FALSE, NULL))
 }
 
-#' Find rows satisfying equality
+#' Find rows satisfying equality.
 #'
 #' Find which rows in column \code{col} of a matrix \code{x} are equal to 
 #' \code{i}.

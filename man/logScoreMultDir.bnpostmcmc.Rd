@@ -1,9 +1,10 @@
 \name{logScoreMultDir.bnpostmcmc}
 \alias{logScoreMultDir.bnpostmcmc}
-\title{Returns the log scores of the best graphs encountered by the sampler.}
+\title{Log scores of best graphs.}
 \usage{\method{logScoreMultDir}{bnpostmcmc} (x, sampler, data,
     sort.by="posterior", head=Inf, use.names=F, ...)}
-\description{Returns the log scores of the best graphs encountered by the sampler.}
+\description{Log scores of best graphs.}
+\details{Returns the log scores of the best graphs encountered by the sampler.}
 \value{A vector of length at least head (if head is finite), giving the
 logScoreMultDir() of the graphs, or all the graphs encountered during
 MCMC if head == Inf.}

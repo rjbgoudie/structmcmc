@@ -8,6 +8,8 @@
 #
 # Copyright 2008 Robert J. B. Goudie, University of Warwick
 
+#' Mukherjee Bioinformatics prior.
+#' 
 #' Compute prior score P(M) for a 'bvsresponse'. The prior is flat from
 #' 0 parents to k0 parents, then exponentially(lambda) decreaasing to kmax,
 #' at which point it becomes zero.
@@ -38,6 +40,8 @@ mukherjeeBioinformaticsPrior <- function(x, k0, kmax, lambda){
   }
 }
 
+#' Check validity.
+#' 
 #' Checks the output of a LOG prior for validity. Basically is it positive?
 #'
 #' @param x A numeric of length 1. The LOG output of a prior function.

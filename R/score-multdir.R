@@ -8,7 +8,7 @@
 #
 # Copyright 2008 Robert J. B. Goudie, University of Warwick
 
-#' method name
+#' Fast ID of a graph.
 #'
 #' method description
 #'
@@ -17,6 +17,9 @@
 fastid <- function(id){
   .Internal(paste(list(id), "", ","))
 }
+
+#' Checks validity.
+#' 
 #' Checks whether the supplied hyperparameters parameter is valid.
 #'
 #' @param x The hyperparameters to test.
@@ -32,6 +35,9 @@ is.valid.hyp <- function(x){
     },
     error = function(e) F)
 }
+
+#' Local Multinomial-Dirichlet Log marginal likelihood.
+#' 
 #' Compute the LOCAL log marginal likelihood of the supplied
 #' Bayesian Networks. ie the contribution to the log marginal liklihood from
 #' one individual node.
@@ -136,7 +142,8 @@ localLogScoreMultDir <- function(node,
                         lgamma(N_prime_marginals)))
   }
 }
-#' method name
+
+#' Multinomial-Dirichlet Log marginal likelihood.
 #'
 #' method description
 #'
@@ -146,6 +153,7 @@ localLogScoreMultDir <- function(node,
 logScoreMultDir <- function(x, ...){
   UseMethod("logScoreMultDir")
 }
+
 #' Compute the log marginal likelihood of the supplied Bayesian Network.
 #'
 #' The data must be discrete. The conditional distributions of each
@@ -201,6 +209,9 @@ logScoreMultDir.bn <- function(x,
                          cache              = cache)
   }), F, F)))
 }
+
+#' Multinomial-Dirichlet Log marginal likelihood (offline).
+#' 
 #' Compute the log marginal likelihood of the supplied Bayesian Network.
 #'
 #' This function is an alternative interface to logScoreMultDir.
@@ -241,6 +252,9 @@ logScoreMultDirOffline <- function(x,
                          checkInput         = F)
   }), F, F)))
 }
+
+#' Multinomial-Dirichlet Log marginal likelihood.
+#' 
 #' Compute the log marginal likelihood of the supplied Bayesian Networks.
 #'
 #' The data must be discrete. The conditional distributions of each
@@ -294,6 +308,9 @@ logScoreMultDir.bn.list <- function(x,
   }
   out
 }
+
+#' Internal functions.
+#' 
 #' Convert a data frame to the appropriate format for the fast/incremental
 #' logScoreMultDir functions, and return as part of the logScoreParameters
 #' list.
@@ -325,6 +342,9 @@ logScoreMultDirPrepare <- function(data, logScoreParameters, checkInput = T){
   data <- data.matrix(data) - 1
   modifyList(logScoreParameters, val = list(data = data, nl = nl))
 }
+
+#' Multinomial-Dirichlet Log marginal likelihood (online).
+#' 
 #' Compute the difference in log marginal likelihood of the supplied
 #' Bayesian Networks, quickly.
 #'

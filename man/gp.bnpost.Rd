@@ -1,8 +1,8 @@
 \name{gp.bnpost}
 \alias{gp.bnpost}
-\title{method name...}
+\title{Posterior graph probaiblities.}
 \usage{\method{gp}{bnpost} (x, logNetworkPriors, log=F, pretty=F, ...)}
-\description{method name}
+\description{Posterior graph probaiblities.}
 \details{method description}
 \arguments{\item{x}{...}
 \item{logNetworkPriors}{...}

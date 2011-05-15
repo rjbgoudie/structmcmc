@@ -1,8 +1,8 @@
 \name{ep.bnpost}
 \alias{ep.bnpost}
-\title{method name...}
+\title{Posterior edge probabilities.}
 \usage{\method{ep}{bnpost} (x, ...)}
-\description{method name}
+\description{Posterior edge probabilities.}
 \details{method description}
 \arguments{\item{x}{...}
 \item{...}{Further arguments (unused)}}

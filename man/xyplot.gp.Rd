@@ -1,8 +1,8 @@
 \name{xyplot.gp}
 \alias{xyplot.gp}
-\title{method name...}
+\title{Scatterplot of posterior graph probabilities.}
 \usage{\method{xyplot}{gp} (gp, head=30, ...)}
-\description{method name}
+\description{Scatterplot of posterior graph probabilities.}
 \details{method description}
 \arguments{\item{gp}{...}
 \item{head}{...}

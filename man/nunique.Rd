@@ -1,7 +1,7 @@
 \name{nunique}
 \alias{nunique}
-\title{method name...}
+\title{Number of unique.}
 \usage{nunique(x)}
-\description{method name}
+\description{Number of unique.}
 \details{method description}
 \arguments{\item{x}{...}}

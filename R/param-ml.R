@@ -8,7 +8,7 @@
 #
 # Copyright 2008 Robert J. B. Goudie, University of Warwick
 
-#' Maximum likelihood estimates
+#' Maximum likelihood estimates.
 #'
 #' A generic
 #'
@@ -19,7 +19,7 @@ ml <- function (x, ...) {
   UseMethod("ml")
 }
 
-#' Maximum likelihood estimates for parameters of a BN
+#' Maximum likelihood estimates for parameters of a BN.
 #'
 #' Computes the maximum likelihood estimates for the parameters of a
 #' Bayesian Network. These are just the proportions of each category for
@@ -109,7 +109,7 @@ ml.bn <- function(x,
   result
 }
 
-#' method name
+#' Undocumented.
 #'
 #' method description
 #'

@@ -8,7 +8,7 @@
 #
 # Copyright 2008 Robert J. B. Goudie, University of Warwick
 
-#' Bayesian posterior parameter estimates
+#' Bayesian posterior parameter estimates.
 #'
 #' A generic
 #'
@@ -19,7 +19,7 @@ bayes <- function (x, ...) {
   UseMethod("bayes")
 }
 
-#' Bayesian posterior parameter estimates
+#' Bayesian posterior parameter estimates.
 #'
 #' A wrapper around \code{\link{ml}}.
 #'

@@ -1,9 +1,9 @@
 \name{drawPT}
 \alias{drawPT}
-\title{method name...}
+\title{Undocumented.}
 \usage{drawPT(samplers, data, n, temperatures, pswap=0.2, burnin=0, verbose=T,
     currentNetwork)}
-\description{method name}
+\description{Undocumented.}
 \details{method description}
 \arguments{\item{samplers}{...}
 \item{data}{...}

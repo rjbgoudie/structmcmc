@@ -8,7 +8,7 @@
 #
 # Copyright 2008 Robert J. B. Goudie, University of Warwick
 
-#' method name
+#' Edge probabilties matrix.
 #'
 #' method description
 #'
@@ -19,6 +19,8 @@ epmx <- function(x, ...){
   UseMethod("epmx")
 }
 
+#' Edge probabilities matrix.
+#' 
 #' Computes the edge probabilities and return a matrix with these. The
 #' format of the matrix is designed for the plotting function xyplot.epmx.
 #'
@@ -104,7 +106,7 @@ epmx.bnpostmcmc.list <- epmx.list <- function(x,
   epmxl
 }
 
-#' method name
+#' Cumulative mean.
 #'
 #' method description
 #'
@@ -115,6 +117,8 @@ cummean <- function(x, ...){
   UseMethod("cummean")
 }
 
+#' Cumulative mean.
+#' 
 #' Compute the cumulative means of the columns of a matrix x.
 #' ie each column is treated separately
 #'
@@ -128,7 +132,7 @@ cummean.matrix <- function(x, ...){
   1/(seq_len(nrow(x))) * apply(x, 2, cumsum)
 }
 
-#' method name
+#' Cumulative edge probabilities.
 #'
 #' method description
 #'
@@ -139,7 +143,7 @@ cumep <- function(x, ...){
   UseMethod("cumep")
 }
 
-#' method name
+#' Cumulative edge probabilities.
 #'
 #' method description
 #'
@@ -171,6 +175,8 @@ mwmean <- function(x, ...){
   UseMethod("mwmean")
 }
 
+#' Moving window mean.
+#' 
 #' Compute the moving window means of the columns of a matrix x.
 #' ie each column is treated separately
 #'
@@ -187,7 +193,7 @@ mwmean.matrix <- function(x, window, ...){
   }
 }
 
-#' method name
+#' Moving window edge probiilities.
 #'
 #' method description
 #'
@@ -198,7 +204,7 @@ mwep <- function(x, ...){
   UseMethod("mwep")
 }
 
-#' method name
+#' Moving window edge probabilities.
 #'
 #' method description
 #'
@@ -218,6 +224,8 @@ mwep.bnpostmcmc.list <- mwep.list <- function(x, window = 10, ...){
   res
 }
 
+#' Plot of cumulative edge probabilities.
+#' 
 #' Returns a xyplot of the cumulative edge probabilities through time
 #' for bnpostmcmc.list and bvspostmcmc.list
 #'
@@ -345,7 +353,7 @@ xyplot.epmx <- function(x){
   }
 }
 
-#' method name
+#' Scatterplot matrix of edge probabilities between runs.
 #'
 #' method description
 #'
@@ -448,7 +456,7 @@ splom.bnpostmcmc.list <- splom.list <- function(x, start = 1, end, plot = F){
 #   )
 # }
 
-#' method name
+#' Plot tape.
 #'
 #' method description
 #'

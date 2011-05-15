@@ -1,8 +1,8 @@
 \name{logScoreZellner}
 \alias{logScoreZellner}
-\title{method name...}
+\title{Normal Log marginal likelihood.}
 \usage{logScoreZellner(x, ...)}
-\description{method name}
+\description{Normal Log marginal likelihood.}
 \details{method description}
 \arguments{\item{x}{...}
 \item{...}{Further arguments passed to method}}

@@ -1,8 +1,8 @@
 \name{whichGraphsNotNeighbours}
 \alias{whichGraphsNotNeighbours}
-\title{Identify neighbouring graphs...}
+\title{Identify neighbouring graphs.}
 \usage{whichGraphsNotNeighbours(x, logScores, verbose=F, head)}
-\description{Identify neighbouring graphs}
+\description{Identify neighbouring graphs.}
 \details{Finds which of the supplied graphs are not neighbours. Neighbouring
 graphs are removed according to a heuristic involving scores.}
 \value{A numeric vector, giving the indicies \code{x} which are 

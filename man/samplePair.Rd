@@ -1,9 +1,9 @@
 \name{samplePair}
 \alias{samplePair}
-\title{Sample the parents of a pair of nodes...}
+\title{Sample the parents of a pair of nodes (Gibbs sampler).}
 \usage{samplePair(currentNetwork, numberOfNodes, nodesSeq, scoresParents,
     parentsTables, allRows, rowsThatContain)}
-\description{Sample the parents of a pair of nodes}
+\description{Sample the parents of a pair of nodes (Gibbs sampler).}
 \details{Sample from posterior distribution on graph, conditional on
 all the edges, except for those corresponding to the parents sets of 
 two nodes.}

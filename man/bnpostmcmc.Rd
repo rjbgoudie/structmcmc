@@ -1,8 +1,8 @@
 \name{bnpostmcmc}
 \alias{bnpostmcmc}
-\title{method name...}
+\title{BN Posterior from MCMC.}
 \usage{bnpostmcmc(sampler, samples, logScoreFUN)}
-\description{method name}
+\description{BN Posterior from MCMC.}
 \details{method description}
 \arguments{\item{sampler}{...}
 \item{samples}{...}

@@ -1,8 +1,8 @@
 \name{dotplot.gp}
 \alias{dotplot.gp}
-\title{method name...}
+\title{Dotplot of posterior graph probabilities.}
 \usage{\method{dotplot}{gp} (gp, head=30, ...)}
-\description{method name}
+\description{Dotplot of posterior graph probabilities.}
 \details{method description}
 \arguments{\item{gp}{...}
 \item{head}{...}

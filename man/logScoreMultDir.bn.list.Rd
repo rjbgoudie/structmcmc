@@ -1,10 +1,12 @@
 \name{logScoreMultDir.bn.list}
 \alias{logScoreMultDir.bn.list}
-\title{Compute the log marginal likelihood of the supplied Bayesian Networks.}
+\title{Multinomial-Dirichlet Log marginal likelihood.}
 \usage{\method{logScoreMultDir}{bn.list} (x, data, hyperparameters="qi",
     cache=new.env(hash = T), verbose=F, ...)}
-\description{Compute the log marginal likelihood of the supplied Bayesian Networks.}
-\details{The data must be discrete. The conditional distributions of each
+\description{Multinomial-Dirichlet Log marginal likelihood.}
+\details{Compute the log marginal likelihood of the supplied Bayesian Networks.
+
+The data must be discrete. The conditional distributions of each
 random variable, conditional on its parents are assumed to be
 multinomial, with Dirichlet priors for the parameters.
 

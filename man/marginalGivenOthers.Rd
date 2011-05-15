@@ -1,8 +1,8 @@
 \name{marginalGivenOthers}
 \alias{marginalGivenOthers}
-\title{Get all marginal probabilities...}
+\title{Get all marginal probabilities.}
 \usage{marginalGivenOthers(x, node, dat, FUN=identity, ...)}
-\description{Get all marginal probabilities}
+\description{Get all marginal probabilities.}
 \details{Get the marginal probability of a node, when each other node (separately)
 has been conditioned upon each of its levels.}
 \value{A list, with a component for each node of the Bayes Net (apart

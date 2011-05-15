@@ -1,9 +1,9 @@
 \name{enumerateParentsTable}
 \alias{enumerateParentsTable}
-\title{Table of all possible parents of a node...}
+\title{Table of all possible parents of a node.}
 \usage{enumerateParentsTable(numberOfNodes, maxNumberParents, required,
     banned, verbose=F)}
-\description{Table of all possible parents of a node}
+\description{Table of all possible parents of a node.}
 \details{Creates a list of tables with rows corresponding to the possible parent 
 sets of each node.}
 \value{A list of matrices of the form returned by 

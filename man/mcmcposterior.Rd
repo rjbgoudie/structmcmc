@@ -1,10 +1,10 @@
 \name{mcmcposterior}
 \alias{mcmcposterior}
-\title{Posterior distribution on Bayesian networks...}
+\title{Posterior distribution on Bayesian networks.}
 \usage{mcmcposterior(sampler=BNSampler, data, prior, logScoreFUN,
     logScoreParameters, constraint, maxNumberParents, nSamples,
     nBurnin, initial, verbose)}
-\description{Posterior distribution on Bayesian networks}
+\description{Posterior distribution on Bayesian networks.}
 \details{Use MCMC to approximate the posterior distribution}
 \value{A \code{bnpostmcmc} object.}
 \arguments{\item{sampler}{A BNSampler. eg BNSampler or BNGibbsSampler etc}
