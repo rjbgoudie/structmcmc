@@ -26,24 +26,27 @@ nunique <- function(x){
 #'
 #' The data is scored as continuous, using a form of the Zellner Prior.
 #'
-#' @param node A numeric vector of length 1. The node to compute
-#'                       the local log score for.
+#' @param node A numeric vector of length 1. The node to compute the local
+#'   log score for.
 #' @param parents A numeric vector. The parents of node.
 #' @param logScoreParameters A list with the following components:
-#'                       data: A matrix with columns giving the values of
-#'                             each random variable.
-#'                       nl  A numeric vector of length nNodes(currentBN),
-#'                             specifying the number of levels that each
-#'                             random variable takes.
-#' @param cache Optionally, provide an environment with cached
-#'                       local scores for this data.
-#' @param checkInput A logical of length 1, specifying whether to check
-#'                       the inputs to the function.
-#'
+#'   \describe{
+#'     \item{data}{A matrix with columns giving the values of each random
+#'                 variable.}
+#'     \item{nl}{A numeric vector of length nNodes(currentBN), specifying the
+#'               number of levels that each random variable takes.}
+#'   }
+#' @param cache Optionally, provide an environment with cached local scores
+#'   for this data.
+#' @param checkInput A logical of length 1, specifying whether to check the
+#'   inputs to the function.
 #' @return A numeric vector of length 1, giving the log marginal likelihood.
 #'   The environment 'cache' will also be updated because its scope is
 #'   global.
 #' @export
+#' @seealso \code{\link{logScoreZellner}},
+#'   \code{\link{logScoreZellnerOffline}},
+#'   \code{\link{logScoreZellnerIncremental}}.
 localLogScoreZellner <- function(node,
                                  parents,
                                  logScoreParameters,
@@ -86,6 +89,7 @@ localLogScoreZellner <- function(node,
 #' @param x ...
 #' @param ... Further arguments passed to method
 #' @export
+#' @seealso \code{\link{logScoreZellner.bn}}
 logScoreZellner <- function(x, ...){
   UseMethod("logScoreZellner")
 }
@@ -96,21 +100,21 @@ logScoreZellner <- function(x, ...){
 #'
 #' The data is scored as continuous, using a form of the Zellner Prior.
 #'
-#' @param x An object of class "bn". The Bayesian Network by
-#'                     for which the marginal likelihood is computed.
-#' @param data A matrix with columns giving the value of each random
-#'                     variable.
-#' @param cache Optionally, provide an environment with cached
-#'                     local scores for this data.
-#' @param checkInput A logical of length 1, specifying whether to check
-#'                     the inputs to the function.
-#' @param ... Further arguments (unused)
-#'
+#' @param x An object of class "bn". The Bayesian Network by for which the
+#'   marginal likelihood is computed.
+#' @param data A matrix with columns giving the value of each random variable.
+#' @param cache Optionally, provide an environment with cached local scores
+#'   for this data.
+#' @param checkInput A logical of length 1, specifying whether to check the
+#'   inputs to the function.
+#' @param ... Further arguments, currently unused
 #' @return A numeric vector of length 1, giving the log marginal likelihood.
 #'   The environment 'cache' will also be updated because its scope is
 #'   global.
 #' @S3method logScoreZellner bn
 #' @method logScoreZellner bn
+#' @seealso \code{\link{logScoreZellner}},
+#'   \code{\link{logScoreZellner.bn.list}}
 logScoreZellner.bn <- function(x,
                                data,
                                cache      = new.env(hash = T),
@@ -143,23 +147,25 @@ logScoreZellner.bn <- function(x,
 #' This function is an alternative interface to logScoreZellner.
 #' This interface is required by the MCMC sampler.
 #'
-#' @param x         An object of class "bn". The Bayesian Network by
-#'                       for which the marginal likelihood is computed.
+#' @param x An object of class "bn". The Bayesian Network by for which the
+#'   marginal likelihood is computed.
 #' @param logScoreParameters A list with the following components:
-#'                       data: A matrix with columns giving the values of
-#'                             each random variable.
-#'                       nl:  A numeric vector of length nNodes(currentBN),
-#'                             specifying the number of levels that each
-#'                             random variable takes.
-#' @param cache Optionally, provide an environment with cached
-#'                       local scores for this data.
-#' @param checkInput A logical of length 1, specifying whether to check
-#'                       the inputs to the function.
-#'
+#'   \describe{
+#'     \item{data}{A matrix with columns giving the values of each random
+#'                 variable.}
+#'     \item{nl}{A numeric vector of length nNodes(currentBN), specifying the
+#'               number of levels that each random variable takes.}
+#'   }
+#' @param cache Optionally, provide an environment with cached local scores
+#'   for this data.
+#' @param checkInput A logical of length 1, specifying whether to check the
+#'   inputs to the function.
 #' @return A numeric vector of length 1, giving the log marginal likelihood.
 #'   The environment 'cache' will also be updated because its scope is
 #'   global.
 #' @export
+#' @seealso \code{\link{logScoreZellner}},
+#'   \code{\link{logScoreZellnerIncremental}}
 logScoreZellnerOffline <- function(x,
                                    logScoreParameters,
                                    cache      = new.env(hash = T),
@@ -188,19 +194,20 @@ logScoreZellnerOffline <- function(x,
 #'
 #' The data is scored as continuous, using a form of the Zellner Prior.
 #'
-#' @param x    An object of class "bn.list", the Bayesian Networks 
-#'          for which the marginal likelihood are computed.
-#' @param data A matrix, with columns giving the values of each
-#'          random variable.
-#' @param cache Optionally, provide an environment with cached
-#'          local scores for this data.
-#' @param ... Further arguments (unused)
+#' @param x An object of class "bn.list", the Bayesian Networks for which
+#'   the marginal likelihood are computed.
+#' @param data A matrix, with columns giving the values of each random
+#'   variable.
+#' @param cache Optionally, provide an environment with cached local scores
+#'   for this data.
+#' @param ... Further arguments, currently unused.
 #'
 #' @return A numeric vector of length 1, giving the log marginal likelihood.
 #'   The environment 'cache' will also be updated because its scope is
 #'   global.
 #' @S3method logScoreZellner bn.list
 #' @method logScoreZellner bn.list
+#' @seealso \code{\link{logScoreZellner.bn}}, \code{\link{logScoreZellner}}
 logScoreZellner.bn.list <- function(x,
                                     data,
                                     cache = new.env(hash = TRUE),
@@ -222,18 +229,27 @@ logScoreZellner.bn.list <- function(x,
 #' In particular, the data is converted to a matrix, and the factor levels
 #' taken integer values from 0, 1, .... ie not on 1, 2, 3.
 #'
-#' @param data A data.frame, with columns being factors giving the
-#'                       values of each random variable.
-#' @param logScoreParameters A list, optionally containing other parameters.
-#' @param checkInput A logical of length 1, specifying whether to check
-#'                       the inputs to the function.
-#'
+#' @param data A data.frame, with columns being factors giving the values of
+#'   each random variable.
+#' @param logScoreParameters A list with the following components:
+#'   \describe{
+#'     \item{data}{A matrix with columns giving the values of each random
+#'                 variable.}
+#'     \item{nl}{A numeric vector of length nNodes(currentBN), specifying the
+#'               number of levels that each random variable takes.}
+#'   }
+#' @param checkInput A logical of length 1, specifying whether to check the
+#'   inputs to the function.
 #' @return A list with the contents of logScoreParameters, with the following
 #'   components added or altered:
-#'     data A matrix with columns giving the value of each random variable.
-#'     nl   A numeric vector of length ncol(data), specifying the number of
-#'          levels that each random variable takes.
+#'   \describe{
+#'     \item{data}{A matrix with columns giving the value of each random
+#'                 variable.}
+#'     \item{nl}{A numeric vector of length ncol(data), specifying the number
+#'               of levels that each random variable takes.}
+#'   }
 #' @export
+#' @seealso \code{\link{logScoreZellner}}
 logScoreZellnerPrepare <- function(data,
                                    logScoreParameters,
                                    checkInput = T){
@@ -256,21 +272,23 @@ logScoreZellnerPrepare <- function(data,
 #'
 #' @param currentBN An object of class "bn".
 #' @param proposalBN An object of class "bn".
-#' @param heads A numeric vector, specifying which nodes have
-#'                       different parents in currentBN and proposalBN.
+#' @param heads A numeric vector, specifying which nodes have different
+#'   parents in currentBN and proposalBN.
 #' @param logScoreParameters A list with the following components:
-#'                       data: A matrix with columns giving the values of
-#'                             each random variable.
-#'                       nl  A numeric vector of length nNodes(currentBN),
-#'                             specifying the number of levels that each
-#'                             random variable takes.
-#' @param cache Optionally, provide an environment with cached
-#'                       local scores for this data.
-#' @param checkInput A logical of length 1, specifying whether to check
-#'                       the inputs to the function.
-#'
+#'   \describe{
+#'     \item{data}{A matrix with columns giving the values of each random
+#'                 variable.}
+#'     \item{nl}{A numeric vector of length nNodes(currentBN), specifying the
+#'               number of levels that each random variable takes.}
+#'   }
+#' @param cache Optionally, provide an environment with cached local scores
+#'   for this data.
+#' @param checkInput A logical of length 1, specifying whether to check the
+#'   inputs to the function.
 #' @return logscore(proposalBN) - logscore(currentBN)
 #' @export
+#' @seealso \code{\link{logScoreZellner}},
+#'   \code{\link{logScoreZellnerOffline}}
 logScoreZellnerIncremental <- function(currentBN,
                                        proposalBN,
                                        heads,

@@ -5,4 +5,5 @@
 \description{Checks validity.}
 \details{Checks whether the supplied hyperparameters parameter is valid.}
 \value{A logical of length 1.}
+\seealso{\code{\link{logScoreMultDir}}}
 \arguments{\item{x}{The hyperparameters to test.}}
