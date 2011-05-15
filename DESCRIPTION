@@ -8,8 +8,8 @@ Maintainer: R.J.B. Goudie <rjbgoudie@gmail.com>
 Description: Structural inference for Bayesian Networks and Variable
     Selection.
 Depends: R (>= 2.9), parental
-Imports: parental, lattice, MASS, zoo, digest, nnet, reshape
-Suggests: gRain
+Imports: parental, lattice, digest
+Suggests: gRain, nnet, reshape, zoo
 License: GPL-3
 Collate: 'constraints.R' 'cross-validation.R' 'diagnostics.R'
     'mcmc-bigflips.R' 'mcmc-gibbs.R' 'mcmc-grzeg.R' 'mcmc-mh.R'
