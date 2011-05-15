@@ -27,6 +27,7 @@ fastid <- function(id){
 #' @return A logical of length 1.
 #' @S3method is.valid hyp
 #' @method is.valid hyp
+#' @seealso \code{\link{logScoreMultDir}}
 is.valid.hyp <- function(x){
   tryCatch({
     all(class(x)  ==   "character",
@@ -50,33 +51,31 @@ is.valid.hyp <- function(x){
 #' Mukherjee and Speed (2008) Network inference using informative priors.
 #' PNAS 105 (38) 14313-14318, doi: 10.1073/pnas.0802272105
 #'
-#' @param node A numeric vector of length 1. The node to compute
-#'                       the local log score for.
+#' @param node A numeric vector of length 1. The node to compute the local
+#'   log score for.
 #' @param parents A numeric vector. The parents of node.
 #' @param logScoreParameters A list with the following components:
-#'                       data         A matrix (NOT data.frame), with
-#'                                        columns being integers in the
-#'                                        range 0, 1, 2, ....  giving the
-#'                                        values of each random variable.
-#'                                       
-#'                                        **** The integers MUST start ****
-#'                                        **** numbering at 0 NOT 1    ****
-#'                                       
-#'                       nl           A numeric vector of length
-#'                                        nNodes(currentBN), specifying the
-#'                                        number of levels that each random
-#'                                        variable takes.
-#'                       hyperparameters: A character vector of length one.
-#'                                        Either "qi", "one", or "point9"
-#' @param cache Optionally, provide an environment with cached
-#'                       local scores for this data.
-#' @param checkInput A logical of length 1, specifying whether to check
-#'                       the inputs to the function.
-#'
+#'   \describe{
+#'     \item{data}{A matrix (NOT data.frame), with columns being integers
+#'                 in the range 0, 1, 2, ....  giving the values of each
+#'                 random variable.
+#'                 **** The integers MUST start  numbering at 0 NOT 1    ****}
+#'     \item{nl}{A numeric vector of length ncol(data), specifying the number 
+#'               of levels that each random variable takes.}
+#'     \item{hyperparameters}{A character vector of length one.
+#'                            Either "qi", "one", or "point9"}
+#'   }
+#' @param cache Optionally, provide an environment with cached local scores
+#'   for this data.
+#' @param checkInput A logical of length 1, specifying whether to check the
+#'   inputs to the function.
 #' @return A numeric vector of length 1, giving the log marginal likelihood.
 #'   The environment 'cache' will also be updated because its scope is
 #'   global.
 #' @export
+#' @seealso \code{\link{logScoreMultDir}},
+#'   \code{\link{logScoreMultDirIncremental}},
+#'   \code{\link{logScoreMultDirOffline}}
 localLogScoreMultDir <- function(node,
                                  parents,
                                  logScoreParameters,
@@ -147,9 +146,13 @@ localLogScoreMultDir <- function(node,
 #'
 #' method description
 #'
-#' @param x ...
-#' @param ... Further arguments passed to method
+#' @param x A \code{bn}.
+#' @param ... Further arguments, passed to method
 #' @export
+#' @seealso \code{\link{logScoreMultDir.bn}},
+#'   \code{\link{logScoreMultDir.bn.list}},
+#'   \code{\link{logScoreMultDirOffline}},
+#'   \code{\link{logScoreMultDirIncremental}}
 logScoreMultDir <- function(x, ...){
   UseMethod("logScoreMultDir")
 }
@@ -164,23 +167,24 @@ logScoreMultDir <- function(x, ...){
 #' Mukherjee and Speed (2008) Network inference using informative priors.
 #' PNAS 105 (38) 14313-14318, doi: 10.1073/pnas.0802272105
 #'
-#' @param x An object of class "bn". The Bayesian Network by
-#'                     for which the marginal likelihood is computed.
-#' @param data A data.frame, with columns being factors giving the
-#'                     values of each random variable.
-#' @param cache Optionally, provide an environment with cached
-#'                     local scores for this data.
-#' @param hyperparameters A character vector of length one. Either "qi", "one",
-#'                     or "point9"
-#' @param checkInput A logical of length 1, specifying whether to check
-#'                     the inputs to the function.
-#' @param ... Further arguments (unused)
-#'
+#' @param x An object of class "bn". The Bayesian Network by for which the
+#'   marginal likelihood is computed.
+#' @param data A data.frame, with columns being factors giving the values of
+#'   each random variable.
+#' @param cache Optionally, provide an environment with cached local scores
+#'   for this data.
+#' @param hyperparameters A character vector of length one. Either "qi",
+#'   "one", or "point9"
+#' @param checkInput A logical of length 1, specifying whether to check the
+#'   inputs to the function.
+#' @param ... Further arguments, currently unused
 #' @return A numeric vector of length 1, giving the log marginal likelihood.
 #'   The environment 'cache' will also be updated because its scope is
 #'   global.
 #' @S3method logScoreMultDir bn
 #' @method logScoreMultDir bn
+#' @seealso \code{\link{logScoreMultDir}},
+#'   \code{\link{logScoreMultDir.bn.list}}
 logScoreMultDir.bn <- function(x,
                                data,
                                cache           = new.env(hash = T),
@@ -217,18 +221,29 @@ logScoreMultDir.bn <- function(x,
 #' This function is an alternative interface to logScoreMultDir.
 #' This interface is required by the MCMC sampler.
 #'
-#' @param x       An object of class "bn". The Bayesian Network by for
-#'               which the marginal likelihood is computed.
-#' @param logScoreParameters ...
-#' @param cache Optionally, provide an environment with cached
-#'               local scores for this data.
-#' @param checkInput A logical of length 1, specifying whether to check
-#'               the inputs to the function.
-#'
+#' @param x An object of class "bn". The Bayesian Network by for which the 
+#'   marginal likelihood is computed.
+#' @param logScoreParameters A list with the following components:
+#'   \describe{
+#'     \item{data}{A matrix (NOT data.frame), with columns being integers
+#'                 in the range 0, 1, 2, ....  giving the values of each
+#'                 random variable.
+#'                 **** The integers MUST start  numbering at 0 NOT 1    ****}
+#'     \item{nl}{A numeric vector of length ncol(data), specifying the number 
+#'               of levels that each random variable takes.}
+#'     \item{hyperparameters}{A character vector of length one.
+#'                            Either "qi", "one", or "point9"}
+#'   }
+#' @param cache Optionally, provide an environment with cached local scores 
+#'   for this data.
+#' @param checkInput A logical of length 1, specifying whether to check the
+#'   inputs to the function.
 #' @return A numeric vector of length 1, giving the log marginal likelihood.
 #'   The environment 'cache' will also be updated because its scope is
 #'   global.
 #' @export
+#' @seealso \code{\link{logScoreMultDir}},
+#'   \code{\link{logScoreMultDirIncremental}}
 logScoreMultDirOffline <- function(x,
                                    logScoreParameters,
                                    cache      = new.env(hash = T),
@@ -265,23 +280,25 @@ logScoreMultDirOffline <- function(x,
 #' Mukherjee and Speed (2008) Network inference using informative priors.
 #' PNAS 105 (38) 14313-14318, doi: 10.1073/pnas.0802272105
 #'
-#' @param x An object of class "bn.list", the Bayesian Networks 
-#'                     for which the marginal likelihood are computed.
-#' @param data A data.frame, with columns being factors giving the
-#'                     values of each random variable.
-#' @param cache Optionally, provide an environment with cached
-#'                     local scores for this data.
-#' @param hyperparameters  A character vector of length one. Either "qi", "one",
-#'                     or "point9"
+#' @param x An object of class "bn.list", the Bayesian Networks for which
+#'   the marginal likelihood are computed.
+#' @param data A data.frame, with columns being factors giving the values of
+#'   each random variable.
+#' @param cache Optionally, provide an environment with cached local scores
+#'   for this data.
+#' @param hyperparameters  A character vector of length one. Either "qi",
+#'   "one", or "point9"
 #' @param verbose A logical of length 1. If true, a progress bar will
 #'   be shown.
 #' @param ... Further arguments (unused)
-#'
 #' @return A numeric vector of length 1, giving the log marginal likelihood.
 #'   The environment 'cache' will also be updated because its scope is
 #'   global.
 #' @S3method logScoreMultDir bn.list
 #' @method logScoreMultDir bn.list
+#' @seealso \code{\link{logScoreMultDir}}, \code{\link{logScoreMultDir.bn}},
+#'   \code{\link{logScoreMultDirOffline}},
+#'   \code{\link{logScoreMultDirIncremental}}
 logScoreMultDir.bn.list <- function(x,
                                     data,
                                     hyperparameters = "qi",
@@ -318,21 +335,33 @@ logScoreMultDir.bn.list <- function(x,
 #' In particular, the data is converted to a matrix, and the factor levels
 #' taken integer values from 0, 1, .... ie not on 1, 2, 3.
 #'
-#' @param data               A data.frame, with columns being factors giving the
-#'                       values of each random variable.
+#' @param data A data.frame, with columns being factors giving the values of 
+#'    each random variable.
 #' @param logScoreParameters A list, optionally containing other parameters.
-#'                       In particular, it may contain 'hyperparameters'
+#'   In particular, it may contain 'hyperparameters'.
+#'   \describe{
+#'     \item{data}{A matrix (NOT data.frame), with columns being integers
+#'                 in the range 0, 1, 2, ....  giving the values of each
+#'                 random variable.
+#'                 **** The integers MUST start  numbering at 0 NOT 1    ****}
+#'     \item{nl}{A numeric vector of length ncol(data), specifying the number 
+#'               of levels that each random variable takes.}
+#'     \item{hyperparameters}{A character vector of length one.
+#'                            Either "qi", "one", or "point9"}
+#'   }
 #' @param checkInput A logical of length 1, specifying whether to check
-#'                       the inputs to the function.
-#'
+#'   the inputs to the function.
 #' @return A list with the contents of logScoreParameters, with the following
 #'   components added or altered:
-#'     data A matrix (NOT data.frame), with columns being integers
-#'          in the range 0, 1, 2, ....  giving the values of each
-#'          random variable.
-#'     nl   A numeric vector of length ncol(data), specifying the number of
-#'          levels that each random variable takes.
+#'   \describe{
+#'     \item{data}{A matrix (NOT data.frame), with columns being integers
+#'                 in the range 0, 1, 2, ....  giving the values of each
+#'                 random variable.}
+#'     \item{nl}{A numeric vector of length ncol(data), specifying the number 
+#'               of levels that each random variable takes.}
+#'   }
 #' @export
+#' @seealso \code{\link{logScoreMultDir}}
 logScoreMultDirPrepare <- function(data, logScoreParameters, checkInput = T){
   if (isTRUE(checkInput)){
     stopifnot(class(data)                     == "data.frame",
@@ -360,32 +389,29 @@ logScoreMultDirPrepare <- function(data, logScoreParameters, checkInput = T){
 #' Mukherjee and Speed (2008) Network inference using informative priors.
 #' PNAS 105 (38) 14313-14318, doi: 10.1073/pnas.0802272105
 #'
-#' @param currentBN       An object of class "bn".
-#' @param proposalBN      An object of class "bn".
-#' @param heads           A numeric vector, specifying which nodes have
-#'                       different parents in currentBN and proposalBN.
+#' @param currentBN An object of class "bn".
+#' @param proposalBN An object of class "bn".
+#' @param heads A numeric vector, specifying which nodes have different
+#'   parents in currentBN and proposalBN.
 #' @param logScoreParameters A list with the following components:
-#'                       data         A matrix (NOT data.frame), with
-#'                                        columns being integers in the
-#'                                        range 0, 1, 2, ....  giving the
-#'                                        values of each random variable.
-#'                                       
-#'                                        **** The integers MUST start ****
-#'                                        **** numbering at 0 NOT 1    ****
-#'                                       
-#'                       nl           A numeric vector of length
-#'                                        nNodes(currentBN), specifying the
-#'                                        number of levels that each random
-#'                                        variable takes.
-#'                       hyperparameters: A character vector of length one.
-#'                                        Either "qi", "one", or "point9"
-#' @param cache        Optionally, provide an environment with cached
-#'                    local scores for this data.
-#' @param checkInput   A logical of length 1, specifying whether to check the
-#'                    inputs to the function.
-#'
+#'   \describe{
+#'     \item{data}{A matrix (NOT data.frame), with columns being integers
+#'                 in the range 0, 1, 2, ....  giving the values of each
+#'                 random variable.
+#'                 **** The integers MUST start  numbering at 0 NOT 1    ****}
+#'     \item{nl}{A numeric vector of length ncol(data), specifying the number 
+#'               of levels that each random variable takes.}
+#'     \item{hyperparameters}{A character vector of length one.
+#'                            Either "qi", "one", or "point9"}
+#'   }
+#' @param cache Optionally, provide an environment with cached local scores
+#'   for this data.
+#' @param checkInput A logical of length 1, specifying whether to check the
+#'   inputs to the function.
 #' @return logscore(proposalBN) - logscore(currentBN)
 #' @export
+#' @seealso \code{\link{logScoreMultDir}},
+#'   \code{\link{logScoreMultDirOffline}}
 logScoreMultDirIncremental <- function(currentBN,
                                        proposalBN,
                                        heads,

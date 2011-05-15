@@ -12,8 +12,8 @@
 #'
 #' method description
 #'
-#'
 #' @export
+#' @seealso \code{\link{logScoreMultDir}}, \code{\link{logScoreZellner}}
 defaultLogScoreFUN <- function(){
   list(offline = logScoreMultDirOffline,
        online  = logScoreMultDirIncremental,

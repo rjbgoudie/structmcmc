@@ -4,5 +4,9 @@
 \usage{logScoreMultDir(x, ...)}
 \description{Multinomial-Dirichlet Log marginal likelihood.}
 \details{method description}
-\arguments{\item{x}{...}
-\item{...}{Further arguments passed to method}}
+\seealso{\code{\link{logScoreMultDir.bn}},
+\code{\link{logScoreMultDir.bn.list}},
+\code{\link{logScoreMultDirOffline}},
+\code{\link{logScoreMultDirIncremental}}}
+\arguments{\item{x}{A \code{bn}.}
+\item{...}{Further arguments, passed to method}}

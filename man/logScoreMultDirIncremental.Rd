@@ -19,26 +19,24 @@ The notation here roughly follows
 Mukherjee and Speed (2008) Network inference using informative priors.
 PNAS 105 (38) 14313-14318, doi: 10.1073/pnas.0802272105}
 \value{logscore(proposalBN) - logscore(currentBN)}
+\seealso{\code{\link{logScoreMultDir}},
+\code{\link{logScoreMultDirOffline}}}
 \arguments{\item{currentBN}{An object of class "bn".}
 \item{proposalBN}{An object of class "bn".}
-\item{heads}{A numeric vector, specifying which nodes have
-different parents in currentBN and proposalBN.}
+\item{heads}{A numeric vector, specifying which nodes have different
+parents in currentBN and proposalBN.}
 \item{logScoreParameters}{A list with the following components:
-data         A matrix (NOT data.frame), with
-columns being integers in the
-range 0, 1, 2, ....  giving the
-values of each random variable.
-
-**** The integers MUST start ****
-**** numbering at 0 NOT 1    ****
-
-nl           A numeric vector of length
-nNodes(currentBN), specifying the
-number of levels that each random
-variable takes.
-hyperparameters: A character vector of length one.
+\describe{
+\item{data}{A matrix (NOT data.frame), with columns being integers
+in the range 0, 1, 2, ....  giving the values of each
+random variable.
+**** The integers MUST start  numbering at 0 NOT 1    ****}
+\item{nl}{A numeric vector of length ncol(data), specifying the number 
+of levels that each random variable takes.}
+\item{hyperparameters}{A character vector of length one.
 Either "qi", "one", or "point9"}
-\item{cache}{Optionally, provide an environment with cached
-local scores for this data.}
+}}
+\item{cache}{Optionally, provide an environment with cached local scores
+for this data.}
 \item{checkInput}{A logical of length 1, specifying whether to check the
 inputs to the function.}}
