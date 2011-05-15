@@ -3,7 +3,7 @@ structmcmc
 
 structmcmc is a set of tools for performing structural inference for Bayesian Networks using MCMC in [`R`][R], a free software environment for statistical computing and graphics.
 
-The widely-used MC<sup>3</sup> ([Madigan & Raftery, 1995][Madigan:1995p10499]) is implemented, as well as a number of variants of the algorithm. The MC<sup>3</sup> algorithm is a Metropolis-Hastings sampler for which the target distribution is the posterior distribution of Bayesian networks. Tools for exact solutions are also available, but for networks with more than, say, 6 nodes, these will be prohibitively slow.
+The widely-used MC<sup>3</sup> algorithm ([Madigan & Raftery, 1995][Madigan:1995p10499]) is implemented, as well as a number of variants of the algorithm. The MC<sup>3</sup> algorithm is a Metropolis-Hastings sampler for which the target distribution is the posterior distribution of Bayesian networks. Tools for exact solutions are also available, but for networks with more than, say, 6 nodes, these will be prohibitively slow.
 
 The implementation allows the local conditional distributions to be multinomial or Gaussian, using standard priors. Arbitrary structural priors for the Bayesian network can be specified. The main difficulty in sampling Bayesian networks efficiently is ensuring the acyclicity constraint is not violated. The package implements the cycle-checking methods introduced by [King & Sagert (2002)][King:2002gt], which is an alternative to the method introduced by [Giudici & Castelo (2003)][Giudici:2003cn]. To enable convergence to be assessed, a number of tools for creating diagnostic plots are included.
 
