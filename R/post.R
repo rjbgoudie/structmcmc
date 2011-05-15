@@ -639,7 +639,7 @@ levelplot.bnpostmcmc <- levelplot.bnpost <- function(x){
   levelplot(ep(x))
 }
 
-#' Internal function
+#' Internal function.
 #'
 #' method description
 #'

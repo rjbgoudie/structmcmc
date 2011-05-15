@@ -8,7 +8,7 @@
 #
 # Copyright 2008 Robert J. B. Goudie, University of Warwick
 
-#' Convert \code{data.frame} of factors to integers.
+#' Convert a data frame of factors to integers.
 #'
 #' Converts a \code{data.frame} that consists columns of factors into a
 #' \code{data.frame} consisting of integers
@@ -36,7 +36,7 @@ fdfAsInt <- function(x, useLevelNames = T){
   }))
 }
 
-#' Convert \code{data.frame} of integers to factors.
+#' Convert a data frame of integers to factors.
 #'
 #' Converts a \code{data.frame} that consists columns of integers into a
 #' \code{data.frame} consisting of factos
