@@ -886,7 +886,7 @@ ep.list <- function(...){
 #'
 #' method description
 #'
-#' @param eplist ...
+#' @param eplist A *NAMED* list of edge probability matrices.
 #' @param subsetBy ...
 #' @param head ...
 #' @param ... Further arguments passed to method
@@ -904,7 +904,7 @@ ep.list <- function(...){
 #' myep1 <- ep(exact)
 #' myep2 <- ep(mcmc)
 #' if (require(lattice)){
-#'   dotplot(ep.list(myep1, myep2))
+#'   dotplot(ep.list(Exact = myep1, MCMC = myep2))
 #' }
 dotplot.ep.list <- function(eplist, subsetBy = "Exact", head = 30, ...){
   epTypes <- names(eplist)
@@ -1012,7 +1012,7 @@ dotplot.gp <- function(gp, head = 30, ...){
   subsetTotals <- tapply(gpdata[, c("gp")], gpdata[, "name"], sum)
   subsetNames <- names(sort(subsetTotals, dec = T))
 
-  gpdata$name <- with(gpdata, reorder(epdata$name, gp))
+  gpdata$name <- with(gpdata, reorder(gpdata$name, gp))
 
   if (!is.null(head)){
     subsetNames <- subsetNames[seq_len(head)]
@@ -1664,11 +1664,25 @@ rocplot <- function(true,
 #' @param ... Further arguments passed to method
 #' @export
 #' @seealso \code{\link{xyplot.cumtvd}}, \code{\link{cumtvd.list}}
+#' @examples
+#' x1 <- factor(c(1, 1, 0, 1, 1, 1))
+#' x2 <- factor(c(0, 1, 0, 1, 0, 1))
+#' x3 <- factor(c(0, 1, 0, 0, 0, 0))
+#' x <- data.frame(x1 = x1, x2 = x2, x3 = x3)
+#' 
+#' exact <- posterior(x, "exact")
+#' exactgp <- gp(exact)
+#' mcmc1 <- posterior(x, "mc3", nSamples = 1000, nBurnin = 100)
+#' mcmc2 <- posterior(x, "mc3", nSamples = 1000, nBurnin = 100)
+#' 
+#' tvd <- cumtvd(exactgp = exactgp,
+#'               bnpostmcmclist = bnpostmcmc.list(mcmc1, mcmc2))
 cumtvd <- function(exactgp, bnpostmcmclist, start = 1, end,
-                   nbin = floor((start - end)/100)){
+                   nbin = (end - start + 1)/100){
   stopifnot(class(bnpostmcmclist) == "bnpostmcmc.list")
   if (missing(end)){
     end <- length(bnpostmcmclist[[1]]$samples)
+    nbin <- (end - start + 1)/100
   }
 
   numberOfNodes <- length(bnpostmcmclist[[1]]$samples[[1]])
@@ -1741,6 +1755,22 @@ cumtvd <- function(exactgp, bnpostmcmclist, start = 1, end,
 #' @S3method xyplot cumtvd
 #' @method xyplot cumtvd
 #' @seealso \code{\link{cumtvd}}
+#' @examples
+#' x1 <- factor(c(1, 1, 0, 1, 1, 1))
+#' x2 <- factor(c(0, 1, 0, 1, 0, 1))
+#' x3 <- factor(c(0, 1, 0, 0, 0, 0))
+#' x <- data.frame(x1 = x1, x2 = x2, x3 = x3)
+#' 
+#' exact <- posterior(x, "exact")
+#' exactgp <- gp(exact)
+#' mcmc1 <- posterior(x, "mc3", nSamples = 1000, nBurnin = 100)
+#' mcmc2 <- posterior(x, "mc3", nSamples = 1000, nBurnin = 100)
+#' 
+#' tvd <- cumtvd(exactgp = exactgp,
+#'               bnpostmcmclist = bnpostmcmc.list(mcmc1, mcmc2))
+#' if (require(lattice)){
+#'   xyplot(tvd)
+#' }
 xyplot.cumtvd <- function(cumtvd){
   # stack the cumtvd to a dataframe
   # with a column 'ind'
