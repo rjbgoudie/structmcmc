@@ -8,6 +8,7 @@ the top 'head' other graphs.
 
 See Norris (1998) Markov Chains. Cambridge. Theorem 1.3.5, p17.}
 \value{A vector of the expected hitting times.}
+\seealso{\code{\link{eht}}, \code{\link{tp}}, \code{\link{hp}}}
 \arguments{\item{x}{An object of class "bnpost".}
 \item{head}{The expected hitting time from the top 'head' ranked graphs,
 with respect to the posterior will be returned. All are computed,

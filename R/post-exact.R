@@ -27,6 +27,10 @@
 #'                    pre-computation required by the logScore functions.}
 #'   }
 #' @export
+#' @seealso \code{\link{bnpostmcmc}}, \code{\link{top.bnpost}}, 
+#'   \code{\link{map.bnpost}}, \code{\link{gp.bnpost}},
+#'   \code{\link{entropy.bnpost}}, \code{\link{tp.bnpost}},
+#'   \code{\link{eht.bnpost}}
 bnpost <- function(bnspace, logScore, data, logScoreFUN = logScoreMultDir){
   stopifnot(class(bnspace)     == c("bn.list", "parental.list"),
             class(logScore)    == "numeric",
@@ -51,6 +55,7 @@ bnpost <- function(bnspace, logScore, data, logScoreFUN = logScoreMultDir){
 #' @param ... Further arguments (unused)
 #' @S3method top bnpost
 #' @method top bnpost
+#' @seealso \code{\link{top}}, \code{\link{map.bnpost}}
 top.bnpost <- function(x, head = 10, ...){
   logScore <- x$logScore
   names(logScore) <- as.character(x$bnspace)
@@ -77,6 +82,7 @@ top.bnpost <- function(x, head = 10, ...){
 #' @param ... Further arguments (unused)
 #' @S3method map bnpost
 #' @method map bnpost
+#' @seealso \code{\link{map}}, \code{\link{top.bnpost}}
 map.bnpost <- function(x, ...){
   top(x, head = 1)
 }
@@ -92,6 +98,7 @@ map.bnpost <- function(x, ...){
 #' @param ... Further arguments (unused)
 #' @S3method gp bnpost
 #' @method gp bnpost
+#' @seealso \code{\link{gp}}, \code{\link{ep.bnpost}}
 gp.bnpost <- function(x, logNetworkPriors, log = F, pretty = F, ...){
   logScore <- x$logScore
   family <- x$bnspace
@@ -124,6 +131,7 @@ gp.bnpost <- function(x, logNetworkPriors, log = F, pretty = F, ...){
 #' @param ... Further arguments (unused)
 #' @S3method ep bnpost
 #' @method ep bnpost
+#' @seealso \code{\link{ep}}, \code{\link{gp.bnpost}}
 ep.bnpost <- function(x, ...){
   logScore <- x$logScore
   family <- x$bnspace
@@ -172,6 +180,7 @@ ep.bnpost <- function(x, ...){
 #' @param ... Further arguments (unused)
 #' @S3method entropy bnpost
 #' @method entropy bnpost
+#' @seealso \code{\link{entropy}}
 entropy.bnpost <- function(x, logNetworkPriors, ...){
   logScore <- x$logScore
   family <- x$bnspace
@@ -201,6 +210,7 @@ entropy.bnpost <- function(x, logNetworkPriors, ...){
 #' @return A matrix of transition probabilities.
 #' @S3method tp bnpost
 #' @method tp bnpost
+#' @seealso \code{\link{tp}}
 tp.bnpost <- function(x, sampler = "mh", allowFlips = T, verbose = F, ...){
   stopifnot(class(x) == "bnpost",
             sampler == "mh",
@@ -246,6 +256,7 @@ tp.bnpost <- function(x, sampler = "mh", allowFlips = T, verbose = F, ...){
 #' @param x ...
 #' @param ... Further arguments passed to method
 #' @export
+#' @seealso \code{\link{eht}}, \code{\link{conductance}}, \code{\link{tp}}
 hp <- function(x, ...){
   UseMethod("hp")
 }
@@ -257,6 +268,7 @@ hp <- function(x, ...){
 #' @param x ...
 #' @param ... Further arguments passed to method
 #' @export
+#' @seealso \code{\link{eht.bnpost}}
 eht <- function(x, ...){
   UseMethod("eht")
 }
@@ -278,6 +290,7 @@ eht <- function(x, ...){
 #' @return A vector of the expected hitting times.
 #' @S3method eht bnpost
 #' @method eht bnpost
+#' @seealso \code{\link{eht}}, \code{\link{tp}}, \code{\link{hp}}
 eht.bnpost <- function(x, head = 5, tp = NULL, ...){
   stopifnot(class(x) == "bnpost",
             class(head) %in% c("numeric", "integer"),
@@ -319,6 +332,7 @@ eht.bnpost <- function(x, head = 5, tp = NULL, ...){
 #' @param x ...
 #' @param ... Further arguments passed to method
 #' @export
+#' @seealso \code{\link{eht}}, \code{\link{hp}}, \code{\link{conductance}}
 tp <- function(x, ...){
   UseMethod("tp")
 }
@@ -330,6 +344,7 @@ tp <- function(x, ...){
 #' @param x ...
 #' @param states ...
 #' @export
+#' @seealso \code{\link{eht}}, \code{\link{hp}}, \code{\link{tp}}
 conductance <- function(x, states){
   # not complete nor correct!
   stop("not complete nor correct")

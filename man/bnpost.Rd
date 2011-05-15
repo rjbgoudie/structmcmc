@@ -4,6 +4,10 @@
 \usage{bnpost(bnspace, logScore, data, logScoreFUN=logScoreMultDir)}
 \description{BN Exact Posterior.}
 \details{method description}
+\seealso{\code{\link{bnpostmcmc}}, \code{\link{top.bnpost}}, 
+\code{\link{map.bnpost}}, \code{\link{gp.bnpost}},
+\code{\link{entropy.bnpost}}, \code{\link{tp.bnpost}},
+\code{\link{eht.bnpost}}}
 \arguments{\item{bnspace}{...}
 \item{logScore}{...}
 \item{data}{...}
