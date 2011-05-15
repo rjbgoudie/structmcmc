@@ -5,6 +5,7 @@
     log=F, pretty=F, levels, ...)}
 \description{Posterior graph probabilities.}
 \details{method description}
+\seealso{\code{\link{gp}}, \code{\link{gp.bnpostmcmc.list}}}
 \arguments{\item{x}{...}
 \item{logNetworkPriors}{...}
 \item{start}{...}
