@@ -8,6 +8,7 @@
 \code{node} set to parent sets corresponding to each row of a single 
 component of a \code{parentsTable}.}
 \value{A numeric vector of scores.}
+\seealso{\code{\link{scoreParentsTable}}}
 \arguments{\item{node}{A node. A numeric vector of length 1.}
 \item{parentsTable}{A component of a \code{parentsTable}, of the form 
 created by \code{enumerateParentsTable()}.}

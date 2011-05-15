@@ -8,6 +8,9 @@
 sets of each node.}
 \value{A list of matrices of the form returned by 
 \code{enumerateParentsTableNode}.}
+\seealso{\code{\link{enumerateParentsTableNode}},
+\code{\link{scoreParentsTable}}, \code{\link{whichParentSetRows}},
+\code{\link{getRowsThatContain}}}
 \arguments{\item{numberOfNodes}{Number of nodes}
 \item{maxNumberParents}{The maximum indegree of the node.}
 \item{required}{A list of numeric vectors. Each component is a numeric 

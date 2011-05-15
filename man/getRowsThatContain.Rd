@@ -10,6 +10,8 @@ list is a list of length \code{numberOfNodes}, the i^{th} component of
 which is a numeric vector containing the indicies of 
 \code{parentsTables[[node]]} that correspond to parent sets including 
 \code{i}.}
+\seealso{\code{\link{enumerateParentsTable}},
+\code{\link{scoreParentsTable}}}
 \arguments{\item{numberOfNodes}{The number of nodes. A numeric vector.}
 \item{parentsTables}{A list of tables of the form returned by 
 \code{enumerateParentsTable()}}
