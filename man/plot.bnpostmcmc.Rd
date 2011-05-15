@@ -9,7 +9,6 @@ encountered graph.}
 \value{A plot of the top graph, with their marginal likelihoods (without
 priors)}
 \seealso{\code{\link{levelplot.bnpostmcmc}},
-\code{\link{levelplot.bnpost}}, \code{\link{bnpostmcmc}},
-\code{\link{bnpost}}}
+\code{\link{bnpostmcmc}}, \code{\link{bnpost}}}
 \arguments{\item{x}{An object of class "bnpostmcmc" or "bnpost"}
 \item{top}{Optionally provide pre-computed top(x)}}

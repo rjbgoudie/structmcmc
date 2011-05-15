@@ -17,18 +17,11 @@ mcmc <- posterior(data = x, method = "mh-mcmc")
 
 # Compute and plot estimated edge probabilities
 epmcmc <- ep(mcmc)
-levelplot(epmcmc)
 
 # Exact evaluation by exhaustive enumeration
 exact <- posterior(x, "exact")
 epexact <- ep(exact)
-levelplot(epexact)
 
 # Comparing multiple MCMC runs
 mcmc2 <- posterior(x, "mh-mcmc")
-epmcmc2 <- ep(mcmc2)
-levelplot(epmcmc2)
-
-levelplot(ep.list(exact = epexact, mcmc = epmcmc))
-
-cumep(list(mcmc, mcmc2))}
+epmcmc2 <- ep(mcmc2)}
