@@ -182,7 +182,9 @@ mwmean <- function(x, ...){
 #' @S3method mwmean matrix
 #' @method mwmean matrix
 mwmean.matrix <- function(x, window, ...){
-  unname(as.matrix(zoo::rollapply(as.zoo(x), window, mean)))
+  if (require(zoo)){
+    unname(as.matrix(rollapply(as.zoo(x), window, mean)))
+  }
 }
 
 #' method name
