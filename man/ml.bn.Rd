@@ -15,6 +15,7 @@ containing components for each configuration of that node's parents
 in the Bayesian Network \code{x}. Each of these components is a
 numeric vector of probabilities that sum to 1, labelled with the
 levels of the relevant node.}
+\seealso{\code{\link{ml}}}
 \arguments{\item{x}{The Bayesian Network. An object of class 'bn'}
 \item{data}{A data frame}
 \item{nodes}{A subset of 1, ..., \code{nNodes(x)}. A numeric vector.}
