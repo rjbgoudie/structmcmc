@@ -12,6 +12,7 @@ Werhli et al. Comparative evaluation of reverse engineering gene
 regulatory networks with relevance networks, graphical gaussian models
 and bayesian networks. Bioinformatics (2006) vol. 22 (20) pp. 2523}
 \value{A lattice object, containing the ROC plot}
+\seealso{\code{\link{as.roc}}}
 \arguments{\item{true}{An object of class bn giving the true graph. This is
 converted to a CPDAG before comparision.}
 \item{maps}{An object of class \code{bn.list}. An estimate of the true

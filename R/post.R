@@ -154,6 +154,7 @@ posterior <- function(data,
 #' @param verbose A logical. Should a progress bar be displayed?
 #' @return A \code{bnpost} object.
 #' @export
+#' @seealso \code{\link{posterior}}
 exactposterior <- function(data,
                            prior,
                            logScoreFUN,
@@ -240,7 +241,7 @@ exactposterior <- function(data,
 #' @param verbose A logical. Should a progress bar be displayed?
 #' @return A \code{bnpostmcmc} object.
 #' @seealso For more control, use the MCMC sampler directly, 
-#'   e.g. \code{\link{BNSampler}}.
+#'   e.g. \code{\link{BNSampler}}. See also \code{\link{posterior}}.
 #' @export
 mcmcposterior <- function(sampler = BNSampler,
                           data,
@@ -281,6 +282,9 @@ mcmcposterior <- function(sampler = BNSampler,
 #'
 #' @param x ...
 #' @param ... Further arguments passed to method
+#' @seealso \code{\link{summary.gp}}, 
+#'   \code{\link{gp.bnpostmcmc}}, \code{\link{gp.bnpost}}, 
+#'   \code{\link{gp.bnpostmcmc.list}}, \code{\link{gp.list}}
 #' @export
 gp <- function(x, ...){
   UseMethod("gp")
@@ -293,6 +297,9 @@ gp <- function(x, ...){
 #' @param x ...
 #' @param ... Further arguments passed to method
 #' @export
+#' @seealso \code{\link{ep.bnpostmcmc.list}}, \code{\link{ep.parental.list}}, 
+#'   \code{\link{ep.bnpost}}, \code{\link{ep.table}},
+#'   \code{\link{ep.parental.contingency}}
 ep <- function(x, ...){
   UseMethod("ep")
 }
@@ -304,6 +311,7 @@ ep <- function(x, ...){
 #' @param x ...
 #' @param ... Further arguments passed to method
 #' @export
+#' @seealso \code{\link{entrop.bnpost}}
 entropy <- function(x, ...){
   UseMethod("entropy")
 }
@@ -315,6 +323,7 @@ entropy <- function(x, ...){
 #' @param x ...
 #' @param ... Further arguments passed to method
 #' @export
+#' @seealso \code{\link{map.bnpost}}, \code{\link{map.bnpostmcmc}}
 map <- function(x, ...){
   UseMethod("map")
 }
@@ -326,6 +335,7 @@ map <- function(x, ...){
 #' @param x ...
 #' @param ... Further arguments passed to method
 #' @export
+#' @seealso \code{\link{top.bnpost}}, \code{\link{top.bnpostmcmc}}
 top <- function(x, ...){
   UseMethod("top")
 }
@@ -339,6 +349,7 @@ top <- function(x, ...){
 #' @param data data
 #' @param ... Further arguments passed to method
 #' @export
+#' @seealso \code{\link{bf.bnpostmcmc}}
 bf <- function(bn1, bn2, data, ...){
   UseMethod("bf")
 }
@@ -365,6 +376,7 @@ bf <- function(bn1, bn2, data, ...){
 #'     each of the nbin bins into which the parental.list was split
 #' @S3method ep parental.list
 #' @method ep parental.list
+#' @seealso \code{\link{ep}}
 ep.parental.list <- function(x, nbin = 1, start = 1, end = length(x),
                              verbose = F, ...){
   stopifnot("parental.list" %in% class(x),
@@ -491,6 +503,7 @@ ep.parental.list <- function(x, nbin = 1, start = 1, end = length(x),
 #'   of an edge from node i --> j
 #' @S3method ep table
 #' @method ep table
+#' @seealso \code{\link{ep}}
 ep.table <- function(x, verbose = F, ...){
   stopifnot(class(x) == "table")
 
@@ -528,6 +541,7 @@ ep.table <- function(x, verbose = F, ...){
 #'  probability of an edge from node \code{i} to \code{j}
 #' @S3method ep parental.contingency
 #' @method ep parental.contingency
+#' @seealso \code{\link{ep}}
 ep.parental.contingency <- function(x, FUN, verbose = F, ...){
   stopifnot(class(x) == "parental.contingency",
             "parental.list" %in% names(x),
@@ -613,6 +627,9 @@ ep.parental.contingency <- function(x, FUN, verbose = F, ...){
 #'   priors)
 #' @S3method plot bnpostmcmc
 #' @method plot bnpostmcmc
+#' @seealso \code{\link{levelplot.bnpostmcmc}},
+#'   \code{\link{levelplot.bnpost}}, \code{\link{bnpostmcmc}},
+#'   \code{\link{bnpost}}
 plot.bnpostmcmc <- plot.bnpost <- function(x, top = NULL, ...){
   if (is.null(top)){
     top <- top(x)
@@ -634,6 +651,7 @@ plot.bnpostmcmc <- plot.bnpost <- function(x, top = NULL, ...){
 #'
 #' @S3method bf bnpostmcmc
 #' @method bf bnpostmcmc
+#' @seealso \code{\link{bf}}
 bf.bnpostmcmc <- bf.bnpost <- function(bn1, bn2, data, ...){
   bnl <- bn.list(bn1, bn2)
   logScoreMultDir(bnl, data, ...)
@@ -647,6 +665,7 @@ bf.bnpostmcmc <- bf.bnpost <- function(bn1, bn2, data, ...){
 #'
 #' @S3method levelplot bnpostmcmc
 #' @method levelplot bnpostmcmc
+#' @seealso \code{\link{plot.bnpostmcmc}}, \code{\link{plot.bnpost}}
 levelplot.bnpostmcmc <- levelplot.bnpost <- function(x){
   stopifnot(class(x) %in% c("bnpostmcmc", "bnpost"))
   levelplot(ep(x))
@@ -657,6 +676,7 @@ levelplot.bnpostmcmc <- levelplot.bnpost <- function(x){
 #' method description
 #'
 #' @param ep ...
+#' @seealso \code{\link{levelplot.ep}}
 prepareLevelPlot <- function(ep){
   n <- dim(ep)[1]
   nodeSeq <- seq_len(n)
@@ -677,6 +697,7 @@ prepareLevelPlot <- function(ep){
 #'
 #' @S3method levelplot ep
 #' @method levelplot ep
+#' @seealso \code{\link{levelplot.ep.list}}, \code{\link{dotplot.ep}}
 levelplot.ep <- function(ep){
   data <- prepareLevelPlot(ep)
 
@@ -748,6 +769,7 @@ shrinkep <- function(ep){
 #' @param ... Further arguments passed to method
 #' @S3method dotplot ep
 #' @method dotplot ep
+#' @seealso \code{\link{levelplot.ep}}, \code{\link{dotplot.ep.list}}
 dotplot.ep <- function(ep, head = 30, ...){
   epdata <- data.frame(method = c(), ep = c(), name = c())
 
@@ -787,6 +809,7 @@ dotplot.ep <- function(ep, head = 30, ...){
 #'
 #' @param ... Further arguments passed to method
 #' @export
+#' @seealso \code{\link{ep}}
 ep.list <- function(...){
   out <- list(...)
   class(out) <- "ep.list"
@@ -803,6 +826,7 @@ ep.list <- function(...){
 #' @param ... Further arguments passed to method
 #' @S3method dotplot ep.list
 #' @method dotplot ep.list
+#' @seealso \code{\link{dotplot.ep}}
 dotplot.ep.list <- function(eplist, subsetBy = "Exact", head = 30, ...){
   epTypes <- names(eplist)
 
@@ -891,6 +915,7 @@ prepareGPPlot <- function(gplist){
 #' @param ... Further arguments passed to method
 #' @S3method dotplot gp
 #' @method dotplot gp
+#' @seealso \code{\link{xyplot.gp}}
 dotplot.gp <- function(gp, head = 30, ...){
   gpdata <- prepareGPPlot(gp)
 
@@ -925,6 +950,7 @@ dotplot.gp <- function(gp, head = 30, ...){
 #' @param ... Further arguments passed to method
 #' @S3method xyplot gp
 #' @method xyplot gp
+#' @seealso \code{\link{dotplot.gp}}
 xyplot.gp <- function(gp, head = 30, ...){
   gpdata <- prepareGPPlot(gp)
 
@@ -978,6 +1004,7 @@ gp.list <- function(...){
 #' @param ... Further arguments passed to method
 #' @S3method dotplot gp.list
 #' @method dotplot gp.list
+#' @seealso \code{\link{xyplot.gp.list}}, \code{\link{dotplot.gp}}
 dotplot.gp.list <- function(gplist, subsetBy = "Exact", head = 30, ...){
   gpdata <- prepareGPPlot(gplist)
 
@@ -1021,6 +1048,7 @@ dotplot.gp.list <- function(gplist, subsetBy = "Exact", head = 30, ...){
 #' @param ... Further arguments passed to method
 #' @S3method xyplot gp.list
 #' @method xyplot gp.list
+#' @seealso \code{\link{dotplot.gp.list}}, \code{\link{xyplot.gp}}
 xyplot.gp.list <- function(gplist, head = 30,
                            scales = list(x = list(rot = 90)),
                            highlight = NULL, ...){
@@ -1089,6 +1117,7 @@ xyplot.gp.list <- function(gplist, head = 30,
 #' @param ... Further arguments passed to method
 #' @S3method summary gp
 #' @method summary gp
+#' @seealso \code{\link{gp}}
 summary.gp <- function(object, ...){
   data.frame(
     graph = as.character(as.parental(names(object)), pretty = T),
@@ -1105,6 +1134,7 @@ summary.gp <- function(object, ...){
 #' @param threshold The value at which to threshold the matrix
 #' @return An object of class parental
 #' @export
+#' @seealso \code{\link{ep}}
 parentalFromEPThreshold <- function(ep, threshold){
   stopifnot("ep"              %in% class(ep),
             class(threshold)  ==   "numeric",
@@ -1178,6 +1208,9 @@ parentalToCPDAG <- function(x, verbose = T){
 #'   \code{fp}. The first contains the supplied label; the latter two
 #'   contain the number of true and false positives respectively.
 #' @export
+#' @seealso For plotting \code{\link{rocplot}}. The methods defined are 
+#'   \code{\link{as.roc.parental}}, \code{\link{as.roc.parental.list}},
+#'   \code{\link{as.roc.ep}}, \code{\link{as.roc.ep.list}}
 as.roc <- function(x, ...){
   UseMethod("as.roc")
 }
@@ -1199,6 +1232,7 @@ as.roc <- function(x, ...){
 #'   contain the number of true and false positives respectively
 #' @S3method as.roc parental
 #' @method as.roc parental
+#' @seealso \code{\link{as.roc.parental.list}}
 as.roc.parental <- function(x, true, label, ...){
   tp <- pintersect(x, true, count = T)
   fp <- psetdiff(x, true, count = T)
@@ -1226,6 +1260,7 @@ as.roc.parental <- function(x, true, label, ...){
 #'   contain the number of true and false positives respectively
 #' @S3method as.roc parental.list
 #' @method as.roc parental.list
+#' @seealso \code{\link{as.roc.parental}}
 as.roc.parental.list <- function(x, true, labels, verbose, ...){
   xSeq <- seq_along(x)
   out <- lapply(xSeq, function(i){
@@ -1254,6 +1289,7 @@ as.roc.parental.list <- function(x, true, labels, verbose, ...){
 #'   correspond to the supplied thresholds.
 #' @S3method as.roc ep
 #' @method as.roc ep
+#' @seealso \code{\link{as.roc.ep.list}}
 as.roc.ep <- function(x, true, thresholds, label, verbose, ...){
   rocdata <- data.frame(estimate = c(), tp = c(), fp = c())
 
@@ -1286,6 +1322,7 @@ as.roc.ep <- function(x, true, thresholds, label, verbose, ...){
 #'   \code{ep.list}.
 #' @S3method as.roc ep.list
 #' @method as.roc ep.list
+#' @seealso \code{\link{as.roc.ep}}
 as.roc.ep.list <- function(x, true, thresholds, labels, verbose, ...){
   xSeq <- seq_along(x)
   out <- lapply(xSeq, function(i){
@@ -1320,6 +1357,7 @@ as.roc.ep.list <- function(x, true, thresholds, labels, verbose, ...){
 #' @param ... Further arguments
 #' @return A lattice object, containing the ROC plot
 #' @export
+#' @seealso \code{\link{as.roc}}
 rocplot <- function(true,
                     maps,
                     bnpmls,
@@ -1457,6 +1495,7 @@ rocplot <- function(true,
 #' @param nbin ...
 #' @param ... Further arguments passed to method
 #' @export
+#' @seealso \code{\link{xyplot.cumtvd}}, \code{\link{cumtvd.list}}
 cumtvd <- function(exactgp, bnpostmcmclist, start = 1, end,
                    nbin = floor((start-end)/100)){
   stopifnot(class(bnpostmcmclist) == "bnpostmcmc.list")
@@ -1533,6 +1572,7 @@ cumtvd <- function(exactgp, bnpostmcmclist, start = 1, end,
 #' @param cumtvd ...
 #' @S3method xyplot cumtvd
 #' @method xyplot cumtvd
+#' @seealso \code{\link{cumtvd}}
 xyplot.cumtvd <- function(cumtvd){
   # stack the cumtvd to a dataframe
   # with a column 'ind'
@@ -1568,6 +1608,7 @@ xyplot.cumtvd <- function(cumtvd){
 #'
 #' @param ... Further arguments passed to method
 #' @export
+#' @seealso \code{\link{cumtvd}}
 cumtvd.list <- function(...){
   cumtvdlist <- list(...)
   class(cumtvdlist) <- c("cumtvd.list")
@@ -1581,6 +1622,7 @@ cumtvd.list <- function(...){
 #' @param cumtvdlist ...
 #' @S3method xyplot cumtvd.list
 #' @method xyplot cumtvd.list
+#' @seealso \code{\link{xyplot.cumtvd.list}}
 xyplot.cumtvd.list <- function(cumtvdlist){
   cumtvdl <- lapply(cumtvdlist, function(cumtvd){
     # stack the cumtvd to a dataframe
