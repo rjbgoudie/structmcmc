@@ -26,6 +26,9 @@
 #' @return A list of matrices of the form returned by 
 #'   \code{enumerateParentsTableNode}.
 #' @export
+#' @seealso \code{\link{enumerateParentsTableNode}},
+#'   \code{\link{scoreParentsTable}}, \code{\link{whichParentSetRows}},
+#'   \code{\link{getRowsThatContain}}
 enumerateParentsTable <- function(numberOfNodes,
                                   maxNumberParents,
                                   required,
@@ -75,6 +78,7 @@ enumerateParentsTable <- function(numberOfNodes,
 #'   Entries that are \code{NA} indicate no parent. e.g. there is only one 
 #'   parent, the other entries will be \code{NA}.
 #' @export
+#' @seealso \code{\link{enumerateParentsTable}}
 enumerateParentsTableNode <- function(node,
                                       numberOfNodes,
                                       maxNumberParents,
@@ -120,6 +124,9 @@ enumerateParentsTableNode <- function(node,
 #'   should be printed.
 #' @return List of numeric vectors of scores.
 #' @export
+#' @seealso \code{\link{scoreParentsTableNode}},
+#'   \code{\link{enumerateParentsTable}}, \code{\link{whichParentSetRows}},
+#'   \code{\link{getRowsThatContain}}
 scoreParentsTable <- function(parentsTables,
                               logScoreLocalFUN,
                               logScoreParameters,
@@ -170,6 +177,7 @@ scoreParentsTable <- function(parentsTables,
 #'   supplied bn.
 #' @return A numeric vector of scores.
 #' @export
+#' @seealso \code{\link{scoreParentsTable}}
 scoreParentsTableNode <- function(node,
                                   parentsTable,
                                   logScoreLocalFUN,
@@ -208,6 +216,8 @@ scoreParentsTableNode <- function(node,
 #'   \code{parentsTables[[node]]} that correspond to parent sets including 
 #'   \code{i}.
 #' @export
+#' @seealso \code{\link{enumerateParentsTable}},
+#'   \code{\link{scoreParentsTable}}
 getRowsThatContain <- function(numberOfNodes,
                                parentsTables,
                                maxNumberParents){
@@ -245,6 +255,8 @@ getRowsThatContain <- function(numberOfNodes,
 #'   \code{getRowsThatContain()}
 #' @return A numeric vector.
 #' @export
+#' @seealso \code{\link{enumerateParentsTable}},
+#'   \code{\link{scoreParentsTable}}
 whichParentSetRows <- function(node,
                                nonDescendants,
                                numberOfNodes,

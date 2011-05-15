@@ -12,6 +12,7 @@ Each row is a possible parent set for node \code{node}, accounting for
 the restrictions given by \code{required} and \code{banned}.
 Entries that are \code{NA} indicate no parent. e.g. there is only one 
 parent, the other entries will be \code{NA}.}
+\seealso{\code{\link{enumerateParentsTable}}}
 \arguments{\item{node}{A node}
 \item{numberOfNodes}{Number of nodes}
 \item{maxNumberParents}{The maximum indegree of the node.}

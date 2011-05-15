@@ -14,6 +14,8 @@ for in the \code{nonDescendants} argument, since these should be
 accounted for when the parentsTable is created. Required nodes must be 
 included in \code{nonDescendants}.}
 \value{A numeric vector.}
+\seealso{\code{\link{enumerateParentsTable}},
+\code{\link{scoreParentsTable}}}
 \arguments{\item{node}{The node. A numeric vector of length 1.}
 \item{nonDescendants}{The nodes that can be added as descendants of 
 \code{node}. A numeric vector.}
