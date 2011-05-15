@@ -14,9 +14,9 @@
 #' \code{data.frame} consisting of integers
 #'
 #' @param x an object of class \code{data.frame}
-#' @param useLevelNames logical, indicating whether the labels of the levels should be
-#' be converted to integers. This only makes sense if the levels are integers stored as
-#' characters. e.g. factor(c("3", "2", "3"))
+#' @param useLevelNames logical, indicating whether the labels of the 
+#'   levels should be converted to integers. This only makes sense if the 
+#'   levels are integers stored as characters. e.g. factor(c("3", "2", "3"))
 #' @return The data.frame with columns converted to integers
 #' @export
 fdfAsInt <- function(x, useLevelNames = T){
