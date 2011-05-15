@@ -1,9 +1,11 @@
 \name{epmx.bnpostmcmc.list}
 \alias{epmx.bnpostmcmc.list}
-\title{Computes the edge probabilities and return a matrix with these.}
-\description{Computes the edge probabilities and return a matrix with these. The
-format of the matrix is designed for the plotting function xyplot.epmx.}
-\details{For a problem with k nodes, the output will have k^2 columns and nbin
+\title{Edge probabilities matrix.}
+\description{Edge probabilities matrix.}
+\details{Computes the edge probabilities and return a matrix with these. The
+format of the matrix is designed for the plotting function xyplot.epmx.
+
+For a problem with k nodes, the output will have k^2 columns and nbin
 rows. Columns are in order 1->1, 1->2, 1->3, ...., 2->1, 2->2 etc}
 \value{An object of class "epmx", a matrix of the form described above.}
 \arguments{\item{x}{An object of class "bnpostmcmc.list"}

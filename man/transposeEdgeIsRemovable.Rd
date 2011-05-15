@@ -1,8 +1,8 @@
 \name{transposeEdgeIsRemovable}
 \alias{transposeEdgeIsRemovable}
-\title{Find togglable edges...}
+\title{Find togglable edges.}
 \usage{transposeEdgeIsRemovable(routes, adjacency, constraintT)}
-\description{Find togglable edges}
+\description{Find togglable edges.}
 \details{Finds "edge-locations" in the graph that can be added or removed without
 introducing a cycle into the graph}
 \value{A logical matrix of the same dimension as the supplied matrices, 

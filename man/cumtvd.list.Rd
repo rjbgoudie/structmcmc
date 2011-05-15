@@ -1,7 +1,7 @@
 \name{cumtvd.list}
 \alias{cumtvd.list}
-\title{method name...}
+\title{List of cumulative total variation distance.}
 \usage{cumtvd.list(...)}
-\description{method name}
+\description{List of cumulative total variation distance.}
 \details{method description}
 \arguments{\item{...}{Further arguments passed to method}}

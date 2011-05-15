@@ -1,9 +1,9 @@
 \name{exactposterior}
 \alias{exactposterior}
-\title{Posterior distribution on Bayesian networks...}
+\title{Posterior distribution on Bayesian networks.}
 \usage{exactposterior(data, prior, logScoreFUN, logScoreParameters,
     constraint, maxNumberParents, verbose)}
-\description{Posterior distribution on Bayesian networks}
+\description{Posterior distribution on Bayesian networks.}
 \details{Use one of a number of methods to get the posterior distribution}
 \value{A \code{bnpost} object.}
 \arguments{\item{data}{The data.}

@@ -1,8 +1,8 @@
 \name{routesAddEdges}
 \alias{routesAddEdges}
-\title{Update a routes matrix (edge addition)...}
+\title{Update a routes matrix (edge addition).}
 \usage{routesAddEdges(x, i, j)}
-\description{Update a routes matrix (edge addition)}
+\description{Update a routes matrix (edge addition).}
 \details{A routes matrix is a matrix A, such that each element (i, j) is the
 number of routes from i to j in some directed graph.
 

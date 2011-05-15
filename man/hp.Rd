@@ -1,8 +1,8 @@
 \name{hp}
 \alias{hp}
-\title{method name...}
+\title{Hitting probability.}
 \usage{hp(x, ...)}
-\description{method name}
+\description{Hitting probability.}
 \details{method description}
 \arguments{\item{x}{...}
 \item{...}{Further arguments passed to method}}

@@ -1,7 +1,7 @@
 \name{cumep.bnpostmcmc.list}
 \alias{cumep.bnpostmcmc.list}
-\title{method name...}
-\description{method name}
+\title{Cumulative edge probabilities.}
+\description{Cumulative edge probabilities.}
 \details{method description}
 \arguments{\item{x}{...}
 \item{...}{Further arguments passed to method}}

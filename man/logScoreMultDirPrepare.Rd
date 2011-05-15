@@ -1,11 +1,13 @@
 \name{logScoreMultDirPrepare}
 \alias{logScoreMultDirPrepare}
-\title{Convert a data frame to the appropriate format for the fast/incremental...}
+\title{Internal functions.}
 \usage{logScoreMultDirPrepare(data, logScoreParameters, checkInput=T)}
-\description{Convert a data frame to the appropriate format for the fast/incremental
+\description{Internal functions.}
+\details{Convert a data frame to the appropriate format for the fast/incremental
 logScoreMultDir functions, and return as part of the logScoreParameters
-list.}
-\details{In particular, the data is converted to a matrix, and the factor levels
+list.
+
+In particular, the data is converted to a matrix, and the factor levels
 taken integer values from 0, 1, .... ie not on 1, 2, 3.}
 \value{A list with the contents of logScoreParameters, with the following
 components added or altered:

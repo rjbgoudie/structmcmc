@@ -1,9 +1,9 @@
 \name{whichParentSetRows}
 \alias{whichParentSetRows}
-\title{Find relevants rows of a parentsTable...}
+\title{Find relevants rows of a parentsTable.}
 \usage{whichParentSetRows(node, nonDescendants, numberOfNodes, allRows,
     rowsThatContain)}
-\description{Find relevants rows of a parentsTable}
+\description{Find relevants rows of a parentsTable.}
 \details{Finds the rows of a parentsTable that correspond to parent sets that 
 could be added as parents of node \code{node}, given some set of 
 nodes \code{nonDescendants} that can be added as parents without 

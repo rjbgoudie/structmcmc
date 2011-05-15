@@ -1,8 +1,9 @@
 \name{top.bnpostmcmc}
 \alias{top.bnpostmcmc}
-\title{Returns the most commonly encountered graphs during the MCMC sampling...}
+\title{Top graph from BN Posterior.}
 \usage{\method{top}{bnpostmcmc} (x, head=10, ...)}
-\description{Returns the most commonly encountered graphs during the MCMC sampling
+\description{Top graph from BN Posterior.}
+\details{Returns the most commonly encountered graphs during the MCMC sampling
 'x'. The top 'head' graphs with respect to MCMC sampling are returned.
 ie if the MCMC sampler has converged, the top graphs with respect to the
 posterior distribution on graphs will be returned.}

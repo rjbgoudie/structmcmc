@@ -1,9 +1,9 @@
 \name{rocplot}
 \alias{rocplot}
-\title{Plot an ROC curve...}
+\title{Plot an ROC curve.}
 \usage{rocplot(true, maps, bnpmls, eps, thresholds=seq(from = 0, to = 1, by =
     0.01), use.cpdags=F, verbose=F, ...)}
-\description{Plot an ROC curve}
+\description{Plot an ROC curve.}
 \details{Print a ROC curve given a variety of estimation methods.
 
 

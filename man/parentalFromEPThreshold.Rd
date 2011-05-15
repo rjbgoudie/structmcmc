@@ -1,8 +1,9 @@
 \name{parentalFromEPThreshold}
 \alias{parentalFromEPThreshold}
-\title{Return the parental given by thresholding a edge probability matrix...}
+\title{Threshold posterior edge probabilities.}
 \usage{parentalFromEPThreshold(ep, threshold)}
-\description{Return the parental given by thresholding a edge probability matrix
+\description{Threshold posterior edge probabilities.}
+\details{Return the parental given by thresholding a edge probability matrix
 at a given level. The inequality is >=. Note this may well be cyclic.}
 \value{An object of class parental}
 \arguments{\item{ep}{A matrix of class ep}

@@ -8,7 +8,7 @@
 #
 # Copyright 2008 Robert J. B. Goudie, University of Warwick
 
-#' (Log) Number of neighbouring networks
+#' (Log) Number of neighbouring networks.
 #'
 #' Returns the number of acyclic graphs that can be formed by adding, 
 #' removing or flipping a single edge of the current network
@@ -41,7 +41,7 @@ logNumMHNeighbours <- function(routes,
   log(length(adjacency[flippable | addable | removable]))
 }
 
-#' Find togglable edges
+#' Find togglable edges.
 #'
 #' Finds "edge-locations" in the graph that can be added or removed without
 #' introducing a cycle into the graph
@@ -57,7 +57,7 @@ transposeEdgeIsRemovable <- function(routes, adjacency, constraintT){
   routes == 0 & t(adjacency) == 1 & constraintT == 0
 }
 
-#' Find togglable edges
+#' Find togglable edges.
 #'
 #' Finds "edge-locations" in the graph that can be added or removed without
 #' introducing a cycle into the graph
@@ -81,7 +81,7 @@ transposeEdgeIsAddable <- function(routes,
   addable
 }
 
-#' Find togglable edges
+#' Find togglable edges.
 #'
 #' Finds "edge-locations" in the graph that can be added or removed without
 #' introducing a cycle into the graph
@@ -109,7 +109,7 @@ transposeEdgeIsTogglable <- function(routes,
   removable + addable == T
 }
 
-#' Find flippable edges
+#' Find flippable edges.
 #'
 #' Finds edges in the graph whose direction can be reversed ("flipped")
 #' without introducing a cycle into the graph.
@@ -130,7 +130,7 @@ edgeIsFlippable <- function(routes, adjacency, constraintT, maxNumberParents){
   flippable
 }
 
-#' Create a MCMC sampler for Bayesian Networks.
+#' Create a MCMC sampler (MC^3) for Bayesian Networks.
 #' 
 #' The sampler samples Bayesian Networks (ie models).
 #'

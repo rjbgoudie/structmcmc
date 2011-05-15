@@ -8,7 +8,7 @@
 #
 # Copyright 2008 Robert J. B. Goudie, University of Warwick
 
-#' Identify neighbouring graphs
+#' Identify neighbouring graphs.
 #'
 #' Finds which of the supplied graphs are not neighbours. Neighbouring
 #' graphs are removed according to a heuristic involving scores.

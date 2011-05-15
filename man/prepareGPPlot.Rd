@@ -1,7 +1,7 @@
 \name{prepareGPPlot}
 \alias{prepareGPPlot}
-\title{method name...}
+\title{Internal function.}
 \usage{prepareGPPlot(gplist)}
-\description{method name}
+\description{Internal function.}
 \details{method description}
 \arguments{\item{gplist}{...}}

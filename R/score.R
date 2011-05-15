@@ -8,7 +8,7 @@
 #
 # Copyright 2008 Robert J. B. Goudie, University of Warwick
 
-#' method name
+#' Multinomial-Dirichlet Log marginal likelihood.
 #'
 #' method description
 #'

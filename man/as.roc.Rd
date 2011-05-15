@@ -1,8 +1,8 @@
 \name{as.roc}
 \alias{as.roc}
-\title{Prepare data for plotting in a ROC plot...}
+\title{Prepare data for plotting in a ROC plot.}
 \usage{as.roc(x, ...)}
-\description{Prepare data for plotting in a ROC plot}
+\description{Prepare data for plotting in a ROC plot.}
 \details{Converts MCMC samples, edge probability matrices etc to a data frame
 ready for plotting as ROC curves.}
 \seealso{For actual graphs, see \code{\link{as.roc.parental}} and

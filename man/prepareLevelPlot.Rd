@@ -1,7 +1,7 @@
 \name{prepareLevelPlot}
 \alias{prepareLevelPlot}
-\title{method name...}
+\title{Internal function...}
 \usage{prepareLevelPlot(ep)}
-\description{method name}
+\description{Internal function}
 \details{method description}
 \arguments{\item{ep}{...}}

@@ -1,10 +1,12 @@
 \name{logScoreMultDirOffline}
 \alias{logScoreMultDirOffline}
-\title{Compute the log marginal likelihood of the supplied Bayesian Network.}
+\title{Multinomial-Dirichlet Log marginal likelihood (offline).}
 \usage{logScoreMultDirOffline(x, logScoreParameters, cache=new.env(hash = T),
     checkInput=T)}
-\description{Compute the log marginal likelihood of the supplied Bayesian Network.}
-\details{This function is an alternative interface to logScoreMultDir.
+\description{Multinomial-Dirichlet Log marginal likelihood (offline).}
+\details{Compute the log marginal likelihood of the supplied Bayesian Network.
+
+This function is an alternative interface to logScoreMultDir.
 This interface is required by the MCMC sampler.}
 \value{A numeric vector of length 1, giving the log marginal likelihood.
 The environment 'cache' will also be updated because its scope is

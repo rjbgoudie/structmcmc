@@ -1,7 +1,7 @@
 \name{shrinkep}
 \alias{shrinkep}
-\title{method name...}
+\title{Internal function.}
 \usage{shrinkep(ep)}
-\description{method name}
+\description{Internal function.}
 \details{method description}
 \arguments{\item{ep}{...}}

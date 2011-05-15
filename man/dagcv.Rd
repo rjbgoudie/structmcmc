@@ -1,9 +1,9 @@
 \name{dagcv}
 \alias{dagcv}
-\title{method name...}
+\title{Undocumented.}
 \usage{dagcv(graph, response, data, fold=10, verbose=F, binomial=F,
     predictiveReplications=10000, Freq, ...)}
-\description{method name}
+\description{Undocumented.}
 \details{method description}
 \arguments{\item{graph}{...}
 \item{response}{...}

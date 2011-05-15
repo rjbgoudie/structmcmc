@@ -1,9 +1,9 @@
 \name{scoreBIC}
 \alias{scoreBIC}
-\title{method name...}
+\title{Undocumented.}
 \usage{scoreBIC(bn, data, nodes=seq_along(bn), mlcache=new.env(hash = T),
     nijkcache=new.env(hash = T))}
-\description{method name}
+\description{Undocumented.}
 \details{method description}
 \arguments{\item{bn}{...}
 \item{data}{...}

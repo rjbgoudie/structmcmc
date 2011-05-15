@@ -1,8 +1,8 @@
 \name{plotTape}
 \alias{plotTape}
-\title{method name...}
+\title{Plot tape.}
 \usage{plotTape(sampler, burnIn=10000)}
-\description{method name}
+\description{Plot tape.}
 \details{method description}
 \arguments{\item{sampler}{...}
 \item{burnIn}{...}}

@@ -8,7 +8,7 @@
 #
 # Copyright 2008 Robert J. B. Goudie, University of Warwick
 
-#' method name
+#' BN Posterior from MCMC.
 #'
 #' method description
 #'
@@ -59,7 +59,7 @@ bnpostmcmc <- function(sampler, samples, logScoreFUN){
   out
 }
 
-#' method name
+#' List of BN Posteriors from MCMC.
 #'
 #' method description
 #'
@@ -73,6 +73,8 @@ bnpostmcmc.list <- function(...){
   x
 }
 
+#' Number of samples drawn.
+#' 
 #' Returns the number of samples draw in the supplied object of class
 #' 'bnpostmcmc' x.
 #'
@@ -86,6 +88,8 @@ length.bnpostmcmc <- function(x, ...){
   length(x$samples)
 }
 
+#' Top graph from BN Posterior.
+#' 
 #' Returns the most commonly encountered graphs during the MCMC sampling
 #' 'x'. The top 'head' graphs with respect to MCMC sampling are returned.
 #' ie if the MCMC sampler has converged, the top graphs with respect to the
@@ -130,6 +134,8 @@ top.bnpostmcmc <- function(x, head = 10, ...){
   out
 }
 
+#' Maximum aposteriori graph.
+#' 
 #' Returns the most commonly encountered graph(s) during the MCMC sampling
 #' 'x'. ie the maximum aposteriori graph(s).
 #'
@@ -148,6 +154,8 @@ map.bnpostmcmc <- function(x, ...){
   top(x, head = 1)
 }
 
+#' Log scores of best graphs.
+#' 
 #' Returns the log scores of the best graphs encountered by the sampler.
 #'
 #' @param x An object of class 'bnpostmcmc'
@@ -222,7 +230,7 @@ logScoreMultDir.bnpostmcmc <- function(x, sampler, data,
   res
 }
 
-#' method name
+#' Posterior graph probabilities.
 #'
 #' method description
 #'
@@ -300,7 +308,7 @@ gp.bnpostmcmc <- function(x, logNetworkPriors, start, end, nbin = 1,
   }
 }
 
-#' method name
+#' Posterior graph probabilities.
 #'
 #' method description
 #'
@@ -313,6 +321,8 @@ gp.bnpostmcmc.list <- function(x, ...){
   lapply(x, gp, ...)
 }
 
+#' Posterior edge probabiities.
+#' 
 #' Computes the edge probabilities implied by the MCMC samples
 #' contained in the 'bnpostmcmc' object x.
 #'
@@ -373,7 +383,7 @@ ep.bnpostmcmc <- function(x, nbin = 1, start, end, method = "flatten",
   }
 }
 
-#' method name
+#' Posterior edge probabilities.
 #'
 #' method description
 #'

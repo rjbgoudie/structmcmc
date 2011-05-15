@@ -1,8 +1,8 @@
 \name{as.roc.parental}
 \alias{as.roc.parental}
-\title{Prepare a parental for a ROC plot...}
+\title{Prepare a parental for a ROC plot.}
 \usage{\method{as.roc}{parental} (x, true, label, ...)}
-\description{Prepare a parental for a ROC plot}
+\description{Prepare a parental for a ROC plot.}
 \details{Compares two graphs, one of which is the true graph, and computes the
 number of true and false positives.}
 \seealso{For lists of graphs, see \code{\link{as.roc.parental.list}}. For

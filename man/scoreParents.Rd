@@ -1,9 +1,9 @@
 \name{scoreParents}
 \alias{scoreParents}
-\title{method name...}
+\title{Undocumented.}
 \usage{scoreParents(possibleParents, head, proposal, current,
     logScoreOnlineFUN, logScoreParameters, cache)}
-\description{method name}
+\description{Undocumented.}
 \details{method description}
 \arguments{\item{possibleParents}{...}
 \item{head}{...}

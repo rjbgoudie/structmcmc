@@ -1,8 +1,8 @@
 \name{matrix2}
 \alias{matrix2}
-\title{Fast, dangerous matrix generation...}
+\title{Fast, dangerous matrix generation.}
 \usage{matrix2(data, nrow, ncol)}
-\description{Fast, dangerous matrix generation}
+\description{Fast, dangerous matrix generation.}
 \details{A fast, simple version of \code{matrix}.
 
 The matrix must be supplied by column (i.e. \code{byrow = FALSE}) and 

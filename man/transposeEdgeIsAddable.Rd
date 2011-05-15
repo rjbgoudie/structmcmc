@@ -1,9 +1,9 @@
 \name{transposeEdgeIsAddable}
 \alias{transposeEdgeIsAddable}
-\title{Find togglable edges...}
+\title{Find togglable edges.}
 \usage{transposeEdgeIsAddable(routes, adjacency, constraintT,
     maxNumberParents)}
-\description{Find togglable edges}
+\description{Find togglable edges.}
 \details{Finds "edge-locations" in the graph that can be added or removed without
 introducing a cycle into the graph}
 \value{A logical matrix of the same dimension as the supplied matrices, 

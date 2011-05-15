@@ -1,8 +1,9 @@
 \name{map.bnpostmcmc}
 \alias{map.bnpostmcmc}
-\title{Returns the most commonly encountered graph(s) during the MCMC sampling...}
+\title{Maximum aposteriori graph.}
 \usage{\method{map}{bnpostmcmc} (x, ...)}
-\description{Returns the most commonly encountered graph(s) during the MCMC sampling
+\description{Maximum aposteriori graph.}
+\details{Returns the most commonly encountered graph(s) during the MCMC sampling
 'x'. ie the maximum aposteriori graph(s).}
 \value{EITHER an object of class 'bn' containing the most commonly
 encountered graph,

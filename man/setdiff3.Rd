@@ -1,8 +1,8 @@
 \name{setdiff3}
 \alias{setdiff3}
-\title{Fast, dangerous set difference...}
+\title{Fast, dangerous set difference.}
 \usage{setdiff3(x, y)}
-\description{Fast, dangerous set difference}
+\description{Fast, dangerous set difference.}
 \details{A fast, simple version of \code{setdiff}.
 This version does not handle factors.
 

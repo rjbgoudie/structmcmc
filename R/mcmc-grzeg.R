@@ -8,7 +8,7 @@
 #
 # Copyright 2008 Robert J. B. Goudie, University of Warwick
 
-#' method name
+#' Undocumented.
 #'
 #' method description
 #'
@@ -40,7 +40,7 @@ scoreParents <- function(possibleParents,
   })
 }
 
-#' method name
+#' Undocumented.
 #'
 #' method description
 #'
@@ -79,7 +79,7 @@ localPartitionFunction <- function(currentNetwork,
        possibleParents = possibleParents)
 }
 
-#' method name
+#' Undocumented.
 #'
 #' method description
 #'

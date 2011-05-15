@@ -1,8 +1,8 @@
 \name{bayes.bn}
 \alias{bayes.bn}
-\title{Bayesian posterior parameter estimates...}
+\title{Bayesian posterior parameter estimates.}
 \usage{\method{bayes}{bn} (x, data, nodes=seq_along(x), prior="qi", ...)}
-\description{Bayesian posterior parameter estimates}
+\description{Bayesian posterior parameter estimates.}
 \details{A wrapper around \code{\link{ml}}.
 
 This is the probability. This is also the expectation. See

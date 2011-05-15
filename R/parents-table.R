@@ -8,7 +8,7 @@
 #
 # Copyright 2008 Robert J. B. Goudie, University of Warwick
 
-#' Table of all possible parents of a node
+#' Table of all possible parents of a node.
 #'
 #' Creates a list of tables with rows corresponding to the possible parent 
 #' sets of each node.
@@ -56,7 +56,7 @@ enumerateParentsTable <- function(numberOfNodes,
   parentsTables
 }
 
-#' Table of all possible parents of a node
+#' Table of all possible parents of a node.
 #'
 #' Creates a matrix, with each row being a parent set.
 #' The is is created subject to the supplied indegree restriction, and the 
@@ -103,7 +103,7 @@ enumerateParentsTableNode <- function(node,
   out
 }
 
-#' Score a node-level parentsTable
+#' Score a node-level parentsTable.
 #'
 #' Computes the scores of all the Bayesian Networks, with parent sets 
 #' corresponding to each row of a single component of a \code{parentsTable}.
@@ -153,7 +153,7 @@ scoreParentsTable <- function(parentsTables,
   scoresList
 }
 
-#' Score a node-level parentsTable
+#' Score a node-level parentsTable.
 #'
 #' Computes the local scores of all the Bayesian Networks, with node 
 #' \code{node} set to parent sets corresponding to each row of a single 
@@ -192,7 +192,7 @@ scoreParentsTableNode <- function(node,
   scores
 }
 
-#' Create lookup table for parentsTable
+#' Create lookup table for parentsTable.
 #'
 #' Creates a list that allows quick lookup of a parentsTable. This is 
 #' needed for \code{whichParentSetRows}.
@@ -222,7 +222,7 @@ getRowsThatContain <- function(numberOfNodes,
   })
 }
 
-#' Find relevants rows of a parentsTable
+#' Find relevants rows of a parentsTable.
 #'
 #' Finds the rows of a parentsTable that correspond to parent sets that 
 #' could be added as parents of node \code{node}, given some set of 

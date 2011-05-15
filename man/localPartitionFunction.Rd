@@ -1,9 +1,9 @@
 \name{localPartitionFunction}
 \alias{localPartitionFunction}
-\title{method name...}
+\title{Undocumented.}
 \usage{localPartitionFunction(currentNetwork, proposalNetwork, node,
     required=integer(0), logScoreOnlineFUN, logScoreParameters, cache)}
-\description{method name}
+\description{Undocumented.}
 \details{method description}
 \arguments{\item{currentNetwork}{...}
 \item{proposalNetwork}{...}

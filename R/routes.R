@@ -8,7 +8,7 @@
 #
 # Copyright 2008 Robert J. B. Goudie, University of Warwick
 
-#' Update a routes matrix (edge addition)
+#' Update a routes matrix (edge addition).
 #'
 #' A routes matrix is a matrix A, such that each element (i, j) is the
 #' number of routes from i to j in some directed graph.
@@ -28,7 +28,7 @@ routesAddEdges <- function(x, i, j){
   }
 }
 
-#' Update a routes matrix (edge removal)
+#' Update a routes matrix (edge removal).
 #'
 #' A routes matrix is a matrix A, such that each element (i, j) is the
 #' number of routes from i to j in some directed graph.
@@ -48,7 +48,7 @@ routesRemoveEdges <- function(x, i, j){
   }
 }
 
-#' Find nonDescendants
+#' Find nonDescendants.
 #'
 #' Find the non-descendants of a node
 #'

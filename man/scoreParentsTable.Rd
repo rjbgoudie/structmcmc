@@ -1,9 +1,9 @@
 \name{scoreParentsTable}
 \alias{scoreParentsTable}
-\title{Score a node-level parentsTable...}
+\title{Score a node-level parentsTable.}
 \usage{scoreParentsTable(parentsTables, logScoreLocalFUN, logScoreParameters,
     prior, verbose=F)}
-\description{Score a node-level parentsTable}
+\description{Score a node-level parentsTable.}
 \details{Computes the scores of all the Bayesian Networks, with parent sets 
 corresponding to each row of a single component of a \code{parentsTable}.}
 \value{List of numeric vectors of scores.}

@@ -1,8 +1,8 @@
 \name{draw}
 \alias{draw}
-\title{Draw samples from a MCMC sampler...}
+\title{Draw samples from a MCMC sampler.}
 \usage{draw(sampler, n=F, time=F, burnin=0, thin=1, verbose=T)}
-\description{Draw samples from a MCMC sampler}
+\description{Draw samples from a MCMC sampler.}
 \details{Draws samples from an MCMC sampler. The length of the run can be specified
 either by the number of samples to be drawn, or the length of time that
 the sampler runs.}

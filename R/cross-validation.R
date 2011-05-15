@@ -10,9 +10,9 @@
 
 # only handles binary???
 # maybe only binary in the response?
-#' method name
-#'
 
+#' Undocumented.
+#'
 #' method description
 #'
 #' @param graph ...

@@ -1,8 +1,8 @@
 \name{queryFinding}
 \alias{queryFinding}
-\title{Query an independence network, given a finding...}
+\title{Query an independence network, given a finding.}
 \usage{queryFinding(x, node, nodeWithState, nodeState, FUN, ...)}
-\description{Query an independence network, given a finding}
+\description{Query an independence network, given a finding.}
 \details{Query a finding, and apply \code{FUN}. Just a wrapper around
 \code{\link[gRain]{setFinding}} and \code{\link[gRain]{querygrain}}.}
 \value{The result of \code{FUN}}

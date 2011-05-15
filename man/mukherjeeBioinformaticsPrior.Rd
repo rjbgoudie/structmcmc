@@ -1,11 +1,13 @@
 \name{mukherjeeBioinformaticsPrior}
 \alias{mukherjeeBioinformaticsPrior}
-\title{Compute prior score P(M) for a 'bvsresponse'.}
+\title{Mukherjee Bioinformatics prior.}
 \usage{mukherjeeBioinformaticsPrior(x, k0, kmax, lambda)}
-\description{Compute prior score P(M) for a 'bvsresponse'. The prior is flat from
+\description{Mukherjee Bioinformatics prior.}
+\details{Compute prior score P(M) for a 'bvsresponse'. The prior is flat from
 0 parents to k0 parents, then exponentially(lambda) decreaasing to kmax,
-at which point it becomes zero.}
-\details{The prior originates in Mukherjee el al. (2009), and is equation (8) in
+at which point it becomes zero.
+
+The prior originates in Mukherjee el al. (2009), and is equation (8) in
 section 3.1.3.
 
 Mukherjee et al. Sparse combinatorial inference with an application in

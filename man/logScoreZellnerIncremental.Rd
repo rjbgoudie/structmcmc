@@ -1,11 +1,13 @@
 \name{logScoreZellnerIncremental}
 \alias{logScoreZellnerIncremental}
-\title{Compute the difference in log marginal likelihood of the supplied...}
+\title{Normal Log marginal likelihood (online).}
 \usage{logScoreZellnerIncremental(currentBN, proposalBN, heads,
     logScoreParameters, cache, checkInput=T)}
-\description{Compute the difference in log marginal likelihood of the supplied
-Bayesian Networks, quickly.}
-\details{This is a fast, incremental version of logScoreZellner.
+\description{Normal Log marginal likelihood (online).}
+\details{Compute the difference in log marginal likelihood of the supplied
+Bayesian Networks, quickly.
+
+This is a fast, incremental version of logScoreZellner.
 
 The data is scored as continuous, using a form of the Zellner Prior.}
 \value{logscore(proposalBN) - logscore(currentBN)}

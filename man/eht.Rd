@@ -1,8 +1,8 @@
 \name{eht}
 \alias{eht}
-\title{method name...}
+\title{Expected hitting time.}
 \usage{eht(x, ...)}
-\description{method name}
+\description{Expected hitting time.}
 \details{method description}
 \arguments{\item{x}{...}
 \item{...}{Further arguments passed to method}}

@@ -1,8 +1,8 @@
 \name{marginalGivenIntervention}
 \alias{marginalGivenIntervention}
-\title{Get marginal probabilities, given an intervention...}
+\title{Get marginal probabilities, given an intervention.}
 \usage{marginalGivenIntervention(net, node, dat, FUN=identity, ...)}
-\description{Get marginal probabilities, given an intervention}
+\description{Get marginal probabilities, given an intervention.}
 \details{Get the marginal probability of a node, when each other node (separately)
 has been conditioned upon each of its levels.}
 \value{A list, with a component for each node of the Bayes Net (apart

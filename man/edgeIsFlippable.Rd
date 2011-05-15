@@ -1,8 +1,8 @@
 \name{edgeIsFlippable}
 \alias{edgeIsFlippable}
-\title{Find flippable edges...}
+\title{Find flippable edges.}
 \usage{edgeIsFlippable(routes, adjacency, constraintT, maxNumberParents)}
-\description{Find flippable edges}
+\description{Find flippable edges.}
 \details{Finds edges in the graph whose direction can be reversed ("flipped")
 without introducing a cycle into the graph.}
 \value{A logical matrix of the same dimension as the supplied matrices, 

@@ -2,7 +2,7 @@
 \alias{fdfAsInt}
 \title{Convert data...}
 \usage{fdfAsInt(x, useLevelNames=T)}
-\description{Convert \code{data.frame} of factors to integers}
+\description{Convert \code{data.frame} of factors to integers.}
 \details{Converts a \code{data.frame} that consists columns of factors into a
 \code{data.frame} consisting of integers}
 \value{The data.frame with columns converted to integers}

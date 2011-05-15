@@ -1,10 +1,12 @@
 \name{logScoreZellner.bn.list}
 \alias{logScoreZellner.bn.list}
-\title{Compute the log marginal likelihood of the supplied Bayesian Networks.}
+\title{Normal Log marginal likelihood.}
 \usage{\method{logScoreZellner}{bn.list} (x, data, cache=new.env(hash = TRUE),
     ...)}
-\description{Compute the log marginal likelihood of the supplied Bayesian Networks.}
-\details{The data is scored as continuous, using a form of the Zellner Prior.}
+\description{Normal Log marginal likelihood.}
+\details{Compute the log marginal likelihood of the supplied Bayesian Networks.
+
+The data is scored as continuous, using a form of the Zellner Prior.}
 \value{A numeric vector of length 1, giving the log marginal likelihood.
 The environment 'cache' will also be updated because its scope is
 global.}

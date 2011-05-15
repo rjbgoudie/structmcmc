@@ -1,8 +1,8 @@
 \name{ml}
 \alias{ml}
-\title{Maximum likelihood estimates...}
+\title{Maximum likelihood estimates.}
 \usage{ml(x, ...)}
-\description{Maximum likelihood estimates}
+\description{Maximum likelihood estimates.}
 \details{A generic}
 \arguments{\item{x}{An object}
 \item{...}{Further arguments passed to method}}

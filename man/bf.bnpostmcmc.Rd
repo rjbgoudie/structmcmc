@@ -1,7 +1,7 @@
 \name{bf.bnpostmcmc}
 \alias{bf.bnpostmcmc}
-\title{method name...}
-\description{method name}
+\title{Bayes Factors.}
+\description{Bayes Factors.}
 \details{method description}
 \arguments{\item{bn1}{A bn}
 \item{bn2}{...}

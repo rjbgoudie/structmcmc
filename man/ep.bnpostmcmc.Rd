@@ -1,9 +1,10 @@
 \name{ep.bnpostmcmc}
 \alias{ep.bnpostmcmc}
-\title{Computes the edge probabilities implied by the MCMC samples...}
+\title{Posterior edge probabiities.}
 \usage{\method{ep}{bnpostmcmc} (x, nbin=1, start, end, method="flatten",
     verbose=F, ...)}
-\description{Computes the edge probabilities implied by the MCMC samples
+\description{Posterior edge probabiities.}
+\details{Computes the edge probabilities implied by the MCMC samples
 contained in the 'bnpostmcmc' object x.}
 \value{if nbin == 1:
 A matrix of class 'ep' with entry (i,j) containing the probability of

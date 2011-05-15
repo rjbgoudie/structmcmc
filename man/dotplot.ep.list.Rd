@@ -1,8 +1,8 @@
 \name{dotplot.ep.list}
 \alias{dotplot.ep.list}
-\title{method name...}
+\title{Dotplot of list of posterior edge probabilities.}
 \usage{\method{dotplot}{ep.list} (eplist, subsetBy="Exact", head=30, ...)}
-\description{method name}
+\description{Dotplot of list of posterior edge probabilities.}
 \details{method description}
 \arguments{\item{eplist}{...}
 \item{subsetBy}{...}

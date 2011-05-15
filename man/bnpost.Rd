@@ -1,8 +1,8 @@
 \name{bnpost}
 \alias{bnpost}
-\title{method name...}
+\title{BN Exact Posterior.}
 \usage{bnpost(bnspace, logScore, data, logScoreFUN=logScoreMultDir)}
-\description{method name}
+\description{BN Exact Posterior.}
 \details{method description}
 \arguments{\item{bnspace}{...}
 \item{logScore}{...}

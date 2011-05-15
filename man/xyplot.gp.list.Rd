@@ -1,9 +1,9 @@
 \name{xyplot.gp.list}
 \alias{xyplot.gp.list}
-\title{method name...}
+\title{Scatterplot of posterior graph probablities.}
 \usage{\method{xyplot}{gp.list} (gplist, head=30, scales=list(x = list(rot =
     90)), highlight, ...)}
-\description{method name}
+\description{Scatterplot of posterior graph probablities.}
 \details{method description}
 \arguments{\item{gplist}{...}
 \item{head}{...}

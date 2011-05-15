@@ -8,6 +8,8 @@
 #
 # Copyright 2008 Robert J. B. Goudie, University of Warwick
 
+#' Big flips MCMC sampler for Bayesian networks.
+#' 
 #' Create a MCMC sampler for Bayesian Networks. The sampler samples Bayesian
 #' Networks (ie models).
 #'

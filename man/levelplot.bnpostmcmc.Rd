@@ -1,6 +1,6 @@
 \name{levelplot.bnpostmcmc}
 \alias{levelplot.bnpostmcmc}
-\title{method name...}
-\description{method name}
+\title{Levelplot of BN Posterior from MCMC.}
+\description{Levelplot of BN Posterior from MCMC.}
 \details{method description}
 \arguments{\item{x}{...}}

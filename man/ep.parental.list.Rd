@@ -1,9 +1,10 @@
 \name{ep.parental.list}
 \alias{ep.parental.list}
-\title{Calculate edge probabilities given a list of...}
+\title{Posterior edge probabilities.}
 \usage{\method{ep}{parental.list} (x, nbin=1, start=1, end=length(x),
     verbose=F, ...)}
-\description{Calculate edge probabilities given a list of
+\description{Posterior edge probabilities.}
+\details{Calculate edge probabilities given a list of
 parental graphs (of class parental.list)}
 \value{if nbin == 1:
 A matrix of class 'ep' with entry (i,j) containing the probability of

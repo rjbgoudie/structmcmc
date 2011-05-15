@@ -8,7 +8,7 @@
 #
 # Copyright 2008 Robert J. B. Goudie, University of Warwick
 
-#' method name
+#' Undocumented.
 #'
 #' method description
 #'
@@ -104,7 +104,7 @@ drawPT <- function(samplers,
   samplesl[[1]]
 }
 
-#' method name
+#' Undocumented.
 #'
 #' method description
 #'

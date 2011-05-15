@@ -1,8 +1,8 @@
 \name{ep}
 \alias{ep}
-\title{method name...}
+\title{Posterior edge probabilities.}
 \usage{ep(x, ...)}
-\description{method name}
+\description{Posterior edge probabilities.}
 \details{method description}
 \arguments{\item{x}{...}
 \item{...}{Further arguments passed to method}}

@@ -1,8 +1,8 @@
 \name{mwep}
 \alias{mwep}
-\title{method name...}
+\title{Moving window edge probiilities.}
 \usage{mwep(x, ...)}
-\description{method name}
+\description{Moving window edge probiilities.}
 \details{method description}
 \arguments{\item{x}{...}
 \item{...}{Further arguments passed to method}}

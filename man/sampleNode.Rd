@@ -1,9 +1,9 @@
 \name{sampleNode}
 \alias{sampleNode}
-\title{Sample the parents of a single node...}
+\title{Sample the parents of a single node (Gibbs sampler).}
 \usage{sampleNode(currentNetwork, numberOfNodes, nodesSeq, scoresParents,
     parentsTables, allRows, rowsThatContain)}
-\description{Sample the parents of a single node}
+\description{Sample the parents of a single node (Gibbs sampler).}
 \details{Sample from posterior distribution on graph, conditional on
 all the edges, except those that go into node \code{node}.}
 \value{Returns the sampled network. A \code{currentNetwork} object.}

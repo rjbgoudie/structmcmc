@@ -1,9 +1,9 @@
 \name{cumtvd}
 \alias{cumtvd}
-\title{method name...}
+\title{Cumulative total variation distance.}
 \usage{cumtvd(exactgp, bnpostmcmclist, start=1, end, nbin=floor((start -
     end)/100))}
-\description{method name}
+\description{Cumulative total variation distance.}
 \details{method description}
 \arguments{\item{exactgp}{...}
 \item{bnpostmcmclist}{...}

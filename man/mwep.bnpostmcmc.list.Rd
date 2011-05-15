@@ -1,7 +1,7 @@
 \name{mwep.bnpostmcmc.list}
 \alias{mwep.bnpostmcmc.list}
-\title{method name...}
-\description{method name}
+\title{Moving window edge probabilities.}
+\description{Moving window edge probabilities.}
 \details{method description}
 \arguments{\item{x}{...}
 \item{window}{...}

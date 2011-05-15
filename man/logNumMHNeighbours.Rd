@@ -1,9 +1,9 @@
 \name{logNumMHNeighbours}
 \alias{logNumMHNeighbours}
-\title{(Log) Number of neighbouring networks...}
+\title{(Log) Number of neighbouring networks.}
 \usage{logNumMHNeighbours(routes, adjacency, constraintT,
     maxNumberParents=Inf)}
-\description{(Log) Number of neighbouring networks}
+\description{(Log) Number of neighbouring networks.}
 \details{Returns the number of acyclic graphs that can be formed by adding, 
 removing or flipping a single edge of the current network}
 \value{A numeric of length 1. The log number of neighbouring graphs.}

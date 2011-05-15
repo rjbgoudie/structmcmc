@@ -1,12 +1,12 @@
 \name{BNSamplerPT}
 \alias{BNSamplerPT}
-\title{method name...}
+\title{Undocumented.}
 \usage{BNSamplerPT(data, initial, prior, return="network",
     logScoreFUN=defaultLogScoreFUN(),
     logScoreParameters=list(hyperparameters = "qi"), constraint,
     modejumping=F, verbose=F, keepTape=F, temp=1, cache=new.env(hash =
     T, size = 10000L))}
-\description{method name}
+\description{Undocumented.}
 \details{method description}
 \arguments{\item{data}{...}
 \item{initial}{...}

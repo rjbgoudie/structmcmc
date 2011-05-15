@@ -1,8 +1,8 @@
 \name{getRowsThatContain}
 \alias{getRowsThatContain}
-\title{Create lookup table for parentsTable...}
+\title{Create lookup table for parentsTable.}
 \usage{getRowsThatContain(numberOfNodes, parentsTables, maxNumberParents)}
-\description{Create lookup table for parentsTable}
+\description{Create lookup table for parentsTable.}
 \details{Creates a list that allows quick lookup of a parentsTable. This is 
 needed for \code{whichParentSetRows}.}
 \value{A list of length \code{numberOfNodes}. Each component of this 
