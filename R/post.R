@@ -71,7 +71,7 @@ posterior <- function(data,
                       nSamples           = 50000,
                       nBurnin            = 10000,
                       initial            = NULL,
-                      verbose            = F){
+                      verbose            = T){
   methods <- c("exact", "mc3", "mh-mcmc", "gibbs", "mj-mcmc")
   stopifnot(class(data) ==   "data.frame",
             method      %in% methods)
@@ -164,7 +164,7 @@ exactposterior <- function(data,
                            logScoreParameters,
                            constraint,
                            maxNumberParents,
-                           verbose){
+                           verbose = T){
   nVar <- ncol(data)
   bnspace <- enumerateBNSpace(nVar)
 
@@ -256,7 +256,7 @@ mcmcposterior <- function(sampler = BNSampler,
                           nSamples,
                           nBurnin,
                           initial,
-                          verbose){
+                          verbose = T){
   nVar <- ncol(data)
   if (is.null(initial)){
     initial <- empty(nVar, class = "bn")

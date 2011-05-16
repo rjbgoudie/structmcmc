@@ -3,7 +3,7 @@
 \title{Posterior distribution on Bayesian networks.}
 \usage{mcmcposterior(sampler=BNSampler, data, prior, logScoreFUN,
     logScoreParameters, constraint, maxNumberParents, nSamples,
-    nBurnin, initial, verbose)}
+    nBurnin, initial, verbose=T)}
 \description{Posterior distribution on Bayesian networks.}
 \details{Use MCMC to approximate the posterior distribution}
 \value{A \code{bnpostmcmc} object.}
