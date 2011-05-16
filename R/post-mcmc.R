@@ -441,7 +441,9 @@ ep.bnpostmcmc <- function(x, nbin = 1, start, end, method = "flatten",
 ep.bnpostmcmc.list <- function(x, start, end, ...){
   stopifnot(class(x) == "bnpostmcmc.list")
   if (!missing(start) || !missing(end)){
-    warning("Start/end not implemented")
+    if (start != 1 && end != length(x[[1]])){
+      warning("Start/end not implemented")
+    }
   }
   # FIXME: using ep.bnpostmcmc is a temporary fix
   # otherwise method dispatches to ep.parental.list
