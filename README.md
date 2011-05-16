@@ -91,7 +91,11 @@ Each random variable is assumed to be Normally-distributed, with a G-prior...
 
 Installation
 ------------
+Download the current version, and `unzip` the file. Then install in `R` using the following, where `rbtgde-structmcmc-XXXXX` is the name of the `unzip`ped directory/folder, and `path/to/rbtgde-structmcmc-XXXXX` is the path to this folder.
 
+``` r
+install.packages("path/to/rbtgde-structmcmc-XXXXX", repos = NULL, type = "source")
+```
 
 Contact
 -------
