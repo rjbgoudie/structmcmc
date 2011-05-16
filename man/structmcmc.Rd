@@ -13,7 +13,8 @@ x <- data.frame(x1 = x1, x2 = x2, x3 = x3)
 
 # Draw samples from the posterior using MC^3.
 set.seed(1234)
-mcmc <- posterior(data = x, method = "mh-mcmc")
+mcmc <- posterior(data = x, method = "mh-mcmc",
+nSamples = 1000, nBurnin = 100)
 
 # Compute and plot estimated edge probabilities
 epmcmc <- ep(mcmc)
@@ -23,5 +24,5 @@ exact <- posterior(x, "exact")
 epexact <- ep(exact)
 
 # Comparing multiple MCMC runs
-mcmc2 <- posterior(x, "mh-mcmc")
+mcmc2 <- posterior(x, "mh-mcmc", nSamples = 1000, nBurnin = 100)
 epmcmc2 <- ep(mcmc2)}

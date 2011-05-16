@@ -20,4 +20,6 @@ mcmc <- posterior(data = x, "mc3", nSamples = 500, nBurnin = 100)
 
 mygp1 <- gp(exact)
 mygp2 <- gp(mcmc)
-xyplot(gp.list(myep1, myep2))}
+if (require(lattice)){
+xyplot(gp.list(Exact = mygp1, MCMC = mygp2))
+}}

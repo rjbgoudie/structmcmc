@@ -24,7 +24,8 @@
 #' 
 #' # Draw samples from the posterior using MC^3.
 #' set.seed(1234)
-#' mcmc <- posterior(data = x, method = "mh-mcmc")
+#' mcmc <- posterior(data = x, method = "mh-mcmc",
+#'                   nSamples = 1000, nBurnin = 100)
 #' 
 #' # Compute and plot estimated edge probabilities
 #' epmcmc <- ep(mcmc)
@@ -34,7 +35,7 @@
 #' epexact <- ep(exact)
 #' 
 #' # Comparing multiple MCMC runs
-#' mcmc2 <- posterior(x, "mh-mcmc")
+#' mcmc2 <- posterior(x, "mh-mcmc", nSamples = 1000, nBurnin = 100)
 #' epmcmc2 <- ep(mcmc2)
 NULL
 

@@ -763,7 +763,7 @@ levelplot.ep <- function(ep){
 #' myep1 <- ep(exact)
 #' myep2 <- ep(mcmc)
 #' if (require(lattice)){
-#'   levelplot(ep.list(myep1, myep2))
+#'   levelplot(ep.list(Exact = myep1, MCMC = myep2))
 #' }
 levelplot.ep.list <- function(eplist){
   dfs <- lapply(eplist, prepareLevelPlot)
@@ -875,7 +875,7 @@ dotplot.ep <- function(ep, head = 30, ...){
 #' 
 #' myep1 <- ep(exact)
 #' myep2 <- ep(mcmc)
-#' ep.list(myep1, myep2)
+#' ep.list(Exact = myep1, MCMC = myep2)
 ep.list <- function(...){
   out <- list(...)
   class(out) <- "ep.list"
@@ -1099,7 +1099,7 @@ xyplot.gp <- function(gp, head = 30, ...){
 #' 
 #' mygp1 <- gp(exact)
 #' mygp2 <- gp(mcmc)
-#' gp.list(myep1, myep2)
+#' gp.list(Exact = mygp1, MCMC = mygp2)
 gp.list <- function(...){
   out <- list(...)
   class(out) <- "gp.list"
@@ -1127,7 +1127,9 @@ gp.list <- function(...){
 #' 
 #' mygp1 <- gp(exact)
 #' mygp2 <- gp(mcmc)
-#' dotplot(gp.list(myep1, myep2))
+#' if (require(lattice)){
+#'   dotplot(gp.list(Exact = mygp1, MCMC = mygp2))
+#' }
 dotplot.gp.list <- function(gplist, subsetBy = "Exact", head = 30, ...){
   gpdata <- prepareGPPlot(gplist)
 
@@ -1182,7 +1184,9 @@ dotplot.gp.list <- function(gplist, subsetBy = "Exact", head = 30, ...){
 #' 
 #' mygp1 <- gp(exact)
 #' mygp2 <- gp(mcmc)
-#' xyplot(gp.list(myep1, myep2))
+#' if (require(lattice)){
+#'   xyplot(gp.list(Exact = mygp1, MCMC = mygp2))
+#' }
 xyplot.gp.list <- function(gplist, head = 30,
                            scales = list(x = list(rot = 90)),
                            highlight = NULL, ...){
@@ -1519,13 +1523,12 @@ as.roc.ep.list <- function(x, true, thresholds, labels, verbose, ...){
 #' 
 #' exact <- posterior(x, "exact")
 #' eppost <- ep(exact)
+#' mcmc <- posterior(x, "mc3", nSamples = 1000, nBurnin = 100)
+#' 
 #' rocplot(true = bn(integer(0), c(1,3), integer(0)),
 #'         eps = ep.list(eppost))
-#' 
-#' mcmc <- posterior(x, "mc3", nSamples = 1000, nBurnin = 100)
-#' rocplot(true = bn(integer(0), c(1,3), integer(0)),
-#'         eps = ep.list(eppost),
-#'         bnpmls = bnpostmcmc.list(mcmc))
+#' rocplot(true = bn(integer(0), integer(0), 2),
+#'         eps = ep.list(eppost))
 rocplot <- function(true,
                     maps,
                     bnpmls,
