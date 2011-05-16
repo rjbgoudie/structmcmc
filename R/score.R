@@ -14,7 +14,7 @@
 #'
 #' @export
 #' @seealso \code{\link{logScoreMultDir}}, \code{\link{logScoreZellner}}
-defaultLogScoreFUN <- function(){
+logScoreMultDirFUN <- function(){
   list(offline = logScoreMultDirOffline,
        online  = logScoreMultDirIncremental,
        local  = localLogScoreMultDir,

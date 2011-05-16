@@ -2,7 +2,7 @@
 \alias{BNSamplerGrzeg}
 \title{Undocumented.}
 \usage{BNSamplerGrzeg(data, initial, prior, return="network",
-    logScoreFUN=defaultLogScoreFUN(),
+    logScoreFUN=logScoreMultDirFUN(),
     logScoreParameters=list(hyperparameters = "qi"), constraint,
     modejumping=F, verbose=F, keepTape=F,
     grzeg=list(grzegMoveProbability = 0.5))}

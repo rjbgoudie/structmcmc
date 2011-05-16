@@ -2,7 +2,7 @@
 \alias{BNSamplerMJ}
 \title{Mode-jumping MCMC sampler for Bayesian Networks.}
 \usage{BNSamplerMJ(data, initial, prior, return="network",
-    logScoreFUN=defaultLogScoreFUN(),
+    logScoreFUN=logScoreMultDirFUN(),
     logScoreParameters=list(hyperparameters = "qi"), constraint,
     modejumping=F, verbose=F, keepTape=F)}
 \description{Mode-jumping MCMC sampler for Bayesian Networks.}

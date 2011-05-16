@@ -1,5 +1,5 @@
-\name{defaultLogScoreFUN}
-\alias{defaultLogScoreFUN}
+\name{logScoreMultDirFUN}
+\alias{logScoreMultDirFUN}
 \title{Multinomial-Dirichlet Log marginal likelihood.}
 \description{Multinomial-Dirichlet Log marginal likelihood.}
 \details{method description}

@@ -2,7 +2,7 @@
 \alias{BNSamplerBigFlips}
 \title{Big flips MCMC sampler for Bayesian networks.}
 \usage{BNSamplerBigFlips(data, initial, prior, return="network",
-    logScoreFUN=defaultLogScoreFUN(),
+    logScoreFUN=logScoreMultDirFUN(),
     logScoreParameters=list(hyperparameters = "qi"), verbose=F,
     keepTape=F)}
 \description{Big flips MCMC sampler for Bayesian networks.}
