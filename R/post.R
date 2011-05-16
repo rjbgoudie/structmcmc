@@ -28,6 +28,9 @@
 #'     \item{prepare}{A function that prepares the data, and any further 
 #'                    pre-computation required by the logScore functions.}
 #'   }
+#'   For Multinomial-Dirichlet models, \code{\link{logScoreMultDirFUN}} 
+#'   returns the appropriate list; for Normal models with Zellner g-priors,
+#'   \code{\link{logScoreZellnerFUN}} returns the appropriate list.
 #' @param logScoreParameters A list of parameters that are passed to
 #'                       logScoreFUN.
 #' @param constraint A matrix of dimension ncol(data) x ncol(data) giving
