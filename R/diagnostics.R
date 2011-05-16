@@ -44,7 +44,7 @@ epmx <- function(x, ...){
 #' @seealso \code{\link{epmx}}, \code{\link{xyplot.epmx}},
 #'   \code{\link{splom.bnpostmcmc.list}}
 epmx.bnpostmcmc.list <- epmx.list <- function(x,
-                                 nbin    = floor((end - start)/100),
+                                 nbin    = floor((end - start + 1)/100),
                                  start   = 1,
                                  end     = length(x[[1]]),
                                  verbose = F,
