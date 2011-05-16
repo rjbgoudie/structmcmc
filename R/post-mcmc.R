@@ -248,7 +248,6 @@ logScoreMultDir.bnpostmcmc <- function(x, sampler, data,
 #' method description
 #'
 #' @param x ...
-#' @param logNetworkPriors ...
 #' @param start ...
 #' @param end ...
 #' @param nbin ...
@@ -259,9 +258,8 @@ logScoreMultDir.bnpostmcmc <- function(x, sampler, data,
 #' @S3method gp bnpostmcmc
 #' @method gp bnpostmcmc
 #' @seealso \code{\link{gp}}, \code{\link{gp.bnpostmcmc.list}}
-gp.bnpostmcmc <- function(x, logNetworkPriors, start, end, nbin = 1,
+gp.bnpostmcmc <- function(x, start, end, nbin = 1,
                           log = F, pretty = F, levels = NULL, ...){
-  warning("does not handle priors, nor logging")
 
   makeNames <- function(tabulatedProportions){
     # a probably suboptimal shuffle so as to keep names
