@@ -21,7 +21,10 @@ Bayesian Network}
 Bayesian Network}
 \item{prepare}{A function that prepares the data, and any further 
 pre-computation required by the logScore functions.}
-}}}
+}
+For Multinomial-Dirichlet models, \code{\link{logScoreMultDirFUN}} 
+returns the appropriate list; for Normal models with Zellner g-priors,
+\code{\link{logScoreZellnerFUN}} returns the appropriate list.}}
 \examples{x1 <- factor(c(1, 1, 0, 1))
 x2 <- factor(c(0, 1, 0, 1))
 dat <- data.frame(x1 = x1, x2 = x2)
