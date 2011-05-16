@@ -2,7 +2,7 @@ Package: structmcmc
 Type: Package
 Title: Structural inference for Bayesian Networks and Variable
     Selection.
-Version: 1.1
+Version: 1.2
 Author: R.J.B. Goudie <rjbgoudie@gmail.com>
 Maintainer: R.J.B. Goudie <rjbgoudie@gmail.com>
 Description: Structural inference for Bayesian Networks and Variable
