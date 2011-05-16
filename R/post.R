@@ -61,7 +61,7 @@
 posterior <- function(data,
                       method             = "mc3",
                       prior              = function(x) 1,
-                      logScoreFUN        = defaultLogScoreFUN(),
+                      logScoreFUN        = logScoreMultDirFUN(),
                       logScoreParameters = list(hyperparameters = "qi"),
                       constraint         = NULL,
                       maxNumberParents   = Inf,

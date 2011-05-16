@@ -2,7 +2,7 @@
 \alias{BNSamplerPT}
 \title{Undocumented.}
 \usage{BNSamplerPT(data, initial, prior, return="network",
-    logScoreFUN=defaultLogScoreFUN(),
+    logScoreFUN=logScoreMultDirFUN(),
     logScoreParameters=list(hyperparameters = "qi"), constraint,
     modejumping=F, verbose=F, keepTape=F, temp=1, cache=new.env(hash =
     T, size = 10000L))}

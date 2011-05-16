@@ -2,7 +2,7 @@
 \alias{posterior}
 \title{Posterior distribution on Bayesian networks.}
 \usage{posterior(data, method="mc3", prior=function(x) 1,
-    logScoreFUN=defaultLogScoreFUN(),
+    logScoreFUN=logScoreMultDirFUN(),
     logScoreParameters=list(hyperparameters = "qi"), constraint,
     maxNumberParents=Inf, nSamples=50000, nBurnin=10000, initial,
     verbose=F)}
