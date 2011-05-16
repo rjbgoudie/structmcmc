@@ -166,6 +166,16 @@ Download the current version, and `unzip` the file. Then install in `R` using th
 install.packages("path/to/rjbgoudie-structmcmc-XXXXX", repos = NULL, type = "source")
 ```
 
+The package depends on [`parental`][pkg:parental], which provides a very lightweight directed graph object and basic manipulation tools for R.
+
+The package also depends on [`lattice`][pkg:lattice], and `grid`, both of which are included with R.
+
+[`gRain`][cran:gRain], [`nnet`][cran:nnet], [`reshape`][cran:reshape], [`zoo`][cran:zoo] are also recommended, and can be installed from CRAN, e.g. using
+
+``` r
+install.packages("reshape")
+```
+
 Contact
 -------
 
@@ -178,7 +188,12 @@ Contact
 [cran:bnlearn]: http://cran.r-project.org/web/packages/bnlearn/ "bnlearn: Bayesian network structure learning, parameter learning and inference"
 [cran:pcalg]: http://cran.r-project.org/web/packages/pcalg/ "pcalg: Estimation of CPDAG/PAG and causal inference using the IDA algorithm"
 [cran:gRain]: http://cran.r-project.org/web/packages/gRain "gRain: Graphical Independence Networks"
+[cran:lattice]: http://cran.r-project.org/web/packages/lattice "lattice: Lattice Graphics"
+[cran:nnet]: http://cran.r-project.org/web/packages/nnet "nnet: Feed-forward Neural Networks and Multinomial Log-Linear Models"
+[cran:reshape]: http://cran.r-project.org/web/packages/reshape "reshape: Flexibly reshape data"
+[cran:zoo]: http://cran.r-project.org/web/packages/zoo "zoo: Z's ordered observations"
 [rdoc:factor]: http://stat.ethz.ch/R-manual/R-devel/library/base/html/factor.html "R Documentation: Factors"
 [rdoc:data.frame]: http://stat.ethz.ch/R-manual/R-devel/library/base/html/data.frame.html "R Documentation: Data Frames"
 [rdoc:matrix]: http://stat.ethz.ch/R-manual/R-devel/library/base/html/matrix.html "R Documentation: Matrices"
 [rdoc:numeric]: http://stat.ethz.ch/R-manual/R-devel/library/base/html/numeric.html "R Documentation: Numeric"
+[pkg:parental]: https://github.com/rjbgoudie/parental "parental: a very lightweight directed graph object and basic manipulation tools for R"
