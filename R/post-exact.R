@@ -126,7 +126,6 @@ map.bnpost <- function(x, ...){
 #' method description
 #'
 #' @param x ...
-#' @param logNetworkPriors ...
 #' @param log ...
 #' @param pretty ...
 #' @param ... Further arguments (unused)
@@ -144,16 +143,12 @@ map.bnpost <- function(x, ...){
 #' 
 #' gp(post)
 #' ep(post)
-gp.bnpost <- function(x, logNetworkPriors, log = F, pretty = F, ...){
+gp.bnpost <- function(x, log = F, pretty = F, ...){
   logScore <- x$logScore
   family <- x$bnspace
 
-  if (missing(logNetworkPriors)){
-    logNetworkPriors <- log(rep(1/length(family), length(family)))
-  }
-
-  normalisingConstant <- logsumexp(logScore + logNetworkPriors)
-  out <- logScore + logNetworkPriors - normalisingConstant
+  normalisingConstant <- logsumexp(logScore)
+  out <- logScore - normalisingConstant
 
   nm <- as.character(family, pretty)
   names(out) <- nm
