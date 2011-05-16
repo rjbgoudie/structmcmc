@@ -172,7 +172,13 @@ install.packages("path/to/rjbgoudie-structmcmc-XXXXX", repos = NULL, type = "sou
 
 The package depends on [`parental`][pkg:parental], which provides a very lightweight directed graph object and basic manipulation tools for R.
 
-The package also depends on [`lattice`][cran:lattice], and `grid`, both of which are included with R.
+The package also depends on [`digest`][cran:digest], which can be installed from CRAN, e.g. using
+
+``` r
+install.packages("digest")
+```
+
+Also required are [`lattice`][cran:lattice], and `grid`, both of which are included with R.
 
 [`gRain`][cran:gRain], [`nnet`][cran:nnet], [`reshape`][cran:reshape], [`zoo`][cran:zoo] are also recommended, and can be installed from CRAN, e.g. using
 
@@ -191,6 +197,7 @@ Contact
 [cran:deal]: http://cran.r-project.org/web/packages/deal/ "deal: Learning Bayesian Networks with Mixed Variables"
 [cran:bnlearn]: http://cran.r-project.org/web/packages/bnlearn/ "bnlearn: Bayesian network structure learning, parameter learning and inference"
 [cran:pcalg]: http://cran.r-project.org/web/packages/pcalg/ "pcalg: Estimation of CPDAG/PAG and causal inference using the IDA algorithm"
+[cran:digest]: http://cran.r-project.org/web/packages/digest/ "digest: Create cryptographic hash digests of R objects"
 [cran:gRain]: http://cran.r-project.org/web/packages/gRain "gRain: Graphical Independence Networks"
 [cran:lattice]: http://cran.r-project.org/web/packages/lattice "lattice: Lattice Graphics"
 [cran:nnet]: http://cran.r-project.org/web/packages/nnet "nnet: Feed-forward Neural Networks and Multinomial Log-Linear Models"
