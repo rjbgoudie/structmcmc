@@ -73,8 +73,7 @@ posterior <- function(data,
                       initial            = NULL,
                       verbose            = T){
   methods <- c("exact", "mc3", "mh-mcmc", "gibbs", "mj-mcmc")
-  stopifnot(class(data) ==   "data.frame",
-            method      %in% methods)
+  stopifnot(method      %in% methods)
 
   if (method == "exact"){
     exactposterior(data,
