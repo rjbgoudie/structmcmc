@@ -14,4 +14,4 @@ mcmc <- posterior(data = x, "mc3", nSamples = 500, nBurnin = 100)
 
 mygp1 <- gp(exact)
 mygp2 <- gp(mcmc)
-gp.list(myep1, myep2)}
+gp.list(Exact = mygp1, MCMC = mygp2)}

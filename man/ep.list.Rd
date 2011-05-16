@@ -15,4 +15,4 @@ mcmc <- posterior(data = x, "mc3", nSamples = 500, nBurnin = 100)
 
 myep1 <- ep(exact)
 myep2 <- ep(mcmc)
-ep.list(myep1, myep2)}
+ep.list(Exact = myep1, MCMC = myep2)}
