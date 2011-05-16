@@ -182,7 +182,8 @@ edgeIsFlippable <- function(routes, adjacency, constraintT, maxNumberParents){
 #' @return A function, which when called draws the next sample of the MCMC.
 #' @export
 #' @seealso \code{\link{draw}}. \code{\link{BNSamplerMJ}},
-#'   \code{\link{BNSamplerPT}}, \code{\link{BNGibbsSampler}}.
+#'   \code{\link{BNSamplerPT}}, \code{\link{BNGibbsSampler}}. Example priors
+#'   \code{\link{priorGraph}}, \code{\link{priorUniform}}
 #' @examples
 #' x1 <- factor(c("a", "a", "g", "c", "c", "a", "g", "a", "a"))
 #' x2 <- factor(c(2, 2, 4, 3, 1, 4, 4, 4, 1))

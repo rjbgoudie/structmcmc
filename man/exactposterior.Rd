@@ -6,7 +6,8 @@
 \description{Posterior distribution on Bayesian networks.}
 \details{Use one of a number of methods to get the posterior distribution}
 \value{A \code{bnpost} object.}
-\seealso{\code{\link{posterior}}}
+\seealso{\code{\link{posterior}}. Example priors
+\code{\link{priorGraph}}, \code{\link{priorUniform}}.}
 \arguments{\item{data}{The data.}
 \item{prior}{A function that returns the prior score of the
 supplied bn.}

@@ -51,7 +51,8 @@
 #' @return Either a \code{bnpost} or a \code{bnpostmcmc} object.
 #' @export
 #' @seealso For more control, use the MCMC sampler directly, 
-#'   e.g. \code{\link{BNSampler}}.
+#'   e.g. \code{\link{BNSampler}}.  Example priors
+#'   \code{\link{priorGraph}}, \code{\link{priorUniform}}.
 #' @examples
 #' x1 <- factor(c("a", "a", "g", "c", "c", "a", "g", "a", "a"))
 #' x2 <- factor(c(2, 2, 4, 3, 1, 4, 4, 4, 1))
@@ -156,7 +157,8 @@ posterior <- function(data,
 #' @param verbose A logical. Should a progress bar be displayed?
 #' @return A \code{bnpost} object.
 #' @export
-#' @seealso \code{\link{posterior}}
+#' @seealso \code{\link{posterior}}. Example priors
+#'   \code{\link{priorGraph}}, \code{\link{priorUniform}}.
 exactposterior <- function(data,
                            prior,
                            logScoreFUN,
@@ -244,6 +246,7 @@ exactposterior <- function(data,
 #' @return A \code{bnpostmcmc} object.
 #' @seealso For more control, use the MCMC sampler directly, 
 #'   e.g. \code{\link{BNSampler}}. See also \code{\link{posterior}}.
+#'    Example priors \code{\link{priorGraph}}, \code{\link{priorUniform}}.
 #' @export
 mcmcposterior <- function(sampler = BNSampler,
                           data,

@@ -10,7 +10,8 @@
 \details{Use one of a number of methods to get the posterior distribution.}
 \value{Either a \code{bnpost} or a \code{bnpostmcmc} object.}
 \seealso{For more control, use the MCMC sampler directly, 
-e.g. \code{\link{BNSampler}}.}
+e.g. \code{\link{BNSampler}}.  Example priors
+\code{\link{priorGraph}}, \code{\link{priorUniform}}.}
 \arguments{\item{data}{The data.}
 \item{method}{One of "exact", "mc3", "gibbs", "mj-mcmc". "mh-mcmc" is a 
 synonym of "mc3".}

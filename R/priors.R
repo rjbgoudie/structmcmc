@@ -55,6 +55,7 @@ mukherjeeBioinformaticsPrior <- function(x, k0, kmax, lambda){
 #' @return A function computes the prior score of the supplied graph. This 
 #'   This function is of a suitable form to be used as a prior.
 #' @export
+#' @seealso \code{\link{priorUniform}}
 #' @examples
 #' x1 <- factor(c("a", "a", "g", "c", "c", "a", "g", "a", "a"))
 #' x2 <- factor(c(2, 2, 4, 3, 1, 4, 4, 4, 1))
@@ -87,6 +88,7 @@ priorGraph <- function(graph, lambda){
 #' @return A function computes the prior score of the supplied graph. This 
 #'   This function is of a suitable form to be used as a prior
 #' @export
+#' @seealso \code{\link{priorGraph}}
 #' @examples
 #' x1 <- factor(c("a", "a", "g", "c", "c", "a", "g", "a", "a"))
 #' x2 <- factor(c(2, 2, 4, 3, 1, 4, 4, 4, 1))

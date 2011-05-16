@@ -9,7 +9,8 @@
 \details{The sampler samples Bayesian Networks (ie models).}
 \value{A function, which when called draws the next sample of the MCMC.}
 \seealso{\code{\link{draw}}. \code{\link{BNSamplerMJ}},
-\code{\link{BNSamplerPT}}, \code{\link{BNGibbsSampler}}.}
+\code{\link{BNSamplerPT}}, \code{\link{BNGibbsSampler}}. Example priors
+\code{\link{priorGraph}}, \code{\link{priorUniform}}}
 \arguments{\item{data}{The data.}
 \item{initial}{An object of class 'bn'. The starting value of the MCMC.}
 \item{prior}{A function that returns the prior score of the supplied bn.}

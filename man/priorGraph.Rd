@@ -12,6 +12,7 @@ edges in the graph \code{graph}; extra edges are penalised; the prior
 is maximised (not uniquely) at the empty graph.}
 \value{A function computes the prior score of the supplied graph. This 
 This function is of a suitable form to be used as a prior.}
+\seealso{\code{\link{priorUniform}}}
 \arguments{\item{graph}{The 'prior graph'. A \code{bn}.}
 \item{lambda}{A weighting parameter. A numeric of length 1.}}
 \examples{x1 <- factor(c("a", "a", "g", "c", "c", "a", "g", "a", "a"))

@@ -8,7 +8,8 @@
 \details{Use MCMC to approximate the posterior distribution}
 \value{A \code{bnpostmcmc} object.}
 \seealso{For more control, use the MCMC sampler directly, 
-e.g. \code{\link{BNSampler}}. See also \code{\link{posterior}}.}
+e.g. \code{\link{BNSampler}}. See also \code{\link{posterior}}.
+Example priors \code{\link{priorGraph}}, \code{\link{priorUniform}}.}
 \arguments{\item{sampler}{A BNSampler. eg BNSampler or BNGibbsSampler etc}
 \item{data}{The data.}
 \item{prior}{A function that returns the prior score of the
