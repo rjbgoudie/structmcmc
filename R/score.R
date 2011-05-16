@@ -13,10 +13,25 @@
 #' method description
 #'
 #' @export
-#' @seealso \code{\link{logScoreMultDir}}, \code{\link{logScoreZellner}}
+#' @seealso \code{\link{logScoreZellnerFUN}}, \code{\link{logScoreMultDir}},
+#'   \code{\link{logScoreZellner}}
 logScoreMultDirFUN <- function(){
   list(offline = logScoreMultDirOffline,
        online  = logScoreMultDirIncremental,
-       local  = localLogScoreMultDir,
+       local   = localLogScoreMultDir,
        prepare = logScoreMultDirPrepare)
+}
+
+#' Normal Log marginal likelihood.
+#'
+#' method description
+#'
+#' @export
+#' @seealso \code{\link{logScoreMultDirFUN}}, \code{\link{logScoreMultDir}},
+#'   \code{\link{logScoreZellner}}
+logScoreZellnerFUN <- function(){
+  list(offline = logScoreZellnerOffline,
+       online  = logScoreZellnerIncremental,
+       local   = localLogScoreZellner,
+       prepare = logScoreZellnerPrepare)
 }
