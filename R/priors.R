@@ -44,10 +44,11 @@ mukherjeeBioinformaticsPrior <- function(x, k0, kmax, lambda){
 #' 
 #' Returns a function that will evaluate the prior of a graph. The prior is 
 #' 
-#' f(x) = exp( - lambda * |E(graph) - E(x))|
+#' f(x) = exp( - lambda * (edges(x) - edges(graph)))
 #' 
-#' So the prior scores more highly those graphs \code{x} that agree more 
-#' closely with the graph \code{graph}.
+#' So the prior scores more highly those graphs \code{x} that include all the
+#' edges in the graph \code{graph}; extra edges are penalised; the prior 
+#' is maximised (not uniquely) at the empty graph.
 #' 
 #' @param graph The 'prior graph'. A \code{bn}.
 #' @param lambda A weighting parameter. A numeric of length 1.
@@ -73,8 +74,9 @@ priorGraph <- function(graph, lambda){
   stopifnot("bn" %in% class(graph),
             inherits(lambda, "numeric") || inherits(lambda, "integer"))
   function(x){
-    difference <- numberOfMovesBetweenIgnoringCycles(x, graph)
-    exp(- lambda * abs(difference))
+    difference <- psetdiff(x, graph)
+    difference <- length(unlist(difference))
+    exp(- lambda * difference)
   }
 }
 

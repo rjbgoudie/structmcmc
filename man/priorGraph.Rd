@@ -5,10 +5,11 @@
 \description{A standard 'graph prior'.}
 \details{Returns a function that will evaluate the prior of a graph. The prior is 
 
-f(x) = exp( - lambda * |E(graph) - E(x))|
+f(x) = exp( - lambda * (edges(x) - edges(graph)))
 
-So the prior scores more highly those graphs \code{x} that agree more 
-closely with the graph \code{graph}.}
+So the prior scores more highly those graphs \code{x} that include all the
+edges in the graph \code{graph}; extra edges are penalised; the prior 
+is maximised (not uniquely) at the empty graph.}
 \value{A function computes the prior score of the supplied graph. This 
 This function is of a suitable form to be used as a prior.}
 \arguments{\item{graph}{The 'prior graph'. A \code{bn}.}
