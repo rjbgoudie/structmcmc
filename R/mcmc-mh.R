@@ -190,9 +190,7 @@ edgeIsFlippable <- function(routes, adjacency, constraintT, maxNumberParents){
 #' x <- data.frame(x1 = x1, x2 = x2, x3 = x3)
 #' 
 #' initial <- empty(3, "bn")
-#' prior <- function(x){
-#'  1
-#' }
+#' prior <- priorUniform()
 #' 
 #' sampler <- BNSampler(data = x, initial = initial, prior = prior)
 #' samples <- draw(sampler, n = 100, burnin = 10)
