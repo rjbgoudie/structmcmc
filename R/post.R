@@ -1688,7 +1688,9 @@ cumtvd <- function(exactgp, bnpostmcmclist, start = 1, end,
   stopifnot(class(bnpostmcmclist) == "bnpostmcmc.list")
   if (missing(end)){
     end <- length(bnpostmcmclist[[1]]$samples)
-    nbin <- (end - start + 1)/100
+    if (missing(nbin)){
+      nbin <- (end - start + 1)/100
+    }
   }
 
   numberOfNodes <- length(bnpostmcmclist[[1]]$samples[[1]])
