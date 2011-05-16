@@ -2,7 +2,7 @@
 \alias{exactposterior}
 \title{Posterior distribution on Bayesian networks.}
 \usage{exactposterior(data, prior, logScoreFUN, logScoreParameters,
-    constraint, maxNumberParents, verbose)}
+    constraint, maxNumberParents, verbose=T)}
 \description{Posterior distribution on Bayesian networks.}
 \details{Use one of a number of methods to get the posterior distribution}
 \value{A \code{bnpost} object.}
