@@ -84,6 +84,7 @@ xyplot(cumtvd(exactgp, bnpostmcmc.list(mcmc, mcmc2)))
 
 Basic operation, continuous data
 --------------------------------
+[View script as file](https://gist.github.com/974390)
 
 Each random variable is assumed to be Normally-distributed, with a G-prior.
 
