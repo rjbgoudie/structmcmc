@@ -29,7 +29,10 @@ Draw samples from the posterior using MC<sup>3</sup>.
 ``` r
 set.seed(1234)
 initial <- bn(c(), c(), c())
-mcmc <- posterior(data = x, method = "mc3", nSamples = 10000, nBurnin = 1000, initial = initial)
+priorgraph <- bn(c(), c(1), c(2))
+prior <- priorGraph(priorgraph, 0.5)
+mcmc <- posterior(data = x, method = "mc3", prior = prior,
+                  nSamples = 10000, nBurnin = 1000, initial = initial)
 ```
 
 Compute and plot estimated edge probabilities given by the MCMC run
@@ -42,7 +45,7 @@ levelplot(epmcmc)
 Since this is a problem with `p = 3`, we can compute the posterior edge probabilies by exhaustive enumeration. This is only feasible for `p <= 6` or so.
 
 ``` r
-exact <- posterior(x, "exact")
+exact <- posterior(x, "exact", prior = prior)
 epexact <- ep(exact)
 levelplot(epexact)
 ```
@@ -50,7 +53,8 @@ levelplot(epexact)
 Comparing multiple MCMC runs
 
 ``` r
-mcmc2 <- posterior(data = x, method = "mc3", nSamples = 10000, nBurnin = 1000, initial = initial)
+mcmc2 <- posterior(data = x, method = "mc3", prior = prior,
+                   nSamples = 10000, nBurnin = 1000, initial = initial)
 epmcmc2 <- ep(mcmc2)
 levelplot(epmcmc2)
 ```
