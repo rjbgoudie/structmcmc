@@ -168,7 +168,7 @@ install.packages("path/to/rjbgoudie-structmcmc-XXXXX", repos = NULL, type = "sou
 
 The package depends on [`parental`][pkg:parental], which provides a very lightweight directed graph object and basic manipulation tools for R.
 
-The package also depends on [`lattice`][pkg:lattice], and `grid`, both of which are included with R.
+The package also depends on [`lattice`][cran:lattice], and `grid`, both of which are included with R.
 
 [`gRain`][cran:gRain], [`nnet`][cran:nnet], [`reshape`][cran:reshape], [`zoo`][cran:zoo] are also recommended, and can be installed from CRAN, e.g. using
 
