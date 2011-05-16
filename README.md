@@ -28,7 +28,8 @@ Draw samples from the posterior using MC<sup>3</sup>.
 
 ``` r
 set.seed(1234)
-mcmc <- posterior(data = x, "mc3")
+initial <- bn(c(), c(), c())
+mcmc <- posterior(data = x, method = "mc3", nSamples = 10000, nBurnin = 1000, initial = initial)
 ```
 
 Compute and plot estimated edge probabilities given by the MCMC run
@@ -49,16 +50,37 @@ levelplot(epexact)
 Comparing multiple MCMC runs
 
 ``` r
-mcmc2 <- posterior(x, "mc3")
+mcmc2 <- posterior(data = x, method = "mc3", nSamples = 10000, nBurnin = 1000, initial = initial)
 epmcmc2 <- ep(mcmc2)
 levelplot(epmcmc2)
-
-levelplot(ep.list(exact = epexact, mcmc = epmcmc))
-
-cumep(list(mcmc, mcmc2))
-
-rocplot()
 ```
+
+Compare the final edge probabilities between runs
+
+``` r
+splom(bnpostmcmc.list(mcmc, mcmc2))
+levelplot(ep.list(exact = epexact, mcmc = epmcmc))
+```
+
+Plot how the cumulative edge probabilities change as samples are drawn.
+
+``` r
+xyplot(cumep(bnpostmcmc.list(mcmc, mcmc2)))
+```
+
+Plot how the moving averaging edge probabilities change as samples are drawn.
+
+``` r
+xyplot(mwep(bnpostmcmc.list(mcmc, mcmc2)))
+```
+
+Plot how the cumulative total variance distance changes as samples are drawn
+
+``` r
+exactgp <- gp(exact)
+xyplot(cumtvd(exactgp, bnpostmcmc.list(mcmc, mcmc2)))
+```
+
 
 Basic operation, continuous data
 --------------------------------
