@@ -4,7 +4,7 @@
 \usage{mcmcposterior(data, sampler=BNSampler, prior=priorUniform(),
     logScoreFUN=logScoreMultDirFUN(),
     logScoreParameters=list(hyperparameters = "qi"), constraint,
-    maxNumberParents, nSamples=50000, nBurnin=10000,
+    maxNumberParents, nSamples=50000, time=F, nBurnin=10000,
     initial=empty(ncol(data), "bn"), verbose=T)}
 \description{Posterior distribution on Bayesian networks.}
 \details{Use MCMC to approximate the posterior distribution}
@@ -38,7 +38,10 @@ The (i, j) element is
 The diagonal of constraint must be all 0.}
 \item{maxNumberParents}{Integer of length 1. The maximum number of
 parents of any node.}
-\item{nSamples}{The number of samples to be draw (only applies to MCMC)}
+\item{nSamples}{The number of samples to be draw. Set this to \code{FALSE}
+if using the \code{time} argument.}
+\item{time}{The number of seconds to spend drawing samples. Set this to
+\code{FALSE} if using the \code{nSamples} argument.}
 \item{nBurnin}{The number of samples to discard from the beginning of
 the sample.}
 \item{initial}{An object of class 'bn'. The starting value of the

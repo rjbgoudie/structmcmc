@@ -44,11 +44,15 @@
 #'   parents of any node. Default value is left to the MCMC sampler when
 #'   \code{\link{mcmcposterior}} is user, or \code{\link{exactposterior}} for
 #'   exact computation.
-#' @param nSamples The number of samples to be draw (only applies to MCMC)
+#' @param nSamples The number of samples to be draw. Set this to \code{FALSE}
+#'   if using the \code{time} argument. (Only applies to MCMC.)
+#' @param time The number of seconds to spend drawing samples. Set this to
+#'   \code{FALSE} if using the \code{nSamples} argument. (Only applies to
+#'   MCMC.)
 #' @param nBurnin The number of samples to discard from the beginning of
-#'   the sample.
+#'   the sample. (Only applies to MCMC.)
 #' @param initial An object of class 'bn'. The starting value of the
-#'                       MCMC.
+#'   MCMC. (Only applies to MCMC.)
 #' @param verbose A logical. Should a progress bar be displayed?
 #' @return Either a \code{bnpost} or a \code{bnpostmcmc} object.
 #' @export
@@ -72,6 +76,7 @@ posterior <- function(data,
                       constraint         = NULL,
                       maxNumberParents   = NULL,
                       nSamples           = 50000,
+                      time               = F,
                       nBurnin            = 10000,
                       initial            = empty(ncol(data), "bn"),
                       verbose            = T){
@@ -95,6 +100,7 @@ posterior <- function(data,
                   constraint,
                   maxNumberParents,
                   nSamples,
+                  time,
                   nBurnin,
                   initial,
                   verbose)
@@ -107,6 +113,7 @@ posterior <- function(data,
                   constraint,
                   maxNumberParents,
                   nSamples,
+                  time,
                   nBurnin,
                   initial,
                   verbose)
@@ -119,6 +126,7 @@ posterior <- function(data,
                   constraint,
                   maxNumberParents,
                   nSamples,
+                  time,
                   nBurnin,
                   initial,
                   verbose)
@@ -242,7 +250,10 @@ exactposterior <- function(data,
 #'                       The diagonal of constraint must be all 0.
 #' @param maxNumberParents Integer of length 1. The maximum number of
 #'   parents of any node.
-#' @param nSamples The number of samples to be draw (only applies to MCMC)
+#' @param nSamples The number of samples to be draw. Set this to \code{FALSE}
+#'   if using the \code{time} argument.
+#' @param time The number of seconds to spend drawing samples. Set this to
+#'   \code{FALSE} if using the \code{nSamples} argument.
 #' @param nBurnin The number of samples to discard from the beginning of
 #'   the sample.
 #' @param initial An object of class 'bn'. The starting value of the
@@ -261,9 +272,12 @@ mcmcposterior <- function(data,
                           constraint         = NULL,
                           maxNumberParents   = NULL,
                           nSamples           = 50000,
+                          time               = F,
                           nBurnin            = 10000,
                           initial            = empty(ncol(data), "bn"),
                           verbose            = T){
+  stopifnot(identical(nSamples, F) + identical(time, F) == 1)
+  
   nVar <- ncol(data)
   if (is.null(initial)){
     initial <- empty(nVar, class = "bn")
@@ -279,6 +293,7 @@ mcmcposterior <- function(data,
                      verbose            = verbose)
   samples <- draw(sampler = sampler,
                   n       = nSamples,
+                  time    = time,
                   burnin  = nBurnin,
                   verbose = verbose)
   bnpostmcmc(sampler     = sampler,

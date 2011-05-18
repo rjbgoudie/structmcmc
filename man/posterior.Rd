@@ -4,7 +4,7 @@
 \usage{posterior(data, method="mc3", prior=priorUniform(),
     logScoreFUN=logScoreMultDirFUN(),
     logScoreParameters=list(hyperparameters = "qi"), constraint,
-    maxNumberParents, nSamples=50000, nBurnin=10000,
+    maxNumberParents, nSamples=50000, time=F, nBurnin=10000,
     initial=empty(ncol(data), "bn"), verbose=T)}
 \description{Posterior distribution on Bayesian networks.}
 \details{Use one of a number of methods to get the posterior distribution.}
@@ -44,11 +44,15 @@ The diagonal of constraint must be all 0.}
 parents of any node. Default value is left to the MCMC sampler when
 \code{\link{mcmcposterior}} is user, or \code{\link{exactposterior}} for
 exact computation.}
-\item{nSamples}{The number of samples to be draw (only applies to MCMC)}
+\item{nSamples}{The number of samples to be draw. Set this to \code{FALSE}
+if using the \code{time} argument. (Only applies to MCMC.)}
+\item{time}{The number of seconds to spend drawing samples. Set this to
+\code{FALSE} if using the \code{nSamples} argument. (Only applies to
+MCMC.)}
 \item{nBurnin}{The number of samples to discard from the beginning of
-the sample.}
+the sample. (Only applies to MCMC.)}
 \item{initial}{An object of class 'bn'. The starting value of the
-MCMC.}
+MCMC. (Only applies to MCMC.)}
 \item{verbose}{A logical. Should a progress bar be displayed?}}
 \examples{x1 <- factor(c("a", "a", "g", "c", "c", "a", "g", "a", "a"))
 x2 <- factor(c(2, 2, 4, 3, 1, 4, 4, 4, 1))
