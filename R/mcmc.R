@@ -120,8 +120,9 @@ drawSamplesByTime <- function(sampler,
   samples <- vector("list", samplesIncrement)
   if (verbose){
     cat("Drawing samples, for ", time, " seconds\n")
+    pb <- txtProgressBar(max = time, style = 3)
+    setTxtProgressBar(progress, 0)
   }
-  pb <- txtProgressBar(max = time, style = 3)
 
   i <- 1
   elapsed <- 1
