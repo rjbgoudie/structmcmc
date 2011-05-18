@@ -119,7 +119,7 @@ drawSamplesByTime <- function(sampler,
   # Note: the initial graph is NOT returned at the moment
   samples <- vector("list", samplesIncrement)
   if (verbose){
-    cat("Drawing samples, for", time, "seconds\n")
+    cat("Drawing samples, for about", time, "seconds\n")
     flush.console()
     pb <- txtProgressBar(max = time, style = 3)
     setTxtProgressBar(pb, 0)

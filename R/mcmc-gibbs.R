@@ -295,7 +295,7 @@ BNGibbsSampler <- function(data,
   
   if (is.null(parentsTables)){
     if (verbose){
-      cat("Listing all possible parent sets (step 1 of 3)\n")
+      cat("Listing all possible parent sets\n")
       flush.console()
     }
     parentsTables <- enumerateParentsTable(numberOfNodes,
@@ -306,7 +306,7 @@ BNGibbsSampler <- function(data,
   }
   if (is.null(scoresParents)){
     if (verbose){
-      cat("Scoring all possible parent sets (step 2 of 3)\n")
+      cat("Scoring all possible parent sets\n")
       flush.console()
     }
     scoresParents <- scoreParentsTable(parentsTables,
@@ -390,11 +390,6 @@ BNGibbsSampler <- function(data,
     tape[nSteps, 2] <<- -1
     tape[nSteps, 3] <<- 1
     tapeProposals[nSteps] <<- as.character(currentNetwork[[1]], pretty = T)
-  }
-  
-  if (verbose){
-    cat("Drawing MCMC samples (step 3 of 3)\n")
-    flush.console()
   }
 
   function(x,
