@@ -149,7 +149,10 @@ drawSamplesByTime <- function(sampler,
     }
     i <- i + 1
   }
-  close(pb)
+  
+  if (verbose){
+    close(pb)
+  }
   
   samples <- samples[seq_len(max(0,i-burninleft - 1))]
   class(samples) <- c("mcmcbn", "bn.list", "parental.list")
@@ -211,8 +214,9 @@ drawSamplesByStepCount <- function(sampler,
     }
     i <- i + 1
   }
-
+  
   if (verbose){
+    close(progress)
     cat("\n")
   }
 
