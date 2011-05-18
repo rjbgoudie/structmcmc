@@ -41,7 +41,9 @@
 #'                         0  if the edge i -> j is not constrained.
 #'                       The diagonal of constraint must be all 0.
 #' @param maxNumberParents Integer of length 1. The maximum number of
-#'   parents of any node.
+#'   parents of any node. Default value is left to the MCMC sampler when
+#'   \code{\link{mcmcposterior}} is user, or \code{\link{exactposterior}} for
+#'   exact computation.
 #' @param nSamples The number of samples to be draw (only applies to MCMC)
 #' @param nBurnin The number of samples to discard from the beginning of
 #'   the sample.
@@ -68,7 +70,7 @@ posterior <- function(data,
                       logScoreFUN        = logScoreMultDirFUN(),
                       logScoreParameters = list(hyperparameters = "qi"),
                       constraint         = NULL,
-                      maxNumberParents   = nNodes(initial) - 1,
+                      maxNumberParents   = NULL,
                       nSamples           = 50000,
                       nBurnin            = 10000,
                       initial            = empty(ncol(data), "bn"),
@@ -153,7 +155,7 @@ posterior <- function(data,
 #'                         0  if the edge i -> j is not constrained.
 #'                       The diagonal of constraint must be all 0.
 #' @param maxNumberParents Integer of length 1. The maximum number of
-#'   parents of any node.
+#'   parents of any node. A \code{NULL} value uses the \code{ncol(data) - 1}.
 #' @param verbose A logical. Should a progress bar be displayed?
 #' @return A \code{bnpost} object.
 #' @export
@@ -164,8 +166,11 @@ exactposterior <- function(data,
                            logScoreFUN        = logScoreMultDirFUN(),
                            logScoreParameters = list(hyperparameters = "qi"),
                            constraint         = NULL,
-                           maxNumberParents   = ncol(data) - 1,
+                           maxNumberParents   = NULL,
                            verbose            = T){
+  if (is.null(maxNumberParents)){
+    maxNumberParents <- ncol(data) - 1
+  }
   nVar <- ncol(data)
   bnspace <- enumerateBNSpace(nVar)
 
@@ -254,7 +259,7 @@ mcmcposterior <- function(data,
                           logScoreFUN        = logScoreMultDirFUN(),
                           logScoreParameters = list(hyperparameters = "qi"),
                           constraint         = NULL,
-                          maxNumberParents   = nNodes(initial) - 1,
+                          maxNumberParents   = NULL,
                           nSamples           = 50000,
                           nBurnin            = 10000,
                           initial            = empty(ncol(data), "bn"),

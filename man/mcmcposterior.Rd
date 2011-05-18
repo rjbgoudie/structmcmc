@@ -4,8 +4,8 @@
 \usage{mcmcposterior(data, sampler=BNSampler, prior=priorUniform(),
     logScoreFUN=logScoreMultDirFUN(),
     logScoreParameters=list(hyperparameters = "qi"), constraint,
-    maxNumberParents=nNodes(initial) - 1, nSamples=50000,
-    nBurnin=10000, initial=empty(ncol(data), "bn"), verbose=T)}
+    maxNumberParents, nSamples=50000, nBurnin=10000,
+    initial=empty(ncol(data), "bn"), verbose=T)}
 \description{Posterior distribution on Bayesian networks.}
 \details{Use MCMC to approximate the posterior distribution}
 \value{A \code{bnpostmcmc} object.}

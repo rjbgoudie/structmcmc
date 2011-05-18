@@ -4,8 +4,8 @@
 \usage{posterior(data, method="mc3", prior=priorUniform(),
     logScoreFUN=logScoreMultDirFUN(),
     logScoreParameters=list(hyperparameters = "qi"), constraint,
-    maxNumberParents=nNodes(initial) - 1, nSamples=50000,
-    nBurnin=10000, initial=empty(ncol(data), "bn"), verbose=T)}
+    maxNumberParents, nSamples=50000, nBurnin=10000,
+    initial=empty(ncol(data), "bn"), verbose=T)}
 \description{Posterior distribution on Bayesian networks.}
 \details{Use one of a number of methods to get the posterior distribution.}
 \value{Either a \code{bnpost} or a \code{bnpostmcmc} object.}
@@ -41,7 +41,9 @@ The (i, j) element is
 0  if the edge i -> j is not constrained.
 The diagonal of constraint must be all 0.}
 \item{maxNumberParents}{Integer of length 1. The maximum number of
-parents of any node.}
+parents of any node. Default value is left to the MCMC sampler when
+\code{\link{mcmcposterior}} is user, or \code{\link{exactposterior}} for
+exact computation.}
 \item{nSamples}{The number of samples to be draw (only applies to MCMC)}
 \item{nBurnin}{The number of samples to discard from the beginning of
 the sample.}

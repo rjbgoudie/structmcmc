@@ -173,7 +173,9 @@ edgeIsFlippable <- function(routes, adjacency, constraintT, maxNumberParents){
 #'   }
 #'   The diagonal of constraint must be all 0.
 #' @param maxNumberParents Integer of length 1. The maximum number of
-#'   parents of any node.
+#'   parents of any node. The default value, which is used for \code{NULL}
+#'   is to not constrain the maximum indegree, i.e. to use
+#'   \code{ncol(data) - 1}.
 #' @param verbose A logical of length 1, indicating whether verbose
 #'  output should be printed.
 #' @param keepTape A logical of length 1, indicating whether a full log
@@ -205,9 +207,12 @@ BNSampler <- function(data,
                       logScoreFUN = logScoreMultDirFUN(),
                       logScoreParameters = list(hyperparameters = "qi"),
                       constraint  = NULL,
-                      maxNumberParents = Inf,
+                      maxNumberParents = NULL,
                       verbose     = F,
                       keepTape    = F){
+  if (is.null(maxNumberParents)){
+    maxNumberParents <- ncol(data) - 1
+  }
   stopifnot("bn"                  %in% class(initial),
             is.valid(initial),
             ncol(as.matrix(data)) ==   length(initial),

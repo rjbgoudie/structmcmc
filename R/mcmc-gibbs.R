@@ -234,7 +234,8 @@ samplePair <- function(currentNetwork,
 #'                         0  if the edge i -> j is not constrained.
 #'                       The diagonal of constraint must be all 0.
 #' @param maxNumberParents Integer of length 1. The maximum number of
-#'   parents of any node.
+#'   parents of any node. A \code{NULL} value gives the default restriction 
+#'   of 3.
 #' @param moveprobs A numeric vector of length 3. Specifies the probability
 #'   that moves updating the parent sets of 1, 2 and 3 nodes simultaneously.
 #'   Must sum to 1.
@@ -260,7 +261,7 @@ BNGibbsSampler <- function(data,
                            logScoreFUN        = logScoreMultDirFUN(),
                            logScoreParameters = list(hyperparameters = "qi"),
                            constraint         = NULL,
-                           maxNumberParents   = 3,
+                           maxNumberParents   = NULL,
                            moveprobs          = c(0.9, 0.1, 0),
                            verbose            = F,
                            keepTape           = F,
@@ -274,7 +275,10 @@ BNGibbsSampler <- function(data,
             is.logical(keepTape),
             length(keepTape)      ==   1,
             sum(moveprobs)        ==   1)
-
+  if (is.null(maxNumberParents)){
+    maxNumberParents <- 3
+  }
+  
   numberOfNodes <- length(initial)
   nodesSeq <- seq_len(numberOfNodes)
 

@@ -4,7 +4,7 @@
 \usage{exactposterior(data, prior=priorUniform(),
     logScoreFUN=logScoreMultDirFUN(),
     logScoreParameters=list(hyperparameters = "qi"), constraint,
-    maxNumberParents=ncol(data) - 1, verbose=T)}
+    maxNumberParents, verbose=T)}
 \description{Posterior distribution on Bayesian networks.}
 \details{Use one of a number of methods to get the posterior distribution}
 \value{A \code{bnpost} object.}
@@ -34,5 +34,5 @@ The (i, j) element is
 0  if the edge i -> j is not constrained.
 The diagonal of constraint must be all 0.}
 \item{maxNumberParents}{Integer of length 1. The maximum number of
-parents of any node.}
+parents of any node. A \code{NULL} value uses the \code{ncol(data) - 1}.}
 \item{verbose}{A logical. Should a progress bar be displayed?}}
