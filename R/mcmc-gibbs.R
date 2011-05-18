@@ -254,18 +254,18 @@ samplePair <- function(currentNetwork,
 #'   \code{\link{BNSamplerGrzeg}}. Internally uses 
 #'   \code{\link{samplePair}} and \code{\link{sampleNode}}.
 BNGibbsSampler <- function(data,
-                           initial,
-                           prior,
-                           return      = "network",
-                           logScoreFUN = logScoreMultDirFUN(),
+                           initial            = empty(ncol(data) - 1),
+                           prior              = priorUniform(),
+                           return             = "network",
+                           logScoreFUN        = logScoreMultDirFUN(),
                            logScoreParameters = list(hyperparameters = "qi"),
-                           constraint  = NULL,
-                           maxNumberParents,
-                           moveprobs = c(0.9, 0.1, 0),
-                           verbose     = F,
-                           keepTape    = F,
-                           parentsTables,
-                           scoresParents){
+                           constraint         = NULL,
+                           maxNumberParents   = 3,
+                           moveprobs          = c(0.9, 0.1, 0),
+                           verbose            = F,
+                           keepTape           = F,
+                           parentsTables      = NULL,
+                           scoresParents      = NULL){
   stopifnot("bn" %in% class(initial),
             is.valid(initial),
             ncol(as.matrix(data)) ==   length(initial),
@@ -289,14 +289,14 @@ BNGibbsSampler <- function(data,
   required <- getRequiredFromConstraint(constraint)
   banned <- getBannedFromConstraint(constraint)
   
-  if (missing(parentsTables)){
+  if (is.null(parentsTables)){
     parentsTables <- enumerateParentsTable(numberOfNodes,
                                            maxNumberParents,
                                            required,
                                            banned,
                                            verbose = verbose)
   }
-  if (missing(scoresParents)){
+  if (is.null(scoresParents)){
     scoresParents <- scoreParentsTable(parentsTables,
                                        logScoreLocalFUN,
                                        logScoreParameters,
