@@ -64,14 +64,14 @@
 #' ep(mcmc)
 posterior <- function(data,
                       method             = "mc3",
-                      prior              = function(x) 1,
+                      prior              = priorUniform(),
                       logScoreFUN        = logScoreMultDirFUN(),
                       logScoreParameters = list(hyperparameters = "qi"),
                       constraint         = NULL,
-                      maxNumberParents   = Inf,
+                      maxNumberParents   = nNodes(initial) - 1,
                       nSamples           = 50000,
                       nBurnin            = 10000,
-                      initial            = NULL,
+                      initial            = empty(ncol(data), "bn"),
                       verbose            = T){
   methods <- c("exact", "mc3", "mh-mcmc", "gibbs", "mj-mcmc")
   stopifnot(method      %in% methods)
@@ -85,8 +85,8 @@ posterior <- function(data,
                    maxNumberParents,
                    verbose)
   } else if (method == "mc3" || method == "mh-mcmc"){
-    mcmcposterior(sampler = BNSampler,
-                  data,
+    mcmcposterior(data,
+                  sampler = BNSampler,
                   prior,
                   logScoreFUN,
                   logScoreParameters,
@@ -97,8 +97,8 @@ posterior <- function(data,
                   initial,
                   verbose)
   } else if (method == "gibbs") {
-    mcmcposterior(sampler = BNGibbsSampler,
-                  data,
+    mcmcposterior(data,
+                  sampler = BNGibbsSampler,
                   prior,
                   logScoreFUN,
                   logScoreParameters,
@@ -109,8 +109,8 @@ posterior <- function(data,
                   initial,
                   verbose)
   } else if (method == "mj-mcmc") {
-    mcmcposterior(sampler = BNSamplerMJ,
-                  data,
+    mcmcposterior(data,
+                  sampler = BNSamplerMJ,
                   prior,
                   logScoreFUN,
                   logScoreParameters,
@@ -160,12 +160,12 @@ posterior <- function(data,
 #' @seealso \code{\link{posterior}}. Example priors
 #'   \code{\link{priorGraph}}, \code{\link{priorUniform}}.
 exactposterior <- function(data,
-                           prior,
-                           logScoreFUN,
-                           logScoreParameters,
-                           constraint,
-                           maxNumberParents,
-                           verbose = T){
+                           prior              = priorUniform(),
+                           logScoreFUN        = logScoreMultDirFUN(),
+                           logScoreParameters = list(hyperparameters = "qi"),
+                           constraint         = NULL,
+                           maxNumberParents   = ncol(data) - 1,
+                           verbose            = T){
   nVar <- ncol(data)
   bnspace <- enumerateBNSpace(nVar)
 
@@ -211,8 +211,8 @@ exactposterior <- function(data,
 #'
 #' Use MCMC to approximate the posterior distribution
 #'
-#' @param sampler A BNSampler. eg BNSampler or BNGibbsSampler etc
 #' @param data The data.
+#' @param sampler A BNSampler. eg BNSampler or BNGibbsSampler etc
 #' @param prior A function that returns the prior score of the
 #'                       supplied bn.
 #' @param logScoreFUN A list of four elements:
@@ -248,17 +248,17 @@ exactposterior <- function(data,
 #'   e.g. \code{\link{BNSampler}}. See also \code{\link{posterior}}.
 #'    Example priors \code{\link{priorGraph}}, \code{\link{priorUniform}}.
 #' @export
-mcmcposterior <- function(sampler = BNSampler,
-                          data,
-                          prior,
-                          logScoreFUN,
-                          logScoreParameters,
-                          constraint,
-                          maxNumberParents,
-                          nSamples,
-                          nBurnin,
-                          initial,
-                          verbose = T){
+mcmcposterior <- function(data,
+                          sampler            = BNSampler,
+                          prior              = priorUniform(),
+                          logScoreFUN        = logScoreMultDirFUN(),
+                          logScoreParameters = list(hyperparameters = "qi"),
+                          constraint         = NULL,
+                          maxNumberParents   = nNodes(initial) - 1,
+                          nSamples           = 50000,
+                          nBurnin            = 10000,
+                          initial            = empty(ncol(data), "bn"),
+                          verbose            = T){
   nVar <- ncol(data)
   if (is.null(initial)){
     initial <- empty(nVar, class = "bn")

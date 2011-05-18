@@ -1,17 +1,19 @@
 \name{mcmcposterior}
 \alias{mcmcposterior}
 \title{Posterior distribution on Bayesian networks.}
-\usage{mcmcposterior(sampler=BNSampler, data, prior, logScoreFUN,
-    logScoreParameters, constraint, maxNumberParents, nSamples,
-    nBurnin, initial, verbose=T)}
+\usage{mcmcposterior(data, sampler=BNSampler, prior=priorUniform(),
+    logScoreFUN=logScoreMultDirFUN(),
+    logScoreParameters=list(hyperparameters = "qi"), constraint,
+    maxNumberParents=nNodes(initial) - 1, nSamples=50000,
+    nBurnin=10000, initial=empty(ncol(data), "bn"), verbose=T)}
 \description{Posterior distribution on Bayesian networks.}
 \details{Use MCMC to approximate the posterior distribution}
 \value{A \code{bnpostmcmc} object.}
 \seealso{For more control, use the MCMC sampler directly, 
 e.g. \code{\link{BNSampler}}. See also \code{\link{posterior}}.
 Example priors \code{\link{priorGraph}}, \code{\link{priorUniform}}.}
-\arguments{\item{sampler}{A BNSampler. eg BNSampler or BNGibbsSampler etc}
-\item{data}{The data.}
+\arguments{\item{data}{The data.}
+\item{sampler}{A BNSampler. eg BNSampler or BNGibbsSampler etc}
 \item{prior}{A function that returns the prior score of the
 supplied bn.}
 \item{logScoreFUN}{A list of four elements:
