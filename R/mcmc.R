@@ -154,6 +154,7 @@ drawSamplesByTime <- function(sampler,
   
   if (verbose){
     close(pb)
+    cat("Drew", i, "samples in", elapsed, "seconds")
   }
   
   samples <- samples[seq_len(max(0,i-burninleft - 1))]
@@ -203,6 +204,7 @@ drawSamplesByStepCount <- function(sampler,
     setTxtProgressBar(progress, 0)
   }
   
+  start <- proc.time()
   i <- 1
   while (i <= n){
     out <- sampler(i, burnin = burnin)
@@ -220,6 +222,8 @@ drawSamplesByStepCount <- function(sampler,
   
   if (verbose){
     close(progress)
+    elapsed <- (proc.time() - start)[[3]]
+    cat("Drew", n, "samples in", elapsed, "seconds")
   }
 
   class(samples) <- c("mcmcbn", "bn.list", "parental.list")
