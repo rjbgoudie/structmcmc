@@ -294,6 +294,9 @@ BNGibbsSampler <- function(data,
   banned <- getBannedFromConstraint(constraint)
   
   if (is.null(parentsTables)){
+    if (verbose){
+      cat("Listing all possible parent sets (step 1 of 3)")
+    }
     parentsTables <- enumerateParentsTable(numberOfNodes,
                                            maxNumberParents,
                                            required,
@@ -301,6 +304,9 @@ BNGibbsSampler <- function(data,
                                            verbose = verbose)
   }
   if (is.null(scoresParents)){
+    if (verbose){
+      cat("Scoring all possible parent sets (step 2 of 3)")
+    }
     scoresParents <- scoreParentsTable(parentsTables,
                                        logScoreLocalFUN,
                                        logScoreParameters,
@@ -382,6 +388,10 @@ BNGibbsSampler <- function(data,
     tape[nSteps, 2] <<- -1
     tape[nSteps, 3] <<- 1
     tapeProposals[nSteps] <<- as.character(currentNetwork[[1]], pretty = T)
+  }
+  
+  if (verbose){
+    cat("Drawing MCMC samples (step 3 of 3)")
   }
 
   function(x,
