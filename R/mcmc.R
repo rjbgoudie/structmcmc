@@ -119,9 +119,10 @@ drawSamplesByTime <- function(sampler,
   # Note: the initial graph is NOT returned at the moment
   samples <- vector("list", samplesIncrement)
   if (verbose){
-    cat("Drawing samples, for ", time, " seconds\n")
+    cat("Drawing samples, for", time, "seconds\n")
+    flush.console()
     pb <- txtProgressBar(max = time, style = 3)
-    setTxtProgressBar(progress, 0)
+    setTxtProgressBar(pb, 0)
   }
 
   i <- 1
@@ -197,6 +198,7 @@ drawSamplesByStepCount <- function(sampler,
   samples <- vector("list", lengthout)
   if (verbose){
     cat("Drawing", n, "samples\n")
+    flush.console()
     progress <- txtProgressBar(max = n, style = 3)
     setTxtProgressBar(progress, 0)
   }
@@ -218,7 +220,6 @@ drawSamplesByStepCount <- function(sampler,
   
   if (verbose){
     close(progress)
-    cat("\n")
   }
 
   class(samples) <- c("mcmcbn", "bn.list", "parental.list")

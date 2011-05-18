@@ -295,7 +295,8 @@ BNGibbsSampler <- function(data,
   
   if (is.null(parentsTables)){
     if (verbose){
-      cat("Listing all possible parent sets (step 1 of 3)")
+      cat("Listing all possible parent sets (step 1 of 3)\n")
+      flush.console()
     }
     parentsTables <- enumerateParentsTable(numberOfNodes,
                                            maxNumberParents,
@@ -305,7 +306,8 @@ BNGibbsSampler <- function(data,
   }
   if (is.null(scoresParents)){
     if (verbose){
-      cat("Scoring all possible parent sets (step 2 of 3)")
+      cat("Scoring all possible parent sets (step 2 of 3)\n")
+      flush.console()
     }
     scoresParents <- scoreParentsTable(parentsTables,
                                        logScoreLocalFUN,
@@ -391,7 +393,8 @@ BNGibbsSampler <- function(data,
   }
   
   if (verbose){
-    cat("Drawing MCMC samples (step 3 of 3)")
+    cat("Drawing MCMC samples (step 3 of 3)\n")
+    flush.console()
   }
 
   function(x,
