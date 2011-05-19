@@ -86,8 +86,8 @@ allDescendants <- function(currentNetwork){
 #' Give a sub-bn, get the possible parents of each node.
 #' 
 #' @param bn A sub-bn
-#' @param nonDescendantsList The output of \code{\link{nonDescendantsList}}
-#' @param descendantsList The output of \code{\link{descendantsList}}
+#' @param nonDescendantsList The output of \code{\link{allNonDescendants}}
+#' @param descendantsList The output of \code{\link{allDescendants}}
 #' @param numberOfNodes The number of nodes of the bn
 #' @param change A numeric vector, containing the nodes whose parents
 #'   are to be changed.
@@ -129,9 +129,12 @@ defaultBanned <- function(nodesSeq){
 #' 
 #' @param i The node
 #' @param possibleParents The output of \code{\link{getPossibleParents}}
+#' @param currentNetwork A list, containing in the first position the
+#'   starting \code{bn}, and in the second position the routes matrix for
+#'   that BN.
 #' @param change A numeric vector, containing the nodes whose parents
 #'   are to be changed.
-#' @param descendantsList The output of \code{\link{descendantsList}}
+#' @param descendantsList The output of \code{\link{allDescendants}}
 #' @return A table(?) of options
 #' @export
 eachChangesChoicesForRequired <- function(i,
@@ -210,14 +213,18 @@ removeDuplicates <- function(optionsForRequired, options){
 #' @param possibleParents The output of \code{\link{getPossibleParents}}
 #' @param change A numeric vector, containing the nodes whose parents
 #'   are to be changed.
-#' @param descendantsList The output of \code{\link{descendantsList}}
+#' @param descendantsList The output of \code{\link{allDescendants}}
+#' @param currentNetwork A list, containing in the first position the
+#'   starting \code{bn}, and in the second position the routes matrix for
+#'   that BN.
 #' @return A list
 #' @export
 requireSomethingFromEachParent <- function(numberOfNodes,
                                            nodesSeq,
                                            possibleParents,
                                            change,
-                                           descendantsList){
+                                           descendantsList,
+                                           currentNetwork){
   options <- lapply(nodesSeq, eachChangesChoicesForRequired,
                     possibleParents, currentNetwork, change, descendantsList)
   
@@ -324,7 +331,8 @@ getAllConsistentWithDAG <- function(bn,
                                  nodesSeq,
                                  possibleParents,
                                  change,
-                                 descendantsList)
+                                 descendantsList,
+                                 currentNetwork)
 
   notchange <- setdiff(nodesSeq, change)
   outout <- lapply(out, function(net){
