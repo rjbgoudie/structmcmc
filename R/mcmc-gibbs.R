@@ -199,6 +199,93 @@ samplePair <- function(currentNetwork,
   currentNetwork
 }
 
+#' Sample the parents of a triple of nodes (Gibbs sampler).
+#'
+#' Sample from posterior distribution on graph, conditional on
+#' all the edges, except for those corresponding to the parents sets of 
+#' two nodes.
+#'
+#' @param currentNetwork A \code{currentNetwork} object
+#' @param numberOfNodes The number of nodes in the network. A numeric vector 
+#'   of length 1.
+#' @param nodesSeq The vector 1:nNodes(currentNetwork). (Supplied as an 
+#'   argument for possible speed gain)
+#' @param scoresParents A list of the form returned by 
+#'   \code{scoreParentsTable()}
+#' @param parentsTables A list of tables of the form returned by 
+#'   \code{enumerateParentsTable()}
+#' @param allRows The vector 1:nrow(parentsTables). (Supplied as an 
+#'   argument for possible speed gain)
+#' @param rowsThatContain A list of the form created by 
+#'   \code{getRowsThatContain()}
+#' @param logScoreFUN A list of four elements:
+#'   \describe{
+#'     \item{offline}{A function that computes the logScore of a Bayesian 
+#'                    Network}
+#'     \item{online}{A function that incrementally computes the logScore of a 
+#'                   Bayesian Network}
+#'     \item{local}{A function that computes the local logScore of a 
+#'                  Bayesian Network}
+#'     \item{prepare}{A function that prepares the data, and any further 
+#'                    pre-computation required by the logScore functions.}
+#'   }
+#'   For Multinomial-Dirichlet models, \code{\link{logScoreMultDirFUN}} 
+#'   returns the appropriate list; for Normal models with Zellner g-priors,
+#'   \code{\link{logScoreZellnerFUN}} returns the appropriate list.
+#' @param logScoreParameters A list of parameters that are passed to
+#'   logScoreFUN.
+#' @return Returns the sampled network. A \code{currentNetwork} object.
+#' @export
+#' @seealso \code{\link{BNGibbsSampler}}, \code{\link{sampleNode}}
+sampleTriple <- function(currentNetwork,
+                         numberOfNodes,
+                         nodesSeq,
+                         scoresParents,
+                         parentsTables,
+                         allRows,
+                         rowsThatContain,
+                         logScoreFUN,
+                         logScoreParameters){
+  node1 <- sample.int(numberOfNodes, size = 1)
+  choices <- setdiff3(nodesSeq, node1)
+  node2 <- choices[sample.int(length(choices), size = 1)]
+  choices <- setdiff3(choices, node2)
+  node3 <- choices[sample.int(length(choices), size = 1)]
+
+  newgraphs <- getNewGraph(currentNetwork,
+                           change = c(node1, node2, node3))
+
+  scores <- sapply(newgraphs, logScoreFUN$offline, logScoreParameters)
+  normalised <- exp(scores - logsumexp(scores))
+  
+  samp <- sample.int(length(normalised), size = 1, prob = normalised)
+  new <- newgraphs[[samp]]
+  
+  # remove the old parents of node 'node1' and 'node2'
+
+  currentNetwork[[2]] <- routesRemoveEdges(currentNetwork[[2]],
+                                           currentNetwork[[1]][[node1]],
+                                           node1)
+  currentNetwork[[2]] <- routesRemoveEdges(currentNetwork[[2]],
+                                           currentNetwork[[1]][[node2]],
+                                           node2)
+  currentNetwork[[2]] <- routesRemoveEdges(currentNetwork[[2]],
+                                          currentNetwork[[1]][[node3]],
+                                          node3)
+  
+  currentNetwork[[1]] <- new
+  currentNetwork[[2]] <- routesAddEdges(currentNetwork[[2]],
+                                        currentNetwork[[1]][[node1]],
+                                        node1)
+  currentNetwork[[2]] <- routesAddEdges(currentNetwork[[2]],
+                                        currentNetwork[[1]][[node2]],
+                                        node2)
+  currentNetwork[[2]] <- routesAddEdges(currentNetwork[[2]],
+                                        currentNetwork[[1]][[node3]],
+                                        node3)
+  currentNetwork
+}
+
 #' Gibbs sampler for Bayesian Networks.
 #'
 #' Create a MCMC sampler for Bayesian Networks. The sampler samples Bayesian
@@ -422,6 +509,16 @@ BNGibbsSampler <- function(data,
                                     parentsTables   = parentsTables,
                                     allRows         = allRows,
                                     rowsThatContain = rowsThatContain)
+    } else if (u < sum(moveprobs[1:3])) {
+      currentNetwork <<- sampleTriple(currentNetwork  = currentNetwork,
+                                      numberOfNodes   = numberOfNodes,
+                                      nodesSeq        = nodesSeq,
+                                      scoresParents   = scoresParents,
+                                      parentsTables   = parentsTables,
+                                      allRows         = allRows,
+                                      rowsThatContain = rowsThatContain,
+                                      logScoreFUN     = logScoreFUN,
+                                      logScoreParameters = logScoreParameters)
     } else {
       stop("Not implemented")
     }
