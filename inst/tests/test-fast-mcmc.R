@@ -16,8 +16,8 @@ test_that("Simple test", {
                     x2 = as.factor(c(0, 1, 0, 1, 0, 1, 1, 0, 1, 0)),
                     x3 = as.factor(c(0, 1, 1, 1, 0, 1, 1, 0, 1, 0)))
 
-  mcmc <- posterior(data = dat, method = "mh-mcmc")
-  exact <- posterior(data = dat, method = "exact")
+  mcmc <- posterior(data = dat, method = "mh-mcmc", verbose = F)
+  exact <- posterior(data = dat, method = "exact", verbose = F)
   
   epmcmc <- ep(mcmc)
   epexact <- ep(exact)
