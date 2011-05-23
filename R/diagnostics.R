@@ -425,7 +425,7 @@ splom.bnpostmcmc.list <- splom.list <- function(x, start = 1, end, plot = F){
     pscales = lapply(
       seq_len(numberOfRuns),
       function(i){
-        list(limits = c(-0.1, 1.1), at = c(5))
+        list(limits = c(-0.1, 1.1), at = c(0, 0.5, 1))
       }
     ),
     scales = list(relation = "same"),
