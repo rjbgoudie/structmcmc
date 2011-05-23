@@ -164,7 +164,7 @@ whichGraphsNotNeighbours <- function(x, logScores, verbose = F, head){
 BNSamplerMJ <- function(data,
                         initial,
                         prior,
-                        return             = "contingency",
+                        return             = "network",
                         logScoreFUN        = logScoreMultDirFUN(),
                         logScoreParameters = list(hyperparameters = "qi"),
                         constraint         = NULL,

@@ -1,7 +1,7 @@
 \name{BNSamplerMJ}
 \alias{BNSamplerMJ}
 \title{Mode-jumping MCMC sampler for Bayesian Networks.}
-\usage{BNSamplerMJ(data, initial, prior, return="contingency",
+\usage{BNSamplerMJ(data, initial, prior, return="network",
     logScoreFUN=logScoreMultDirFUN(),
     logScoreParameters=list(hyperparameters = "qi"),
     constraint, modejumping=F, verbose=F, keepTape=F)}

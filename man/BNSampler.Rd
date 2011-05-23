@@ -1,7 +1,7 @@
 \name{BNSampler}
 \alias{BNSampler}
 \title{Create a MCMC sampler (MC^3) for Bayesian Networks.}
-\usage{BNSampler(data, initial, prior, return="contingency",
+\usage{BNSampler(data, initial, prior, return="network",
     logScoreFUN=logScoreMultDirFUN(),
     logScoreParameters=list(hyperparameters = "qi"),
     constraint, maxNumberParents, verbose=F, keepTape=F)}

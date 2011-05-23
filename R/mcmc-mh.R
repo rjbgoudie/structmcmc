@@ -203,7 +203,7 @@ edgeIsFlippable <- function(routes, adjacency, constraintT, maxNumberParents){
 BNSampler <- function(data,
                       initial,
                       prior,
-                      return      = "contingency",
+                      return      = "network",
                       logScoreFUN = logScoreMultDirFUN(),
                       logScoreParameters = list(hyperparameters = "qi"),
                       constraint  = NULL,
