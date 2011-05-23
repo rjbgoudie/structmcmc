@@ -93,7 +93,8 @@ intersect2 <- function(x, y){
 #'   data \code{data}.
 matrix2 <- function(data, nrow, ncol) 
 {
-  .Internal(matrix(data, nrow, ncol, FALSE, NULL))
+  .Internal(matrix(data, nrow, ncol, FALSE, NULL,
+                   missing(nrow), missing(ncol)))
 }
 
 #' Find rows satisfying equality.
