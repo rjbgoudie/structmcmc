@@ -16,13 +16,14 @@ test_that("Simple test", {
                     x2 = as.factor(c(0, 1, 0, 1, 0, 1, 1, 0, 1, 0)),
                     x3 = as.factor(c(0, 1, 1, 1, 0, 1, 1, 0, 1, 0)))
 
-  mcmc <- posterior(data = dat, method = "mh-mcmc", verbose = F)
+  mcmc <- posterior(data = dat, method = "mc3", verbose = F,
+                    nSamples = 1000, nBurnin = 500)
   exact <- posterior(data = dat, method = "exact", verbose = F)
   
   epmcmc <- ep(mcmc)
   epexact <- ep(exact)
 
-  expect_that(max(epmcmc - epexact) < 0.004, is_true())
+  expect_that(max(epmcmc - epexact) < 0.05, is_true())
 })
 
 test_that("2-node Bayesian Network", {
