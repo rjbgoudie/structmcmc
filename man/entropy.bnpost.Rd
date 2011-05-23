@@ -2,12 +2,20 @@
 \alias{entropy.bnpost}
 \title{Entropy.}
 \usage{\method{entropy}{bnpost} (x, logNetworkPriors, ...)}
-\description{Entropy.}
-\details{method description}
+
+\description{
+  Entropy.
+}
+
+\details{
+  method description
+}
 \seealso{\code{\link{entropy}}}
-\arguments{\item{x}{...}
-\item{logNetworkPriors}{...}
-\item{...}{Further arguments (unused)}}
+\arguments{
+  \item{x}{...}
+  \item{logNetworkPriors}{...}
+  \item{...}{Further arguments (unused)}
+}
 \examples{x1 <- factor(c(1, 1, 0, 1))
 x2 <- factor(c(0, 1, 0, 1))
 dat <- data.frame(x1 = x1, x2 = x2)

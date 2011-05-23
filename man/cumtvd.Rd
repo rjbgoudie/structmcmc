@@ -1,17 +1,25 @@
 \name{cumtvd}
 \alias{cumtvd}
 \title{Cumulative total variation distance.}
-\usage{cumtvd(exactgp, bnpostmcmclist, start=1, end, nbin=(end - start +
-    1)/100)}
-\description{Cumulative total variation distance.}
-\details{method description}
+\usage{cumtvd(exactgp, bnpostmcmclist, start=1, end, nbin=(end -
+    start + 1)/100)}
+
+\description{
+  Cumulative total variation distance.
+}
+
+\details{
+  method description
+}
 \seealso{\code{\link{xyplot.cumtvd}}, \code{\link{cumtvd.list}}}
-\arguments{\item{exactgp}{...}
-\item{bnpostmcmclist}{...}
-\item{start}{...}
-\item{end}{...}
-\item{nbin}{...}
-\item{...}{Further arguments passed to method}}
+\arguments{
+  \item{exactgp}{...}
+  \item{bnpostmcmclist}{...}
+  \item{start}{...}
+  \item{end}{...}
+  \item{nbin}{...}
+  \item{...}{Further arguments passed to method}
+}
 \examples{x1 <- factor(c(1, 1, 0, 1, 1, 1))
 x2 <- factor(c(0, 1, 0, 1, 0, 1))
 x3 <- factor(c(0, 1, 0, 0, 0, 0))

@@ -2,10 +2,19 @@
 \alias{levelplot.ep.list}
 \title{Levelplot of posterior edge probabilities.}
 \usage{\method{levelplot}{ep.list} (eplist)}
-\description{Levelplot of posterior edge probabilities.}
-\details{Plot a \code{\link[lattice]{levelplot}} displaying the edge probabilities.}
-\arguments{\item{eplist}{An \code{ep.list} object. A list of edge probability
-matrices}}
+
+\description{
+  Levelplot of posterior edge probabilities.
+}
+
+\details{
+  Plot a \code{\link[lattice]{levelplot}} displaying the
+  edge probabilities.
+}
+\arguments{
+  \item{eplist}{An \code{ep.list} object. A list of edge probability
+matrices}
+}
 \examples{x1 <- factor(c(1, 1, 0, 1))
 x2 <- factor(c(0, 1, 0, 1))
 x <- data.frame(x1 = x1, x2 = x2)

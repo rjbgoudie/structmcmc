@@ -2,12 +2,20 @@
 \alias{dotplot.ep}
 \title{Dotplot of posterior edge probabilities.}
 \usage{\method{dotplot}{ep} (ep, head=30, ...)}
-\description{Dotplot of posterior edge probabilities.}
-\details{method description}
+
+\description{
+  Dotplot of posterior edge probabilities.
+}
+
+\details{
+  method description
+}
 \seealso{\code{\link{levelplot.ep}}, \code{\link{dotplot.ep.list}}}
-\arguments{\item{ep}{...}
-\item{head}{...}
-\item{...}{Further arguments passed to method}}
+\arguments{
+  \item{ep}{...}
+  \item{head}{...}
+  \item{...}{Further arguments passed to method}
+}
 \examples{x1 <- factor(c(1, 1, 0, 1))
 x2 <- factor(c(0, 1, 0, 1))
 x <- data.frame(x1 = x1, x2 = x2)

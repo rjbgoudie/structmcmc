@@ -2,11 +2,19 @@
 \alias{bayes}
 \title{Bayesian posterior parameter estimates.}
 \usage{bayes(x, ...)}
-\description{Bayesian posterior parameter estimates.}
-\details{A generic}
+
+\description{
+  Bayesian posterior parameter estimates.
+}
+
+\details{
+  A generic
+}
 \seealso{\code{\link{bayes.bn}}, \code{\link{ml}}}
-\arguments{\item{x}{An object}
-\item{...}{Further arguments passed to method}}
+\arguments{
+  \item{x}{An object}
+  \item{...}{Further arguments passed to method}
+}
 \examples{d <- data.frame(
 a = factor(c(1, rep(3, 2), rep(1, 7))),
 b = factor(c(2, rep(1, 2), 3, 3, rep(2, 5))),

@@ -2,10 +2,18 @@
 \alias{ep.list}
 \title{List of posterior edge probabilities.}
 \usage{ep.list(...)}
-\description{List of posterior edge probabilities.}
-\details{method description}
+
+\description{
+  List of posterior edge probabilities.
+}
+
+\details{
+  method description
+}
 \seealso{\code{\link{ep}}}
-\arguments{\item{...}{Further arguments passed to method}}
+\arguments{
+  \item{...}{Further arguments passed to method}
+}
 \examples{x1 <- factor(c(1, 1, 0, 1))
 x2 <- factor(c(0, 1, 0, 1))
 x <- data.frame(x1 = x1, x2 = x2)

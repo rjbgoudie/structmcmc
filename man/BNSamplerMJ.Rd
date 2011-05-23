@@ -3,20 +3,27 @@
 \title{Mode-jumping MCMC sampler for Bayesian Networks.}
 \usage{BNSamplerMJ(data, initial, prior, return="network",
     logScoreFUN=logScoreMultDirFUN(),
-    logScoreParameters=list(hyperparameters = "qi"), constraint,
-    modejumping=F, verbose=F, keepTape=F)}
-\description{Mode-jumping MCMC sampler for Bayesian Networks.}
-\details{The sampler samples Bayesian Networks (ie models).}
+    logScoreParameters=list(hyperparameters = "qi"),
+    constraint, modejumping=F, verbose=F, keepTape=F)}
+
+\description{
+  Mode-jumping MCMC sampler for Bayesian Networks.
+}
+
+\details{
+  The sampler samples Bayesian Networks (ie models).
+}
 \value{A function, which when called draws the next sample of the MCMC.}
 \seealso{\code{\link{BNSampler}}, \code{\link{BNGibbsSampler}},
 \code{\link{BNSamplerPT}}, \code{\link{BNSamplerGrzeg}},
 \code{\link{BNSamplerBigFlips}}. Internally uses 
 \code{\link{whichGraphsNotNeighbours}}}
-\arguments{\item{data}{The data.}
-\item{initial}{An object of class 'bn'. The starting value of the MCMC.}
-\item{prior}{A function that returns the prior score of the supplied bn.}
-\item{return}{Either "network" or "contingency".}
-\item{logScoreFUN}{A list of four elements:
+\arguments{
+  \item{data}{The data.}
+  \item{initial}{An object of class 'bn'. The starting value of the MCMC.}
+  \item{prior}{A function that returns the prior score of the supplied bn.}
+  \item{return}{Either "network" or "contingency".}
+  \item{logScoreFUN}{A list of four elements:
 \describe{
 \item{offline}{A function that computes the logScore of a Bayesian 
 Network}
@@ -30,9 +37,9 @@ pre-computation required by the logScore functions.}
 For Multinomial-Dirichlet models, \code{\link{logScoreMultDirFUN}} 
 returns the appropriate list; for Normal models with Zellner g-priors,
 \code{\link{logScoreZellnerFUN}} returns the appropriate list.}
-\item{logScoreParameters}{A list of parameters that are passed to
+  \item{logScoreParameters}{A list of parameters that are passed to
 logScoreFUN.}
-\item{constraint}{A matrix of dimension ncol(data) x ncol(data) giving
+  \item{constraint}{A matrix of dimension ncol(data) x ncol(data) giving
 constraints to the sample space. The (i, j) element is:
 \describe{
 \item{1}{if the edge i -> j is required}
@@ -40,7 +47,7 @@ constraints to the sample space. The (i, j) element is:
 \item{0}{if the edge i -> j is not constrained.}
 }
 The diagonal of constraint must be all 0.}
-\item{modejumping}{Either a logical of length 1, or a list. When no
+  \item{modejumping}{Either a logical of length 1, or a list. When no
 mode-jumping is desired, use modejumping = F. For mode-jumping, use a 
 list with the following components:
 \describe{
@@ -52,8 +59,9 @@ logScores of the modes.}
 \item{modeJumpingProbability}{A numeric of length 1. Default 0.25}
 \item{dontCheckModesValid}{A logical of length 1}
 }}
-\item{verbose}{A logical of length 1, indicating whether verbose
+  \item{verbose}{A logical of length 1, indicating whether verbose
 output should be printed.}
-\item{keepTape}{A logical of length 1, indicating whether a full log
+  \item{keepTape}{A logical of length 1, indicating whether a full log
 (\code{tape}) of the MCMC sampler should be kept. Enabling this option 
-can be very memory-intensive.}}
+can be very memory-intensive.}
+}

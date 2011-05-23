@@ -2,12 +2,20 @@
 \alias{dotplot.gp}
 \title{Dotplot of posterior graph probabilities.}
 \usage{\method{dotplot}{gp} (gp, head=30, ...)}
-\description{Dotplot of posterior graph probabilities.}
-\details{method description}
+
+\description{
+  Dotplot of posterior graph probabilities.
+}
+
+\details{
+  method description
+}
 \seealso{\code{\link{xyplot.gp}}}
-\arguments{\item{gp}{...}
-\item{head}{...}
-\item{...}{Further arguments passed to method}}
+\arguments{
+  \item{gp}{...}
+  \item{head}{...}
+  \item{...}{Further arguments passed to method}
+}
 \examples{x1 <- factor(c(1, 1, 0, 1))
 x2 <- factor(c(0, 1, 0, 1))
 x <- data.frame(x1 = x1, x2 = x2)

@@ -1,8 +1,15 @@
 \name{priorUniform}
 \alias{priorUniform}
 \title{A uniform prior for graphs.}
-\description{A uniform prior for graphs.}
-\details{A 'flat' improper prior that assigns equal probability to all the graphs.}
+
+\description{
+  A uniform prior for graphs.
+}
+
+\details{
+  A 'flat' improper prior that assigns equal probability to
+  all the graphs.
+}
 \value{A function computes the prior score of the supplied graph. This 
 This function is of a suitable form to be used as a prior}
 \seealso{\code{\link{priorGraph}}}

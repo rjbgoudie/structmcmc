@@ -1,9 +1,16 @@
 \name{logScoreZellnerFUN}
 \alias{logScoreZellnerFUN}
 \title{Normal Log marginal likelihood.}
-\description{Normal Log marginal likelihood.}
-\details{This function returns a list of functions that are used for MCMC
-computation for Normal models, with Zellner g-priors.}
+
+\description{
+  Normal Log marginal likelihood.
+}
+
+\details{
+  This function returns a list of functions that are used
+  for MCMC computation for Normal models, with Zellner
+  g-priors.
+}
 \value{A list consisting of the functions that perform each of the 
 following roles.
 \describe{

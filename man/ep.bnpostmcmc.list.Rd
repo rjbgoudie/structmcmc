@@ -2,13 +2,21 @@
 \alias{ep.bnpostmcmc.list}
 \title{Posterior edge probabilities.}
 \usage{\method{ep}{bnpostmcmc.list} (x, start, end, ...)}
-\description{Posterior edge probabilities.}
-\details{method description}
+
+\description{
+  Posterior edge probabilities.
+}
+
+\details{
+  method description
+}
 \seealso{\code{\link{ep}}, \code{\link{ep.bnpostmcmc}}}
-\arguments{\item{x}{...}
-\item{start}{...}
-\item{end}{...}
-\item{...}{further arguments}}
+\arguments{
+  \item{x}{...}
+  \item{start}{...}
+  \item{end}{...}
+  \item{...}{further arguments}
+}
 \examples{x1 <- factor(c(1, 1, 0, 1))
 x2 <- factor(c(0, 1, 0, 1))
 dat <- data.frame(x1 = x1, x2 = x2)

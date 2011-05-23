@@ -3,19 +3,26 @@
 \title{Undocumented.}
 \usage{BNSamplerPT(data, initial, prior, return="network",
     logScoreFUN=logScoreMultDirFUN(),
-    logScoreParameters=list(hyperparameters = "qi"), constraint,
-    modejumping=F, verbose=F, keepTape=F, temp=1, cache=new.env(hash =
-    T, size = 10000L))}
-\description{Undocumented.}
-\details{method description}
+    logScoreParameters=list(hyperparameters = "qi"),
+    constraint, modejumping=F, verbose=F, keepTape=F,
+    temp=1, cache=new.env(hash = T, size = 10000L))}
+
+\description{
+  Undocumented.
+}
+
+\details{
+  method description
+}
 \seealso{\code{\link{drawPT}}. \code{\link{BNSampler}},
 \code{\link{BNSamplerMJ}}, \code{\link{BNGibbsSampler}},
 \code{\link{BNSamplerBigFlips}}, \code{\link{BNSamplerGrzeg}}}
-\arguments{\item{data}{...}
-\item{initial}{...}
-\item{prior}{...}
-\item{return}{...}
-\item{logScoreFUN}{A list of four elements:
+\arguments{
+  \item{data}{...}
+  \item{initial}{...}
+  \item{prior}{...}
+  \item{return}{...}
+  \item{logScoreFUN}{A list of four elements:
 \describe{
 \item{offline}{A function that computes the logScore of a Bayesian 
 Network}
@@ -29,10 +36,11 @@ pre-computation required by the logScore functions.}
 For Multinomial-Dirichlet models, \code{\link{logScoreMultDirFUN}} 
 returns the appropriate list; for Normal models with Zellner g-priors,
 \code{\link{logScoreZellnerFUN}} returns the appropriate list.}
-\item{logScoreParameters}{...}
-\item{constraint}{...}
-\item{modejumping}{...}
-\item{verbose}{...}
-\item{keepTape}{...}
-\item{temp}{...}
-\item{cache}{...}}
+  \item{logScoreParameters}{...}
+  \item{constraint}{...}
+  \item{modejumping}{...}
+  \item{verbose}{...}
+  \item{keepTape}{...}
+  \item{temp}{...}
+  \item{cache}{...}
+}

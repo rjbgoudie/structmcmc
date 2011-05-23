@@ -1,9 +1,15 @@
 \name{logScoreMultDirFUN}
 \alias{logScoreMultDirFUN}
 \title{Multinomial-Dirichlet Log marginal likelihood.}
-\description{Multinomial-Dirichlet Log marginal likelihood.}
-\details{This function returns a list of functions that are used for MCMC
-computation for Multinomial-Dirichlet models.}
+
+\description{
+  Multinomial-Dirichlet Log marginal likelihood.
+}
+
+\details{
+  This function returns a list of functions that are used
+  for MCMC computation for Multinomial-Dirichlet models.
+}
 \value{A list consisting of the functions that perform each of the 
 following roles.
 \describe{

@@ -2,7 +2,15 @@
 \alias{xyplot.cumtvd.list}
 \title{Plot of cumulative total variation distance.}
 \usage{\method{xyplot}{cumtvd.list} (cumtvdlist)}
-\description{Plot of cumulative total variation distance.}
-\details{method description}
+
+\description{
+  Plot of cumulative total variation distance.
+}
+
+\details{
+  method description
+}
 \seealso{\code{\link{xyplot.cumtvd.list}}}
-\arguments{\item{cumtvdlist}{...}}
+\arguments{
+  \item{cumtvdlist}{...}
+}

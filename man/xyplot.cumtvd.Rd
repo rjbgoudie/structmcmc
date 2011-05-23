@@ -2,10 +2,18 @@
 \alias{xyplot.cumtvd}
 \title{Plot cumulative total variation distance.}
 \usage{\method{xyplot}{cumtvd} (cumtvd)}
-\description{Plot cumulative total variation distance.}
-\details{method description}
+
+\description{
+  Plot cumulative total variation distance.
+}
+
+\details{
+  method description
+}
 \seealso{\code{\link{cumtvd}}}
-\arguments{\item{cumtvd}{...}}
+\arguments{
+  \item{cumtvd}{...}
+}
 \examples{x1 <- factor(c(1, 1, 0, 1, 1, 1))
 x2 <- factor(c(0, 1, 0, 1, 0, 1))
 x3 <- factor(c(0, 1, 0, 0, 0, 0))
