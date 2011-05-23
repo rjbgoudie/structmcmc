@@ -7,7 +7,7 @@ Author: R.J.B. Goudie <rjbgoudie@gmail.com>
 Maintainer: R.J.B. Goudie <rjbgoudie@gmail.com>
 Description: Structural inference for Bayesian Networks and Variable
     Selection.
-Depends: R (>= 2.9), parental
+Depends: R (>= 2.13), parental
 Imports: parental, lattice, digest
 Suggests: gRain, nnet, reshape, zoo
 License: GPL-3
