@@ -37,7 +37,7 @@ bnpostmcmc <- function(sampler, samples, logScoreFUN){
   stopifnot(class(sampler) ==   "function",
             "bn.list"      %in% class(samples))
 
-  if (exists("count", envir = environment(sampler))){
+  if (get("return", envir = environment(sampler)) == "contingency"){
     tabulated <- get("count", envir = environment(sampler))
     tabulated <- as.list(tabulated)
     tabulated <- unlist(tabulated)
