@@ -344,7 +344,7 @@ sampleTriple <- function(currentNetwork,
 BNGibbsSampler <- function(data,
                            initial            = empty(ncol(data) - 1),
                            prior              = priorUniform(),
-                           return             = "network",
+                           return             = "contingency",
                            logScoreFUN        = logScoreMultDirFUN(),
                            logScoreParameters = list(hyperparameters = "qi"),
                            constraint         = NULL,
@@ -358,7 +358,7 @@ BNGibbsSampler <- function(data,
             is.valid(initial),
             ncol(as.matrix(data)) ==   length(initial),
             is.function(prior),
-            return               %in% c("network", "contingency", "sha256"),
+            return               %in% c("network", "contingency"),
             is.logical(keepTape),
             length(keepTape)      ==   1,
             sum(moveprobs)        ==   1)
@@ -429,9 +429,6 @@ BNGibbsSampler <- function(data,
 
   if (return == "contingency"){
     count <- new.env(hash = T)
-    lookup <- new.env(hash = T)
-  } else if (return == "sha256"){
-    lookup <- new.env(hash = T)
   }
 
   if (isTRUE(keepTape)){
@@ -530,10 +527,9 @@ BNGibbsSampler <- function(data,
       currentNetwork[[1]]
     } else if (return == "contingency") {
       if (nSteps > burnin){
-        id <- digest(currentNetwork[[1]], algo = "sha256")
+        id <- as.character(currentNetwork[[1]])
         if (is.null(count[[id]])){
           count[[id]] <<- 1L
-          lookup[[id]] <<- currentNetwork[[1]]
         }
         else {
           count[[id]] <<- count[[id]] + 1L
@@ -542,14 +538,6 @@ BNGibbsSampler <- function(data,
       } else {
         NULL
       }
-    } else if (return == "sha256"){
-      id <- digest(currentNetwork[[1]], algo = "sha256")
-      if (is.null(count[[id]])){
-        lookup[[id]] <<- currentNetwork[[1]]
-      } else {
-        lookup[[id]] <<- currentNetwork[[1]]
-      }
-      id
     }
   }
 }

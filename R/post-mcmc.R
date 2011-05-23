@@ -37,14 +37,9 @@ bnpostmcmc <- function(sampler, samples, logScoreFUN){
   stopifnot(class(sampler) ==   "function",
             "bn.list"      %in% class(samples))
 
-  if (exists("lookup", envir = environment(sampler))){
-    lookup <- get("lookup", envir = environment(sampler))
-    count <- get("count", envir = environment(sampler))
-
-    tabulated <- mget(ls(count), envir = count)
-    bnlist <- mget(names(tabulated), envir = lookup)
-    class(bnlist) <- c("bn.list", "parental.list")
-    names(tabulated) <- as.character(bnlist)
+  if (exists("count", envir = environment(sampler))){
+    tabulated <- get("count", envir = environment(sampler))
+    tabulated <- as.list(tabulated)
     tabulated <- unlist(tabulated)
     tabulated <- sort.int(tabulated, method = "shell")
     tabulated <- as.table(tabulated)
@@ -389,24 +384,7 @@ ep.bnpostmcmc <- function(x, nbin = 1, start, end, method = "flatten",
     }
     if (verbose) cat("Compiling ep by tabulating\n")
 
-    sampler <- x$sampler
-    if (exists("lookup", envir = environment(sampler))){
-      if (verbose) cat("Looking up tabulation from environment\n")
-      lookup <- get("lookup", envir = environment(sampler))
-      count <- get("count", envir = environment(sampler))
-
-      tabulated <- unlist(mget(ls(count), envir = count))
-      bnlist <- mget(names(tabulated), envir = lookup)
-      class(bnlist) <- c("bn.list", "parental.list")
-
-      pc <- list(parental.list = bnlist,
-                 contingency   = tabulated)
-
-      class(pc) <- "parental.contingency"
-      ep(pc, verbose = verbose, ...)
-    } else {
-      ep(x$tabulated, verbose = verbose, ...)
-    }
+    ep(x$tabulated, verbose = verbose, ...)
   }
 }
 

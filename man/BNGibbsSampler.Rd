@@ -2,7 +2,7 @@
 \alias{BNGibbsSampler}
 \title{Gibbs sampler for Bayesian Networks.}
 \usage{BNGibbsSampler(data, initial=empty(ncol(data) - 1),
-    prior=priorUniform(), return="network",
+    prior=priorUniform(), return="contingency",
     logScoreFUN=logScoreMultDirFUN(),
     logScoreParameters=list(hyperparameters = "qi"),
     constraint, maxNumberParents, moveprobs=c(0.9, 0.1, 0),

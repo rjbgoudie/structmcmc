@@ -1,8 +1,7 @@
 Package: structmcmc
 Imports:
     parental,
-    lattice,
-    digest
+    lattice
 Maintainer: R.J.B. Goudie <rjbgoudie@gmail.com>
 License: GPL-3
 Title: Structural inference for Bayesian Networks and

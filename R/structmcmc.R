@@ -10,7 +10,7 @@
 
 #' The structmcmc package.
 #'
-#' @import parental lattice digest
+#' @import parental lattice
 #' @docType package
 #' @name structmcmc
 #' @aliases structmcmc package-structmcmc
