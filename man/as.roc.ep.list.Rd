@@ -16,13 +16,12 @@
 }
 \seealso{For individual edge probability matrices see
 \code{\link{as.roc.ep}}. For graphs, \code{\link{as.roc.parental}} and
-\code{\link{as.roc.parental.list}}.}
+\code{\link{as.roc.parental.list}}. \code{\link{as.roc.ep}}}
 \value{A data frame, with columns \code{estimate}, \code{tp}, and
 \code{fp}. The first contains the supplied label; the latter two
 contain the number of true and false positives respectively. Rows
 correspond to the supplied thresholds, for each element of the supplied
 \code{ep.list}.}
-\seealso{\code{\link{as.roc.ep}}}
 \arguments{
   \item{x}{A list of matrices of class \code{ep} of edge probabilities}
   \item{true}{A \code{bn}. The true graph.}

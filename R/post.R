@@ -1386,13 +1386,13 @@ parentalToCPDAG <- function(x, verbose = T){
 #' @seealso For actual graphs, see \code{\link{as.roc.parental}} and
 #'   \code{\link{as.roc.parental.list}}. For edge probability matrices see
 #'   \code{\link{as.roc.ep}} and \code{\link{as.roc.ep.list}}.
+#'   For plotting \code{\link{rocplot}}. The methods defined are 
+#'   \code{\link{as.roc.parental}}, \code{\link{as.roc.parental.list}},
+#'   \code{\link{as.roc.ep}}, \code{\link{as.roc.ep.list}}
 #' @return A data frame, with columns \code{estimate}, \code{tp}, and
 #'   \code{fp}. The first contains the supplied label; the latter two
 #'   contain the number of true and false positives respectively.
 #' @export
-#' @seealso For plotting \code{\link{rocplot}}. The methods defined are 
-#'   \code{\link{as.roc.parental}}, \code{\link{as.roc.parental.list}},
-#'   \code{\link{as.roc.ep}}, \code{\link{as.roc.ep.list}}
 as.roc <- function(x, ...){
   UseMethod("as.roc")
 }
@@ -1408,13 +1408,12 @@ as.roc <- function(x, ...){
 #' @param ... Further arguments (unused)
 #' @seealso For lists of graphs, see \code{\link{as.roc.parental.list}}. For
 #'   edge probability matrices see \code{\link{as.roc.ep}} and
-#'   \code{\link{as.roc.ep.list}}.
+#'   \code{\link{as.roc.ep.list}}. \code{\link{as.roc.parental.list}}
 #' @return A 1-row data frame, with columns \code{estimate}, \code{tp}, and
 #'   \code{fp}. The first contains the supplied label; the latter two
 #'   contain the number of true and false positives respectively
 #' @S3method as.roc parental
 #' @method as.roc parental
-#' @seealso \code{\link{as.roc.parental.list}}
 as.roc.parental <- function(x, true, label, ...){
   tp <- pintersect(x, true, count = T)
   fp <- psetdiff(x, true, count = T)
@@ -1436,13 +1435,12 @@ as.roc.parental <- function(x, true, label, ...){
 #' @param ... Further arguments (unused)
 #' @seealso For individual graphs, see \code{\link{as.roc.parental}}. For
 #'   edge probability matrices see \code{\link{as.roc.ep}} and
-#'   \code{\link{as.roc.ep.list}}.
+#'   \code{\link{as.roc.ep.list}}. \code{\link{as.roc.parental}}
 #' @return A data frame, with columns \code{estimate}, \code{tp}, and
 #'   \code{fp}. The first contains the supplied label; the latter two
 #'   contain the number of true and false positives respectively
 #' @S3method as.roc parental.list
 #' @method as.roc parental.list
-#' @seealso \code{\link{as.roc.parental}}
 as.roc.parental.list <- function(x, true, labels, verbose, ...){
   xSeq <- seq_along(x)
   out <- lapply(xSeq, function(i){
@@ -1464,14 +1462,13 @@ as.roc.parental.list <- function(x, true, labels, verbose, ...){
 #' @param ... Further arguments (unused)
 #' @seealso For lists of edge probability matrices, see
 #'   \code{\link{as.roc.ep.list}}. For graphs, \code{\link{as.roc.parental}}
-#'   and \code{\link{as.roc.parental.list}}.
+#'   and \code{\link{as.roc.parental.list}}. \code{\link{as.roc.ep.list}}
 #' @return A data frame, with columns \code{estimate}, \code{tp}, and
 #'   \code{fp}. The first contains the supplied label; the latter two
 #'   contain the number of true and false positives respectively. Rows
 #'   correspond to the supplied thresholds.
 #' @S3method as.roc ep
 #' @method as.roc ep
-#' @seealso \code{\link{as.roc.ep.list}}
 as.roc.ep <- function(x, true, thresholds, label, verbose, ...){
   rocdata <- data.frame(estimate = c(), tp = c(), fp = c())
 
@@ -1496,7 +1493,7 @@ as.roc.ep <- function(x, true, thresholds, label, verbose, ...){
 #' @param ... Further arguments (unused)
 #' @seealso For individual edge probability matrices see
 #'   \code{\link{as.roc.ep}}. For graphs, \code{\link{as.roc.parental}} and
-#'   \code{\link{as.roc.parental.list}}.
+#'   \code{\link{as.roc.parental.list}}. \code{\link{as.roc.ep}}
 #' @return A data frame, with columns \code{estimate}, \code{tp}, and
 #'   \code{fp}. The first contains the supplied label; the latter two
 #'   contain the number of true and false positives respectively. Rows
@@ -1504,7 +1501,6 @@ as.roc.ep <- function(x, true, thresholds, label, verbose, ...){
 #'   \code{ep.list}.
 #' @S3method as.roc ep.list
 #' @method as.roc ep.list
-#' @seealso \code{\link{as.roc.ep}}
 as.roc.ep.list <- function(x, true, thresholds, labels, verbose, ...){
   xSeq <- seq_along(x)
   out <- lapply(xSeq, function(i){

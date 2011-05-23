@@ -21,8 +21,7 @@
 \value{An object of class "grain".}
 \seealso{\code{\link[gRain]{querygrain}} for querying the result. For
 queries involving conditioning, use \code{\link[gRain]{setFinding}}
-before running \code{querygrain}.}
-\seealso{\code{\link{marginalGivenOthers}},
+before running \code{querygrain}. \code{\link{marginalGivenOthers}},
 \code{\link{marginalGivenIntervention}}, \code{\link{queryFinding}}}
 \arguments{
   \item{x}{A list of multinomial parameters, in the form

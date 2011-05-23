@@ -13,11 +13,10 @@
 }
 \seealso{For lists of graphs, see \code{\link{as.roc.parental.list}}. For
 edge probability matrices see \code{\link{as.roc.ep}} and
-\code{\link{as.roc.ep.list}}.}
+\code{\link{as.roc.ep.list}}. \code{\link{as.roc.parental.list}}}
 \value{A 1-row data frame, with columns \code{estimate}, \code{tp}, and
 \code{fp}. The first contains the supplied label; the latter two
 contain the number of true and false positives respectively}
-\seealso{\code{\link{as.roc.parental.list}}}
 \arguments{
   \item{x}{A \code{parental} graph to compare to \code{true}}
   \item{true}{A \code{bn}. The true graph.}
