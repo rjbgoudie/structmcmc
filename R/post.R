@@ -668,6 +668,7 @@ ep.parental.contingency <- function(x, FUN, verbose = F, ...){
 #'
 #' @param x An object of class "bnpostmcmc" or "bnpost"
 #' @param top Optionally provide pre-computed top(x)
+#' @param ... Further arguments, passed to \code{\link[parental]{grplot}}
 #'
 #' @return A plot of the top graph, with their marginal likelihoods (without
 #'   priors)

@@ -36,6 +36,7 @@ epmx <- function(x, ...){
 #'          The samples start:end inclusive will be used.
 #' @param end An integer of length 1, specifying the number of samples at the
 #'          end to ignore. The samples start:end inclusive will be used.
+#' @param verbose Should progress be shown? A logical.
 #' @param ... Further arguments (unused)
 #'
 #' @return An object of class "epmx", a matrix of the form described above.

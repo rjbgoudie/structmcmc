@@ -21,4 +21,5 @@ priors)}
 \arguments{
   \item{x}{An object of class "bnpostmcmc" or "bnpost"}
   \item{top}{Optionally provide pre-computed top(x)}
+  \item{...}{Further arguments, passed to \code{\link[parental]{grplot}}}
 }

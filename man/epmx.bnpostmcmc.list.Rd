@@ -28,5 +28,6 @@ divided into before computing the edge probabilities of each}
 The samples start:end inclusive will be used.}
   \item{end}{An integer of length 1, specifying the number of samples at the
 end to ignore. The samples start:end inclusive will be used.}
+  \item{verbose}{Should progress be shown? A logical.}
   \item{...}{Further arguments (unused)}
 }
