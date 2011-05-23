@@ -19,7 +19,8 @@ Suggests:
     nnet,
     reshape,
     zoo,
-    testthat
+    testthat,
+    deal
 Collate:
     'constraints.R'
     'cross-validation.R'
