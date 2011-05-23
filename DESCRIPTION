@@ -18,7 +18,8 @@ Suggests:
     gRain,
     nnet,
     reshape,
-    zoo
+    zoo,
+    testthat
 Collate:
     'constraints.R'
     'cross-validation.R'
