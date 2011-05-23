@@ -137,7 +137,7 @@ test_that("2-node Bayesian Network, all 8s", {
   }))))
 
   expect_that(as.vector(outTable["integer(0),1"]),
-              is_within(333, 20))
+              is_within(333, 24))
   expect_that(as.vector(outTable["2,integer(0)"]),
               is_within(333, 20))
   expect_that(as.vector(outTable["integer(0),integer(0)"]),
