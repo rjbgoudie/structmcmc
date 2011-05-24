@@ -374,16 +374,18 @@ ep.bnpostmcmc <- function(x, nbin = 1, start, end, method = "et",
             isTRUE(is.wholenumber(nbin)),
             method %in% c("et", "flatten", "tabulate"))
   nbin_1 <- nbin == 1
-  et_exists <- exists("et", envir = environment(x$sampler))
+  etbins_exists <- exists("etbins", envir = environment(x$sampler))
   if (method != "flatten" && !nbin_1){
     stop("Only method = 'flatten' is implemented for nbin != 1")
   }
 
-  if (method == "et" && nbin_1 && et_exists){
+  if (method == "et" && nbin_1 && etbins_exists){
     if (verbose){
       cat("Using edge total matrix to compute ep\n")
     }
-    et <- get("et", envir = environment(x$sampler))
+    et <- get("etbins", envir = environment(x$sampler))
+    numberOfNodes <- get("numberOfNodes", envir = environment(x$sampler))
+    et <- t(matrix(colSums(et, na.rm = T), numberOfNodes, numberOfNodes))
     nSteps <- length(x$samples)
     ep <- et/nSteps
     class(ep) <- c("ep", "matrix")
