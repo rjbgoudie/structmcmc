@@ -69,7 +69,8 @@ epmx.bnpostmcmc.list <- epmx.list <- function(x,
   else {
     numberOfNodes <- length(x[[1]]$samples[[1]])
     if (method == "online"){
-      epmxl <- lapply(x, epmxFromET)
+      samplers <- lapply(x, "[[", "sampler")
+      epmxl <- lapply(samplers, epmx)
       nbin <- NA
     } else {
       epmxl <- lapply(x, epmx, nbin, start, end, verbose, ...)
@@ -90,23 +91,35 @@ epmx.bnpostmcmc.list <- epmx.list <- function(x,
   epmxl
 }
 
-#' Retreive edge prob matrix from edge totals.
+#' Edge probabilities matrix from a sampler.
 #'
-#' Returns matrix for epmx from the edge totals matrix collected online.
+#' Computes the edge probabilities and return a matrix with these. The
+#' format of the matrix is designed for the plotting function xyplot.epmx.
 #'
-#' @param y An \code{bnpostmcmc}
-#' @return An epmx
-#' @export
-epmxFromET <- function(y){
-  etbins_exists <- exists("etbins", envir = environment(y$sampler))
+#' For a problem with k nodes, the output will have k^2 columns and nbin
+#' rows. Columns are in order 1->1, 1->2, 1->3, ...., 2->1, 2->2 etc
+#'
+#' @param x An MCMC sampler, of class "sampler".
+#' @param verbose Should progress be shown? A logical.
+#' @param ... Further arguments (unused)
+#'
+#' @return An object of class "epmx", a matrix of the form described above.
+#' @S3method epmx sampler
+#' @method epmx sampler
+#' @seealso \code{\link{bnpostmcmc.list}}, \code{\link{epmx}},
+#'   \code{\link{xyplot.epmx}}, \code{\link{splom.bnpostmcmc.list}}
+epmx.sampler <- function(x, verbose = F, ...){
+  stopifnot(inherits(x, "sampler"))
+
+  etbins_exists <- exists("etbins", envir = environment(x))
 
   if (etbins_exists){
-    epmx <- get("etbins", envir = environment(y$sampler))
+    epmx <- get("etbins", envir = environment(x))
     epmx <- epmx[!is.na(rowSums(epmx)), , drop = F]
 
     # compute edge probabilities from totals
-    nSteps <- get("nSteps", envir = environment(y$sampler))
-    etBinsSize <- get("etBinsSize", envir = environment(y$sampler))
+    nSteps <- get("nSteps", envir = environment(x))
+    etBinsSize <- get("etBinsSize", envir = environment(x))
     epmx <- epmx/etBinsSize
 
     # adjust for last row being incomplete
