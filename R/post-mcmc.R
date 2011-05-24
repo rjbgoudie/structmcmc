@@ -340,7 +340,9 @@ gp.bnpostmcmc.list <- function(x, ...){
 #'           are computed separately for each bin.
 #' @param start ...
 #' @param end ...
-#' @param method Either "flatten" (the default) or "tabulate".
+#' @param method Either "et" (the default), "flatten" or "tabulate". If
+#'   the edge totals are not available, method "tabulate" is used if
+#'   possible. Only "flatten" is available if \code{nbin != 1}.
 #' @param verbose ...
 #' @param ... Further arguments passed to ep.parental.list() for method =
 #'           "flatten", or ep.table() for method = "tabulate"
@@ -366,25 +368,38 @@ gp.bnpostmcmc.list <- function(x, ...){
 #' mpost <- bnpostmcmc(sampler, samples)
 #' 
 #' ep(mpost)
-ep.bnpostmcmc <- function(x, nbin = 1, start, end, method = "flatten",
+ep.bnpostmcmc <- function(x, nbin = 1, start, end, method = "et",
                           verbose = F, ...){
   stopifnot(class(x) == "bnpostmcmc",
             isTRUE(is.wholenumber(nbin)),
-            method %in% c("flatten", "tabulate"))
+            method %in% c("et", "flatten", "tabulate"))
+  nbin_1 <- nbin == 1
+  etbins_exists <- exists("etbins", envir = environment(x$sampler))
+  if (method != "flatten" && !nbin_1){
+    stop("Only method = 'flatten' is implemented for nbin != 1")
+  }
 
-  if (method == "flatten"){
+  if (method == "et" && nbin_1 && etbins_exists){
     if (verbose){
-      cat("doing the flaten method\n")
+      cat("Using edge total matrix to compute ep\n")
+    }
+    et <- get("etbins", envir = environment(x$sampler))
+    numberOfNodes <- get("numberOfNodes", envir = environment(x$sampler))
+    et <- matrix(colSums(et, na.rm = T), numberOfNodes, numberOfNodes)
+    nSteps <- length(x$samples)
+    ep <- et/nSteps
+    class(ep) <- c("ep", "matrix")
+    ep
+  } else if (method == "tabulate" && nbin_1){
+    if (verbose){
+      cat("Using tabulated samples to compute ep\n")
+    }
+    ep(x$tabulated, verbose = verbose, ...)
+  }  else if (method == "flatten"){
+    if (verbose){
+      cat("Flattening the samples to compute ep\n")
     }
     ep(x$samples, nbin, ...)
-  }
-  else if (method == "tabulate"){
-    if (nbin != 1){
-      stop("method = tabulate not implemented for nbin != 1")
-    }
-    if (verbose) cat("Compiling ep by tabulating\n")
-
-    ep(x$tabulated, verbose = verbose, ...)
   }
 }
 

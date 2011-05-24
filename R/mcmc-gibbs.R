@@ -66,6 +66,13 @@ sampleNode <- function(currentNetwork,
   currentNetwork[[2]] <- routesAddEdges(currentNetwork[[2]],
                                         currentNetwork[[1]][[node]],
                                         node)
+  currentNetwork[[4]][currentNetwork[[1]][[node]], node] <- 1
+  if (length(currentNetwork[[1]][[node]]) == 0){
+    currentNetwork[[4]][, node] <- 0
+  } else {
+    currentNetwork[[4]][-currentNetwork[[1]][[node]], node] <- 0
+  }
+
   currentNetwork
 }
 
@@ -196,6 +203,19 @@ samplePair <- function(currentNetwork,
   currentNetwork[[2]] <- routesAddEdges(currentNetwork[[2]],
                                         currentNetwork[[1]][[node2]],
                                         node2)
+  currentNetwork[[4]][currentNetwork[[1]][[node1]], node1] <- 1
+  if (length(currentNetwork[[1]][[node1]]) == 0){
+    currentNetwork[[4]][, node1] <- 0
+  } else {
+    currentNetwork[[4]][-currentNetwork[[1]][[node1]], node1] <- 0
+  }
+  currentNetwork[[4]][currentNetwork[[1]][[node2]], node2] <- 1
+  if (length(currentNetwork[[1]][[node2]]) == 0){
+    currentNetwork[[4]][, node2] <- 0
+  } else {
+    currentNetwork[[4]][-currentNetwork[[1]][[node2]], node2] <- 0
+  }
+
   currentNetwork
 }
 
@@ -283,6 +303,25 @@ sampleTriple <- function(currentNetwork,
   currentNetwork[[2]] <- routesAddEdges(currentNetwork[[2]],
                                         currentNetwork[[1]][[node3]],
                                         node3)
+  currentNetwork[[4]][currentNetwork[[1]][[node1]], node1] <- 1
+  if (length(currentNetwork[[1]][[node1]]) == 0){
+    currentNetwork[[4]][, node1] <- 0
+  } else {
+    currentNetwork[[4]][-currentNetwork[[1]][[node1]], node1] <- 0
+  }
+  currentNetwork[[4]][currentNetwork[[1]][[node2]], node2] <- 1
+  if (length(currentNetwork[[1]][[node2]]) == 0){
+    currentNetwork[[4]][, node2] <- 0
+  } else {
+    currentNetwork[[4]][-currentNetwork[[1]][[node2]], node2] <- 0
+  }
+  currentNetwork[[4]][currentNetwork[[1]][[node3]], node3] <- 1
+  if (length(currentNetwork[[1]][[node3]]) == 0){
+    currentNetwork[[4]][, node3] <- 0
+  } else {
+    currentNetwork[[4]][-currentNetwork[[1]][[node3]], node3] <- 0
+  }
+
   currentNetwork
 }
 
@@ -412,6 +451,7 @@ BNGibbsSampler <- function(data,
   currentNetwork[[1]] <- initial
   currentNetwork[[2]] <- routes(currentNetwork[[1]])
   currentNetwork[[3]] <- log(prior(currentNetwork[[1]]))
+  currentNetwork[[4]] <- as.adjacency(currentNetwork[[1]])
   if (!is.valid.prior(currentNetwork[[3]])){
     stop("Initial network has prior with 0 probability.")
   }
@@ -430,6 +470,10 @@ BNGibbsSampler <- function(data,
   if (return == "contingency"){
     count <- new.env(hash = T)
   }
+  et <- matrix(0, nrow = numberOfNodes, ncol = numberOfNodes)
+  etBinsIncrement <- 100
+  etBinsSize <- 1000
+  etbins <- matrix(ncol = numberOfNodes^2, nrow = etBinsIncrement)
 
   if (isTRUE(keepTape)){
     tapeSizeIncrement <- 500000
@@ -474,6 +518,28 @@ BNGibbsSampler <- function(data,
     tape[nSteps, 2] <<- -1
     tape[nSteps, 3] <<- 1
     tapeProposals[nSteps] <<- as.character(currentNetwork[[1]], pretty = T)
+  }
+
+  updateET <- function(currentNetwork, nSteps, burnin){
+    if (nSteps > burnin){
+      et <<- et + currentNetwork[[4]]
+    }
+    lengthenETBins(nSteps, burnin)
+    row <- ((nSteps - burnin - 1) %/% etBinsSize) + 1
+    etbins[row, ] <<- as.vector(et)
+    if ((nSteps - burnin) %% etBinsSize == 0){
+      et <<- matrix(0, nrow = numberOfNodes, ncol = numberOfNodes)
+    }
+  }
+
+  lengthenETBins <- function(nSteps, burnin){
+    if ((nSteps - burnin) %% (etBinsSize * etBinsIncrement) == 0){
+      temp <- etbins
+      nRowsPrev <- nrow(etbins)
+      etbins <<- matrix(nrow = nRowsPrev + etBinsIncrement,
+                        ncol = numberOfNodes^2)
+      etbins[seq_len(nRowsPrev), ] <<- temp
+    }
   }
 
   function(x,
@@ -522,6 +588,8 @@ BNGibbsSampler <- function(data,
 
     if (isTRUE(keepTape)) updateTape(nSteps, currentNetwork)
     if (isTRUE(debugAcceptance)) browser()
+
+    updateET(currentNetwork, nSteps, burnin)
 
     if (return == "network"){
       currentNetwork[[1]]

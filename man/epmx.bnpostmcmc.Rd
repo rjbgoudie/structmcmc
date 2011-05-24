@@ -1,9 +1,8 @@
-\name{epmx.bnpostmcmc.list}
-\alias{epmx.bnpostmcmc.list}
+\name{epmx.bnpostmcmc}
+\alias{epmx.bnpostmcmc}
 \title{Edge probabilities matrix.}
-\usage{\method{epmx}{bnpostmcmc.list} (x, method="online",
-    nbin=floor((end - start + 1)/100), start=1,
-    end=length(x[[1]]), verbose=F, ...)}
+\usage{\method{epmx}{bnpostmcmc} (x, nbin=floor((end - start +
+    1)/100), start=1, end=length(x[[1]]), verbose=F, ...)}
 
 \description{
   Edge probabilities matrix.
@@ -19,15 +18,12 @@
   1->3, ...., 2->1, 2->2 etc
 }
 \value{An object of class "epmx", a matrix of the form described above.}
-\seealso{\code{\link{epmx}}, \code{\link{xyplot.epmx}},
-\code{\link{splom.bnpostmcmc.list}}}
+\seealso{\code{\link{bnpostmcmc.list}}, \code{\link{epmx}},
+\code{\link{xyplot.epmx}}, \code{\link{splom.bnpostmcmc.list}}}
 \arguments{
   \item{x}{An object of class "bnpostmcmc.list"}
-  \item{method}{Either \code{"online"}, or \code{"offline"}. For online,
-the edge totals kept online will be used. This}
   \item{nbin}{The number of equally-sized bins into which the samples are
-divided into before computing the edge probabilities of each.
-This applies only for \code{method = "offline"}.}
+divided into before computing the edge probabilities of each}
   \item{start}{An integer of length 1, specifying the amount of burn-in.
 The samples start:end inclusive will be used.}
   \item{end}{An integer of length 1, specifying the number of samples at the

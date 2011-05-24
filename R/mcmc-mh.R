@@ -268,6 +268,10 @@ BNSampler <- function(data,
   if (return == "contingency"){
     count <- new.env(hash = T)
   }
+  et <- matrix(0, nrow = numberOfNodes, ncol = numberOfNodes)
+  etBinsIncrement <- 100
+  etBinsSize <- 1000
+  etbins <- matrix(ncol = numberOfNodes^2, nrow = etBinsIncrement)
 
   if (isTRUE(keepTape)){
     tapeSizeIncrement <- 500000
@@ -323,6 +327,28 @@ BNSampler <- function(data,
     tape[nSteps, 2] <<- logAccProb
     tape[nSteps, 3] <<- accepted
     tapeProposals[nSteps] <<- as.character(currentNetwork[[1]], pretty = T)
+  }
+
+  updateET <- function(currentNetwork, nSteps, burnin){
+    if (nSteps > burnin){
+      et <<- et + currentNetwork[[4]]
+    }
+    lengthenETBins(nSteps, burnin)
+    row <- ((nSteps - burnin - 1) %/% etBinsSize) + 1
+    etbins[row, ] <<- as.vector(et)
+    if ((nSteps - burnin) %% etBinsSize == 0){
+      et <<- matrix(0, nrow = numberOfNodes, ncol = numberOfNodes)
+    }
+  }
+
+  lengthenETBins <- function(nSteps, burnin){
+    if ((nSteps - burnin) %% (etBinsSize * etBinsIncrement) == 0){
+      temp <- etbins
+      nRowsPrev <- nrow(etbins)
+      etbins <<- matrix(nrow = nRowsPrev + etBinsIncrement,
+                        ncol = numberOfNodes^2)
+      etbins[seq_len(nRowsPrev), ] <<- temp
+    }
   }
 
   function(x,
@@ -511,6 +537,9 @@ BNSampler <- function(data,
                                        currentNetwork,
                                        accepted = F)
     }
+
+    updateET(currentNetwork, nSteps, burnin)
+
     # return
     # either the logScore of the network
     # or the network
