@@ -40,6 +40,7 @@ test_that("Two node example", {
     structure(c(0, 0.4, 0.2, 0), .Dim = c(2L, 2L), class = c("ep",
 "matrix"))
   ))
+  expect_identical(mep, ep(sampler))
 })
 
 test_that("Tabulate samples", {

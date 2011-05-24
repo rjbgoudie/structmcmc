@@ -34,7 +34,7 @@
 #'   \code{\link{map.bnpostmcmc}}, \code{\link{logScoreMultDir.bnpostmcmc}},
 #'   \code{\link{gp.bnpostmcmc}}, \code{\link{ep.bnpostmcmc}}
 bnpostmcmc <- function(sampler, samples, logScoreFUN){
-  stopifnot(class(sampler) ==   "function",
+  stopifnot(inherits(sampler, "sampler"),
             "bn.list"      %in% class(samples))
 
   if (get("return", envir = environment(sampler)) == "contingency"){
@@ -207,7 +207,7 @@ logScoreMultDir.bnpostmcmc <- function(x, sampler, data,
                                        head      = Inf,
                                        use.names = F, ...){
   stopifnot(class(x)          ==   "bnpostmcmc",
-            class(sampler)    ==   "function",
+            inherits(sampler, "sampler"),
             class(data)       ==   "data.frame",
             is.wholenumber(head) || is.infinite(head),
             head              >    0,
@@ -400,6 +400,55 @@ ep.bnpostmcmc <- function(x, nbin = 1, start, end, method = "et",
       cat("Flattening the samples to compute ep\n")
     }
     ep(x$samples, nbin, ...)
+  }
+}
+
+#' Extract posterior edge probabiities from a sampler.
+#' 
+#' Computes the edge probabilities implied by the MCMC samples
+#' contained in a MCMC sampler function.
+#'
+#' @param x An MCMC sampler 'function'
+#' @param start ...
+#' @param end ...
+#' @param verbose ...
+#' @param ... Further arguments passed to ep.parental.list() for method =
+#'           "flatten", or ep.table() for method = "tabulate"
+#' @return A matrix of class 'ep' with entry (i,j) containing the probability
+#'   of an edge from node i --> j
+#' @S3method ep sampler
+#' @method ep sampler
+#' @seealso \code{\link{ep}}, \code{\link{ep.bnpostmcmc.list}}
+#' @examples
+#' x1 <- factor(c(1, 1, 0, 1))
+#' x2 <- factor(c(0, 1, 0, 1))
+#' dat <- data.frame(x1 = x1, x2 = x2)
+#'
+#' prior <- function(net) 1
+#' initial <- bn(c(), c())
+#'
+#' sampler <- BNSampler(dat, initial, prior)
+#' samples <- draw(sampler, n = 50)
+#'
+#' ep(sampler)
+ep.sampler <- function(x, start, end, verbose = F, ...){
+  stopifnot(inherits(x, "sampler"))
+
+  etbins_exists <- exists("etbins", envir = environment(x))
+
+  if (etbins_exists){
+    if (verbose){
+      cat("Using edge total matrix to compute ep\n")
+    }
+    et <- get("etbins", envir = environment(x))
+    numberOfNodes <- get("numberOfNodes", envir = environment(x))
+    et <- matrix(colSums(et, na.rm = T), numberOfNodes, numberOfNodes)
+    nSteps <- get("nSteps", envir = environment(x))
+    ep <- et/nSteps
+    class(ep) <- c("ep", "matrix")
+    ep
+  } else {
+    stop("The supplied function 'x' does not appear to be a sampler.")
   }
 }
 

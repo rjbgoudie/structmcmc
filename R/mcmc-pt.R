@@ -299,7 +299,7 @@ BNSamplerPT <- function(data,
     currentGraphIsAMode <- fastid(currentNetwork[[1]]) %in% modesID
   }
 
-  function(x, verbose = F, returnDiagnostics = F,
+  sampler <- function(x, verbose = F, returnDiagnostics = F,
            debugAcceptance = F, returnTape = F){
 
     if (returnDiagnostics == T){
@@ -626,4 +626,6 @@ BNSamplerPT <- function(data,
       }
     } 
   }
+  class(sampler) <- c("sampler", "fucntion")
+  sampler
 }

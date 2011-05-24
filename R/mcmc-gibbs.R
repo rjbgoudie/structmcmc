@@ -542,7 +542,7 @@ BNGibbsSampler <- function(data,
     }
   }
 
-  function(x,
+  sampler <- function(x,
            verbose = F,
            returnDiagnostics = F,
            debugAcceptance = F,
@@ -608,4 +608,6 @@ BNGibbsSampler <- function(data,
       }
     }
   }
+  class(sampler) <- c("sampler", "fucntion")
+  sampler
 }

@@ -351,7 +351,7 @@ BNSampler <- function(data,
     }
   }
 
-  function(x,
+  sampler <- function(x,
            verbose           = F,
            returnDiagnostics = F,
            debugAcceptance   = F,
@@ -560,4 +560,6 @@ BNSampler <- function(data,
       }
     }
   }
+  class(sampler) <- c("sampler", "fucntion")
+  sampler
 }
