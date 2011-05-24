@@ -213,7 +213,7 @@ BNSamplerGrzeg <- function(data,
     grzegMoveProbability <- grzeg$grzegMoveProbability
   }
 
-  function(x, verbose = F, returnDiagnostics = F,
+  sampler <- function(x, verbose = F, returnDiagnostics = F,
            debugAcceptance = F, returnTape = F){
 
     if (returnDiagnostics == T){
@@ -607,4 +607,6 @@ BNSamplerGrzeg <- function(data,
       }
     } 
   }
+  class(sampler) <- c("sampler", "fucntion")
+  sampler
 }

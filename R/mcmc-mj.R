@@ -363,7 +363,7 @@ BNSamplerMJ <- function(data,
     }
   }
 
-  function(x, verbose = F, returnDiagnostics = F,
+  sampler <- function(x, verbose = F, returnDiagnostics = F,
            debugAcceptance = F, returnTape = F, burnin = 0){
     if (isTRUE(returnDiagnostics)) return(returnDiagnostics())
     if (isTRUE(returnTape)) return(returnTape())
@@ -651,4 +651,6 @@ BNSamplerMJ <- function(data,
       }
     }
   }
+  class(sampler) <- c("sampler", "fucntion")
+  sampler
 }

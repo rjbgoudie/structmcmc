@@ -34,7 +34,7 @@
 #'   \code{\link{map.bnpostmcmc}}, \code{\link{logScoreMultDir.bnpostmcmc}},
 #'   \code{\link{gp.bnpostmcmc}}, \code{\link{ep.bnpostmcmc}}
 bnpostmcmc <- function(sampler, samples, logScoreFUN){
-  stopifnot(class(sampler) ==   "function",
+  stopifnot(inherits(sampler, "sampler"),
             "bn.list"      %in% class(samples))
 
   if (get("return", envir = environment(sampler)) == "contingency"){
@@ -207,7 +207,7 @@ logScoreMultDir.bnpostmcmc <- function(x, sampler, data,
                                        head      = Inf,
                                        use.names = F, ...){
   stopifnot(class(x)          ==   "bnpostmcmc",
-            class(sampler)    ==   "function",
+            inherits(sampler, "sampler"),
             class(data)       ==   "data.frame",
             is.wholenumber(head) || is.infinite(head),
             head              >    0,

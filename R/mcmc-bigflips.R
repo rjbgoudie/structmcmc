@@ -111,7 +111,7 @@ BNSamplerBigFlips <- function(data,
   moves <- which(row(currentNetwork[[2]]) != col(currentNetwork[[2]]),
                  arr.ind = T)
 
-  function(x, verbose = F, returnDiagnostics = F,
+  sampler <- function(x, verbose = F, returnDiagnostics = F,
            debugAcceptance = F, returnTape = F){
 
     if (returnDiagnostics == T){
@@ -335,4 +335,6 @@ BNSamplerBigFlips <- function(data,
       currentNetwork[[1]]
     }
   }
+  class(sampler) <- c("sampler", "fucntion")
+  sampler
 }
