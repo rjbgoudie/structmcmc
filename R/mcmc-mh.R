@@ -269,9 +269,9 @@ BNSampler <- function(data,
     count <- new.env(hash = T)
   }
   et <- matrix(0, numberOfNodes, numberOfNodes)
-  etbins <- matrix(0, ncol = numberOfNodes^2, nrow = 0)
   etBinsIncrement <- 100
   etBinsSize <- 1000
+  etbins <- matrix(0, ncol = numberOfNodes^2, nrow = etBinsIncrement)
 
   if (isTRUE(keepTape)){
     tapeSizeIncrement <- 500000
@@ -334,9 +334,9 @@ BNSampler <- function(data,
       et <<- et + currentNetwork[[4]]
     }
     lengthenETBins(nSteps, burnin)
+    row <- ((nSteps - burnin) %/% etBinsSize) + 1
+    etbins[row, ] <<- as.vector(t(et))
     if ((nSteps - burnin) %% etBinsSize == 0){
-      row <- ((nSteps - burnin) %/% etBinsSize)
-      etbins[row, ] <<- as.vector(t(et))
       et <<- matrix(0, numberOfNodes, numberOfNodes)
     }
   }
@@ -346,7 +346,7 @@ BNSampler <- function(data,
       temp <- etbins
       nRowsPrev <- nrow(etbins)
       etbins <<- matrix(nrow = nRowsPrev + etBinsIncrement,
-                       ncol = numberOfNodes^2)
+                        ncol = numberOfNodes^2)
       etbins[seq_len(nRowsPrev), ] <<- temp
     }
   }

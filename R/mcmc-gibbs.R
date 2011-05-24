@@ -471,9 +471,9 @@ BNGibbsSampler <- function(data,
     count <- new.env(hash = T)
   }
   et <- matrix(0, numberOfNodes, numberOfNodes)
-  etbins <- matrix(0, ncol = numberOfNodes^2, nrow = 0)
   etBinsIncrement <- 100
   etBinsSize <- 1000
+  etbins <- matrix(0, ncol = numberOfNodes^2, nrow = etBinsIncrement)
 
   if (isTRUE(keepTape)){
     tapeSizeIncrement <- 500000
@@ -521,15 +521,14 @@ BNGibbsSampler <- function(data,
   }
 
   updateET <- function(currentNetwork, nSteps, burnin){
-    postburnin <- nSteps - burnin
-    if (postburnin > 0){
+    if (nSteps > burnin){
       et <<- et + currentNetwork[[4]]
-      lengthenETBins(nSteps, burnin)
-      if (postburnin %% etBinsSize == 0){
-        row <- postburnin %/% etBinsSize
-        etbins[row, ] <<- as.vector(t(et))
-        et <<- matrix(0, numberOfNodes, numberOfNodes)
-      }
+    }
+    lengthenETBins(nSteps, burnin)
+    row <- ((nSteps - burnin) %/% etBinsSize) + 1
+    etbins[row, ] <<- as.vector(t(et))
+    if ((nSteps - burnin) %% etBinsSize == 0){
+      et <<- matrix(0, numberOfNodes, numberOfNodes)
     }
   }
 

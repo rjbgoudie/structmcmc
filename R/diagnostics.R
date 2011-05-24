@@ -55,48 +55,17 @@ epmx.bnpostmcmc.list <- epmx.list <- function(x,
             #validStartEnd(start, end, length(x[[1]])),
             is.wholenumber(nbin))
   haveEPL <- ifelse(class(x) == "list", T, F)
+
   if (haveEPL){
     numberOfNodes <- dim(x[[1]][[1]])[1]
+    epl <- x
+    epmxl <- lapply(epl, convertEPMatrixToColumns, numberOfNodes, verbose)
   }
   else {
     numberOfNodes <- length(x[[1]]$samples[[1]])
+    epmxl <- lapply(x, epmx, nbin, start, end, verbose, ...)
   }
 
-  # get the edge probabilities
-  # for each MCMC sample
-  # for each bin within each sample
-  if (verbose){
-    cat("Doing the ep() call....\n")
-  }
-  if (!haveEPL){
-    epl <- ep(x, start = start, end = end, nbin = nbin, method = "flatten")
-  }
-  else {
-    epl <- x
-  }
-
-  # want to convert the ep list to a matrix
-  # with individual edges in the columns
-  # with the edges ordered according to as.table in xyplot
-  # ie 1->1, 1->2, 1->3, ... , 2->1, 2->2, ...
-  convertToMatrix <- function(epl, numberOfNodes){
-    if (verbose){
-      cat("Converting to Matrix\n")
-    }
-    epl <- lapply(epl, t)
-    if (verbose){
-      cat("matrix line\n")
-    }
-    matrix(unlist(epl, use.names = F), ncol = numberOfNodes^2, byrow = T)
-  }
-  if (verbose){
-    cat("doing the lapply stuff\n")
-  }
-  epmxl <- lapply(epl, convertToMatrix, numberOfNodes)
-
-  if (verbose){
-    cat("finishing off\n")
-  }
   # name the components
   names(epmxl) <- paste("Sample", seq_along(x))
 
@@ -109,6 +78,66 @@ epmx.bnpostmcmc.list <- epmx.list <- function(x,
 
   class(epmxl) <- "epmx"
   epmxl
+}
+
+#' Convert edge prob matrix to a column matrix
+#'
+#' Want to convert the ep list to a matrix with individual edges in the
+#' columns with the edges ordered according to as.table in xyplot 
+#'
+#' ie 1->1, 1->2, 1->3, ... , 2->1, 2->2, ...
+#' @param epl A matrix of edge probability matrices, each corresponding to
+#'   a separate bin
+#' @param numberOfNodes The number of nodes in the matrix
+#' @param verbose Should progress text be output?
+#' @export
+convertEPMatrixToColumns <- function(epl, numberOfNodes, verbose){
+  if (verbose){
+    cat("Converting to Matrix\n")
+  }
+  epl <- lapply(epl, t)
+  if (verbose){
+    cat("matrix line\n")
+  }
+  matrix(unlist(epl, use.names = F), ncol = numberOfNodes^2, byrow = T)
+}
+
+#' Edge probabilities matrix.
+#'
+#' Computes the edge probabilities and return a matrix with these. The
+#' format of the matrix is designed for the plotting function xyplot.epmx.
+#'
+#' For a problem with k nodes, the output will have k^2 columns and nbin
+#' rows. Columns are in order 1->1, 1->2, 1->3, ...., 2->1, 2->2 etc
+#'
+#' @param x An object of class "bnpostmcmc.list"
+#' @param nbin The number of equally-sized bins into which the samples are
+#'          divided into before computing the edge probabilities of each
+#' @param start An integer of length 1, specifying the amount of burn-in.
+#'          The samples start:end inclusive will be used.
+#' @param end An integer of length 1, specifying the number of samples at the
+#'          end to ignore. The samples start:end inclusive will be used.
+#' @param verbose Should progress be shown? A logical.
+#' @param ... Further arguments (unused)
+#'
+#' @return An object of class "epmx", a matrix of the form described above.
+#' @S3method epmx bnpostmcmc
+#' @method epmx bnpostmcmc
+#' @seealso \code{\link{bnpostmcmc.list}}, \code{\link{epmx}},
+#'   \code{\link{xyplot.epmx}}, \code{\link{splom.bnpostmcmc.list}}
+epmx.bnpostmcmc <- function(x,
+                            nbin    = floor((end - start + 1)/100),
+                            start   = 1,
+                            end     = length(x[[1]]),
+                            verbose = F,
+                            ...){
+  stopifnot(class(x) == "bnpostmcmc",
+            is.wholenumber(nbin))
+
+  numberOfNodes <- length(x$samples[[1]])
+  eps <- ep(x, start = start, end = end, nbin = nbin, method = "flatten")
+
+  convertEPMatrixToColumns(eps, numberOfNodes, verbose)
 }
 
 #' Cumulative mean.
