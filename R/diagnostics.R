@@ -71,7 +71,7 @@ epmx.bnpostmcmc.list <- epmx.list <- function(x,
     if (method == "online"){
       samplers <- lapply(x, "[[", "sampler")
       epmxl <- lapply(samplers, epmx)
-      nbin <- NA
+      nbin <- nrow(epmxl[[1]])
     } else {
       epmxl <- lapply(x, epmx, nbin, start, end, verbose, ...)
     }
@@ -115,7 +115,7 @@ epmx.samplers <- function(x,
   stopifnot(inherits(x, "samplers"))
 
   epmxl <- lapply(x, epmx)
-  nbin <- NA
+  nbin <- nrow(epmxl[[1]])
 
   nSteps <- get("nSteps", envir = environment(x[[1]]))
   burnin <- get("burnin", envir = environment(x[[1]]))
