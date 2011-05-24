@@ -474,6 +474,7 @@ BNGibbsSampler <- function(data,
   etBinsIncrement <- 100
   etBinsSize <- 1000
   etbins <- matrix(ncol = numberOfNodes^2, nrow = etBinsIncrement)
+  burnin <- 0
 
   if (isTRUE(keepTape)){
     tapeSizeIncrement <- 500000
@@ -543,16 +544,17 @@ BNGibbsSampler <- function(data,
   }
 
   sampler <- function(x,
-           verbose = F,
-           returnDiagnostics = F,
-           debugAcceptance = F,
-           returnTape = F,
-           burnin = 0){
+                      verbose = F,
+                      returnDiagnostics = F,
+                      debugAcceptance = F,
+                      returnTape = F,
+                      burnin = 0){
     if (isTRUE(returnDiagnostics)) return(returnDiagnostics())
     if (isTRUE(returnTape)) return(returnTape())
     if (isTRUE(debugAcceptance)) browser()
     if (isTRUE(keepTape)) lengthenTape()
 
+    burnin <<- burnin
     nSteps <<- nSteps + 1
 
     u <- runif(1, min = 0, max = 1)
