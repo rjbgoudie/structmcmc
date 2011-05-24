@@ -66,6 +66,13 @@ sampleNode <- function(currentNetwork,
   currentNetwork[[2]] <- routesAddEdges(currentNetwork[[2]],
                                         currentNetwork[[1]][[node]],
                                         node)
+  currentNetwork[[4]][currentNetwork[[1]][[node]], node] <- 1
+  if (length(currentNetwork[[1]][[node]]) == 0){
+    currentNetwork[[4]][, node] <- 0
+  } else {
+    currentNetwork[[4]][-currentNetwork[[1]][[node]], node] <- 0
+  }
+
   currentNetwork
 }
 
@@ -196,6 +203,19 @@ samplePair <- function(currentNetwork,
   currentNetwork[[2]] <- routesAddEdges(currentNetwork[[2]],
                                         currentNetwork[[1]][[node2]],
                                         node2)
+  currentNetwork[[4]][currentNetwork[[1]][[node1]], node1] <- 1
+  if (length(currentNetwork[[1]][[node1]]) == 0){
+    currentNetwork[[4]][, node1] <- 0
+  } else {
+    currentNetwork[[4]][-currentNetwork[[1]][[node1]], node1] <- 0
+  }
+  currentNetwork[[4]][currentNetwork[[1]][[node2]], node2] <- 1
+  if (length(currentNetwork[[1]][[node2]]) == 0){
+    currentNetwork[[4]][, node2] <- 0
+  } else {
+    currentNetwork[[4]][-currentNetwork[[1]][[node2]], node2] <- 0
+  }
+
   currentNetwork
 }
 
@@ -283,6 +303,25 @@ sampleTriple <- function(currentNetwork,
   currentNetwork[[2]] <- routesAddEdges(currentNetwork[[2]],
                                         currentNetwork[[1]][[node3]],
                                         node3)
+  currentNetwork[[4]][currentNetwork[[1]][[node1]], node1] <- 1
+  if (length(currentNetwork[[1]][[node1]]) == 0){
+    currentNetwork[[4]][, node1] <- 0
+  } else {
+    currentNetwork[[4]][-currentNetwork[[1]][[node1]], node1] <- 0
+  }
+  currentNetwork[[4]][currentNetwork[[1]][[node2]], node2] <- 1
+  if (length(currentNetwork[[1]][[node2]]) == 0){
+    currentNetwork[[4]][, node2] <- 0
+  } else {
+    currentNetwork[[4]][-currentNetwork[[1]][[node2]], node2] <- 0
+  }
+  currentNetwork[[4]][currentNetwork[[1]][[node3]], node3] <- 1
+  if (length(currentNetwork[[1]][[node3]]) == 0){
+    currentNetwork[[4]][, node3] <- 0
+  } else {
+    currentNetwork[[4]][-currentNetwork[[1]][[node3]], node3] <- 0
+  }
+
   currentNetwork
 }
 
@@ -412,6 +451,7 @@ BNGibbsSampler <- function(data,
   currentNetwork[[1]] <- initial
   currentNetwork[[2]] <- routes(currentNetwork[[1]])
   currentNetwork[[3]] <- log(prior(currentNetwork[[1]]))
+  currentNetwork[[4]] <- as.adjacency(currentNetwork[[1]])
   if (!is.valid.prior(currentNetwork[[3]])){
     stop("Initial network has prior with 0 probability.")
   }
@@ -430,6 +470,7 @@ BNGibbsSampler <- function(data,
   if (return == "contingency"){
     count <- new.env(hash = T)
   }
+  et <- matrix(0, numberOfNodes, numberOfNodes)
 
   if (isTRUE(keepTape)){
     tapeSizeIncrement <- 500000
@@ -522,6 +563,10 @@ BNGibbsSampler <- function(data,
 
     if (isTRUE(keepTape)) updateTape(nSteps, currentNetwork)
     if (isTRUE(debugAcceptance)) browser()
+
+    if (nSteps > burnin){
+      et <<- et + currentNetwork[[4]]
+    }
 
     if (return == "network"){
       currentNetwork[[1]]

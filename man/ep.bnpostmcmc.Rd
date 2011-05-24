@@ -2,7 +2,7 @@
 \alias{ep.bnpostmcmc}
 \title{Posterior edge probabiities.}
 \usage{\method{ep}{bnpostmcmc} (x, nbin=1, start, end,
-    method="flatten", verbose=F, ...)}
+    method="et", verbose=F, ...)}
 
 \description{
   Posterior edge probabiities.
@@ -26,7 +26,9 @@ into which to divide the MCMC samples. The edge probabilities
 are computed separately for each bin.}
   \item{start}{...}
   \item{end}{...}
-  \item{method}{Either "flatten" (the default) or "tabulate".}
+  \item{method}{Either "et" (the default), "flatten" or "tabulate". If
+the edge totals are not available, method "tabulate" is used if
+possible. Only "flatten" is available if \code{nbin != 1}.}
   \item{verbose}{...}
   \item{...}{Further arguments passed to ep.parental.list() for method =
 "flatten", or ep.table() for method = "tabulate"}

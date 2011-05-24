@@ -69,7 +69,7 @@ epmx.bnpostmcmc.list <- epmx.list <- function(x,
     cat("Doing the ep() call....\n")
   }
   if (!haveEPL){
-    epl <- ep(x, start = start, end = end, nbin = nbin)
+    epl <- ep(x, start = start, end = end, nbin = nbin, method = "flatten")
   }
   else {
     epl <- x

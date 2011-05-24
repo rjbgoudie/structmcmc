@@ -268,6 +268,7 @@ BNSampler <- function(data,
   if (return == "contingency"){
     count <- new.env(hash = T)
   }
+  et <- matrix(0, numberOfNodes, numberOfNodes)
 
   if (isTRUE(keepTape)){
     tapeSizeIncrement <- 500000
@@ -511,6 +512,11 @@ BNSampler <- function(data,
                                        currentNetwork,
                                        accepted = F)
     }
+
+    if (nSteps > burnin){
+      et <<- et + currentNetwork[[4]]
+    }
+
     # return
     # either the logScore of the network
     # or the network

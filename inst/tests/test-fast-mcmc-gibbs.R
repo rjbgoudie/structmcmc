@@ -10,6 +10,24 @@
 
 context("MCMC BN Gibbs Sampling (Fast Tests)")
 
+test_that("Simple test", {
+  set.seed(9501)
+  dat <- data.frame(x1 = as.factor(c(1, 1, 0, 1, 0, 0, 1, 0, 1, 0)),
+                    x2 = as.factor(c(0, 1, 0, 1, 0, 1, 1, 0, 1, 0)),
+                    x3 = as.factor(c(0, 1, 1, 1, 0, 1, 1, 0, 1, 0)))
+
+  mcmc <- posterior(data = dat, method = "gibbs", verbose = F,
+                    nSamples = 1000, nBurnin = 500)
+  exact <- posterior(data = dat, method = "exact", verbose = F)
+
+  epmcmc <- ep(mcmc)
+  epexact <- ep(exact)
+
+  expect_that(max(epmcmc - epexact) < 0.05, is_true())
+  expect_identical(epmcmc, ep(mcmc, method = "tabulate"))
+  expect_identical(epmcmc, ep(mcmc, method = "flatten"))
+})
+
 test_that("2-node Bayesian Network", {
   #set.seed(7101)
   set.seed(5141)
