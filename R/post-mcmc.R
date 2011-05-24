@@ -385,7 +385,7 @@ ep.bnpostmcmc <- function(x, nbin = 1, start, end, method = "et",
     }
     et <- get("etbins", envir = environment(x$sampler))
     numberOfNodes <- get("numberOfNodes", envir = environment(x$sampler))
-    et <- t(matrix(colSums(et, na.rm = T), numberOfNodes, numberOfNodes))
+    et <- matrix(colSums(et, na.rm = T), numberOfNodes, numberOfNodes)
     nSteps <- length(x$samples)
     ep <- et/nSteps
     class(ep) <- c("ep", "matrix")

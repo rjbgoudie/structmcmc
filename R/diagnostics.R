@@ -30,8 +30,11 @@ epmx <- function(x, ...){
 #' rows. Columns are in order 1->1, 1->2, 1->3, ...., 2->1, 2->2 etc
 #'
 #' @param x An object of class "bnpostmcmc.list"
+#' @param method Either \code{"online"}, or \code{"offline"}. For online,
+#'   the edge totals kept online will be used. This
 #' @param nbin The number of equally-sized bins into which the samples are
-#'          divided into before computing the edge probabilities of each
+#'          divided into before computing the edge probabilities of each.
+#'          This applies only for \code{method = "offline"}.
 #' @param start An integer of length 1, specifying the amount of burn-in.
 #'          The samples start:end inclusive will be used.
 #' @param end An integer of length 1, specifying the number of samples at the
@@ -45,6 +48,7 @@ epmx <- function(x, ...){
 #' @seealso \code{\link{epmx}}, \code{\link{xyplot.epmx}},
 #'   \code{\link{splom.bnpostmcmc.list}}
 epmx.bnpostmcmc.list <- epmx.list <- function(x,
+                                 method  = "online",
                                  nbin    = floor((end - start + 1)/100),
                                  start   = 1,
                                  end     = length(x[[1]]),
@@ -52,6 +56,7 @@ epmx.bnpostmcmc.list <- epmx.list <- function(x,
                                  ...){
   stopifnot(class(x) == "bnpostmcmc.list" || class(x) == "list",
             all(diff(sapply(x, length)) == 0) || class(x) == "list",
+            method %in% c("online", "offline"),
             #validStartEnd(start, end, length(x[[1]])),
             is.wholenumber(nbin))
   haveEPL <- ifelse(class(x) == "list", T, F)
@@ -63,7 +68,12 @@ epmx.bnpostmcmc.list <- epmx.list <- function(x,
   }
   else {
     numberOfNodes <- length(x[[1]]$samples[[1]])
-    epmxl <- lapply(x, epmx, nbin, start, end, verbose, ...)
+    if (method == "online"){
+      epmxl <- lapply(x, epmxFromET)
+      nbin <- NA
+    } else {
+      epmxl <- lapply(x, epmx, nbin, start, end, verbose, ...)
+    }
   }
 
   # name the components
@@ -78,6 +88,36 @@ epmx.bnpostmcmc.list <- epmx.list <- function(x,
 
   class(epmxl) <- "epmx"
   epmxl
+}
+
+#' Retreive edge prob matrix from edge totals.
+#'
+#' Returns matrix for epmx from the edge totals matrix collected online.
+#'
+#' @param y An \code{bnpostmcmc}
+#' @return An epmx
+#' @export
+epmxFromET <- function(y){
+  etbins_exists <- exists("etbins", envir = environment(y$sampler))
+
+  if (etbins_exists){
+    epmx <- get("etbins", envir = environment(y$sampler))
+    epmx <- epmx[!is.na(rowSums(epmx)), , drop = F]
+
+    # compute edge probabilities from totals
+    nSteps <- get("nSteps", envir = environment(y$sampler))
+    etBinsSize <- get("etBinsSize", envir = environment(y$sampler))
+    epmx <- epmx/etBinsSize
+
+    # adjust for last row being incomplete
+    leftover <- nSteps %% etBinsSize
+    if (leftover > 0){
+      epmx[nrow(epmx), ] <- (epmx[nrow(epmx), ] * etBinsSize)/leftover
+    }
+    epmx
+  } else {
+    stop("et bins missing")
+  }
 }
 
 #' Convert edge prob matrix to a column matrix

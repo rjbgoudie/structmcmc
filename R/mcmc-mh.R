@@ -268,10 +268,10 @@ BNSampler <- function(data,
   if (return == "contingency"){
     count <- new.env(hash = T)
   }
-  et <- matrix(0, numberOfNodes, numberOfNodes)
+  et <- matrix(0, nrow = numberOfNodes, ncol = numberOfNodes)
   etBinsIncrement <- 100
   etBinsSize <- 1000
-  etbins <- matrix(0, ncol = numberOfNodes^2, nrow = etBinsIncrement)
+  etbins <- matrix(ncol = numberOfNodes^2, nrow = etBinsIncrement)
 
   if (isTRUE(keepTape)){
     tapeSizeIncrement <- 500000
@@ -334,10 +334,10 @@ BNSampler <- function(data,
       et <<- et + currentNetwork[[4]]
     }
     lengthenETBins(nSteps, burnin)
-    row <- ((nSteps - burnin) %/% etBinsSize) + 1
-    etbins[row, ] <<- as.vector(t(et))
+    row <- ((nSteps - burnin - 1) %/% etBinsSize) + 1
+    etbins[row, ] <<- as.vector(et)
     if ((nSteps - burnin) %% etBinsSize == 0){
-      et <<- matrix(0, numberOfNodes, numberOfNodes)
+      et <<- matrix(0, nrow = numberOfNodes, ncol = numberOfNodes)
     }
   }
 

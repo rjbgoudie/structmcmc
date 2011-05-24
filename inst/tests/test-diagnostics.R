@@ -65,7 +65,7 @@ test_that("cumep", {
   attr(expected, "function") <- "cum"
 
   expect_that(
-    cumep(testmpostl, nbin = 5),
+    cumep(testmpostl, method = "offline", nbin = 5),
     equals(expected)
   )
 
@@ -97,7 +97,7 @@ test_that("cumep", {
   attr(expected, "function") <- "mw"
 
   expect_that(
-    mwep(testmpostl, window = 3, nbin = 5),
+    mwep(testmpostl, method = "offline", window = 3, nbin = 5),
     equals(expected)
   )
 
@@ -208,6 +208,21 @@ test_that("cumep", {
   #       expect_that(res$results$png[[i]]$result, is_identical_to("identical"))
   #     }
   #   }
+})
+
+test_that("Fast cumep equals slow cumep", {
+  set.seed(9501)
+  dat <- data.frame(x1 = as.factor(c(1, 1, 0, 1, 0, 0, 1, 0, 1, 0)),
+                    x2 = as.factor(c(0, 1, 0, 1, 0, 1, 1, 0, 1, 0)),
+                    x3 = as.factor(c(0, 1, 1, 1, 0, 1, 1, 0, 1, 0)))
+
+  mcmc <- posterior(data = dat, method = "gibbs", verbose = F,
+                    nSamples = 1000, nBurnin = 0)
+
+  epfast <- cumep(bnpostmcmc.list(mcmc))
+  epslow <- cumep(bnpostmcmc.list(mcmc), method = "offline", nbin = 1)
+
+  expect_equal(epfast[[1]], epslow[[1]])
 })
 
 test_that("cumtvd", {
