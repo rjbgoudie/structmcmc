@@ -276,3 +276,37 @@ test_that("cumtvd", {
     )
   )
 })
+
+test_that("cumep with sampler", {
+  set.seed(310)
+  x1 <- as.factor(c(1, 1, 0, 1))
+  x2 <- as.factor(c(0, 1, 0, 1))
+  dat <- data.frame(x1 = x1, x2 = x2)
+
+  nSamples <- 5
+  prior <- function(net) 1
+  initial <- bn(integer(0), integer(0))
+
+  sampler1 <- BNSampler(dat, initial, prior)
+  sampler2 <- BNSampler(dat, initial, prior)
+  sink(tempfile())
+  samples1 <- draw(sampler1, n = nSamples, burnin = 0)
+
+  # this is a mistake,
+  # but it doesn't matter here
+  # but do have to work around it, due to draw() being smarter
+  samples2 <- draw(sampler2, n = nSamples, burnin = 0)
+
+  sink()
+
+  mpost1 <- bnpostmcmc(sampler1, samples1)
+  mpost2 <- bnpostmcmc(sampler2, samples2)
+
+  testmpostl <- list(mpost1, mpost2)
+  class(testmpostl) <- "bnpostmcmc.list"
+
+  expect_identical(
+    cumep(testmpostl, method = "offline", nbin = 1)[[1]],
+    cumep(samplers(sampler1, sampler2))[[1]]
+  )
+})

@@ -229,3 +229,15 @@ drawSamplesByStepCount <- function(sampler,
   class(samples) <- c("mcmcbn", "bn.list", "parental.list")
   samples
 }
+
+#' List of MCMC Samplers
+#'
+#' method description
+#'
+#' @param ... Further arguments passed to method
+#' @export
+samplers <- function(...){
+  x <- list(...)
+  class(x) <- "samplers"
+  x
+}
