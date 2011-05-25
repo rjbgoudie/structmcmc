@@ -163,11 +163,12 @@ epmx.sampler <- function(x, verbose = F, ...){
 
     # compute edge probabilities from totals
     nSteps <- get("nSteps", envir = environment(x))
+    nBurnin <- get("nBurnin", envir = environment(x))
     etBinsSize <- get("etBinsSize", envir = environment(x))
     epmx <- epmx/etBinsSize
 
     # adjust for last row being incomplete
-    leftover <- nSteps %% etBinsSize
+    leftover <- (nSteps - nBurnin) %% etBinsSize
     if (leftover > 0){
       epmx[nrow(epmx), ] <- (epmx[nrow(epmx), ] * etBinsSize)/leftover
     }

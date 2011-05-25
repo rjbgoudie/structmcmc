@@ -445,7 +445,8 @@ ep.sampler <- function(x, start, end, verbose = F, ...){
     numberOfNodes <- get("numberOfNodes", envir = environment(x))
     et <- matrix(colSums(et, na.rm = T), numberOfNodes, numberOfNodes)
     nSteps <- get("nSteps", envir = environment(x))
-    ep <- et/nSteps
+    nBurnin <- get("nBurnin", envir = environment(x$sampler))
+    ep <- et/(nSteps - nBurnin)
     class(ep) <- c("ep", "matrix")
     ep
   } else {
