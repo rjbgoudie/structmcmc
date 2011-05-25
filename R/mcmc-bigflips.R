@@ -335,6 +335,6 @@ BNSamplerBigFlips <- function(data,
       currentNetwork[[1]]
     }
   }
-  class(sampler) <- c("sampler", "fucntion")
+  class(sampler) <- c("sampler", "function")
   sampler
 }

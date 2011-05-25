@@ -562,6 +562,6 @@ BNSampler <- function(data,
       }
     }
   }
-  class(sampler) <- c("sampler", "fucntion")
+  class(sampler) <- c("sampler", "function")
   sampler
 }
