@@ -310,3 +310,18 @@ test_that("cumep with sampler", {
     cumep(samplers(sampler1, sampler2))[[1]]
   )
 })
+
+test_that("cumep with sampler", {
+  set.seed(9501)
+  dat <- data.frame(x1 = as.factor(c(1, 1, 0, 1, 0, 0, 1, 0, 1, 0)),
+                    x2 = as.factor(c(0, 1, 0, 1, 0, 1, 1, 0, 1, 0)),
+                    x3 = as.factor(c(0, 1, 1, 1, 0, 1, 1, 0, 1, 0)))
+
+  mcmc1 <- posterior(data = dat, method = "mc3", verbose = F,
+                     nSamples = 2000, nBurnin = 0)
+  mcmc2 <- posterior(data = dat, method = "mc3", verbose = F,
+                     nSamples = 2000, nBurnin = 0)
+
+  subset <- c(2, 3)
+  xyplot(cumep(bnpostmcmc.list(mcmc1, mcmc2)), subset = subset)
+})
