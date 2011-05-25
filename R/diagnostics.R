@@ -407,14 +407,16 @@ mwep.samplers <- function(x, window = 10, ...){
 #' for bnpostmcmc.list and bvspostmcmc.list
 #'
 #' @param x ...
+#' @param subset A numeric vector. This specifies the nodes between which
+#'   the epmx should be displayed for.
 #'
 #' @return ...
 #' @S3method xyplot epmx
 #' @method xyplot epmx
 #' @seealso \code{\link{epmx}}
-xyplot.epmx <- function(x){
-
+xyplot.epmx <- function(x, subset = NULL){
   stopifnot(class(x) == "epmx")
+
   lengthOfRuns <- attr(x, "lengthOfRuns")
   numberOfRuns <- attr(x, "numberOfRuns")
   numberOfNodes <- attr(x, "numberOfNodes")
@@ -422,6 +424,21 @@ xyplot.epmx <- function(x){
   nbin <- attr(x, "nbin")
   fun <- attr(x, "function")
   isbvsresponse <- isTRUE(type == "bvspostmcmc.list")
+
+  if (!is.null(subset)){
+    stopifnot(inherits(subset, c("numeric", "integer")),
+              all(sapply(subset, is.wholenumber)),
+              all(findInterval(subset, c(1, numberOfNodes), right = T) == 1))
+
+    subsetm <- matrix(F, numberOfNodes, numberOfNodes)
+    subsetm[subset, subset] <- T
+    subsetm <- as.vector(subsetm)
+
+    x <- lapply(x, "[", , subsetm)
+    numberOfNodes <- length(subset)
+  } else {
+    subset <- seq_len(numberOfNodes)
+  }
 
   # pre-allocate the data matrix
   if (isbvsresponse){
@@ -503,6 +520,7 @@ xyplot.epmx <- function(x){
       as.table = T,
       default.scales = list(relation = "same"),
       strip = F,
+      varnames = subset,
       type = "l",
       ylab = "Probability",
       xlab = "Samples",
@@ -512,9 +530,9 @@ xyplot.epmx <- function(x){
         x = list(draw = F)
       ),
       main = main,
-      panel = function(x, y, ...){
+      panel = function(x, y, varnames, ...){
         if (current.row() == current.column()){
-          diag.panel.splom(varname = current.row(),
+          diag.panel.splom(varname = varnames[current.row()],
                            limits  = c(0, 1),
                            draw    = F)
         }
