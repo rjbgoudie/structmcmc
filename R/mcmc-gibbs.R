@@ -474,7 +474,7 @@ BNGibbsSampler <- function(data,
   etBinsIncrement <- 100
   etBinsSize <- 1000
   etbins <- matrix(ncol = numberOfNodes^2, nrow = etBinsIncrement)
-  burnin <- 0
+  nBurnin <- 0
 
   if (isTRUE(keepTape)){
     tapeSizeIncrement <- 500000
@@ -521,20 +521,20 @@ BNGibbsSampler <- function(data,
     tapeProposals[nSteps] <<- as.character(currentNetwork[[1]], pretty = T)
   }
 
-  updateET <- function(currentNetwork, nSteps, burnin){
-    if (nSteps > burnin){
+  updateET <- function(currentNetwork, nSteps, nBurnin){
+    if (nSteps > nBurnin){
       et <<- et + currentNetwork[[4]]
     }
-    lengthenETBins(nSteps, burnin)
-    row <- ((nSteps - burnin - 1) %/% etBinsSize) + 1
+    lengthenETBins(nSteps, nBurnin)
+    row <- ((nSteps - nBurnin - 1) %/% etBinsSize) + 1
     etbins[row, ] <<- as.vector(et)
-    if ((nSteps - burnin) %% etBinsSize == 0){
+    if ((nSteps - nBurnin) %% etBinsSize == 0){
       et <<- matrix(0, nrow = numberOfNodes, ncol = numberOfNodes)
     }
   }
 
-  lengthenETBins <- function(nSteps, burnin){
-    if ((nSteps - burnin) %% (etBinsSize * etBinsIncrement) == 0){
+  lengthenETBins <- function(nSteps, nBurnin){
+    if ((nSteps - nBurnin) %% (etBinsSize * etBinsIncrement) == 0){
       temp <- etbins
       nRowsPrev <- nrow(etbins)
       etbins <<- matrix(nrow = nRowsPrev + etBinsIncrement,
@@ -554,7 +554,7 @@ BNGibbsSampler <- function(data,
     if (isTRUE(debugAcceptance)) browser()
     if (isTRUE(keepTape)) lengthenTape()
 
-    burnin <<- burnin
+    nBurnin <<- burnin
     nSteps <<- nSteps + 1
 
     u <- runif(1, min = 0, max = 1)
@@ -591,12 +591,12 @@ BNGibbsSampler <- function(data,
     if (isTRUE(keepTape)) updateTape(nSteps, currentNetwork)
     if (isTRUE(debugAcceptance)) browser()
 
-    updateET(currentNetwork, nSteps, burnin)
+    updateET(currentNetwork, nSteps, nBurnin)
 
     if (return == "network"){
       currentNetwork[[1]]
     } else if (return == "contingency") {
-      if (nSteps > burnin){
+      if (nSteps > nBurnin){
         id <- as.character(currentNetwork[[1]])
         if (is.null(count[[id]])){
           count[[id]] <<- 1L

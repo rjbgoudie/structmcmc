@@ -387,8 +387,8 @@ ep.bnpostmcmc <- function(x, nbin = 1, start, end, method = "et",
     numberOfNodes <- get("numberOfNodes", envir = environment(x$sampler))
     et <- matrix(colSums(et, na.rm = T), numberOfNodes, numberOfNodes)
     nSteps <- get("nSteps", envir = environment(x$sampler))
-    burnin <- get("burnin", envir = environment(x$sampler))
-    ep <- et/(nSteps - burnin)
+    nBurnin <- get("nBurnin", envir = environment(x$sampler))
+    ep <- et/(nSteps - nBurnin)
     class(ep) <- c("ep", "matrix")
     ep
   } else if (method == "tabulate" && nbin_1){

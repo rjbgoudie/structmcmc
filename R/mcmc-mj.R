@@ -362,6 +362,7 @@ BNSamplerMJ <- function(data,
       tape[nSteps, 5] <<- proposalGraphIsAMode
     }
   }
+  nBurnin <- 0
 
   sampler <- function(x, verbose = F, returnDiagnostics = F,
            debugAcceptance = F, returnTape = F, burnin = 0){
@@ -370,6 +371,7 @@ BNSamplerMJ <- function(data,
     if (isTRUE(debugAcceptance)) browser()
     if (isTRUE(keepTape)) lengthenTape()
 
+    nBurnin <<- burnin
     nSteps <<- nSteps + 1
     proposalNetwork <- currentNetwork
 
@@ -637,7 +639,7 @@ BNSamplerMJ <- function(data,
     if (return == "network"){
       currentNetwork[[1]]
     } else if (return == "contingency") {
-      if (nSteps > burnin){
+      if (nSteps > nBurnin){
         id <- as.character(currentNetwork[[1]])
         if (is.null(count[[id]])){
           count[[id]] <<- 1L

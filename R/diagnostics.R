@@ -118,7 +118,7 @@ epmx.samplers <- function(x,
   nbin <- nrow(epmxl[[1]])
 
   nSteps <- get("nSteps", envir = environment(x[[1]]))
-  burnin <- get("burnin", envir = environment(x[[1]]))
+  burnin <- get("nBurnin", envir = environment(x[[1]]))
   numberOfNodes <- get("numberOfNodes", envir = environment(x[[1]]))
 
   # name the components
