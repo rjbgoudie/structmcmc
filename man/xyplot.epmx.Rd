@@ -1,7 +1,7 @@
 \name{xyplot.epmx}
 \alias{xyplot.epmx}
 \title{Plot of cumulative edge probabilities.}
-\usage{\method{xyplot}{epmx} (x)}
+\usage{\method{xyplot}{epmx} (x, subset)}
 
 \description{
   Plot of cumulative edge probabilities.
@@ -15,4 +15,6 @@
 \seealso{\code{\link{epmx}}}
 \arguments{
   \item{x}{...}
+  \item{subset}{A numeric vector. This specifies the nodes between which
+the epmx should be displayed for.}
 }
