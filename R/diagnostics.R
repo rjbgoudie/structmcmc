@@ -262,7 +262,9 @@ cummean <- function(x, ...){
 #' @method cummean matrix
 #' @seealso \code{\link{cummean}}
 cummean.matrix <- function(x, ...){
-  1/(seq_len(nrow(x))) * apply(x, 2, cumsum)
+  result <- 1/(seq_len(nrow(x))) * apply(x, 2, cumsum)
+  dim(result) <- dim(x)
+  result
 }
 
 #' Cumulative edge probabilities.
