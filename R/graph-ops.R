@@ -276,8 +276,8 @@ requireSomethingFromEachParent <- function(numberOfNodes,
     out[[z]] <- enumerateRest(numberOfNodes,
                               currentNetwork = currentNetwork,
                               change = change,
-                              banned = banned[change],
-                              required = thisrequired[change],
+                              banned = banned,
+                              required = thisrequired,
                               maxIndegree = maxIndegree)
     # out[[z]] <- enumerateBNSpace(numberOfNodes,
     #                                 banned = banned,
@@ -291,19 +291,18 @@ requireSomethingFromEachParent <- function(numberOfNodes,
 enumerateRest <- function(numberOfNodes, currentNetwork, change, banned,
                           required, maxIndegree){
   base <- currentNetwork[[1]]
-  all <- vector("list", length(change))
-  for (i in seq_along(change)){
-    all[[i]] <- setdiff(seq_len(numberOfNodes), change[i])
+  all <- vector("list", numberOfNodes)
+  for (i in change){
+    all[[i]] <- setdiff(seq_len(numberOfNodes), i)
     all[[i]] <- setdiff(all[[i]], banned[[i]])
     all[[i]] <- setdiff(all[[i]], required[[i]])
   }
-  out <- options.grid(all, maxIndegree)
-  lapply(out, function(this){
-    for (i in seq_along(change)){
-      this[[i]] <- sort.int(c(this[[i]], required[[i]]))
-    }
-    base[change] <- this
-    base
+  out <- options.grid(all, maxIndegree, required)
+  lapply(out, function(net){
+    notchange <- setdiff(seq_len(numberOfNodes), change)
+    net[notchange] <- base[notchange]
+    class(net) <- c("bn", "parental")
+    net
   })
 }
 
@@ -402,19 +401,21 @@ getAllConsistentWithDAG <- function(bn,
 #' @param maxIndegree Maximum indegree
 #' @return A list of options
 #' @export
-options.grid <- function(x, maxIndegree){
+options.grid <- function(x,
+                         maxIndegree,
+                         required = lapply(seq_along(x), function(i){
+                           integer(0)
+                         })){
   ops <- vector("list", length(x))
   for (i in 1:length(x)){
     this <- x[[i]]
     lenthis <- length(this)
-    if (lenthis > 0){
+    maxlen <- min(maxIndegree, lenthis)
+    maxlen <- maxlen - length(required[[i]])
+    if (maxlen > 0){
       out <- list()
-      maxlen <- min(maxIndegree, lenthis)
       for (j in seq_len(maxlen)){
-        l <- unlist(apply(combn(lenthis, j), 2, list), rec = F)
-        l <- lapply(l, function(z){
-          x[[i]][z]
-        })
+        l <- combn3(this, j, required = required[[i]])
         out <- c(out, l)
       }
       ops[[i]] <- out
@@ -432,9 +433,9 @@ options.grid <- function(x, maxIndegree){
     for (j in 1:ncol(grid)){
       what <- ops[[j]]
       if (!identical(what, 0)){
-        out[[i]][[j]] <- what[[grid[i, j]]]
+        out[[i]][[j]] <- sort.int(what[[grid[i, j]]], required[[j]])
       } else {
-        out[[i]][[j]] <- integer(0)
+        out[[i]][[j]] <- required[[j]]
       }
     }
   }
