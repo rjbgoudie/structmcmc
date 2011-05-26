@@ -8,10 +8,12 @@
 #'   that BN.
 #' @param change A numeric vector, containing the nodes whose parents
 #'   are to be changed.
+#' @param maxIndegree The maximum indegree allowed
 #' @return A list of \code{bn}
 #' @export
 getNewGraph <- function(currentNetwork,
-                        change){
+                        change,
+                        maxIndegree){
   stopifnot(class(currentNetwork) == "list",
             inherits(change, "integer") || inherits(change, "numeric"))
   nodesSeq <- seq_along(currentNetwork[[1]])
@@ -33,7 +35,10 @@ getNewGraph <- function(currentNetwork,
   banned[change] <- lapply(change, function(i){
     setdiff(nodesSeq, change)
   })
-  bns <- enumerateBNSpace(numberOfNodes, banned = banned)
+  bns <- enumerateBNSpace(n           = numberOfNodes,
+                          banned      = banned,
+                          maxIndegree = maxIndegree,
+                          check       = F)
 
   out <- vector("list", length(bns))
   for (i in seq_along(bns)){
@@ -42,7 +47,8 @@ getNewGraph <- function(currentNetwork,
                                         currentNetwork,
                                         numberOfNodes,
                                         nodesSeq,
-                                        change)
+                                        change,
+                                        maxIndegree)
   }
   #browser()
   unlist(out, rec = F)
@@ -91,13 +97,15 @@ allDescendants <- function(currentNetwork){
 #' @param numberOfNodes The number of nodes of the bn
 #' @param change A numeric vector, containing the nodes whose parents
 #'   are to be changed.
+#' @param maxIndegree Maximum indegree
 #' @return A list of possible parents of each node
 #' @export
 getPossibleParents <- function(bn,
                                nonDescendantsList,
                                descendantsList,
                                numberOfNodes,
-                               change){
+                               change,
+                               maxIndegree){
   possibleParents <- vector("list", length = numberOfNodes)
   for (child in change){
     possibleParentsChild <- lapply(change, function(node){
@@ -217,6 +225,7 @@ removeDuplicates <- function(optionsForRequired, options){
 #' @param currentNetwork A list, containing in the first position the
 #'   starting \code{bn}, and in the second position the routes matrix for
 #'   that BN.
+#' @param maxIndegree Maximum indegree
 #' @return A list
 #' @export
 requireSomethingFromEachParent <- function(numberOfNodes,
@@ -224,18 +233,18 @@ requireSomethingFromEachParent <- function(numberOfNodes,
                                            possibleParents,
                                            change,
                                            descendantsList,
-                                           currentNetwork){
+                                           currentNetwork,
+                                           maxIndegree){
   options <- lapply(nodesSeq, eachChangesChoicesForRequired,
                     possibleParents, currentNetwork, change, descendantsList)
-  
-  optionsForRequired <- lapply(options, options.grid)
+
+  optionsForRequired <- lapply(options, options.grid, maxIndegree)
   optionsForRequired <- removeDuplicates(optionsForRequired, options)
   
   ol <- lapply(optionsForRequired, length)
   ols <- lapply(ol, seq_len)
   opgrid <- expand.grid(ols)
-  
-  
+
   required <- list()
   i <- 1
   for (row in seq_len(nrow(opgrid))){
@@ -263,13 +272,39 @@ requireSomethingFromEachParent <- function(numberOfNodes,
                                                       change,
                                                       toBanIfNotRequired,
                                                       thisrequired)
-    out[[z]] <- enumerateBNSpace(numberOfNodes,
-                                 banned = banned,
-                                 required = thisrequired)
+
+    out[[z]] <- enumerateRest(numberOfNodes,
+                              currentNetwork = currentNetwork,
+                              change = change,
+                              banned = banned[change],
+                              required = thisrequired[change],
+                              maxIndegree = maxIndegree)
+    # out[[z]] <- enumerateBNSpace(numberOfNodes,
+    #                                 banned = banned,
+    #                                 required = thisrequired)
     z <- z + 1
   }
   out <- unlist(out, rec = F)
   out
+}
+
+enumerateRest <- function(numberOfNodes, currentNetwork, change, banned,
+                          required, maxIndegree){
+  base <- currentNetwork[[1]]
+  all <- vector("list", length(change))
+  for (i in seq_along(change)){
+    all[[i]] <- setdiff(seq_len(numberOfNodes), change[i])
+    all[[i]] <- setdiff(all[[i]], banned[[i]])
+    all[[i]] <- setdiff(all[[i]], required[[i]])
+  }
+  out <- options.grid(all, maxIndegree)
+  lapply(out, function(this){
+    for (i in seq_along(change)){
+      this[[i]] <- sort.int(c(this[[i]], required[[i]]))
+    }
+    base[change] <- this
+    base
+  })
 }
 
 #' Make a banned list.
@@ -308,13 +343,15 @@ allBannedExceptPPNotBannedIfNotRequired <- function(nodesSeq,
 #' @param nodesSeq A sequence \code{1:numberOfNodes}
 #' @param change A numeric vector, containing the nodes whose parents
 #'   are to be changed.
+#' @param maxIndegree Maximum indegree
 #' @return A list of possible parents of each node
 #' @export
 getAllConsistentWithDAG <- function(bn,
                                     currentNetwork,
                                     numberOfNodes,
                                     nodesSeq,
-                                    change){
+                                    change,
+                                    maxIndegree){
   
   nonDescendantsList <- allNonDescendants(currentNetwork)
   descendantsList <- allDescendants(currentNetwork)
@@ -325,22 +362,25 @@ getAllConsistentWithDAG <- function(bn,
                                         nonDescendantsList,
                                         descendantsList,
                                         numberOfNodes,
-                                        change)
+                                        change,
+                                        maxIndegree)
   
   out <- requireSomethingFromEachParent(numberOfNodes,
                                  nodesSeq,
                                  possibleParents,
                                  change,
                                  descendantsList,
-                                 currentNetwork)
-
-  notchange <- setdiff(nodesSeq, change)
-  outout <- lapply(out, function(net){
-    net[notchange] <- currentNetwork[[1]][notchange]
-    net
-  })
+                                 currentNetwork,
+                                 maxIndegree)
   
-  outout
+  # notchange <- setdiff(nodesSeq, change)
+  # outout <- lapply(out, function(net){
+  #   net[notchange] <- currentNetwork[[1]][notchange]
+  #   net
+  # })
+  
+  # outout
+  out
 }
 
 #' input a list x.
@@ -359,16 +399,18 @@ getAllConsistentWithDAG <- function(bn,
 #'            list(c(1, 2), c(2, 3)))
 #' 
 #' @param x A list
+#' @param maxIndegree Maximum indegree
 #' @return A list of options
 #' @export
-options.grid <- function(x){
+options.grid <- function(x, maxIndegree){
   ops <- vector("list", length(x))
   for (i in 1:length(x)){
     this <- x[[i]]
     lenthis <- length(this)
     if (lenthis > 0){
       out <- list()
-      for (j in 1:lenthis){
+      maxlen <- min(maxIndegree, lenthis)
+      for (j in seq_len(maxlen)){
         l <- unlist(apply(combn(lenthis, j), 2, list), rec = F)
         l <- lapply(l, function(z){
           x[[i]][z]
@@ -382,7 +424,7 @@ options.grid <- function(x){
   }
   lenops <- lapply(ops, length)
   seqlenops <- lapply(lenops, seq_len)
-  grid <- expand.grid(seqlenops)
+  grid <- data.matrix(expand.grid(seqlenops))
 
   out <- list()
   for (i in 1:nrow(grid)){
