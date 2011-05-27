@@ -433,7 +433,7 @@ options.grid <- function(x,
     for (j in 1:ncol(grid)){
       what <- ops[[j]]
       if (!identical(what, 0)){
-        out[[i]][[j]] <- sort.int(what[[grid[i, j]]], required[[j]])
+        out[[i]][[j]] <- sort.int(c(what[[grid[i, j]]], required[[j]]))
       } else {
         out[[i]][[j]] <- required[[j]]
       }
