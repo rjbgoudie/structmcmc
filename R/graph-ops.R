@@ -279,9 +279,6 @@ requireSomethingFromEachParent <- function(numberOfNodes,
                               banned = banned,
                               required = thisrequired,
                               maxIndegree = maxIndegree)
-    # out[[z]] <- enumerateBNSpace(numberOfNodes,
-    #                                 banned = banned,
-    #                                 required = thisrequired)
     z <- z + 1
   }
   out <- unlist(out, rec = F)
@@ -372,13 +369,6 @@ getAllConsistentWithDAG <- function(bn,
                                  currentNetwork,
                                  maxIndegree)
   
-  # notchange <- setdiff(nodesSeq, change)
-  # outout <- lapply(out, function(net){
-  #   net[notchange] <- currentNetwork[[1]][notchange]
-  #   net
-  # })
-  
-  # outout
   out
 }
 
@@ -440,20 +430,4 @@ options.grid <- function(x,
     }
   }
   out
-}
-
-#' Make graph from a row.
-#' 
-#' @param graph A graph
-#' @param change A vector of changes
-#' @param row A row number
-#' @return ?
-#' @export
-graphFromRow <- function(graph, change, row){
-  rowList <- as.list(row)
-  empty <- row == -1
-  replace <- vector("list", sum(empty))
-  rowList[empty] <- replace
-  graph[change] <- rowList
-  graph
 }
