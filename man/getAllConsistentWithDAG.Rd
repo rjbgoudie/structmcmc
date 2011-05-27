@@ -2,7 +2,7 @@
 \alias{getAllConsistentWithDAG}
 \title{Get all consistent with DAG...}
 \usage{getAllConsistentWithDAG(bn, currentNetwork, numberOfNodes,
-    nodesSeq, change)}
+    nodesSeq, change, maxIndegree)}
 
 \description{
   Get all consistent with DAG
@@ -17,4 +17,5 @@ that BN.}
   \item{nodesSeq}{A sequence \code{1:numberOfNodes}}
   \item{change}{A numeric vector, containing the nodes whose parents
 are to be changed.}
+  \item{maxIndegree}{Maximum indegree}
 }

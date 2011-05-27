@@ -3,7 +3,7 @@
 \title{Require something from each parent.}
 \usage{requireSomethingFromEachParent(numberOfNodes, nodesSeq,
     possibleParents, change, descendantsList,
-    currentNetwork)}
+    currentNetwork, maxIndegree)}
 
 \description{
   Require something from each parent.
@@ -19,4 +19,5 @@ are to be changed.}
   \item{currentNetwork}{A list, containing in the first position the
 starting \code{bn}, and in the second position the routes matrix for
 that BN.}
+  \item{maxIndegree}{Maximum indegree}
 }

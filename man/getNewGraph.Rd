@@ -1,7 +1,7 @@
 \name{getNewGraph}
 \alias{getNewGraph}
 \title{List graphs in change node neighbourhood.}
-\usage{getNewGraph(currentNetwork, change)}
+\usage{getNewGraph(currentNetwork, change, maxIndegree)}
 
 \description{
   List graphs in change node neighbourhood.
@@ -18,4 +18,5 @@ starting \code{bn}, and in the second position the routes matrix for
 that BN.}
   \item{change}{A numeric vector, containing the nodes whose parents
 are to be changed.}
+  \item{maxIndegree}{The maximum indegree allowed}
 }

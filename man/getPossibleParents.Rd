@@ -2,7 +2,7 @@
 \alias{getPossibleParents}
 \title{Get possible parents.}
 \usage{getPossibleParents(bn, nonDescendantsList, descendantsList,
-    numberOfNodes, change)}
+    numberOfNodes, change, maxIndegree)}
 
 \description{
   Get possible parents.
@@ -19,4 +19,5 @@
   \item{numberOfNodes}{The number of nodes of the bn}
   \item{change}{A numeric vector, containing the nodes whose parents
 are to be changed.}
+  \item{maxIndegree}{Maximum indegree}
 }

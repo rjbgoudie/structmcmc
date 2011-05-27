@@ -1,7 +1,7 @@
 \name{options.grid}
 \alias{options.grid}
 \title{input a list x.}
-\usage{options.grid(x)}
+\usage{options.grid(x, maxIndegree, required)}
 
 \description{
   input a list x.
@@ -19,4 +19,5 @@
 \value{A list of options}
 \arguments{
   \item{x}{A list}
+  \item{maxIndegree}{Maximum indegree}
 }

@@ -393,9 +393,12 @@ getAllConsistentWithDAG <- function(bn,
 #' @export
 options.grid <- function(x,
                          maxIndegree,
-                         required = lapply(seq_along(x), function(i){
-                           integer(0)
-                         })){
+                         required = NULL){
+  if (is.null(required)){
+    required <- lapply(seq_along(x), function(i){
+       integer(0)
+     })
+  }
   ops <- vector("list", length(x))
   for (i in 1:length(x)){
     this <- x[[i]]
