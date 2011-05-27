@@ -89,7 +89,11 @@ allDescendants <- function(currentNetwork){
 
 #' Get possible parents.
 #' 
-#' Give a sub-bn, get the possible parents of each node.
+#' Given a sub-bn, get the possible parents of each node.
+#' 
+#' The possible parents for a node j that changes (a "change node") are
+#' those that are not descendants of any other change node, except for
+#' any change node that is an immediate parents of j in bn (the "sub-bn").
 #' 
 #' @param bn A sub-bn
 #' @param nonDescendantsList The output of \code{\link{allNonDescendants}}
@@ -107,16 +111,10 @@ getPossibleParents <- function(bn,
                                change,
                                maxIndegree){
   possibleParents <- vector("list", length = numberOfNodes)
-  for (child in change){
-    possibleParentsChild <- lapply(change, function(node){
-      if (node %in% bn[[child]]){
-        c(descendantsList[[node]], nonDescendantsList[[node]])
-      } else {
-        setdiff(nonDescendantsList[[node]], node)
-      }
-    })
- 
-    possibleParents[[child]] <- do.call("intersection", possibleParentsChild)
+  for (c in change){
+    notparents <- setdiff(change, bn[[c]])
+    out <- do.call("intersection", nonDescendantsList[notparents])
+    possibleParents[[c]] <- out
   }
   possibleParents
 }
