@@ -27,7 +27,7 @@
 #'   }
 #'   For Multinomial-Dirichlet models, \code{\link{logScoreMultDirFUN}} 
 #'   returns the appropriate list; for Normal models with Zellner g-priors,
-#'   \code{\link{logScoreZellnerFUN}} returns the appropriate list.
+#'   \code{\link{logScoreNormalFUN}} returns the appropriate list.
 #' @export
 #' @seealso \code{\link{bnpost}}, \code{\link{bnpostmcmc.list}}.
 #'   \code{\link{length.bnpostmcmc}}, \code{\link{top.bnpostmcmc}}, 

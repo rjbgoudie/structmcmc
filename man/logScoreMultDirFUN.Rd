@@ -22,5 +22,5 @@ Bayesian Network}
 \item{prepare}{A function that prepares the data, and any further 
 pre-computation required by the logScore functions.}
 }}
-\seealso{\code{\link{logScoreZellnerFUN}}, \code{\link{logScoreMultDir}},
-\code{\link{logScoreZellner}}}
+\seealso{\code{\link{logScoreNormalFUN}}, \code{\link{logScoreMultDir}},
+\code{\link{logScoreNormal}}}

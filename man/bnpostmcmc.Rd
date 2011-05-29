@@ -30,5 +30,5 @@ pre-computation required by the logScore functions.}
 }
 For Multinomial-Dirichlet models, \code{\link{logScoreMultDirFUN}} 
 returns the appropriate list; for Normal models with Zellner g-priors,
-\code{\link{logScoreZellnerFUN}} returns the appropriate list.}
+\code{\link{logScoreNormalFUN}} returns the appropriate list.}
 }

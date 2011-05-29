@@ -44,7 +44,7 @@ Collate:
     'routes.R'
     'score-bic.R'
     'score-multdir.R'
-    'score-zellner.R'
+    'score-normal.R'
     'score.R'
     'structmcmc.R'
     'utils.R'

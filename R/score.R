@@ -27,8 +27,8 @@
 #' }
 #'
 #' @export
-#' @seealso \code{\link{logScoreZellnerFUN}}, \code{\link{logScoreMultDir}},
-#'   \code{\link{logScoreZellner}}
+#' @seealso \code{\link{logScoreNormalFUN}}, \code{\link{logScoreMultDir}},
+#'   \code{\link{logScoreNormal}}
 logScoreMultDirFUN <- function(){
   list(offline = logScoreMultDirOffline,
        online  = logScoreMultDirIncremental,
@@ -56,10 +56,10 @@ logScoreMultDirFUN <- function(){
 #'
 #' @export
 #' @seealso \code{\link{logScoreMultDirFUN}}, \code{\link{logScoreMultDir}},
-#'   \code{\link{logScoreZellner}}
-logScoreZellnerFUN <- function(){
-  list(offline = logScoreZellnerOffline,
-       online  = logScoreZellnerIncremental,
-       local   = localLogScoreZellner,
-       prepare = logScoreZellnerPrepare)
+#'   \code{\link{logScoreNormal}}
+logScoreNormalFUN <- function(){
+  list(offline = logScoreNormalOffline,
+       online  = logScoreNormalIncremental,
+       local   = localLogScoreNormal,
+       prepare = logScoreNormalPrepare)
 }

@@ -32,7 +32,7 @@ pre-computation required by the logScore functions.}
 }
 For Multinomial-Dirichlet models, \code{\link{logScoreMultDirFUN}} 
 returns the appropriate list; for Normal models with Zellner g-priors,
-\code{\link{logScoreZellnerFUN}} returns the appropriate list.}
+\code{\link{logScoreNormalFUN}} returns the appropriate list.}
 }
 \examples{x1 <- factor(c(1, 1, 0, 1))
 x2 <- factor(c(0, 1, 0, 1))

@@ -100,7 +100,7 @@ localPartitionFunction <- function(currentNetwork,
 #'   }
 #'   For Multinomial-Dirichlet models, \code{\link{logScoreMultDirFUN}} 
 #'   returns the appropriate list; for Normal models with Zellner g-priors,
-#'   \code{\link{logScoreZellnerFUN}} returns the appropriate list.
+#'   \code{\link{logScoreNormalFUN}} returns the appropriate list.
 #' @param logScoreParameters ...
 #' @param constraint ...
 #' @param modejumping NOT IMPLEMENTED
