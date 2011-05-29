@@ -1,10 +1,11 @@
 \name{logScoreZellner}
 \alias{logScoreZellner}
-\title{Normal Log marginal likelihood.}
+\title{Normal-inverse-gamma (with g-prior) Log marginal likelihood.}
 \usage{logScoreZellner(x, ...)}
 
 \description{
-  Normal Log marginal likelihood.
+  Normal-inverse-gamma (with g-prior) Log marginal
+  likelihood.
 }
 
 \details{

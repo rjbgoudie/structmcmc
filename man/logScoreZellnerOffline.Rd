@@ -1,11 +1,12 @@
 \name{logScoreZellnerOffline}
 \alias{logScoreZellnerOffline}
-\title{Normal Log marginal likelihood (offline).}
+\title{Normal-inverse-gamma (with g-prior) Log marginal likelihood (offline).}
 \usage{logScoreZellnerOffline(x, logScoreParameters,
     cache=new.env(hash = T), checkInput=T)}
 
 \description{
-  Normal Log marginal likelihood (offline).
+  Normal-inverse-gamma (with g-prior) Log marginal
+  likelihood (offline).
 }
 
 \details{

@@ -1,11 +1,12 @@
 \name{logScoreZellnerIncremental}
 \alias{logScoreZellnerIncremental}
-\title{Normal Log marginal likelihood (online).}
+\title{Normal-inverse-gamma (with g-prior) Log marginal likelihood (online).}
 \usage{logScoreZellnerIncremental(currentBN, proposalBN, heads,
     logScoreParameters, cache, checkInput=T)}
 
 \description{
-  Normal Log marginal likelihood (online).
+  Normal-inverse-gamma (with g-prior) Log marginal
+  likelihood (online).
 }
 
 \details{

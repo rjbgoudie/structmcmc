@@ -7,6 +7,11 @@
 \description{
   Each changes choices for required.
 }
+
+\details{
+  Returns of list, with a component corresponding to each
+  node. Each component of this list corresponds to a node?
+}
 \value{A table(?) of options}
 \arguments{
   \item{i}{The node}

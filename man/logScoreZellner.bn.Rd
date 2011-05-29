@@ -1,11 +1,12 @@
 \name{logScoreZellner.bn}
 \alias{logScoreZellner.bn}
-\title{Normal Log marginal likelihood.}
+\title{Normal-inverse-gamma (with g-prior) Log marginal likelihood.}
 \usage{\method{logScoreZellner}{bn} (x, data, cache=new.env(hash =
     T), checkInput=T, ...)}
 
 \description{
-  Normal Log marginal likelihood.
+  Normal-inverse-gamma (with g-prior) Log marginal
+  likelihood.
 }
 
 \details{
