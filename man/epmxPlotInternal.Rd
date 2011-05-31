@@ -18,4 +18,5 @@
   \item{x}{...}
   \item{subset}{A numeric vector. This specifies the nodes between which
 the epmx should be displayed for.}
+  \item{plottype}{Either \code{"xyplot"} or \code{"splom"}.}
 }
