@@ -393,6 +393,7 @@ getAllConsistentWithDAG <- function(bn,
 #' 
 #' @param x A list
 #' @param maxIndegree Maximum indegree
+#' @param required ...
 #' @return A list of options
 #' @export
 options.grid <- function(x,

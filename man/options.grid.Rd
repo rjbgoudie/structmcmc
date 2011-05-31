@@ -20,4 +20,5 @@
 \arguments{
   \item{x}{A list}
   \item{maxIndegree}{Maximum indegree}
+  \item{required}{...}
 }
