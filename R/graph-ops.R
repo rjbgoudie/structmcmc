@@ -133,6 +133,9 @@ defaultBanned <- function(nodesSeq){
 
 #' Each changes choices for required.
 #' 
+#' Returns of list, with a component corresponding to each node.
+#' Each component of this list corresponds to a node?
+#' 
 #' @param i The node
 #' @param possibleParents The output of \code{\link{getPossibleParents}}
 #' @param currentNetwork A list, containing in the first position the
@@ -150,6 +153,8 @@ eachChangesChoicesForRequired <- function(i,
                                           descendantsList){
   pp <- possibleParents[[i]]
   numberOfNodes <- length(possibleParents)
+  
+  # does this only need to be length(change) long?
   options <- do.call(list, lapply(seq_len(numberOfNodes), function(i) {
       integer(0)
   }))
@@ -233,7 +238,8 @@ requireSomethingFromEachParent <- function(numberOfNodes,
                                            descendantsList,
                                            currentNetwork,
                                            maxIndegree){
-  options <- lapply(nodesSeq, eachChangesChoicesForRequired,
+  changeSeq <- seq_along(change)
+  options <- lapply(changeSeq, eachChangesChoicesForRequired,
                     possibleParents, currentNetwork, change, descendantsList)
 
   optionsForRequired <- lapply(options, options.grid, maxIndegree)
@@ -251,7 +257,7 @@ requireSomethingFromEachParent <- function(numberOfNodes,
     gr <- empty(length(wh), "bn")
     for (k in 1:length(wh)){
       this <- wh[, k]
-      gr[[k]] <- unlist(optionsForRequired[[k]][[this]])
+      gr[[change[k]]] <- unlist(optionsForRequired[[k]][[this]])
       #gr <- mapply(c, gr, newgr)
     }
     required[[i]] <- gr
@@ -319,7 +325,7 @@ allBannedExceptPPNotBannedIfNotRequired <- function(nodesSeq,
                                                     toBanIfNotRequired,
                                                     required){
   banned <- defaultBanned(nodesSeq)
-  banned[change] <- lapply(change, function(i){
+  banned[change] <- lapply(seq_along(change), function(i){
     allowed <- setdiff(possibleParents[[i]], toBanIfNotRequired[[i]])
     allowed <- union(allowed, required[[i]])
     setdiff(banned[[i]], allowed)
