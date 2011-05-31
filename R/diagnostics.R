@@ -458,41 +458,51 @@ epmxPlotInternal <- function(x, subset, plottype = "xyplot"){
   fun <- attr(x, "function")
   isbvsresponse <- isTRUE(type == "bvspostmcmc.list")
 
-  if (!is.null(subset)){
-    stopifnot(inherits(subset, c("numeric", "integer")),
-              all(sapply(subset, is.wholenumber)),
-              all(findInterval(subset, c(1, numberOfNodes), right = T) == 1))
-
-    subsetm <- matrix(F, numberOfNodes, numberOfNodes)
-    subsetm[subset, subset] <- T
-    subsetm <- as.vector(subsetm)
-
-    x <- lapply(x, "[", , subsetm, drop = F)
-    numberOfNodes <- length(subset)
-  } else {
+  if (is.null(subset)){
     subset <- seq_len(numberOfNodes)
   }
 
+  stopifnot(inherits(subset, c("numeric", "integer")),
+            length(subset) > 1,
+            all(sapply(subset, is.wholenumber)),
+            all(findInterval(subset, c(1, numberOfNodes), right = T) == 1))
+
+  subsetm <- matrix(F, numberOfNodes, numberOfNodes)
+  subsetm[subset, subset] <- T
+  if (plottype == "xyplot"){
+    diag(subsetm) <- F
+  }
+  subsetv <- as.vector(subsetm)
+
+  x <- lapply(x, "[", , subsetv, drop = F)
+  numberOfNodesToPlot <- length(subset)
+
   # pre-allocate the data matrix
   if (isbvsresponse){
-    data <- matrix(nrow = numberOfRuns * nbin, ncol = numberOfNodes)
+    data <- matrix(nrow = numberOfRuns * nbin, ncol = numberOfNodesToPlot)
   }
   else {
-    data <- matrix(nrow = numberOfRuns * nbin, ncol = numberOfNodes ^ 2)
+    data <- matrix(nrow = numberOfRuns * nbin, ncol = numberOfNodesToPlot^2)
   }
 
   # reorder the columns to be appropriate for as.table
-  # remove the diagonals
-  ord <- seq_len(numberOfNodes^2)
-  ord <- matrix(ord, numberOfNodes, numberOfNodes, byrow = T)
+  # ord is a matrix that converts colwise ordering to rowwise ordering
+  ord <- matrix(seq_len(numberOfNodesToPlot^2),
+                nrow  = numberOfNodesToPlot,
+                ncol  = numberOfNodesToPlot,
+                byrow = T)
+
   if (plottype == "xyplot"){
-    diag(ord) <- F
+    sub <- matrix(T, numberOfNodesToPlot, numberOfNodesToPlot)
+    diag(sub) <- F
+    diag(ord) <- NA
+    ord[sub] <- seq_len(numberOfNodesToPlot^2 - numberOfNodesToPlot)
+    ord <- t(ord)
   }
-  ord <- as.vector(ord)
+  ord <- as.vector(ord[!is.na(ord)])
 
   # Name the column according to the
-  namesm <- matrix(T, numberOfNodes, numberOfNodes)
-  namesm <- which(namesm, arr.ind = T)
+  namesm <- which(subsetm, arr.ind = T)
   newcolnames <- apply(namesm, 1, paste, collapse = "->")[ord]
 
   # convert each epmx x to a dataframe
@@ -594,7 +604,7 @@ epmxPlotInternal <- function(x, subset, plottype = "xyplot"){
         data = data,
         outer = T,
         groups = which,
-        layout = c(numberOfNodes, numberOfNodes),
+        layout = c(numberOfNodesToPlot, numberOfNodesToPlot),
         as.table = T,
         default.scales = list(relation = "same"),
         strip = F,
