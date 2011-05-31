@@ -40,7 +40,7 @@ test_that("cumep", {
 
   expected <- list(
     # cols in order 1->1, 1->2, 2->1, 2->2
-    # ie in xyplot's as.table order
+    # ie in splom's as.table order
     `Sample 1` = matrix(c(
       0, 0, 0, 0, 0,
       0/1, 1/2, 1/3, 1/4, 1/5,
@@ -72,7 +72,7 @@ test_that("cumep", {
   # Moving window
   expected <- list(
     # cols in order 1->1, 1->2, 2->1, 2->2
-    # ie in xyplot's as.table order
+    # ie in splom's as.table order
     `Sample 1` = matrix(c(
         0,   0,   0,
       1/3, 1/3, 0/3,
@@ -166,7 +166,7 @@ test_that("cumep", {
   # "x2"), row.names = c(NA, -4L), class = "data.frame")), .Names = c("samples",
   # "tabulated", "data"), class = "bnpostmcmc")), class = "bnpostmcmc.list")'
   #
-  #   plots <- c(paste("print(xyplot(cumep(", serialised, ", nbin = 5)))"))
+  #   plots <- c(paste("print(splom(cumep(", serialised, ", nbin = 5)))"))
   #
   #   controlfile <- system.file("tests", "data", "diagnostics-plot-test",
   #                              package = "structmcmc")
@@ -325,5 +325,5 @@ test_that("cumep with sampler", {
                      nSamples = 2000, nBurnin = 0)
 
   subset <- c(2, 3)
-  xyplot(cumep(bnpostmcmc.list(mcmc1, mcmc2)), subset = subset)
+  splom(cumep(bnpostmcmc.list(mcmc1, mcmc2)), subset = subset)
 })

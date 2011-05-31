@@ -10,7 +10,7 @@
 \details{
   method description
 }
-\seealso{\code{\link{epmx}}, \code{\link{xyplot.epmx}}, \code{\link{splom}}}
+\seealso{\code{\link{epmx}}, \code{\link{splom.epmx}}, \code{\link{splom}}}
 \arguments{
   \item{x}{...}
   \item{start}{...}

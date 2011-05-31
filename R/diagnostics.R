@@ -15,7 +15,7 @@
 #' @param x ...
 #' @param ... Further arguments passed to method
 #' @export
-#' @seealso \code{\link{epmx.bnpostmcmc.list}}, \code{\link{xyplot.epmx}},
+#' @seealso \code{\link{epmx.bnpostmcmc.list}}, \code{\link{splom.epmx}},
 #'   \code{\link{splom.bnpostmcmc.list}}
 epmx <- function(x, ...){
   UseMethod("epmx")
@@ -24,7 +24,7 @@ epmx <- function(x, ...){
 #' Edge probabilities matrix.
 #' 
 #' Computes the edge probabilities and return a matrix with these. The
-#' format of the matrix is designed for the plotting function xyplot.epmx.
+#' format of the matrix is designed for the plotting function splom.epmx.
 #'
 #' For a problem with k nodes, the output will have k^2 columns and nbin
 #' rows. Columns are in order 1->1, 1->2, 1->3, ...., 2->1, 2->2 etc
@@ -45,7 +45,7 @@ epmx <- function(x, ...){
 #' @return An object of class "epmx", a matrix of the form described above.
 #' @S3method epmx bnpostmcmc.list
 #' @method epmx bnpostmcmc.list
-#' @seealso \code{\link{epmx}}, \code{\link{xyplot.epmx}},
+#' @seealso \code{\link{epmx}}, \code{\link{splom.epmx}},
 #'   \code{\link{splom.bnpostmcmc.list}}
 epmx.bnpostmcmc.list <- epmx.list <- function(x,
                                  method  = "online",
@@ -95,7 +95,7 @@ epmx.bnpostmcmc.list <- epmx.list <- function(x,
 #' Edge probabilities matrix.
 #'
 #' Computes the edge probabilities and return a matrix with these. The
-#' format of the matrix is designed for the plotting function xyplot.epmx.
+#' format of the matrix is designed for the plotting function splom.epmx.
 #'
 #' For a problem with k nodes, the output will have k^2 columns and nbin
 #' rows. Columns are in order 1->1, 1->2, 1->3, ...., 2->1, 2->2 etc
@@ -107,7 +107,7 @@ epmx.bnpostmcmc.list <- epmx.list <- function(x,
 #' @return An object of class "epmx", a matrix of the form described above.
 #' @S3method epmx samplers
 #' @method epmx samplers
-#' @seealso \code{\link{epmx}}, \code{\link{xyplot.epmx}},
+#' @seealso \code{\link{epmx}}, \code{\link{splom.epmx}},
 #'   \code{\link{splom.bnpostmcmc.list}}
 epmx.samplers <- function(x,
                           verbose = F,
@@ -138,7 +138,7 @@ epmx.samplers <- function(x,
 #' Edge probabilities matrix from a sampler.
 #'
 #' Computes the edge probabilities and return a matrix with these. The
-#' format of the matrix is designed for the plotting function xyplot.epmx.
+#' format of the matrix is designed for the plotting function splom.epmx.
 #'
 #' For a problem with k nodes, the output will have k^2 columns and nbin
 #' rows. Columns are in order 1->1, 1->2, 1->3, ...., 2->1, 2->2 etc
@@ -151,7 +151,7 @@ epmx.samplers <- function(x,
 #' @S3method epmx sampler
 #' @method epmx sampler
 #' @seealso \code{\link{bnpostmcmc.list}}, \code{\link{epmx}},
-#'   \code{\link{xyplot.epmx}}, \code{\link{splom.bnpostmcmc.list}}
+#'   \code{\link{splom.epmx}}, \code{\link{splom.bnpostmcmc.list}}
 epmx.sampler <- function(x, verbose = F, ...){
   stopifnot(inherits(x, "sampler"))
 
@@ -181,7 +181,7 @@ epmx.sampler <- function(x, verbose = F, ...){
 #' Convert edge prob matrix to a column matrix
 #'
 #' Want to convert the ep list to a matrix with individual edges in the
-#' columns with the edges ordered according to as.table in xyplot 
+#' columns with the edges ordered according to as.table in splom 
 #'
 #' ie 1->1, 1->2, 1->3, ... , 2->1, 2->2, ...
 #' @param epl A matrix of edge probability matrices, each corresponding to
@@ -203,7 +203,7 @@ convertEPMatrixToColumns <- function(epl, numberOfNodes, verbose){
 #' Edge probabilities matrix.
 #'
 #' Computes the edge probabilities and return a matrix with these. The
-#' format of the matrix is designed for the plotting function xyplot.epmx.
+#' format of the matrix is designed for the plotting function splom.epmx.
 #'
 #' For a problem with k nodes, the output will have k^2 columns and nbin
 #' rows. Columns are in order 1->1, 1->2, 1->3, ...., 2->1, 2->2 etc
@@ -222,7 +222,7 @@ convertEPMatrixToColumns <- function(epl, numberOfNodes, verbose){
 #' @S3method epmx bnpostmcmc
 #' @method epmx bnpostmcmc
 #' @seealso \code{\link{bnpostmcmc.list}}, \code{\link{epmx}},
-#'   \code{\link{xyplot.epmx}}, \code{\link{splom.bnpostmcmc.list}}
+#'   \code{\link{splom.epmx}}, \code{\link{splom.bnpostmcmc.list}}
 epmx.bnpostmcmc <- function(x,
                             nbin    = floor((end - start + 1)/100),
                             start   = 1,
@@ -404,7 +404,7 @@ mwep.samplers <- function(x, window = 10, ...){
 
 #' Plot of cumulative edge probabilities.
 #' 
-#' Returns a xyplot of the cumulative edge probabilities through time
+#' Returns a splom of the cumulative edge probabilities through time
 #' for bnpostmcmc.list and bvspostmcmc.list
 #'
 #' @param x ...
@@ -412,10 +412,10 @@ mwep.samplers <- function(x, window = 10, ...){
 #'   the epmx should be displayed for.
 #'
 #' @return ...
-#' @S3method xyplot epmx
-#' @method xyplot epmx
+#' @S3method splom epmx
+#' @method splom epmx
 #' @seealso \code{\link{epmx}}
-xyplot.epmx <- function(x, subset = NULL){
+splom.epmx <- function(x, subset = NULL){
   stopifnot(class(x) == "epmx")
 
   lengthOfRuns <- attr(x, "lengthOfRuns")
@@ -565,7 +565,7 @@ xyplot.epmx <- function(x, subset = NULL){
 #' @S3method splom list
 #' @method splom bnpostmcmc.list
 #' @method splom list
-#' @seealso \code{\link{epmx}}, \code{\link{xyplot.epmx}}, \code{\link{splom}}
+#' @seealso \code{\link{epmx}}, \code{\link{splom.epmx}}, \code{\link{splom}}
 splom.bnpostmcmc.list <- splom.list <- function(x, start = 1, end, plot = F){
   stopifnot(class(x) == "bnpostmcmc.list" ||
                 class(x) == "list",

@@ -10,7 +10,7 @@
 \details{
   Want to convert the ep list to a matrix with individual
   edges in the columns with the edges ordered according to
-  as.table in xyplot
+  as.table in splom
 
   ie 1->1, 1->2, 1->3, ... , 2->1, 2->2, ...
 }

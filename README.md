@@ -69,20 +69,20 @@ levelplot(ep.list(exact = epexact, mcmc = epmcmc))
 Plot how the cumulative edge probabilities change as samples are drawn.
 
 ``` r
-xyplot(cumep(bnpostmcmc.list(mcmc, mcmc2)))
+splom(cumep(bnpostmcmc.list(mcmc, mcmc2)))
 ```
 
 Plot how the moving averaging edge probabilities change as samples are drawn.
 
 ``` r
-xyplot(mwep(bnpostmcmc.list(mcmc, mcmc2)))
+splom(mwep(bnpostmcmc.list(mcmc, mcmc2)))
 ```
 
 Plot how the cumulative total variance distance changes as samples are drawn
 
 ``` r
 exactgp <- gp(exact)
-xyplot(cumtvd(exactgp, bnpostmcmc.list(mcmc, mcmc2)))
+splom(cumtvd(exactgp, bnpostmcmc.list(mcmc, mcmc2)))
 ```
 
 
@@ -146,20 +146,20 @@ levelplot(ep.list(exact = epexact, mcmc = epmcmc))
 Plot how the cumulative edge probabilities change as samples are drawn.
 
 ``` r
-xyplot(cumep(bnpostmcmc.list(mcmc, mcmc2)))
+splom(cumep(bnpostmcmc.list(mcmc, mcmc2)))
 ```
 
 Plot how the moving averaging edge probabilities change as samples are drawn.
 
 ``` r
-xyplot(mwep(bnpostmcmc.list(mcmc, mcmc2)))
+splom(mwep(bnpostmcmc.list(mcmc, mcmc2)))
 ```
 
 Plot how the cumulative total variance distance changes as samples are drawn
 
 ``` r
 exactgp <- gp(exact)
-xyplot(cumtvd(exactgp, bnpostmcmc.list(mcmc, mcmc2)))
+splom(cumtvd(exactgp, bnpostmcmc.list(mcmc, mcmc2)))
 ```
 
 Installation

@@ -10,7 +10,7 @@
 \details{
   method description
 }
-\seealso{\code{\link{epmx.bnpostmcmc.list}}, \code{\link{xyplot.epmx}},
+\seealso{\code{\link{epmx.bnpostmcmc.list}}, \code{\link{splom.epmx}},
 \code{\link{splom.bnpostmcmc.list}}}
 \arguments{
   \item{x}{...}

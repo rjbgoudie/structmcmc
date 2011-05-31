@@ -11,7 +11,7 @@
 \details{
   Computes the edge probabilities and return a matrix with
   these. The format of the matrix is designed for the
-  plotting function xyplot.epmx.
+  plotting function splom.epmx.
 
   For a problem with k nodes, the output will have k^2
   columns and nbin rows. Columns are in order 1->1, 1->2,
@@ -19,7 +19,7 @@
 }
 \value{An object of class "epmx", a matrix of the form described above.}
 \seealso{\code{\link{bnpostmcmc.list}}, \code{\link{epmx}},
-\code{\link{xyplot.epmx}}, \code{\link{splom.bnpostmcmc.list}}}
+\code{\link{splom.epmx}}, \code{\link{splom.bnpostmcmc.list}}}
 \arguments{
   \item{x}{An object of class "bnpostmcmc.list"}
   \item{nbin}{The number of equally-sized bins into which the samples are
