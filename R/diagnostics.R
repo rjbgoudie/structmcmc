@@ -416,6 +416,38 @@ mwep.samplers <- function(x, window = 10, ...){
 #' @method splom epmx
 #' @seealso \code{\link{epmx}}
 splom.epmx <- function(x, subset = NULL){
+  epmxPlotInternal(x, subset, plottype = "splom")
+}
+
+#' Plot of cumulative edge probabilities.
+#'
+#' Returns a xyplot of the cumulative edge probabilities through time
+#' for bnpostmcmc.list and bvspostmcmc.list
+#'
+#' @param x ...
+#' @param subset A numeric vector. This specifies the nodes between which
+#'   the epmx should be displayed for.
+#'
+#' @return ...
+#' @S3method xyplot epmx
+#' @method xyplot epmx
+#' @seealso \code{\link{epmx}}
+xyplot.epmx <- function(x, subset = NULL){
+  epmxPlotInternal(x, subset, plottype = "xyplot")
+}
+
+#' (Internal) Plot of cumulative edge probabilities.
+#'
+#' Returns a xyplot/splom of the cumulative edge probabilities through time
+#' for bnpostmcmc.list and bvspostmcmc.list
+#'
+#' @param x ...
+#' @param subset A numeric vector. This specifies the nodes between which
+#'   the epmx should be displayed for.
+#'
+#' @return ...
+#' @seealso \code{\link{epmx}}
+epmxPlotInternal <- function(x, subset, plottype = "xyplot"){
   stopifnot(class(x) == "epmx")
 
   lengthOfRuns <- attr(x, "lengthOfRuns")
@@ -450,8 +482,12 @@ splom.epmx <- function(x, subset = NULL){
   }
 
   # reorder the columns to be appropriate for as.table
+  # remove the diagonals
   ord <- seq_len(numberOfNodes^2)
   ord <- matrix(ord, numberOfNodes, numberOfNodes, byrow = T)
+  if (plottype == "xyplot"){
+    diag(ord) <- F
+  }
   ord <- as.vector(ord)
 
   # Name the column according to the
@@ -493,7 +529,7 @@ splom.epmx <- function(x, subset = NULL){
     numberOfRuns, "runs"
   )
 
-  if (isbvsresponse){
+  if (plottype == "xyplot"){
     xyplot(
       form,
       data = data,
@@ -501,37 +537,6 @@ splom.epmx <- function(x, subset = NULL){
       groups = which,
       as.table = T,
       default.scales = list(relation = "same"),
-      type = "l",
-      ylab = "Probability",
-      xlab = "Samples",
-      ylim = c(-0.025, 1.025),
-      scales = list(
-        y = list(tick.number = 3, at = seq(from = 0, to = 1, by = 0.1)),
-        x = list(draw = F)
-      ),
-      main = main,
-      panel = function(x, y, ...){
-        for (i in seq(from = 0, to = 1, by = 0.1)){
-          panel.abline(h = i, col.line = rgb(0.9, 0.9, 0.9))
-        }
-        panel.xyplot(x, y, ...)
-      },
-      par.settings = list(
-        axis.line = list(col = rgb(0.9, 0.9, 0.9))
-      ),
-      between = list(x = 0.5, y = 0.5)
-    )
-  }
-  else {
-    xyplot(
-      form,
-      data = data,
-      outer = T,
-      groups = which,
-      layout = c(numberOfNodes, numberOfNodes),
-      as.table = T,
-      default.scales = list(relation = "same"),
-      strip = F,
       varnames = subset,
       type = "l",
       ylab = "Probability",
@@ -543,23 +548,85 @@ splom.epmx <- function(x, subset = NULL){
       ),
       main = main,
       panel = function(x, y, varnames, ...){
-        if (current.row() == current.column()){
-          diag.panel.splom(varname = varnames[current.row()],
-                           limits  = c(0, 1),
-                           draw    = F)
+        for (i in seq(from = 0, to = 1, by = 0.1)){
+          panel.abline(h = i, col.line = rgb(0.9, 0.9, 0.9))
         }
-        else {
-          for (i in seq(from = 0, to = 1, by = 0.1)){
-            panel.abline(h = i, col.line = rgb(0.9, 0.9, 0.9))
-          }
         panel.xyplot(x, y, ...)
-        }
       },
       par.settings = list(
         axis.line = list(col = rgb(0.9, 0.9, 0.9))
       ),
       between = list(x = 0.5, y = 0.5)
     )
+  } else {
+    if (isbvsresponse){
+      xyplot(
+        form,
+        data = data,
+        outer = T,
+        groups = which,
+        as.table = T,
+        default.scales = list(relation = "same"),
+        type = "l",
+        ylab = "Probability",
+        xlab = "Samples",
+        ylim = c(-0.025, 1.025),
+        scales = list(
+          y = list(tick.number = 3, at = seq(from = 0, to = 1, by = 0.1)),
+          x = list(draw = F)
+        ),
+        main = main,
+        panel = function(x, y, ...){
+          for (i in seq(from = 0, to = 1, by = 0.1)){
+            panel.abline(h = i, col.line = rgb(0.9, 0.9, 0.9))
+          }
+          panel.xyplot(x, y, ...)
+        },
+        par.settings = list(
+          axis.line = list(col = rgb(0.9, 0.9, 0.9))
+        ),
+        between = list(x = 0.5, y = 0.5)
+      )
+    }
+    else {
+      xyplot(
+        form,
+        data = data,
+        outer = T,
+        groups = which,
+        layout = c(numberOfNodes, numberOfNodes),
+        as.table = T,
+        default.scales = list(relation = "same"),
+        strip = F,
+        varnames = subset,
+        type = "l",
+        ylab = "Probability",
+        xlab = "Samples",
+        ylim = c(-0.025, 1.025),
+        scales = list(
+          y = list(tick.number = 3, at = seq(from = 0, to = 1, by = 0.1)),
+          x = list(draw = F)
+        ),
+        main = main,
+        panel = function(x, y, varnames, ...){
+          if (current.row() == current.column()){
+            diag.panel.splom(varname = varnames[current.row()],
+                             limits  = c(0, 1),
+                             draw    = F)
+          }
+          else {
+            for (i in seq(from = 0, to = 1, by = 0.1)){
+              panel.abline(h = i, col.line = rgb(0.9, 0.9, 0.9))
+            }
+          panel.xyplot(x, y, ...)
+          }
+        },
+        par.settings = list(
+          axis.line = list(col = rgb(0.9, 0.9, 0.9))
+        ),
+        between = list(x = 0.5, y = 0.5)
+      )
+    }
   }
 }
 
