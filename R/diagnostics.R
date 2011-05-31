@@ -450,12 +450,14 @@ splom.epmx <- function(x, subset = NULL){
   }
 
   # reorder the columns to be appropriate for as.table
-  ord <- as.vector(matrix(1:9, 3, 3, byrow = T))
+  ord <- seq_len(numberOfNodes^2)
+  ord <- matrix(ord, numberOfNodes, numberOfNodes, byrow = T)
+  ord <- as.vector(ord)
 
   # Name the column according to the
   namesm <- matrix(T, numberOfNodes, numberOfNodes)
   namesm <- which(namesm, arr.ind = T)
-  newcolnames <- apply(namesm, 1, paste, collapse = "->")
+  newcolnames <- apply(namesm, 1, paste, collapse = "->")[ord]
 
   # convert each epmx x to a dataframe
   xDF <- lapply(x, function(x){
