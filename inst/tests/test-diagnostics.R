@@ -96,10 +96,12 @@ test_that("cumep", {
   class(expected) <- "epmx"
   attr(expected, "function") <- "mw"
 
-  expect_that(
-    mwep(testmpostl, method = "offline", window = 3, nbin = 5),
-    equals(expected)
-  )
+  if (require(zoo)){
+    expect_that(
+      mwep(testmpostl, method = "offline", window = 3, nbin = 5),
+      equals(expected)
+    )
+  }
 
   # More
   expect_that(ep(testmpostl), equals(

@@ -65,6 +65,7 @@ as.grain <- function(x, net, dat){
       expr <- paste("~", expr)
       form <- as.formula(expr)
       values <- unlist(x[[i]])
+
       # NaN is output by ml() when there are no observations
       # for that parent set.
       if (any(is.nan(values))){

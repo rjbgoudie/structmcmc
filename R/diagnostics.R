@@ -345,7 +345,7 @@ mwmean <- function(x, ...){
 #' @method mwmean matrix
 #' @seealso \code{\link{mwmean}}
 mwmean.matrix <- function(x, window, ...){
-  if (require(zoo)){
+  if (require("zoo")){
     unname(as.matrix(rollapply(as.zoo(x), window, mean)))
   }
 }
