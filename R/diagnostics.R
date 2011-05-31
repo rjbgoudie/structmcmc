@@ -467,7 +467,7 @@ epmxPlotInternal <- function(x, subset, plottype = "xyplot"){
     subsetm[subset, subset] <- T
     subsetm <- as.vector(subsetm)
 
-    x <- lapply(x, "[", , subsetm)
+    x <- lapply(x, "[", , subsetm, drop = F)
     numberOfNodes <- length(subset)
   } else {
     subset <- seq_len(numberOfNodes)
