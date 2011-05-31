@@ -461,7 +461,8 @@ xyplot.epmx <- function(x, subset = NULL){
   data <- do.call("make.groups", xDF)
 
   # add column denoting which bin the data is from
-  data[[".index"]] <- unlist(sapply(unlist(sapply(xDF, nrow)), seq))
+  s <- sapply(unlist(sapply(xDF, nrow)), seq)
+  data[[".index"]] <- as.vector(unlist(s))
 
   # select all the columns apart from 'which'
   indexAndWhich <- (length(names(data)) - 1):length(names(data))
