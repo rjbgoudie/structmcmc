@@ -449,11 +449,12 @@ splom.epmx <- function(x, subset = NULL){
     data <- matrix(nrow = numberOfRuns * nbin, ncol = numberOfNodes ^ 2)
   }
 
+  # reorder the columns to be appropriate for as.table
+  ord <- as.vector(matrix(1:9, 3, 3, byrow = T))
+
   # convert each epmx x to a dataframe
   xDF <- lapply(x, function(x){
-    out <- as.data.frame(x)
-    # would be good to name these
-    #colnames(out) <-
+    out <- as.data.frame(x[, ord])
   })
 
   # stack with a column called 'which'
