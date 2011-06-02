@@ -20,7 +20,8 @@ Suggests:
     reshape,
     zoo,
     testthat,
-    deal
+    deal,
+    coda
 Collate:
     'constraints.R'
     'cross-validation.R'

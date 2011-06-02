@@ -327,3 +327,33 @@ test_that("cumep with sampler", {
   subset <- c(2, 3)
   splom(cumep(bnpostmcmc.list(mcmc1, mcmc2)), subset = subset)
 })
+
+test_that("gelman", {
+  set.seed(310)
+  x1 <- as.factor(c(1, 1, 0, 1))
+  x2 <- as.factor(c(0, 1, 0, 1))
+  dat <- data.frame(x1 = x1, x2 = x2)
+
+  nSamples <- 5000
+  prior <- function(net) 1
+  initial <- bn(integer(0), integer(0))
+
+  sampler1 <- BNSampler(dat, initial, prior)
+  sampler2 <- BNSampler(dat, initial, prior)
+
+  samples1 <- draw(sampler1, n = nSamples, burnin = 0)
+  samples2 <- draw(sampler2, n = nSamples, burnin = 0)
+
+  expected <- c(0.99980265162473, 0.999812178389246)
+  expect_equal(gelman(samplers(sampler1, sampler2)), expected)
+
+  manual1 <- sapply(samples1, nEdges)
+  manual2 <- sapply(samples2, nEdges)
+
+  expected <- gelman.diag(mcmc.list(mcmc(manual1), mcmc(manual2)))
+  expect_equal(gelman(samplers(sampler1, sampler2)), expected)
+
+  expected <- gelman.diag(mcmc.list(mcmc(log(manual1)), mcmc(log(manual2))))
+  actual <- gelman(samplers(sampler1, sampler2), transform = log)
+  expect_equal(actual, expected)
+})

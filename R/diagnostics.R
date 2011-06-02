@@ -785,3 +785,68 @@ plotTape <- function(sampler, burnIn = 10000){
     scales = list(x = list(relation = "sliced", axs = "i", draw = F))
   )
 }
+
+#' Gelman and Rubin's convergence diagnostic
+#'
+#' The 'potential scale reduction factor' is calculated for each variable in
+#' \code{x}, together with upper and lower confidence limits.
+#' Computation is performed using \code{\link[coda]{gelman.diag}}.
+#'
+#' @param x ...
+#' @param ... Further arguments passed to method
+#' @export
+#' @seealso \code{\link{gelman.samplers}}. Computation performed using
+#'   \code{\link[coda]{gelman.diag}}.
+gelman <- function(x, ...){
+  UseMethod("gelman")
+}
+
+#' Gelman and Rubin's convergence diagnostic
+#'
+#' The 'potential scale reduction factor' is calculated for each variable in
+#' \code{x}, together with upper and lower confidence limits.
+#' Computation is performed using \code{\link[coda]{gelman.diag}}.
+#'
+#' @param x An MCMC sampler
+#' @param names A character vector of statistics collected during the
+#'   MCMC run, for which the 'potential scale reduction factor' should be
+#'   computed.
+#' @param transform A list of functions (or a single function), which will
+#'   be applied to the statistics. This can be used to improve the
+#'   normality of the statistics, which is a requirement for Gelman-Rubin's
+#'   statistic to be meaningful. The default \code{NULL} value applies no
+#'   transform to any statistic (equivalent to \code{\link{identity}})
+#' @param ... Further arguments, currently unused
+#'
+#' @return An object of class \code{gelman.diag}
+#' @S3method gelman samplers
+#' @method gelman samplers
+#' @seealso Computation performed using \code{\link[coda]{gelman.diag}}.
+gelman.samplers <- function(x, names = "nEdges", transform = NULL, ...){
+  stopifnot(inherits(x, "samplers"),
+            inherits(names, "character"))
+  if (!is.null(transform)){
+    if (length(names) == 1){
+      stopifnot(inherits(transform, "function"))
+      transform <- list(transform)
+    }
+    stopifnot(length(transform) == length(names))
+  }
+
+  if (require(coda)){
+    ml <- lapply(x, function(sampler){
+      ml <- statistics(sampler, names)
+      if (!is.null(transform)){
+        for (i in seq_along(names)){
+          ml[[i]] <- transform[[i]](ml[[i]])
+        }
+      }
+      ml <- data.frame(ml)
+      mcmc(ml)
+    })
+    ml <- as.mcmc.list(ml)
+    gelman.diag(ml)
+  } else {
+    stop("Package 'coda' required to compute Gelman-Rubin statistic")
+  }
+}
