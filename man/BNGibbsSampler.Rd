@@ -5,8 +5,9 @@
     prior=priorUniform(), return="network",
     logScoreFUN=logScoreMultDirFUN(),
     logScoreParameters=list(hyperparameters = "qi"),
-    constraint, maxNumberParents, moveprobs=c(0.9, 0.1, 0),
-    verbose=F, keepTape=F, parentsTables, scoresParents)}
+    constraint, statistics=list(nEdges = nEdges),
+    maxNumberParents, moveprobs=c(0.9, 0.1, 0), verbose=F,
+    keepTape=F, parentsTables, scoresParents)}
 
 \description{
   Gibbs sampler for Bayesian Networks.
@@ -51,6 +52,10 @@ The (i, j) element is
 -1 if the edge i -> is excluded.
 0  if the edge i -> j is not constrained.
 The diagonal of constraint must be all 0.}
+  \item{statistics}{A named list of functions which should be applied to
+the current network after each step. Each function should accept an
+object of class \code{bn} and return a scalar output. Each item in
+the list must be named so that it can be referred to.}
   \item{maxNumberParents}{Integer of length 1. The maximum number of
 parents of any node. A \code{NULL} value gives the default restriction 
 of 3.}

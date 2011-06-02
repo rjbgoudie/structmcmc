@@ -4,7 +4,8 @@
 \usage{BNSampler(data, initial, prior, return="network",
     logScoreFUN=logScoreMultDirFUN(),
     logScoreParameters=list(hyperparameters = "qi"),
-    constraint, maxNumberParents, verbose=F, keepTape=F)}
+    constraint, statistics=list(nEdges = nEdges),
+    maxNumberParents, verbose=F, keepTape=F)}
 
 \description{
   Create a MCMC sampler (MC^3) for Bayesian Networks.
@@ -46,6 +47,10 @@ constraints to the sample space. The (i, j) element is:
 \item{0}{if the edge i -> j is not constrained.}
 }
 The diagonal of constraint must be all 0.}
+  \item{statistics}{A named list of functions which should be applied to
+the current network after each step. Each function should accept an
+object of class \code{bn} and return a scalar output. Each item in
+the list must be named so that it can be referred to.}
   \item{maxNumberParents}{Integer of length 1. The maximum number of
 parents of any node. The default value, which is used for \code{NULL}
 is to not constrain the maximum indegree, i.e. to use

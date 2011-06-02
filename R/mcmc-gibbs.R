@@ -359,6 +359,10 @@ sampleTriple <- function(currentNetwork,
 #'                         -1 if the edge i -> is excluded.
 #'                         0  if the edge i -> j is not constrained.
 #'                       The diagonal of constraint must be all 0.
+#' @param statistics A named list of functions which should be applied to
+#'   the current network after each step. Each function should accept an
+#'   object of class \code{bn} and return a scalar output. Each item in
+#'   the list must be named so that it can be referred to.
 #' @param maxNumberParents Integer of length 1. The maximum number of
 #'   parents of any node. A \code{NULL} value gives the default restriction 
 #'   of 3.
@@ -387,6 +391,7 @@ BNGibbsSampler <- function(data,
                            logScoreFUN        = logScoreMultDirFUN(),
                            logScoreParameters = list(hyperparameters = "qi"),
                            constraint         = NULL,
+                           statistics         = list(nEdges = nEdges),
                            maxNumberParents   = NULL,
                            moveprobs          = c(0.9, 0.1, 0),
                            verbose            = F,
@@ -398,6 +403,9 @@ BNGibbsSampler <- function(data,
             ncol(as.matrix(data)) ==   length(initial),
             is.function(prior),
             return               %in% c("network", "contingency"),
+            class(statistics)     == "list",
+            all(lapply(statistics, class) == "function"),
+            all(nchar(names(statistics)) > 0),
             is.logical(keepTape),
             length(keepTape)      ==   1,
             sum(moveprobs)        ==   1)
@@ -475,6 +483,10 @@ BNGibbsSampler <- function(data,
   etBinsSize <- 1000
   etbins <- matrix(ncol = numberOfNodes^2, nrow = etBinsIncrement)
   nBurnin <- 0
+  nStatistics <- length(statistics)
+  statisticsTable <- matrix(ncol = nStatistics,
+                            nrow = etBinsSize * etBinsIncrement)
+  colnames(statisticsTable) <- names(statistics)
 
   if (isTRUE(keepTape)){
     tapeSizeIncrement <- 500000
@@ -543,6 +555,27 @@ BNGibbsSampler <- function(data,
     }
   }
 
+  updateStatistics <- function(currentNetwork, nSteps, nBurnin){
+    lengthenStatistics(nSteps, nBurnin)
+    if (nSteps > nBurnin){
+      step <- nSteps - nBurnin
+      for (i in seq_along(statistics)){
+        statisticsTable[step, i] <<- statistics[[i]](currentNetwork[[1]])
+      }
+    }
+  }
+
+  lengthenStatistics <- function(nSteps, nBurnin){
+    if ((nSteps - nBurnin) %% (etBinsSize * etBinsIncrement) == 0){
+      temp <- statisticsTable
+      nRowsPrev <- nrow(temp)
+      nRowsNew <- nRowsPrev + etBinsSize * etBinsIncrement
+      statisticsTable <<- matrix(ncol = nStatistics, nrow = nRowsNew)
+      colnames(statisticsTable) <<- names(statistics)
+      statisticsTable[seq_len(nRowsPrev), ] <<- temp
+    }
+  }
+
   sampler <- function(x,
                       verbose = F,
                       returnDiagnostics = F,
@@ -592,6 +625,7 @@ BNGibbsSampler <- function(data,
     if (isTRUE(debugAcceptance)) browser()
 
     updateET(currentNetwork, nSteps, nBurnin)
+    updateStatistics(currentNetwork, nSteps, nBurnin)
 
     if (return == "network"){
       currentNetwork[[1]]

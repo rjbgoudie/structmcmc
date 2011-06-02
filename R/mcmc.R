@@ -241,3 +241,39 @@ samplers <- function(...){
   class(x) <- "samplers"
   x
 }
+
+#' Extract statistics from a sampler.
+#'
+#' Extracts the statistics collected during an MCMC run
+#'
+#' @param x A sampler
+#' @param ... Further arguments passed to method
+#' @return A list of statistics collected during the MCMC run.
+#' @export
+#' @seealso \code{\link{statistics.sampler}}
+statistics <- function(x, ...){
+  UseMethod("statistics")
+}
+
+#' Extract statistics from a sampler.
+#'
+#' Extracts the statistics collected during an MCMC run
+#'
+#' @param x A sampler
+#' @param names Which statistics to extract? A character vector of
+#'   statistics collected during the MCMC run.
+#' @param ... Further arguments passed to method
+#' @return A list of statistics collected during the MCMC run.
+#' @export
+#' @seealso \code{\link{statistics}}
+statistics.sampler <- function(x, names, ...){
+  stopifnot(inherits(x, "sampler"),
+            length(names) > 0,
+            inherits(names, "character"))
+
+  statisticsTable <- get("statisticsTable", envir = environment(x))
+  statisticsTable <- statisticsTable[, names, drop = F]
+  nSteps <- get("nSteps", envir = environment(x))
+  nBurnin <- get("nBurnin", envir = environment(x))
+  statisticsTable[seq_len(nSteps - nBurnin), , drop = T]
+}
