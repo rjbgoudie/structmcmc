@@ -442,8 +442,9 @@ xyplot.epmx <- function(x, subset = NULL){
 #' for bnpostmcmc.list and bvspostmcmc.list
 #'
 #' @param x ...
-#' @param subset A numeric vector. This specifies the nodes between which
-#'   the epmx should be displayed for.
+#' @param subset A numeric vector. A list of length of two, the first
+#'   component of which determines the heads of the edges that are displayed,
+#'   and the second determines the tails of the edges that are displayed.
 #' @param plottype Either \code{"xyplot"} or \code{"splom"}.
 #'
 #' @return ...
@@ -460,16 +461,18 @@ epmxPlotInternal <- function(x, subset, plottype = "xyplot"){
   isbvsresponse <- isTRUE(type == "bvspostmcmc.list")
 
   if (is.null(subset)){
-    subset <- seq_len(numberOfNodes)
+    subset <- list(seq_len(numberOfNodes), seq_len(numberOfNodes))
   }
 
-  stopifnot(inherits(subset, c("numeric", "integer")),
-            length(subset) > 1,
-            all(sapply(subset, is.wholenumber)),
-            all(findInterval(subset, c(1, numberOfNodes), right = T) == 1))
+  stopifnot(inherits(subset, "list"),
+            length(subset) == 2,
+            all(sapply(subset[[1]], is.wholenumber)),
+            all(sapply(subset[[2]], is.wholenumber)),
+            all(findInterval(subset[[1]], c(1, numberOfNodes), r = T) == 1),
+            all(findInterval(subset[[2]], c(1, numberOfNodes), r = T) == 1))
 
   subsetm <- matrix(F, numberOfNodes, numberOfNodes)
-  subsetm[subset, subset] <- T
+  subsetm[subset[[1]], subset[[2]]] <- T
   if (plottype == "xyplot"){
     diag(subsetm) <- F
   }
@@ -548,7 +551,6 @@ epmxPlotInternal <- function(x, subset, plottype = "xyplot"){
       groups = which,
       as.table = T,
       default.scales = list(relation = "same"),
-      varnames = subset,
       type = "l",
       ylab = "Probability",
       xlab = "Samples",
@@ -609,7 +611,6 @@ epmxPlotInternal <- function(x, subset, plottype = "xyplot"){
         as.table = T,
         default.scales = list(relation = "same"),
         strip = F,
-        varnames = subset,
         type = "l",
         ylab = "Probability",
         xlab = "Samples",

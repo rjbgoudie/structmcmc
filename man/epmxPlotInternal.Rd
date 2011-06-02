@@ -16,7 +16,8 @@
 \seealso{\code{\link{epmx}}}
 \arguments{
   \item{x}{...}
-  \item{subset}{A numeric vector. This specifies the nodes between which
-the epmx should be displayed for.}
+  \item{subset}{A numeric vector. A list of length of two, the first
+component of which determines the heads of the edges that are displayed,
+and the second determines the tails of the edges that are displayed.}
   \item{plottype}{Either \code{"xyplot"} or \code{"splom"}.}
 }
