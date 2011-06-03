@@ -11,10 +11,11 @@
   Returns a splom of the cumulative edge probabilities
   through time for bnpostmcmc.list and bvspostmcmc.list
 }
-\value{...}
+\value{A scatter plot matrix.}
 \seealso{\code{\link{epmx}}}
 \arguments{
-  \item{x}{...}
-  \item{subset}{A numeric vector. This specifies the nodes between which
-the epmx should be displayed for.}
+  \item{x}{An \code{epmx} object.}
+  \item{subset}{A numeric vector that specifies the nodes between which
+the plot will be drawn for. The default value \code{NULL} displays
+all pairs.}
 }

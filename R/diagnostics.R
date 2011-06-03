@@ -407,15 +407,20 @@ mwep.samplers <- function(x, window = 10, ...){
 #' Returns a splom of the cumulative edge probabilities through time
 #' for bnpostmcmc.list and bvspostmcmc.list
 #'
-#' @param x ...
-#' @param subset A numeric vector. This specifies the nodes between which
-#'   the epmx should be displayed for.
+#' @param x An \code{epmx} object.
+#' @param subset A numeric vector that specifies the nodes between which
+#'   the plot will be drawn for. The default value \code{NULL} displays
+#'   all pairs.
 #'
-#' @return ...
+#' @return A scatter plot matrix.
 #' @S3method splom epmx
 #' @method splom epmx
 #' @seealso \code{\link{epmx}}
 splom.epmx <- function(x, subset = NULL){
+  if (!is.null(subset)){
+    stopifnot(inherits(subset, c("numeric", "integer")))
+    subset <- list(from = subset, to = subset)
+  }
   epmxPlotInternal(x, subset, plottype = "splom")
 }
 
@@ -424,11 +429,13 @@ splom.epmx <- function(x, subset = NULL){
 #' Returns a xyplot of the cumulative edge probabilities through time
 #' for bnpostmcmc.list and bvspostmcmc.list
 #'
-#' @param x ...
-#' @param subset A numeric vector. This specifies the nodes between which
-#'   the epmx should be displayed for.
+#' @param x An \code{epmx} object.
+#' @param subset A list of length of two, the first component of which
+#'   determines the heads of the edges that are displayed, and the second
+#'   determines the tails of the edges that are displayed. The default
+#'   value \code{NULL} displays all pairs.
 #'
-#' @return ...
+#' @return An \code{xyplot}.
 #' @S3method xyplot epmx
 #' @method xyplot epmx
 #' @seealso \code{\link{epmx}}
@@ -441,13 +448,14 @@ xyplot.epmx <- function(x, subset = NULL){
 #' Returns a xyplot/splom of the cumulative edge probabilities through time
 #' for bnpostmcmc.list and bvspostmcmc.list
 #'
-#' @param x ...
-#' @param subset A numeric vector. A list of length of two, the first
-#'   component of which determines the heads of the edges that are displayed,
-#'   and the second determines the tails of the edges that are displayed.
+#' @param x An \code{epmx} object.
+#' @param subset A list of length of two, the first component of which
+#'   determines the heads of the edges that are displayed, and the second
+#'   determines the tails of the edges that are displayed. The default
+#'   value \code{NULL} displays all pairs.
 #' @param plottype Either \code{"xyplot"} or \code{"splom"}.
 #'
-#' @return ...
+#' @return An appropriate plot.
 #' @seealso \code{\link{epmx}}
 epmxPlotInternal <- function(x, subset, plottype = "xyplot"){
   stopifnot(class(x) == "epmx")
@@ -611,6 +619,7 @@ epmxPlotInternal <- function(x, subset, plottype = "xyplot"){
         as.table = T,
         default.scales = list(relation = "same"),
         strip = F,
+        varnames = subset[[1]],
         type = "l",
         ylab = "Probability",
         xlab = "Samples",
