@@ -443,6 +443,69 @@ xyplot.epmx <- function(x, subset = NULL){
   epmxPlotInternal(x, subset, plottype = "xyplot")
 }
 
+#' Convert epmx to a data.frame
+#'
+#' Converts an epmx to a data.frame, in the appropriate form for
+#' \code{\link{epmxPlotInternal}}.
+#'
+#' @param x An \code{epmx} object.
+#' @param subset A list of length of two, the first component of which
+#'   determines the heads of the edges that are displayed, and the second
+#'   determines the tails of the edges that are displayed. The default
+#'   value \code{NULL} displays all pairs.
+#' @param plottype Either \code{"xyplot"} or \code{"splom"}.
+#'
+#' @return A \code{data.frame}, with a column \code{which} that denotes
+#'   the sampler, a \code{.index} column indicating the original row.
+#' @S3method as.data.frame epmx
+#' @method as.data.frame epmx
+#' @seealso \code{\link{epmx}}
+as.data.frame.epmx <- function(x, subset, plottype = "xyplot"){
+  numberOfNodes <- attr(x, "numberOfNodes")
+
+  # reorder the columns to be appropriate for as.table
+  # order is a matrix that converts colwise ordering to rowwise ordering
+  dyadSeq <- seq_len(numberOfNodes^2)
+  order <- matrix(dyadSeq, numberOfNodes, numberOfNodes, byrow = T)
+
+  # Name the columns
+  allDyads <- which(order > 0, arr.ind = T)
+  newColnames <- apply(allDyads, 1, paste, collapse = "->")
+
+  reorderAndAddColnames <- function(x){
+    colnames(x) <- newColnames
+    as.data.frame(x[, as.vector(order)])
+  }
+
+  x <- lapply(x, reorderAndAddColnames)
+
+  # subsetting
+  if (is.null(subset)){
+    subset <- list(seq_len(numberOfNodes), seq_len(numberOfNodes))
+  }
+
+  stopifnot(inherits(subset, "list"),
+            length(subset) == 2,
+            all(sapply(subset[[1]], is.wholenumber)),
+            all(sapply(subset[[2]], is.wholenumber)),
+            all(findInterval(subset[[1]], c(1, numberOfNodes), r = T) == 1),
+            all(findInterval(subset[[2]], c(1, numberOfNodes), r = T) == 1))
+
+  # the subset[[2]] and subset[[1]] are transposed here because the
+  # columns have already been reordered
+  subsetm <- matrix(F, numberOfNodes, numberOfNodes)
+  subsetm[subset[[2]], subset[[1]]] <- T
+  diag(subsetm) <- F
+  x <- lapply(x, "[", , as.vector(subsetm), drop = F)
+
+  data <- do.call("make.groups", x)
+
+  # add column denoting which bin the data is from
+  s <- sapply(unlist(sapply(x, nrow)), seq)
+  data <- cbind(data, `.index` = as.vector(unlist(s)))
+  data
+}
+
 #' (Internal) Plot of cumulative edge probabilities.
 #'
 #' Returns a xyplot/splom of the cumulative edge probabilities through time
@@ -462,75 +525,12 @@ epmxPlotInternal <- function(x, subset, plottype = "xyplot"){
 
   lengthOfRuns <- attr(x, "lengthOfRuns")
   numberOfRuns <- attr(x, "numberOfRuns")
-  numberOfNodes <- attr(x, "numberOfNodes")
   type <- attr(x, "type")
+  isbvsresponse <- isTRUE(type == "bvspostmcmc.list")
   nbin <- attr(x, "nbin")
   fun <- attr(x, "function")
-  isbvsresponse <- isTRUE(type == "bvspostmcmc.list")
 
-  if (is.null(subset)){
-    subset <- list(seq_len(numberOfNodes), seq_len(numberOfNodes))
-  }
-
-  stopifnot(inherits(subset, "list"),
-            length(subset) == 2,
-            all(sapply(subset[[1]], is.wholenumber)),
-            all(sapply(subset[[2]], is.wholenumber)),
-            all(findInterval(subset[[1]], c(1, numberOfNodes), r = T) == 1),
-            all(findInterval(subset[[2]], c(1, numberOfNodes), r = T) == 1))
-
-  subsetm <- matrix(F, numberOfNodes, numberOfNodes)
-  subsetm[subset[[1]], subset[[2]]] <- T
-  if (plottype == "xyplot"){
-    diag(subsetm) <- F
-  }
-  subsetv <- as.vector(subsetm)
-
-  x <- lapply(x, "[", , subsetv, drop = F)
-  numberOfNodesToPlot <- length(subset)
-
-  # pre-allocate the data matrix
-  if (isbvsresponse){
-    data <- matrix(nrow = numberOfRuns * nbin, ncol = numberOfNodesToPlot)
-  }
-  else {
-    data <- matrix(nrow = numberOfRuns * nbin, ncol = numberOfNodesToPlot^2)
-  }
-
-  # reorder the columns to be appropriate for as.table
-  # ord is a matrix that converts colwise ordering to rowwise ordering
-  ord <- matrix(seq_len(numberOfNodesToPlot^2),
-                nrow  = numberOfNodesToPlot,
-                ncol  = numberOfNodesToPlot,
-                byrow = T)
-
-  if (plottype == "xyplot"){
-    sub <- matrix(T, numberOfNodesToPlot, numberOfNodesToPlot)
-    diag(sub) <- F
-    diag(ord) <- NA
-    ord[sub] <- seq_len(numberOfNodesToPlot^2 - numberOfNodesToPlot)
-    ord <- t(ord)
-  }
-  ord <- as.vector(ord[!is.na(ord)])
-
-  # Name the column according to the
-  namesm <- which(subsetm, arr.ind = T)
-  newcolnames <- apply(namesm, 1, paste, collapse = "->")[ord]
-
-  # convert each epmx x to a dataframe
-  xDF <- lapply(x, function(x){
-    out <- as.data.frame(x[, ord])
-    colnames(out) <- newcolnames
-    out
-  })
-
-  # stack with a column called 'which'
-  # that shows which sample it came from
-  data <- do.call("make.groups", xDF)
-
-  # add column denoting which bin the data is from
-  s <- sapply(unlist(sapply(xDF, nrow)), seq)
-  data[[".index"]] <- as.vector(unlist(s))
+  data <- as.data.frame(x, subset = subset, plottype = plottype)
 
   # select all the columns apart from 'which'
   indexAndWhich <- (length(names(data)) - 1):length(names(data))
@@ -539,6 +539,9 @@ epmxPlotInternal <- function(x, subset, plottype = "xyplot"){
   toparse <- paste(paste(variablesasname, collapse = "+"), "~ .index")
   form <- eval(parse(text = toparse))
 
+  if (plottype == "splom"){
+    numberOfNodesToPlot <- length(subset[[1]])
+  }
   mainintro <- switch(fun,
     cum = "Edge probabilities through time, with",
     mw = "Moving windows probs, with"
