@@ -277,3 +277,43 @@ statistics.sampler <- function(x, names, ...){
   nBurnin <- get("nBurnin", envir = environment(x))
   statisticsTable[seq_len(nSteps - nBurnin), , drop = T]
 }
+
+#' Number of samples drawn.
+#'
+#' Returns the number of samples (MCMC steps) drawn in the supplied sampler.
+#'
+#' @param x A sampler
+#' @param ... Further arguments, currently unused
+#' @return The number of samples (steps) that have been drawn.
+#' @S3method length sampler
+#' @method length sampler
+length.sampler <- function(x, ...){
+  stopifnot(inherits(x, "sampler"))
+  get("nSteps", envir = environment(x))
+}
+
+#' Print a sampler
+#'
+#' Prints a sampler
+#'
+#' @param x A sampler
+#' @param ... Further arguments, currently unused
+#' @S3method print sampler
+#' @method print sampler
+print.sampler <- function(x, ...){
+  cat("Number of steps: ", length(x))
+  invisible(x)
+}
+
+#' Summarising MCMC samplers
+#'
+#' \code{summary} method for class "\code{sampler}"
+#'
+#' @param x A sampler
+#' @param ... Further arguments, currently unused
+#' @S3method summary sampler
+#' @method summary sampler
+summary.sampler <- function(x, ...){
+  cat("Number of steps: ", length(x))
+  invisible(x)
+}
