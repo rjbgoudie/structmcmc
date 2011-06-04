@@ -536,12 +536,12 @@ BNGibbsSampler <- function(data,
   updateET <- function(currentNetwork, nSteps, nBurnin){
     if (nSteps > nBurnin){
       et <<- et + currentNetwork[[4]]
-    }
-    lengthenETBins(nSteps, nBurnin)
-    row <- ((nSteps - nBurnin - 1) %/% etBinsSize) + 1
-    etbins[row, ] <<- as.vector(et)
-    if ((nSteps - nBurnin) %% etBinsSize == 0){
-      et <<- matrix(0, nrow = numberOfNodes, ncol = numberOfNodes)
+      lengthenETBins(nSteps, nBurnin)
+      row <- ((nSteps - nBurnin - 1) %/% etBinsSize) + 1
+      etbins[row, ] <<- as.vector(et)
+      if ((nSteps - nBurnin) %% etBinsSize == 0){
+        et <<- matrix(0, nrow = numberOfNodes, ncol = numberOfNodes)
+      }
     }
   }
 
