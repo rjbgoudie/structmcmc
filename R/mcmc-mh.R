@@ -283,6 +283,16 @@ BNSampler <- function(data,
   etBinsSize <- 1000
   etbins <- matrix(ncol = numberOfNodes^2, nrow = etBinsIncrement)
   nBurnin <- 0
+
+  statistics <- lapply(statistics, function(f){
+    function(currentNetwork){
+      f(currentNetwork[[1]])
+    }
+  })
+  defaultStatistics <- list(score = function(currentNetwork){
+    currentNetwork[[6]]
+  })
+  statistics <- c(statistics, defaultStatistics)
   nStatistics <- length(statistics)
   statisticsTable <- matrix(ncol = nStatistics,
                             nrow = etBinsSize * etBinsIncrement)
@@ -371,7 +381,7 @@ BNSampler <- function(data,
     if (nSteps > nBurnin){
       step <- nSteps - nBurnin
       for (i in seq_along(statistics)){
-        statisticsTable[step, i] <<- statistics[[i]](currentNetwork[[1]])
+        statisticsTable[step, i] <<- statistics[[i]](currentNetwork)
       }
     }
   }
