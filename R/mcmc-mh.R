@@ -254,9 +254,6 @@ BNSampler <- function(data,
   # currentNetwork[[5]] is the log number of neighbours
   currentNetwork <- list(5, mode = "list")
   currentNetwork[[1]] <- initial
-  currentScore <- logScoreOfflineFUN(x                  = currentNetwork[[1]],
-                                     logScoreParameters = logScoreParameters,
-                                     cache              = cache)
   currentNetwork[[2]] <- routes(currentNetwork[[1]])
   currentNetwork[[3]] <- log(prior(currentNetwork[[1]]))
   if (!is.valid.prior(currentNetwork[[3]])){
@@ -266,6 +263,11 @@ BNSampler <- function(data,
   currentNetwork[[5]] <- logNumMHNeighbours(routes      = currentNetwork[[2]],
                                             adjacency   = currentNetwork[[4]],
                                             constraintT = constraintT)
+
+  currentNetwork[[6]] <-
+    logScoreOfflineFUN(x                  = currentNetwork[[1]],
+                       logScoreParameters = logScoreParameters,
+                       cache              = cache)
 
   # Set up internal counters and logs etc
   nAccepted <- 0
@@ -455,16 +457,18 @@ BNSampler <- function(data,
                                                    proposalNetwork[[4]],
                                                    constraintT)
         if (pr > 0){
-          logAccProb <- logScoreOnlineFUN(
-                          currentBN          = currentNetwork[[1]],
-                          proposalBN         = proposalNetwork[[1]],
-                          heads              = j,
-                          logScoreParameters = logScoreParameters,
-                          cache              = cache,
-                          checkInput         = F) +
-                        proposalNetwork[[3]] -
-                        proposalNetwork[[5]] -
-                        currentNetwork[[3]] +
+          logLikChange <- logScoreOnlineFUN(
+                            currentBN          = currentNetwork[[1]],
+                            proposalBN         = proposalNetwork[[1]],
+                            heads              = j,
+                            logScoreParameters = logScoreParameters,
+                            cache              = cache,
+                            checkInput         = F) +
+                          proposalNetwork[[3]] -
+                          currentNetwork[[3]]
+          proposalNetwork[[6]] <- currentNetwork[[6]] + logLikChange
+          logAccProb <- logLikChange -
+                        proposalNetwork[[5]] +
                         currentNetwork[[5]]
         }
         else {
@@ -490,16 +494,18 @@ BNSampler <- function(data,
                                                    constraintT)
 
         if (pr > 0){
-          logAccProb <- logScoreOnlineFUN(
-                          currentBN          = currentNetwork[[1]],
-                          proposalBN         = proposalNetwork[[1]],
-                          heads              = j,
-                          logScoreParameters = logScoreParameters,
-                          cache              = cache,
-                          checkInput         = F) +
-                        proposalNetwork[[3]] -
-                        proposalNetwork[[5]] -
-                        currentNetwork[[3]] +
+          logLikChange <- logScoreOnlineFUN(
+                            currentBN          = currentNetwork[[1]],
+                            proposalBN         = proposalNetwork[[1]],
+                            heads              = j,
+                            logScoreParameters = logScoreParameters,
+                            cache              = cache,
+                            checkInput         = F) +
+                          proposalNetwork[[3]] -
+                          currentNetwork[[3]]
+          proposalNetwork[[6]] <- currentNetwork[[6]] + logLikChange
+          logAccProb <- logLikChange -
+                        proposalNetwork[[5]] +
                         currentNetwork[[5]]
         }
         else {
@@ -534,17 +540,19 @@ BNSampler <- function(data,
                                                  constraintT)
 
       if (pr > 0){
-        logAccProb <- logScoreOnlineFUN(
-                        currentBN          = currentNetwork[[1]],
-                        proposalBN         = proposalNetwork[[1]],
-                        heads              = c(j, i),
-                        cache              = cache,
-                        logScoreParameters = logScoreParameters,
-                        checkInput         = F) +
-                      proposalNetwork[[3]] -
-                      proposalNetwork[[5]] -
-                      currentNetwork[[3]] +
-                      currentNetwork[[5]]
+        logLikChange <- logScoreOnlineFUN(
+                          currentBN          = currentNetwork[[1]],
+                          proposalBN         = proposalNetwork[[1]],
+                          heads              = c(j, i),
+                          cache              = cache,
+                          logScoreParameters = logScoreParameters,
+                          checkInput         = F) +
+                        proposalNetwork[[3]] -
+                        currentNetwork[[3]]
+          proposalNetwork[[6]] <- currentNetwork[[6]] + logLikChange
+          logAccProb <- logLikChange -
+                        proposalNetwork[[5]] +
+                        currentNetwork[[5]]
         }
         else {
           logAccProb <- -Inf
