@@ -289,7 +289,7 @@ BNSampler <- function(data,
       f(currentNetwork[[1]])
     }
   })
-  defaultStatistics <- list(score = function(currentNetwork){
+  defaultStatistics <- list(logScores = function(currentNetwork){
     currentNetwork[[6]]
   })
   statistics <- c(statistics, defaultStatistics)

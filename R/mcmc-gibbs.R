@@ -504,7 +504,7 @@ BNGibbsSampler <- function(data,
       f(currentNetwork[[1]])
     }
   })
-  defaultStatistics <- list(score = function(currentNetwork){
+  defaultStatistics <- list(logScores = function(currentNetwork){
     sum(currentNetwork[[5]])
   })
   statistics <- c(statistics, defaultStatistics)
