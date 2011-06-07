@@ -73,6 +73,8 @@ sampleNode <- function(currentNetwork,
     currentNetwork[[4]][-currentNetwork[[1]][[node]], node] <- 0
   }
 
+  currentNetwork[[5]][node] <- scores[samp]
+
   currentNetwork
 }
 
@@ -215,6 +217,9 @@ samplePair <- function(currentNetwork,
   } else {
     currentNetwork[[4]][-currentNetwork[[1]][[node2]], node2] <- 0
   }
+
+  currentNetwork[[5]][node1] <- n1scoresGroup[n1samp]
+  currentNetwork[[5]][node2] <- n2scoresGroup[n2samp]
 
   currentNetwork
 }
@@ -455,11 +460,21 @@ BNGibbsSampler <- function(data,
   # currentNetwork[[1]] is the bn
   # currentNetwork[[2]] is the routes matrix
   # currentNetwork[[3]] is the log prior
-  currentNetwork <- vector(mode = "list", length = 3)
+  currentNetwork <- vector(mode = "list", length = 5)
   currentNetwork[[1]] <- initial
   currentNetwork[[2]] <- routes(currentNetwork[[1]])
   currentNetwork[[3]] <- log(prior(currentNetwork[[1]]))
   currentNetwork[[4]] <- as.adjacency(currentNetwork[[1]])
+
+  for (node in nodesSeq){
+    localScore <- logScoreLocalFUN(node               = node,
+                                   parents            = initial[[node]],
+                                   logScoreParameters = logScoreParameters,
+                                   cache              = new.env(),
+                                   checkInput         = F)
+    currentNetwork[[5]][node] <- localScore
+  }
+
   if (!is.valid.prior(currentNetwork[[3]])){
     stop("Initial network has prior with 0 probability.")
   }
