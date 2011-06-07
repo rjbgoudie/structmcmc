@@ -152,7 +152,7 @@ samplePair <- function(currentNetwork,
                  logsumexp(scoresParents[[node2]][rows2[[1]]])
 
   # group2
-  newNonDescendants1 <- intersect2(nonDescendants1, descendants2)
+  newNonDescendants1 <- nonDescendants1
 
   # get the conditional probability for the parents of
   # node 'node1', given the rest of the graph
@@ -165,7 +165,7 @@ samplePair <- function(currentNetwork,
   # haveNewDescendants == T
   # nonDescendants2 = nonDescendants2 + descendants1
   # == intersect2(nonDescendants1, nonDescendants2)
-  newNonDescendants2 <- setdiff3(nonDescendants2, descendants1)
+  newNonDescendants2 <- intersect2(nonDescendants2, nonDescendants1)
   rows2[[2]] <- whichParentSetRows(node            = node2,
                                    nonDescendants  = newNonDescendants2,
                                    numberOfNodes   = numberOfNodes,
