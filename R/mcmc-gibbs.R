@@ -162,7 +162,7 @@ samplePair <- function(currentNetwork,
 
   # haveNewDescendants == T
   # nonDescendants2 = nonDescendants2 + descendants1
-
+  # == intersect2(nonDescendants1, nonDescendants2)
   newNonDescendants2 <- setdiff3(nonDescendants2, descendants1)
   rows2[[2]] <- whichParentSetRows(node            = node2,
                                    nonDescendants  = newNonDescendants2,
