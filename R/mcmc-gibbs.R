@@ -148,9 +148,13 @@ samplePair <- function(currentNetwork,
                                    numberOfNodes   = numberOfNodes,
                                    allRows         = allRows,
                                    rowsThatContain = rowsThatContain)
-  group1Score <- outer(logsumexp(scoresParents[[node1]][rows1[[1]]]),
-                       logsumexp(scoresParents[[node2]][rows2[[1]]]), "+")
-  group1Score <- sum(group1Score)
+  if (nrow(rows1[[1]]) > 0 && nrow(rows2[[1]]) > 0){
+    group1Score <- outer(logsumexp(scoresParents[[node1]][rows1[[1]]]),
+                         logsumexp(scoresParents[[node2]][rows2[[1]]]), "+")
+    group1Score <- sum(group1Score)
+  } else {
+    group1Score <- -Inf
+  }
 
   # group2
   newNonDescendants1 <- nonDescendants1
@@ -172,9 +176,13 @@ samplePair <- function(currentNetwork,
                                    numberOfNodes   = numberOfNodes,
                                    allRows         = allRows,
                                    rowsThatContain = rowsThatContain)
-  group2Score <- outer(logsumexp(scoresParents[[node1]][rows1[[2]]]),
-                       logsumexp(scoresParents[[node2]][rows2[[2]]]), "+")
-  group2Score <- sum(group2Score)
+  if (nrow(rows1[[2]]) > 0 && nrow(rows2[[2]]) > 0){
+    group2Score <- outer(logsumexp(scoresParents[[node1]][rows1[[2]]]),
+                         logsumexp(scoresParents[[node2]][rows2[[2]]]), "+")
+    group2Score <- sum(group2Score)
+  } else {
+    group2Score <- -Inf
+  }
 
   # group3
   newNonDescendants1 <- intersect2(nonDescendants1, nonDescendants2)
@@ -197,9 +205,13 @@ samplePair <- function(currentNetwork,
                                    numberOfNodes   = numberOfNodes,
                                    allRows         = allRows,
                                    rowsThatContain = rowsThatContain)
-  group3Score <- outer(logsumexp(scoresParents[[node1]][rows1[[3]]]),
-                       logsumexp(scoresParents[[node2]][rows2[[3]]]), "+")
-  group3Score <- sum(group3Score)
+  if (nrow(rows1[[3]]) > 0 && nrow(rows2[[3]]) > 0){
+    group3Score <- outer(logsumexp(scoresParents[[node1]][rows1[[3]]]),
+                         logsumexp(scoresParents[[node2]][rows2[[3]]]), "+")
+    group3Score <- sum(group3Score)
+  } else {
+    group3Score <- -Inf
+  }
 
   # sample group
   groupScoresOld <- c(group1Score, group2Score, group3Score)
