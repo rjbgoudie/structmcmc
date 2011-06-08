@@ -1,8 +1,8 @@
 \name{whichParentSetRows}
 \alias{whichParentSetRows}
 \title{Find relevants rows of a parentsTable.}
-\usage{whichParentSetRows(node, nonDescendants, numberOfNodes,
-    allRows, rowsThatContain)}
+\usage{whichParentSetRows(node, nonDescendants, needOneOf,
+    numberOfNodes, allRows, rowsThatContain)}
 
 \description{
   Find relevants rows of a parentsTable.
@@ -28,6 +28,9 @@
   \item{node}{The node. A numeric vector of length 1.}
   \item{nonDescendants}{The nodes that can be added as descendants of 
 \code{node}. A numeric vector.}
+  \item{needOneOf}{Nodes the MUST be included as parents of the node. This
+is NOT the same as the required/banned list; this is to allow the
+space to be partitioned.}
   \item{numberOfNodes}{The number of nodes in the network. A numeric vector 
 of length 1.}
   \item{allRows}{The vector 1:nrow(parentsTables). (Supplied as an 

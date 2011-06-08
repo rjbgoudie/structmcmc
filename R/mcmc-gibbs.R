@@ -125,8 +125,8 @@ samplePair <- function(currentNetwork,
   nonDescendants2 <- nonDescendants(currentNetwork[[2]], node2)
   descendants2 <- setdiff3(nodesSeq, nonDescendants2)
 
-  rows1 <- vector("list", 2)
-  rows2 <- vector("list", 2)
+  rows1 <- vector("list", 3)
+  rows2 <- vector("list", 3)
 
   # group1. nonDescendants1 = nonDescendants1 union nonDescendants2
   newNonDescendants1 <- intersect2(nonDescendants1, nonDescendants2)
@@ -141,7 +141,7 @@ samplePair <- function(currentNetwork,
 
   # haveNewDescendants == F
   # no new nonDescendants2
-  newNonDescendants2 <- nonDescendants2
+  newNonDescendants2 <- intersect2(nonDescendants1, nonDescendants2)
 
   rows2[[1]] <- whichParentSetRows(node            = node2,
                                    nonDescendants  = newNonDescendants2,
@@ -153,11 +153,11 @@ samplePair <- function(currentNetwork,
 
   # group2
   newNonDescendants1 <- nonDescendants1
-
   # get the conditional probability for the parents of
   # node 'node1', given the rest of the graph
   rows1[[2]] <- whichParentSetRows(node            = node1,
                                    nonDescendants  = newNonDescendants1,
+                                   needOneOf       = descendants2,
                                    numberOfNodes   = numberOfNodes,
                                    allRows         = allRows,
                                    rowsThatContain = rowsThatContain)
@@ -171,14 +171,37 @@ samplePair <- function(currentNetwork,
                                    numberOfNodes   = numberOfNodes,
                                    allRows         = allRows,
                                    rowsThatContain = rowsThatContain)
-
   group2Score <- logsumexp(scoresParents[[node1]][rows1[[2]]]) +
                  logsumexp(scoresParents[[node2]][rows2[[2]]])
 
+  # group3
+  newNonDescendants1 <- intersect2(nonDescendants1, nonDescendants2)
+
+  # get the conditional probability for the parents of
+  # node 'node1', given the rest of the graph
+  rows1[[3]] <- whichParentSetRows(node            = node1,
+                                   nonDescendants  = newNonDescendants1,
+                                   numberOfNodes   = numberOfNodes,
+                                   allRows         = allRows,
+                                   rowsThatContain = rowsThatContain)
+
+  # haveNewDescendants == T
+  # nonDescendants2 = nonDescendants2 + descendants1
+  # == intersect2(nonDescendants1, nonDescendants2)
+  newNonDescendants2 <- nonDescendants2
+  rows2[[3]] <- whichParentSetRows(node            = node2,
+                                   nonDescendants  = newNonDescendants2,
+                                   needOneOf       = descendants1,
+                                   numberOfNodes   = numberOfNodes,
+                                   allRows         = allRows,
+                                   rowsThatContain = rowsThatContain)
+  group3Score <- logsumexp(scoresParents[[node1]][rows1[[3]]]) +
+                 logsumexp(scoresParents[[node2]][rows2[[3]]])
+
   # sample group
-  groupScoresOld <- c(group1Score, group2Score)
+  groupScoresOld <- c(group1Score, group2Score, group3Score)
   groupWeights <- exp(groupScoresOld - logsumexp(groupScoresOld))
-  n2SampGroup <- sample.int(2, size = 1, prob = groupWeights)
+  n2SampGroup <- sample.int(3, size = 1, prob = groupWeights)
   
   # sample 'node1' parents
   n1scoresGroup <- scoresParents[[node1]][rows1[[n2SampGroup]]]

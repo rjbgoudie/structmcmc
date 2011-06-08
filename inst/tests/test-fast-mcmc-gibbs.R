@@ -17,7 +17,7 @@ test_that("Simple test", {
                     x3 = as.factor(c(0, 1, 1, 1, 0, 1, 1, 0, 1, 0)))
 
   mcmc <- posterior(data = dat, method = "gibbs", verbose = F,
-                    nSamples = 1000, nBurnin = 500)
+                    nSamples = 50000, nBurnin = 10000)
   exact <- posterior(data = dat, method = "exact", verbose = F)
 
   epmcmc <- ep(mcmc)

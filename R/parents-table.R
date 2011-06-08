@@ -247,6 +247,9 @@ getRowsThatContain <- function(numberOfNodes,
 #' @param node The node. A numeric vector of length 1.
 #' @param nonDescendants The nodes that can be added as descendants of 
 #'   \code{node}. A numeric vector.
+#' @param needOneOf Nodes the MUST be included as parents of the node. This
+#'   is NOT the same as the required/banned list; this is to allow the
+#'   space to be partitioned.
 #' @param numberOfNodes The number of nodes in the network. A numeric vector 
 #'   of length 1.
 #' @param allRows The vector 1:nrow(parentsTables). (Supplied as an 
@@ -259,6 +262,7 @@ getRowsThatContain <- function(numberOfNodes,
 #'   \code{\link{scoreParentsTable}}
 whichParentSetRows <- function(node,
                                nonDescendants,
+                               needOneOf = NULL,
                                numberOfNodes,
                                allRows,
                                rowsThatContain){
@@ -266,5 +270,10 @@ whichParentSetRows <- function(node,
   nodesNotAllowed <- setdiff3(nodesSeq, nonDescendants)
   rowsNotAllowed <- rowsThatContain[[node]][nodesNotAllowed]
   rowsNotAllowed <- unlist(rowsNotAllowed, use.names = F)
-  setdiff3(allRows[[node]], rowsNotAllowed)
+  rowsNeeded <- allRows[[node]]
+  if (!is.null(needOneOf)){
+    rowsNeeded <- rowsThatContain[[node]][needOneOf]
+    rowsNeeded <- unique(unlist(rowsNeeded, use.names = F))
+  }
+  setdiff3(rowsNeeded, rowsNotAllowed)
 }
