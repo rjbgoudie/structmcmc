@@ -148,8 +148,9 @@ samplePair <- function(currentNetwork,
                                    numberOfNodes   = numberOfNodes,
                                    allRows         = allRows,
                                    rowsThatContain = rowsThatContain)
-  group1Score <- logsumexp(scoresParents[[node1]][rows1[[1]]]) +
-                 logsumexp(scoresParents[[node2]][rows2[[1]]])
+  group1Score <- outer(logsumexp(scoresParents[[node1]][rows1[[1]]]),
+                       logsumexp(scoresParents[[node2]][rows2[[1]]]), "+")
+  group1Score <- sum(group1Score)
 
   # group2
   newNonDescendants1 <- nonDescendants1
@@ -171,8 +172,9 @@ samplePair <- function(currentNetwork,
                                    numberOfNodes   = numberOfNodes,
                                    allRows         = allRows,
                                    rowsThatContain = rowsThatContain)
-  group2Score <- logsumexp(scoresParents[[node1]][rows1[[2]]]) +
-                 logsumexp(scoresParents[[node2]][rows2[[2]]])
+  group2Score <- outer(logsumexp(scoresParents[[node1]][rows1[[2]]]),
+                       logsumexp(scoresParents[[node2]][rows2[[2]]]), "+")
+  group2Score <- sum(group2Score)
 
   # group3
   newNonDescendants1 <- intersect2(nonDescendants1, nonDescendants2)
@@ -195,8 +197,9 @@ samplePair <- function(currentNetwork,
                                    numberOfNodes   = numberOfNodes,
                                    allRows         = allRows,
                                    rowsThatContain = rowsThatContain)
-  group3Score <- logsumexp(scoresParents[[node1]][rows1[[3]]]) +
-                 logsumexp(scoresParents[[node2]][rows2[[3]]])
+  group3Score <- outer(logsumexp(scoresParents[[node1]][rows1[[3]]]),
+                       logsumexp(scoresParents[[node2]][rows2[[3]]]), "+")
+  group3Score <- sum(group3Score)
 
   # sample group
   groupScoresOld <- c(group1Score, group2Score, group3Score)
