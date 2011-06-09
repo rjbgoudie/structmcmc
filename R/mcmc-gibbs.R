@@ -262,6 +262,149 @@ samplePair <- function(currentNetwork,
   currentNetwork
 }
 
+#' Sample the parents of a pair of nodes (Gibbs sampler) v2.
+#'
+#' Sample from posterior distribution on graph, conditional on
+#' all the edges, except for those corresponding to the parents sets of
+#' two nodes.
+#'
+#' @param currentNetwork A \code{currentNetwork} object
+#' @param numberOfNodes The number of nodes in the network. A numeric vector
+#'   of length 1.
+#' @param nodesSeq The vector 1:nNodes(currentNetwork). (Supplied as an
+#'   argument for possible speed gain)
+#' @param scoresParents A list of the form returned by
+#'   \code{scoreParentsTable()}
+#' @param parentsTables A list of tables of the form returned by
+#'   \code{enumerateParentsTable()}
+#' @param allRows The vector 1:nrow(parentsTables). (Supplied as an
+#'   argument for possible speed gain)
+#' @param rowsThatContain A list of the form created by
+#'   \code{getRowsThatContain()}
+#' @return Returns the sampled network. A \code{currentNetwork} object.
+#' @export
+#' @seealso \code{\link{BNGibbsSampler}}, \code{\link{sampleNode}}
+samplePair2 <- function(currentNetwork,
+                         numberOfNodes,
+                         nodesSeq,
+                         scoresParents,
+                         parentsTables,
+                         allRows,
+                         rowsThatContain,
+                         logScoreFUN,
+                         logScoreParameters){
+  node1 <- sample.int(numberOfNodes, size = 1)
+  choices <- setdiff3(nodesSeq, node1)
+  node2 <- choices[sample.int(length(choices), size = 1)]
+
+  currentNetwork[[2]] <- routesRemoveEdges(currentNetwork[[2]],
+                                           currentNetwork[[1]][[node1]],
+                                           node1)
+  currentNetwork[[2]] <- routesRemoveEdges(currentNetwork[[2]],
+                                           currentNetwork[[1]][[node2]],
+                                           node2)
+
+  nonDescendants1 <- nonDescendants(currentNetwork[[2]], node1)
+  descendants1 <- setdiff3(nodesSeq, nonDescendants1)
+  nonDescendants2 <- nonDescendants(currentNetwork[[2]], node2)
+  descendants2 <- setdiff3(nodesSeq, nonDescendants2)
+
+  optionsGivenGraph <- function(net){
+    if (identical(net[[1]], 2L)){
+      newNonDescendants1 <- nonDescendants1
+      needOneOf <- descendants2
+    } else {
+      newNonDescendants1 <- intersect2(nonDescendants1, nonDescendants2)
+      needOneOf <- NULL
+    }
+    rows1 <- whichParentSetRows(node            = node1,
+                                nonDescendants  = newNonDescendants1,
+                                needOneOf       = needOneOf,
+                                numberOfNodes   = numberOfNodes,
+                                allRows         = allRows,
+                                rowsThatContain = rowsThatContain)
+
+    if (identical(net[[2]], 1L)){
+      newNonDescendants2 <- nonDescendants2
+      needOneOf <- descendants1
+    } else {
+      newNonDescendants2 <- intersect2(nonDescendants2, nonDescendants1)
+      needOneOf <- NULL
+    }
+    rows2 <- whichParentSetRows(node            = node2,
+                                nonDescendants  = newNonDescendants2,
+                                needOneOf       = needOneOf,
+                                numberOfNodes   = numberOfNodes,
+                                allRows         = allRows,
+                                rowsThatContain = rowsThatContain)
+    list(rows1, rows2)
+  }
+
+  getScoreFromRows <- function(rows){
+    if (length(rows[[1]]) > 0 && length(rows[[2]]) > 0){
+      groupScore <- outer(logsumexp(scoresParents[[node1]][rows[[1]]]),
+                          logsumexp(scoresParents[[node2]][rows[[2]]]), "+")
+      sum(groupScore)
+    } else {
+      -Inf
+    }
+  }
+
+  nets <- bn.list(bn(integer(0), integer(0)),
+                  bn(2L, integer(0)),
+                  bn(integer(0), 1L))
+  rows <- lapply(nets, optionsGivenGraph)
+  groupScoresOld <- sapply(rows, getScoreFromRows)
+
+  # sample group
+  groupWeights <- exp(groupScoresOld - logsumexp(groupScoresOld))
+  n2SampGroup <- sample.int(3, size = 1, prob = groupWeights)
+
+  # sample 'node1' parents
+  n1scoresGroup <- scoresParents[[node1]][rows[[n2SampGroup]][[1]]]
+  n1probs <- exp(n1scoresGroup - logsumexp(n1scoresGroup))
+  n1samp <- sample.int(length(n1scoresGroup), size = 1, prob = n1probs)
+
+  # sample 'node2' parents
+  n2scoresGroup <- scoresParents[[node2]][rows[[n2SampGroup]][[2]]]
+  n2probs <- exp(n2scoresGroup - logsumexp(n2scoresGroup))
+  n2samp <- sample.int(length(n2scoresGroup), size = 1, prob = n2probs)
+
+  # generate the new graph
+  parents1 <- rows[[n2SampGroup]][[1]]
+  new <- parentsTables[[node1]][parents1[n1samp], ]
+  currentNetwork[[1]][[node1]] <- new[!is.na(new)]
+
+  parents2 <- rows[[n2SampGroup]][[2]]
+  new <- parentsTables[[node2]][parents2[n2samp], ]
+  currentNetwork[[1]][[node2]] <- new[!is.na(new)]
+
+  currentNetwork[[2]] <- routesAddEdges(currentNetwork[[2]],
+                                        currentNetwork[[1]][[node1]],
+                                        node1)
+  currentNetwork[[2]] <- routesAddEdges(currentNetwork[[2]],
+                                        currentNetwork[[1]][[node2]],
+                                        node2)
+  currentNetwork[[4]][currentNetwork[[1]][[node1]], node1] <- 1
+  if (length(currentNetwork[[1]][[node1]]) == 0){
+    currentNetwork[[4]][, node1] <- 0
+  } else {
+    currentNetwork[[4]][-currentNetwork[[1]][[node1]], node1] <- 0
+  }
+  currentNetwork[[4]][currentNetwork[[1]][[node2]], node2] <- 1
+  if (length(currentNetwork[[1]][[node2]]) == 0){
+    currentNetwork[[4]][, node2] <- 0
+  } else {
+    currentNetwork[[4]][-currentNetwork[[1]][[node2]], node2] <- 0
+  }
+
+  currentNetwork[[5]][node1] <- n1scoresGroup[n1samp]
+  currentNetwork[[5]][node2] <- n2scoresGroup[n2samp]
+
+  currentNetwork
+}
+
+
 #' Sample the parents of a triple of nodes (Gibbs sampler).
 #'
 #' Sample from posterior distribution on graph, conditional on
