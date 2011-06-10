@@ -493,23 +493,31 @@ sampleTriple <- function(currentNetwork,
     needOneOf2 <- NULL
     needOneOf3 <- NULL
 
+    three <- 1:3
+
     if (length(net[[1]]) > 0){
-      allowed <- unlist(descendants[net[[1]]])
-      notAllowed <- unlist(descendants[setdiff(nodesSeq, net[[1]])])
-      newNonDescendants1 <- setdiff(allowed, notAllowed)
-      needOneOf1 <- descendants[net[[1]]]
+      descendantOfParent <- descendants[net[[1]]]
+      descendantOfNonParent <- unlist(descendants[setdiff(three, net[[1]])])
+      needOneOf1 <- lapply(descendantOfParent, function(x){
+        setdiff(x, descendantOfNonParent)
+      })
+      newNonDescendants1 <- c(intersectAll, unlist(needOneOf1))
     }
     if (length(net[[2]]) > 0){
-      allowed <- unlist(descendants[net[[2]]])
-      notAllowed <- unlist(descendants[setdiff(nodesSeq, net[[2]])])
-      newNonDescendants2 <- setdiff(allowed, notAllowed)
-      needOneOf2 <- descendants[net[[2]]]
+      descendantOfParent <- descendants[net[[2]]]
+      descendantOfNonParent <- unlist(descendants[setdiff(three, net[[2]])])
+      needOneOf2 <- lapply(descendantOfParent, function(x){
+        setdiff(x, descendantOfNonParent)
+      })
+      newNonDescendants2 <- c(intersectAll, unlist(needOneOf2))
     }
     if (length(net[[3]]) > 0){
-      allowed <- unlist(descendants[net[[3]]])
-      notAllowed <- unlist(descendants[setdiff(nodesSeq, net[[3]])])
-      newNonDescendants3 <- setdiff(allowed, notAllowed)
-      needOneOf3 <- descendants[net[[3]]]
+      descendantOfParent <- descendants[net[[3]]]
+      descendantOfNonParent <- unlist(descendants[setdiff(three, net[[3]])])
+      needOneOf3 <- lapply(descendantOfParent, function(x){
+        setdiff(x, descendantOfNonParent)
+      })
+      newNonDescendants3 <- c(intersectAll, unlist(needOneOf3))
     }
     rows1 <- whichParentSetRows(node            = node1,
                                 nonDescendants  = newNonDescendants1,
