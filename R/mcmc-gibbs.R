@@ -458,17 +458,7 @@ sampleTriple <- function(currentNetwork,
   choices <- setdiff3(choices, node2)
   node3 <- choices[sample.int(length(choices), size = 1)]
 
-  newgraphs <- getNewGraph(currentNetwork,
-                           change = c(node1, node2, node3))
-
-  scores <- sapply(newgraphs, logScoreFUN$offline, logScoreParameters)
-  normalised <- exp(scores - logsumexp(scores))
-  
-  samp <- sample.int(length(normalised), size = 1, prob = normalised)
-  new <- newgraphs[[samp]]
-  
-  # remove the old parents of node 'node1' and 'node2'
-
+  nodes <- c(node1, node2, node3)
   currentNetwork[[2]] <- routesRemoveEdges(currentNetwork[[2]],
                                            currentNetwork[[1]][[node1]],
                                            node1)
@@ -476,10 +466,150 @@ sampleTriple <- function(currentNetwork,
                                            currentNetwork[[1]][[node2]],
                                            node2)
   currentNetwork[[2]] <- routesRemoveEdges(currentNetwork[[2]],
-                                          currentNetwork[[1]][[node3]],
-                                          node3)
-  
-  currentNetwork[[1]] <- new
+                                           currentNetwork[[1]][[node3]],
+                                           node3)
+
+  # indexed by node1, node2, node3
+  # output is for real node numbers
+  nonDescendants <- vector("list", 3)
+  descendants <- vector("list", 3)
+  nonDescendants[[1]] <- nonDescendants(currentNetwork[[2]], node1)
+  descendants[[1]] <- setdiff3(nodesSeq, nonDescendants[[1]])
+  nonDescendants[[2]] <- nonDescendants(currentNetwork[[2]], node2)
+  descendants[[2]] <- setdiff3(nodesSeq, nonDescendants[[2]])
+  nonDescendants[[3]] <- nonDescendants(currentNetwork[[2]], node3)
+  descendants[[3]] <- setdiff3(nodesSeq, nonDescendants[[3]])
+
+  optionsGivenGraph <- function(net){
+    intersectAll <- intersection(nonDescendants[[1]],
+                                 nonDescendants[[2]],
+                                 nonDescendants[[3]])
+
+    newNonDescendants1 <- intersectAll
+    newNonDescendants2 <- intersectAll
+    newNonDescendants3 <- intersectAll
+
+    needOneOf1 <- NULL
+    needOneOf2 <- NULL
+    needOneOf3 <- NULL
+
+    if (length(net[[1]]) > 0){
+      allowed <- unlist(descendants[net[[1]]])
+      notAllowed <- unlist(descendants[setdiff(nodesSeq, net[[1]])])
+      newNonDescendants1 <- setdiff(allowed, notAllowed)
+      needOneOf1 <- descendants[net[[1]]]
+    }
+    if (length(net[[2]]) > 0){
+      allowed <- unlist(descendants[net[[2]]])
+      notAllowed <- unlist(descendants[setdiff(nodesSeq, net[[2]])])
+      newNonDescendants2 <- setdiff(allowed, notAllowed)
+      needOneOf2 <- descendants[net[[2]]]
+    }
+    if (length(net[[3]]) > 0){
+      allowed <- unlist(descendants[net[[3]]])
+      notAllowed <- unlist(descendants[setdiff(nodesSeq, net[[3]])])
+      newNonDescendants3 <- setdiff(allowed, notAllowed)
+      needOneOf3 <- descendants[net[[3]]]
+    }
+    rows1 <- whichParentSetRows(node            = node1,
+                                nonDescendants  = newNonDescendants1,
+                                needOneOf       = needOneOf1,
+                                numberOfNodes   = numberOfNodes,
+                                allRows         = allRows,
+                                rowsThatContain = rowsThatContain)
+
+    rows2 <- whichParentSetRows(node            = node2,
+                                nonDescendants  = newNonDescendants2,
+                                needOneOf       = needOneOf2,
+                                numberOfNodes   = numberOfNodes,
+                                allRows         = allRows,
+                                rowsThatContain = rowsThatContain)
+
+    rows3 <- whichParentSetRows(node            = node3,
+                                nonDescendants  = newNonDescendants3,
+                                needOneOf       = needOneOf3,
+                                numberOfNodes   = numberOfNodes,
+                                allRows         = allRows,
+                                rowsThatContain = rowsThatContain)
+    list(rows1, rows2, rows3)
+  }
+
+  getScoreFromRows <- function(rows){
+    if (length(rows[[1]]) > 0 &&
+        length(rows[[2]]) > 0 &&
+        length(rows[[3]]) > 0){
+      groupScore <- outer(logsumexp(scoresParents[[node1]][rows[[1]]]),
+                          logsumexp(scoresParents[[node2]][rows[[2]]]), "+")
+      groupScore <- outer(groupScore,
+                          logsumexp(scoresParents[[node3]][rows[[3]]]), "+")
+      sum(groupScore)
+    } else {
+      -Inf
+    }
+  }
+
+  nets <- bn.list(bn(integer(0), integer(0), integer(0)),
+                  bn(2L, integer(0), integer(0)),
+                  bn(3L, integer(0), integer(0)),
+                  bn(2:3, integer(0), integer(0)),
+                  bn(integer(0), 1L, integer(0)),
+                  bn(3L, 1L, integer(0)),
+                  bn(integer(0), 3L, integer(0)),
+                  bn(2L, 3L, integer(0)),
+                  bn(3L, 3L, integer(0)),
+                  bn(2:3, 3L, integer(0)),
+                  bn(integer(0), c(1L, 3L), integer(0)),
+                  bn(3L, c(1L, 3L), integer(0)),
+                  bn(integer(0), integer(0), 1L),
+                  bn(2L, integer(0), 1L),
+                  bn(integer(0), 1L, 1L),
+                  bn(integer(0), 3L, 1L),
+                  bn(integer(0), c(1L, 3L), 1L),
+                  bn(integer(0), integer(0), 2L),
+                  bn(2L, integer(0), 2L),
+                  bn(3L, integer(0), 2L),
+                  bn(2:3, integer(0), 2L),
+                  bn(integer(0), 1L, 2L),
+                  bn(integer(0), integer(0), 1:2),
+                  bn(2L, integer(0), 1:2),
+                  bn(integer(0), 1L, 1:2))
+
+  # each rows component refers to node1, node2, node3
+  rows <- lapply(nets, optionsGivenGraph)
+  groupScoresOld <- sapply(rows, getScoreFromRows)
+
+  # sample group
+  groupWeights <- exp(groupScoresOld - logsumexp(groupScoresOld))
+  sampGroup <- sample.int(25, size = 1, prob = groupWeights)
+
+  # sample 'node1' parents
+  n1scoresGroup <- scoresParents[[node1]][rows[[sampGroup]][[1]]]
+  n1probs <- exp(n1scoresGroup - logsumexp(n1scoresGroup))
+  n1samp <- sample.int(length(n1scoresGroup), size = 1, prob = n1probs)
+
+  # sample 'node2' parents
+  n2scoresGroup <- scoresParents[[node2]][rows[[sampGroup]][[2]]]
+  n2probs <- exp(n2scoresGroup - logsumexp(n2scoresGroup))
+  n2samp <- sample.int(length(n2scoresGroup), size = 1, prob = n2probs)
+
+  # sample 'node3' parents
+  n3scoresGroup <- scoresParents[[node3]][rows[[sampGroup]][[3]]]
+  n3probs <- exp(n3scoresGroup - logsumexp(n3scoresGroup))
+  n3samp <- sample.int(length(n3scoresGroup), size = 1, prob = n3probs)
+
+  # generate the new graph
+  parents1 <- rows[[sampGroup]][[1]]
+  new <- parentsTables[[node1]][parents1[n1samp], ]
+  currentNetwork[[1]][[node1]] <- new[!is.na(new)]
+
+  parents2 <- rows[[sampGroup]][[2]]
+  new <- parentsTables[[node2]][parents2[n2samp], ]
+  currentNetwork[[1]][[node2]] <- new[!is.na(new)]
+
+  parents3 <- rows[[sampGroup]][[3]]
+  new <- parentsTables[[node3]][parents3[n3samp], ]
+  currentNetwork[[1]][[node3]] <- new[!is.na(new)]
+
   currentNetwork[[2]] <- routesAddEdges(currentNetwork[[2]],
                                         currentNetwork[[1]][[node1]],
                                         node1)
@@ -507,6 +637,10 @@ sampleTriple <- function(currentNetwork,
   } else {
     currentNetwork[[4]][-currentNetwork[[1]][[node3]], node3] <- 0
   }
+
+  currentNetwork[[5]][node1] <- n1scoresGroup[n1samp]
+  currentNetwork[[5]][node2] <- n2scoresGroup[n2samp]
+  currentNetwork[[5]][node3] <- n3scoresGroup[n3samp]
 
   currentNetwork
 }

@@ -272,8 +272,15 @@ whichParentSetRows <- function(node,
   rowsNotAllowed <- unlist(rowsNotAllowed, use.names = F)
   rowsNeeded <- allRows[[node]]
   if (!is.null(needOneOf)){
-    rowsNeeded <- rowsThatContain[[node]][needOneOf]
-    rowsNeeded <- unique(unlist(rowsNeeded, use.names = F))
+    if (is.list(needOneOf)){
+      rowsNeeded <- lapply(needOneOf, function(needed){
+        unlist(rowsThatContain[[node]][needed])
+      })
+      rowsNeeded <- do.call("intersection", rowsNeeded)
+    } else {
+      rowsNeeded <- rowsThatContain[[node]][needOneOf]
+      rowsNeeded <- unique(unlist(rowsNeeded, use.names = F))
+    }
   }
   setdiff3(rowsNeeded, rowsNotAllowed)
 }
