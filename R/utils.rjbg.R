@@ -70,6 +70,32 @@ logsumexp <- function(a){
   m + log(sum(exp(b)))
 }
 
+#' Multiple intersection function
+#'
+#' Performs intersection across all the supplied arguments.
+#'
+#' @param x A vector containing a sequence of items (conceptually with no
+#'   duplicated values).
+#' @param y A vector of the same \code{\link{mode}} as \code{x}.
+#' @param ... Further vectors of the same mode as \code{x}.
+#' @return A vector of the same \code{\link{mode}} as \code{x} and \code{y}.
+#' @export
+#' @examples
+#' x <- c(1, 2, 4, 5)
+#' y <- c(2, 3, 4)
+#' intersection(x, y)
+#' z <- c(5, 4, 3)
+#' intersection(x, y, z)
+intersection <- function(x, y, ...){
+  if (missing(y)){
+    unique(unlist(x))
+  }
+   else {
+    if (missing(...)) intersect(x, y)
+    else intersect(x, intersection(y, ...))
+  }
+}
+
 #' Most-recently used stack.
 #'
 #' Stack that is aware of which items have been used most recently.

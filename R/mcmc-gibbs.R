@@ -777,7 +777,6 @@ BNGibbsSampler <- function(data,
                                        prior,
                                        verbose = verbose)
   }
-  
 
   # The current MCMC state is stored a list of the form:
   # currentNetwork[[1]] is the bn
