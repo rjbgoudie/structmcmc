@@ -149,8 +149,8 @@ samplePair <- function(currentNetwork,
                                    allRows         = allRows,
                                    rowsThatContain = rowsThatContain)
   if (length(rows1[[1]]) > 0 && length(rows2[[1]]) > 0){
-    group1Score <- outer(logsumexp(scoresParents[[node1]][rows1[[1]]]),
-                         logsumexp(scoresParents[[node2]][rows2[[1]]]), "+")
+    group1Score <- logsumexp(scoresParents[[node1]][rows1[[1]]]) +
+                   logsumexp(scoresParents[[node2]][rows2[[1]]])
     group1Score <- sum(group1Score)
   } else {
     group1Score <- -Inf
@@ -177,8 +177,8 @@ samplePair <- function(currentNetwork,
                                    allRows         = allRows,
                                    rowsThatContain = rowsThatContain)
   if (length(rows1[[2]]) > 0 && length(rows2[[2]]) > 0){
-    group2Score <- outer(logsumexp(scoresParents[[node1]][rows1[[2]]]),
-                         logsumexp(scoresParents[[node2]][rows2[[2]]]), "+")
+    group2Score <- logsumexp(scoresParents[[node1]][rows1[[2]]]) +
+                   logsumexp(scoresParents[[node2]][rows2[[2]]])
     group2Score <- sum(group2Score)
   } else {
     group2Score <- -Inf
@@ -206,8 +206,8 @@ samplePair <- function(currentNetwork,
                                    allRows         = allRows,
                                    rowsThatContain = rowsThatContain)
   if (length(rows1[[3]]) > 0 && length(rows2[[3]]) > 0){
-    group3Score <- outer(logsumexp(scoresParents[[node1]][rows1[[3]]]),
-                         logsumexp(scoresParents[[node2]][rows2[[3]]]), "+")
+    group3Score <- logsumexp(scoresParents[[node1]][rows1[[3]]])
+                   logsumexp(scoresParents[[node2]][rows2[[3]]])
     group3Score <- sum(group3Score)
   } else {
     group3Score <- -Inf
@@ -343,8 +343,8 @@ samplePair2 <- function(currentNetwork,
 
   getScoreFromRows <- function(rows){
     if (length(rows[[1]]) > 0 && length(rows[[2]]) > 0){
-      groupScore <- outer(logsumexp(scoresParents[[node1]][rows[[1]]]),
-                          logsumexp(scoresParents[[node2]][rows[[2]]]), "+")
+      groupScore <- logsumexp(scoresParents[[node1]][rows[[1]]])
+                    logsumexp(scoresParents[[node2]][rows[[2]]])
       sum(groupScore)
     } else {
       -Inf
@@ -547,10 +547,9 @@ sampleTriple <- function(currentNetwork,
     if (length(rows[[1]]) > 0 &&
         length(rows[[2]]) > 0 &&
         length(rows[[3]]) > 0){
-      groupScore <- outer(logsumexp(scoresParents[[node1]][rows[[1]]]),
-                          logsumexp(scoresParents[[node2]][rows[[2]]]), "+")
-      groupScore <- outer(groupScore,
-                          logsumexp(scoresParents[[node3]][rows[[3]]]), "+")
+      groupScore <- logsumexp(scoresParents[[node1]][rows[[1]]]) +
+                    logsumexp(scoresParents[[node2]][rows[[2]]]) +
+                    logsumexp(scoresParents[[node3]][rows[[3]]])
       sum(groupScore)
     } else {
       -Inf
