@@ -32,6 +32,7 @@ Collate:
     'mcmc-grzeg.R'
     'mcmc-mh.R'
     'mcmc-mj.R'
+    'mcmc-order.R'
     'mcmc-pt.R'
     'mcmc.R'
     'param-bayes.R'
