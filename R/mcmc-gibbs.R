@@ -54,12 +54,12 @@ sampleNode <- function(currentNetwork,
                              rowsThatContain = rowsThatContain)
   scores <- scoresParents[[node]][rows]
   scoresNormalised <- exp(scores - logsumexp(scores))
-  
+
   # sample a new parent set, according to the condtional probability
   samp <- sample.int(length(scores),
                      size = 1,
                      prob = scoresNormalised)
-  
+
   # set the new graph to the sampled graph
   new <- parentsTables[[node]][rows[samp], ]
   currentNetwork[[1]][[node]] <- new[!is.na(new)]
@@ -213,11 +213,12 @@ samplePair <- function(currentNetwork,
     group3Score <- -Inf
   }
 
+
   # sample group
   groupScoresOld <- c(group1Score, group2Score, group3Score)
   groupWeights <- exp(groupScoresOld - logsumexp(groupScoresOld))
   n2SampGroup <- sample.int(3, size = 1, prob = groupWeights)
-  
+
   # sample 'node1' parents
   n1scoresGroup <- scoresParents[[node1]][rows1[[n2SampGroup]]]
   n1probs <- exp(n1scoresGroup - logsumexp(n1scoresGroup))
@@ -232,7 +233,7 @@ samplePair <- function(currentNetwork,
   parents1 <- rows1[[n2SampGroup]]
   new <- parentsTables[[node1]][parents1[n1samp], ]
   currentNetwork[[1]][[node1]] <- new[!is.na(new)]
-  
+
   parents2 <- rows2[[n2SampGroup]]
   new <- parentsTables[[node2]][parents2[n2samp], ]
   currentNetwork[[1]][[node2]] <- new[!is.na(new)]
@@ -584,6 +585,7 @@ sampleTriple <- function(currentNetwork,
 
   # each rows component refers to node1, node2, node3
   rows <- lapply(nets, optionsGivenGraph)
+
   groupScoresOld <- sapply(rows, getScoreFromRows)
 
   # sample group
@@ -740,7 +742,7 @@ BNGibbsSampler <- function(data,
   if (is.null(maxNumberParents)){
     maxNumberParents <- 3
   }
-  
+
   numberOfNodes <- length(initial)
   nodesSeq <- seq_len(numberOfNodes)
 
@@ -754,7 +756,7 @@ BNGibbsSampler <- function(data,
   constraint <- setupConstraint(constraint, initial)
   required <- getRequiredFromConstraint(constraint)
   banned <- getBannedFromConstraint(constraint)
-  
+
   if (is.null(parentsTables)){
     if (verbose){
       cat("Listing all possible parent sets\n")
@@ -800,11 +802,11 @@ BNGibbsSampler <- function(data,
   if (!is.valid.prior(currentNetwork[[3]])){
     stop("Initial network has prior with 0 probability.")
   }
-  
+
   rowsThatContain <- getRowsThatContain(numberOfNodes,
                                         parentsTables,
                                         maxNumberParents)
-  
+
   allRows <- lapply(nodesSeq, function(node){
     seq_len(nrow(parentsTables[[node]]))
   })
