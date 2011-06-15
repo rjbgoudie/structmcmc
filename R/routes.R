@@ -23,7 +23,7 @@
 #' @seealso \code{\link{routesRemoveEdges}}, \code{\link{nonDescendants}}
 routesAddEdges <- function(x, i, j){
   if (length(i) > 0){
-    x + rowSums(x[, i, drop = F]) * x[rep(j, dim(x)[1]), ]
+    x + rowSums2(x[, i, drop = F]) * x[rep(j, dim(x)[1]), ]
   } else {
     x
   }
@@ -44,7 +44,7 @@ routesAddEdges <- function(x, i, j){
 #' @seealso \code{\link{routesAddEdges}}, \code{\link{nonDescendants}}
 routesRemoveEdges <- function(x, i, j){
   if (length(i) > 0){
-    x - rowSums(x[, i, drop = F]) * x[rep(j, dim(x)[1]), ]
+    x - rowSums2(x[, i, drop = F]) * x[rep(j, dim(x)[1]), ]
   } else {
     x
   }
