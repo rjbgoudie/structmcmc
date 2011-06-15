@@ -88,7 +88,11 @@ logsumexp <- function(a){
 #' intersection(x, y, z)
 intersection <- function(x, y, ...){
   if (missing(y)){
-    unique(unlist(x))
+    .Internal(unique(x             = .Internal(unlist(x,
+                                                      recursive = T,
+                                                      use.names = F)),
+                     incomparables = F,
+                     fromLast      = F))
   }
    else {
     if (missing(...)){
