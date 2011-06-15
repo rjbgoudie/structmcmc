@@ -498,27 +498,30 @@ sampleTriple <- function(currentNetwork,
 
     if (length(net[[1]]) > 0){
       descendantOfParent <- descendants[net[[1]]]
-      descendantOfNonParent <- unlist(descendants[setdiff(three, net[[1]])])
+      descendantOfNonParent <- unlist(descendants[setdiff(three, net[[1]])],
+                                      use.names = F)
       needOneOf1 <- lapply(descendantOfParent, function(x){
         setdiff(x, descendantOfNonParent)
       })
-      newNonDescendants1 <- c(intersectAll, unlist(needOneOf1))
+      newNonDescendants1 <- c(intersectAll, unlist(needOneOf1, use.names = F))
     }
     if (length(net[[2]]) > 0){
       descendantOfParent <- descendants[net[[2]]]
-      descendantOfNonParent <- unlist(descendants[setdiff(three, net[[2]])])
+      descendantOfNonParent <- unlist(descendants[setdiff(three, net[[2]])],
+                                      use.names = F)
       needOneOf2 <- lapply(descendantOfParent, function(x){
         setdiff(x, descendantOfNonParent)
       })
-      newNonDescendants2 <- c(intersectAll, unlist(needOneOf2))
+      newNonDescendants2 <- c(intersectAll, unlist(needOneOf2, use.names = F))
     }
     if (length(net[[3]]) > 0){
       descendantOfParent <- descendants[net[[3]]]
-      descendantOfNonParent <- unlist(descendants[setdiff(three, net[[3]])])
+      descendantOfNonParent <- unlist(descendants[setdiff(three, net[[3]])],
+                                      use.names = F)
       needOneOf3 <- lapply(descendantOfParent, function(x){
         setdiff(x, descendantOfNonParent)
       })
-      newNonDescendants3 <- c(intersectAll, unlist(needOneOf3))
+      newNonDescendants3 <- c(intersectAll, unlist(needOneOf3, use.names = F))
     }
     rows1 <- whichParentSetRows(node            = node1,
                                 nonDescendants  = newNonDescendants1,

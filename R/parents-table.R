@@ -274,7 +274,7 @@ whichParentSetRows <- function(node,
   if (!is.null(needOneOf)){
     if (is.list(needOneOf)){
       rowsNeeded <- lapply(needOneOf, function(needed){
-        unlist(rowsThatContain[[node]][needed])
+        unlist(rowsThatContain[[node]][needed], use.names = F)
       })
       rowsNeeded <- do.call("intersection", rowsNeeded)
     } else {
