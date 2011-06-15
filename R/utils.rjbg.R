@@ -91,8 +91,11 @@ intersection <- function(x, y, ...){
     unique(unlist(x))
   }
    else {
-    if (missing(...)) intersect(x, y)
-    else intersect(x, intersection(y, ...))
+    if (missing(...)){
+      intersect2(x, y)
+    } else {
+      intersect2(x, intersection(y, ...))
+    }
   }
 }
 
