@@ -343,7 +343,7 @@ samplePair2 <- function(currentNetwork,
 
   getScoreFromRows <- function(rows){
     if (length(rows[[1]]) > 0 && length(rows[[2]]) > 0){
-      groupScore <- logsumexp(scoresParents[[node1]][rows[[1]]])
+      groupScore <- logsumexp(scoresParents[[node1]][rows[[1]]]) +
                     logsumexp(scoresParents[[node2]][rows[[2]]])
       sum(groupScore)
     } else {
