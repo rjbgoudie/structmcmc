@@ -1662,7 +1662,7 @@ rocplot <- function(true,
   scalesAt <- c(0, seq_len(length(true) * (length(true) - 1)))
 
   nTrueEdgesInTrue <- nEdges(true)
-  nFalseEdgesInTrue <- nNodes(true) ^ 2 - nTrueEdgesInTrue
+  nFalseEdgesInTrue <- nNodes(true) * (nNodes(true) - 1) - nTrueEdgesInTrue
   rocdata <- transform(rocdata,
                        tpr = tp/nTrueEdgesInTrue,
                        fpr = fp/nFalseEdgesInTrue)
