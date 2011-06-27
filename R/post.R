@@ -1419,9 +1419,15 @@ as.roc.parental <- function(x, true, label, ...){
   tp <- pintersect(x, true, count = T)
   fp <- psetdiff(x, true, count = T)
 
+  totalPositives <- nEdges(true)
+  totalPossibleEdges <- nNodes(true) * (nNodes(true) - 1)
+  totalNegatives <- totalPossibleEdges - totalPositives
+
   data.frame(estimate = label,
-             tp   = tp,
-             fp   = fp)
+             tp       = tp,
+             fp       = fp,
+             tpr      = tp/totalPositives,
+             fpr      = fp/totalNegatives)
 }
 
 #' Prepare a parental list for a ROC plot.
@@ -1660,13 +1666,6 @@ rocplot <- function(true,
   rocdata[, "type"] <- factor(rocdata[, "type"])
 
   scalesAt <- c(0, seq_len(length(true) * (length(true) - 1)))
-
-  totalPositives <- nEdges(true)
-  totalPossibleEdges <- nNodes(true) * (nNodes(true) - 1)
-  totalNegatives <- totalPossibleEdges - totalPositives
-  rocdata <- transform(rocdata,
-                       tpr = tp/totalPositives,
-                       fpr = fp/totalNegatives)
 
   xyplot(tpr ~ fpr,
          data         = rocdata,
