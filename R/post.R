@@ -1683,6 +1683,71 @@ rocplot <- function(true,
          ...)
 }
 
+#' Compute the area under an ROC curve.
+#'
+#' Generic function for computing the area under an ROC curve.
+#'
+#' @param x An appropriate object.
+#' @param ... Further arguments passed to method.
+#' @seealso \code{\link{auroc.ep}}, \code{\link{auroc.ep.list}}
+#' @return The area under the ROC curve(s).
+#' @export
+auroc <- function(x, ...){
+  UseMethod("auroc")
+}
+
+#' Compute the area under an ROC curve.
+#'
+#' Compute the area under an ROC curve for an edge probability matrix.
+#'
+#' @param x A matrix of class \code{ep} of edge probabilities
+#' @param true A \code{bn}. The true graph.
+#' @param thresholds A numeric vector of thresholds.
+#' @param label A label
+#' @param verbose A logical. Should progress should be displayed?
+#' @param ... Further arguments (unused)
+#' @seealso \code{\link{auroc}}, \code{\link{auroc.ep.list}}
+#' @return The area under the ROC curve.
+#' @S3method auroc ep
+#' @method auroc ep
+auroc.ep <- function(x, true, thresholds, label, verbose, ...){
+  rocdata <- data.frame(estimate = c(), tp = c(), fp = c())
+
+  for (threshold in thresholds){
+    xgraph <- parentalFromEPThreshold(x, threshold)
+    newdata <- as.roc(xgraph, true, label = label)
+    rocdata <- rbind(rocdata, newdata)
+  }
+  # compute area under curve
+  auc <- function(x, y){
+    sum(diff(x) * y[-length(y)])
+  }
+  auc(rev(rocdata[, "fpr"]), rev(rocdata[, "tpr"]))
+}
+
+#' Compute the area under an ROC curve.
+#'
+#' Compute the area under an ROC curve for a list of edge probability
+#' matrices.
+#'
+#' @param x A list of matrices of class \code{ep} of edge probabilities
+#' @param true A \code{bn}. The true graph.
+#' @param thresholds A numeric vector of thresholds.
+#' @param labels A vector of labels
+#' @param verbose A logical. Should progress should be displayed?
+#' @param ... Further arguments (unused)
+#' @seealso For individual edge probability matrices see
+#'   \code{\link{auroc.ep}}.
+#' @return A vector of areas under ROC.
+#' @S3method auroc ep.list
+#' @method auroc ep.list
+auroc.ep.list <- function(x, true, thresholds, labels, verbose, ...){
+  xSeq <- seq_along(x)
+  sapply(xSeq, function(i){
+    auroc(x[[i]], true, thresholds, labels[[i]])
+  })
+}
+
 #' Cumulative total variation distance.
 #'
 #' method description
