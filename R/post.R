@@ -1661,11 +1661,12 @@ rocplot <- function(true,
 
   scalesAt <- c(0, seq_len(length(true) * (length(true) - 1)))
 
-  nTrueEdgesInTrue <- nEdges(true)
-  nFalseEdgesInTrue <- nNodes(true) * (nNodes(true) - 1) - nTrueEdgesInTrue
+  totalPositives <- nEdges(true)
+  totalPossibleEdges <- nNodes(true) * (nNodes(true) - 1)
+  totalNegatives <- totalPossibleEdges - totalPositives
   rocdata <- transform(rocdata,
-                       tpr = tp/nTrueEdgesInTrue,
-                       fpr = fp/nFalseEdgesInTrue)
+                       tpr = tp/totalPositives,
+                       fpr = fp/totalNegatives)
 
   xyplot(tpr ~ fpr,
          data         = rocdata,
