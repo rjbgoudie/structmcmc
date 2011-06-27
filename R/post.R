@@ -1592,12 +1592,12 @@ rocplot <- function(true,
   if (use.cpdags){
     if (verbose) cat("Converting true to cpdag\n")
     true <- as.cpdag(true)
-    
+
     if (haveMAPs){
       if (verbose) cat("Converting MAPs to cpdag\n")
       maps <- lapply(maps, as.cpdag)
     }
-    
+
     if (haveBNPMLs){
       if (verbose) cat("Converting BNPMLs to cpdag\n")
       bnpmls <- ep(x       = bnpmls,
