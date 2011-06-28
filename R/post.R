@@ -1661,7 +1661,7 @@ rocplot <- function(true,
 
   typeChar <- as.character(rocdata[, "estimate"])
   rocdata[, "type"] <- trimName(typeChar)
-  ll <- c("Gibbs", "M-H", "REV", "Xie", "EP", "BN Post", "MAP")
+  ll <- c("Gibbs", "M-H", "REV", "Xie", "PC", "EP", "BN Post", "MAP")
   rocdata[, "type"] <- factor(rocdata[, "type"], levels = ll)
   rocdata[, "type"] <- factor(rocdata[, "type"])
 
