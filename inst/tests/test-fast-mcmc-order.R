@@ -60,7 +60,8 @@ test_that("Simple test", {
                                allRows         = allRows,
                                rowsThatContain = rowsThatContain)
 
-  expected <- sum(exp(scores[sapply(fam, filterByOrder, order = order)]))
+  expected <- log(sum(exp(scores[sapply(fam, isConsistentWithOrder,
+                                        order = order)])))
 
   expect_equal(actual, expected)
 })

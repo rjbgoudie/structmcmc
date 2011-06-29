@@ -331,7 +331,17 @@ orderPriorUniformStructures <- function(x){
   1/numberDAGsGivenOrder(x)
 }
 
-filterByOrder <- function(x, order){
+#' Is a BN consistent with an order?
+#'
+#' Tests whether a graph is consistent with a node ordering.
+#'
+#' @param x A \code{bn}.
+#' @param order A vector length \code{numberOfNodes}, giving a permuation
+#'   of \code{1:numberOfNodes}.
+#' @return A logical indicating whether the BN is consistent with the
+#'   supplied ordering.
+#' @export
+isConsistentWithOrder <- function(x, order){
   stopifnot(inherits(x, "bn"))
   is.ok <- T
   for (node in seq_along(order)){
@@ -344,7 +354,7 @@ filterByOrder <- function(x, order){
 }
 
 numberDAGsGivenOrder <- function(fam, order){
-  length(fam[sapply(fam, filterByOrder, order = order)])
+  length(fam[sapply(fam, isConsistentWithOrder, order = order)])
 }
 
 numberOrdersGivenDAG <- function(x){
@@ -356,7 +366,7 @@ numberOrdersGivenDAG <- function(x){
   ok <- vector("logical", nrow(p))
   for (i in 1:nrow(p)){
     order <- p[i, ]
-    ok[i] <- filterByOrder(x, order)
+    ok[i] <- isConsistentWithOrder(x, order)
   }
   sum(ok)
 }
