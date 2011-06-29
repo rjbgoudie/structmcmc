@@ -289,6 +289,60 @@ statistics.sampler <- function(x, names, ...){
 #' @method length sampler
 length.sampler <- function(x, ...){
   stopifnot(inherits(x, "sampler"))
+  steps(x) - burnin(x)
+}
+
+#' Extract burnin
+#'
+#' Extracts the amount of burnin used in a sampler
+#'
+#' @param x A sampler
+#' @param ... Further arguments passed to method
+#' @return An integer amount of burnin
+#' @export
+#' @seealso \code{\link{steps.sampler}}
+burnin <- function(x, ...){
+  UseMethod("burnin")
+}
+
+#' Extract burnin
+#'
+#' Extracts the amount of burnin used in a sampler
+#'
+#' @param x A sampler
+#' @param ... Further arguments, currently unused
+#' @return An integer amount of burnin
+#' @S3method burnin sampler
+#' @method burnin sampler
+burnin.sampler <- function(x, ...){
+  stopifnot(inherits(x, "sampler"))
+  get("nBurnin", envir = environment(x))
+}
+
+#' Extract burnin
+#'
+#' Extracts the amount of burnin used in a sampler
+#'
+#' @param x A sampler
+#' @param ... Further arguments passed to method
+#' @return An integer amount of burnin
+#' @export
+#' @seealso \code{\link{steps.sampler}}
+burnin <- function(x, ...){
+  UseMethod("burnin")
+}
+
+#' Number of samples drawn.
+#'
+#' Returns the number of samples (MCMC steps) drawn in the supplied sampler.
+#'
+#' @param x A sampler
+#' @param ... Further arguments, currently unused
+#' @return The number of samples (steps) that have been drawn.
+#' @S3method length sampler
+#' @method length sampler
+steps.sampler <- function(x, ...){
+  stopifnot(inherits(x, "sampler"))
   get("nSteps", envir = environment(x))
 }
 
