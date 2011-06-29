@@ -21,7 +21,6 @@ test_that("Simple test", {
   scores <- logScoreMultDir(fam, theData)
 
   priors <- rep(1/25, 25)
-  scores <- scores - max(scores)
   expected <- exp(scores)*priors/sum(exp(scores)*priors)
 
   numberOfBurnIn <- 1000
