@@ -244,7 +244,7 @@ BNOrderSampler <- function(data,
 
     logAccProb <- logLikNewOrder -
                   logLikOldOrder +
-                  log(orderPrior(proposalOrder)) - 
+                  log(orderPrior(proposalOrder)) -
                   log(orderPrior(currentOrder))
 
     logp <- log(runif(1, min = 0, max = 1))
