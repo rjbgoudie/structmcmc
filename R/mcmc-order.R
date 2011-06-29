@@ -353,6 +353,16 @@ isConsistentWithOrder <- function(x, order){
   is.ok
 }
 
+#' Number of BNs consistent with an order.
+#'
+#' Computes the number of BNs from a list of BNs that are consistent with an
+#' order
+#'
+#' @param fam A \code{parental.list}
+#' @param order A vector length \code{numberOfNodes}, giving a permuation
+#'   of \code{1:numberOfNodes}.
+#' @return A numeric. The number of BNs consistent with the order
+#' @export
 numberDAGsGivenOrder <- function(fam, order){
   length(fam[sapply(fam, isConsistentWithOrder, order = order)])
 }
