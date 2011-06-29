@@ -8,10 +8,10 @@
 #
 # Copyright 2008 Robert J. B. Goudie, University of Warwick
 
-#' Sample the parents of a single node (Gibbs sampler).
+#' Log likelihood of an order
 #'
-#' Sample from posterior distribution on graph, conditional on
-#' all the edges, except those that go into node \code{node}.
+#' Evaluates the log likelihood of an order, using the efficient decompostion
+#' used by Freidman and Koller (2003) (equation 8).
 #'
 #' @param order A vector length \code{numberOfNodes}, giving a permuation
 #'   of \code{1:numberOfNodes}.
@@ -30,6 +30,11 @@
 #' @return Returns the sampled network. A \code{currentNetwork} object.
 #' @export
 #' @seealso \code{\link{BNGibbsSampler}}, \code{\link{samplePair}}
+#' @references
+#'   Friedman, N., & Koller, D. (2003). \emph{Being Bayesian about Network
+#'   Structure. A Bayesian Approach to Structure Discovery in Bayesian
+#'   Networks}. Machine Learning, 50, 95-125.
+#'   \url{http://dx.doi.org/10.1023/A:1020249912095}
 logOrderLikelihood <- function(order,
                                numberOfNodes,
                                nodesSeq,
@@ -48,7 +53,7 @@ logOrderLikelihood <- function(order,
                                rowsThatContain = rowsThatContain)
     score[i] <- logsumexp(scoresParents[[i]][rows])
   }
-  exp(sum(score))
+  sum(score)
 }
 
 #' Draw order proposal using flip-operator
