@@ -323,6 +323,65 @@ dagGivenOrder <- function(order,
   out
 }
 
+#' Probability of a graph given an order.
+#'
+#' @param x A BN
+#' @param order A vector length \code{numberOfNodes}, giving a permuation
+#'   of \code{1:numberOfNodes}.
+#' @param numberOfNodes The number of nodes in the network. A numeric vector 
+#'   of length 1.
+#' @param nodesSeq The vector 1:nNodes(currentNetwork). (Supplied as an 
+#'   argument for possible speed gain)
+#' @param scoresParents A list of the form returned by 
+#'   \code{scoreParentsTable()}
+#' @param parentsTables A list of tables of the form returned by 
+#'   \code{enumerateParentsTable()}
+#' @param allRows The vector 1:nrow(parentsTables). (Supplied as an 
+#'   argument for possible speed gain)
+#' @param rowsThatContain A list of the form created by 
+#'   \code{getRowsThatContain()}
+#' @return The probabilty of that graph given the order.
+#' @export
+graphProbGivenOrder <- function(x,
+                                order,
+                                numberOfNodes,
+                                nodesSeq,
+                                scoresParents,
+                                parentsTables,
+                                allRows,
+                                rowsThatContain){
+  scoreGivenOrder <- vector("numeric", numberOfNodes)
+  for (i in seq_along(order)){
+    predecessors <- order[seq_len(i)]
+    node <- order[i]
+    rows <- whichParentSetRows(node            = node,
+                               nonDescendants  = predecessors,
+                               numberOfNodes   = numberOfNodes,
+                               allRows         = allRows,
+                               rowsThatContain = rowsThatContain)
+    scores <- scoresParents[[node]][rows]
+    scoresNormalised <- exp(scores - logsumexp(scores))
+
+    tabList <- list()
+    tab <- parentsTables[[node]][, ]
+    for (j in 1:nrow(tab)){
+      new <- tab[j, ]
+      tabList <- c(tabList, list(new[!is.na(new)]))
+    }
+
+    which3 <- function (el, set){
+        which(sapply(set, function(x) {
+            identical(el, x)
+        }))
+    }
+
+    this <- which3(x[[node]], tabList)
+    this2 <- which(rows == this)
+    scoreGivenOrder[i] <- scoresNormalised[this2]
+  }
+  prod(scoreGivenOrder)
+}
+
 orderPriorUniform <- function(x){
   1
 }
