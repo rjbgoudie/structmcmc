@@ -129,11 +129,11 @@ localLogScoreNormal <- function(node,
                   ncol = eta + 1,
                   nrow = n)
     # solve should throw an error on singularity, or ill-conditioning.
-    # mx <- crossprod(Xi) -
-    #       n/(n + 1) * crossprod(Xi, phi) %*%
-    #       solve(crossprod(phi)) %*% crossprod(phi, Xi)
-    phiQR <- qr(phi)
-    mx <- crossprod(Xi) - n/(n + 1) * crossprod(crossprod(qr.Q(phiQR), Xi))
+    mx <- crossprod(Xi) -
+          n/(n + 1) * crossprod(Xi, phi) %*%
+          solve(crossprod(phi)) %*% crossprod(phi, Xi)
+    # phiQR <- qr(phi)
+    # mx <- crossprod(Xi) - n/(n + 1) * crossprod(crossprod(qr.Q(phiQR), Xi))
     out <- -(eta + 1)/2 * log(1 + n) - n/2 * log(mx)
     (cache[[id]] <- out)
   }
