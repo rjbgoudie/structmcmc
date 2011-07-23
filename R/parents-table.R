@@ -184,7 +184,7 @@ scoreParentsTableNode <- function(node,
                                   parentsTable,
                                   logScoreLocalFUN,
                                   logScoreParameters,
-                                  prior){
+                                  localPrior){
   i <- 0
   nr <- nrow(parentsTable)
   scores <- vector("numeric", length = nr)
