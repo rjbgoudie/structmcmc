@@ -118,8 +118,9 @@ enumerateParentsTableNode <- function(node,
 #'   of a Bayesian Network.
 #' @param logScoreParameters A list of parameters that are passed to
 #'   \code{logScoreFUN}.
-#' @param prior  function that returns the prior score of the
-#'   supplied bn.
+#' @param loalPriors A list of functions of the same length as the number of
+#'   nodes that returns the local prior score of the corresponding node, given a
+#'   numeric vector of parents.
 #' @param verbose A logical of length 1, indicating whether verbose output
 #'   should be printed.
 #' @return List of numeric vectors of scores.
@@ -130,7 +131,7 @@ enumerateParentsTableNode <- function(node,
 scoreParentsTable <- function(parentsTables,
                               logScoreLocalFUN,
                               logScoreParameters,
-                              prior,
+                              localPriors,
                               verbose = F){
   numberOfNodes <- length(parentsTables)
   numberOfRows <- sapply(parentsTables, nrow)
@@ -140,15 +141,16 @@ scoreParentsTable <- function(parentsTables,
     progress <- txtProgressBar(max = totalNumberRows, style = 3)
     setTxtProgressBar(progress, 0)
   }
-  
+
   scoresList <- vector("list", numberOfNodes)
   for (node in nodesSeq){
+    localPrior <- localPriors[[node]]
     scoresList[[node]] <- scoreParentsTableNode(
                           node               = node,
                           parentsTable       = parentsTables[[node]],
                           logScoreLocalFUN   = logScoreLocalFUN,
                           logScoreParameters = logScoreParameters,
-                          prior              = prior)
+                          localPrior         = localPrior)
     if (isTRUE(verbose)){
       new <- getTxtProgressBar(progress) + numberOfRows[[node]]
       setTxtProgressBar(progress, new)
@@ -173,8 +175,8 @@ scoreParentsTable <- function(parentsTables,
 #'   of a Bayesian Network.
 #' @param logScoreParameters A list of parameters that are passed to
 #'   \code{logScoreFUN}.
-#' @param prior  function that returns the prior score of the
-#'   supplied bn.
+#' @param localPrior  function that returns the prior score of the
+#'   supplied parents.
 #' @return A numeric vector of scores.
 #' @export
 #' @seealso \code{\link{scoreParentsTable}}
@@ -194,7 +196,7 @@ scoreParentsTableNode <- function(node,
                                   logScoreParameters = logScoreParameters,
                                   cache              = new.env(),
                                   checkInput         = F)
-    scores[i] <- log(prior(parents)) + scores[i]
+    scores[i] <- log(localPrior(parents)) + scores[i]
     i <- i + 1
   }
   scores

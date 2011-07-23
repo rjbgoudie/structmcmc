@@ -2,7 +2,7 @@
 \alias{BNGibbsSampler}
 \title{Gibbs sampler for Bayesian Networks.}
 \usage{BNGibbsSampler(data, initial=empty(ncol(data) - 1),
-    prior=priorUniform(), return="network",
+    localPriors, return="network",
     logScoreFUN=logScoreMultDirFUN(),
     logScoreParameters=list(hyperparameters = "qi"),
     constraint, statistics=list(nEdges = nEdges),
@@ -26,8 +26,10 @@
   \item{data}{The data.}
   \item{initial}{An object of class 'bn'. The starting value of the
 MCMC.}
-  \item{prior}{A function that returns the prior score of the
-supplied bn.}
+  \item{localPriors}{A list of functions of the same length as \code{initial}
+that returns the local prior score of the corresponding node, given a
+numeric vector of parents. The default value \code{NULL} uses an
+improper uniform prior.}
   \item{return}{Either "network" or "contingency".}
   \item{logScoreFUN}{A list of four elements:
 \describe{
@@ -41,7 +43,7 @@ Bayesian Network}
 pre-computation required by the logScore functions.}
 }
 For Multinomial-Dirichlet models, \code{\link{logScoreMultDirFUN}} 
-returns the appropriate list; for Normal models with Zellner g-priors,
+returns the appropriate list; for Normal models with Zellner g-gs,
 \code{\link{logScoreNormalFUN}} returns the appropriate list.}
   \item{logScoreParameters}{A list of parameters that are passed to
 logScoreFUN.}

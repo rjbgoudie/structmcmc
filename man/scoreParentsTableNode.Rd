@@ -23,6 +23,6 @@ created by \code{enumerateParentsTable()}.}
 of a Bayesian Network.}
   \item{logScoreParameters}{A list of parameters that are passed to
 \code{logScoreFUN}.}
-  \item{prior}{function that returns the prior score of the
-supplied bn.}
+  \item{localPrior}{function that returns the prior score of the
+supplied parents.}
 }

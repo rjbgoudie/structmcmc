@@ -686,9 +686,11 @@ sampleTriple <- function(currentNetwork,
 #'
 #' @param data The data.
 #' @param initial An object of class 'bn'. The starting value of the
-#'                       MCMC.
-#' @param prior A function that returns the prior score of the
-#'                       supplied bn.
+#'   MCMC.
+#' @param localPriors A list of functions of the same length as \code{initial}
+#'   that returns the local prior score of the corresponding node, given a
+#'   numeric vector of parents. The default value \code{NULL} uses an
+#'   improper uniform prior.
 #' @param return Either "network" or "contingency".
 #' @param logScoreFUN A list of four elements:
 #'   \describe{
@@ -740,7 +742,7 @@ sampleTriple <- function(currentNetwork,
 #'   \code{\link{samplePair}} and \code{\link{sampleNode}}.
 BNGibbsSampler <- function(data,
                            initial            = empty(ncol(data) - 1),
-                           prior              = priorUniform(),
+                           localPriors        = NULL,
                            return             = "network",
                            logScoreFUN        = logScoreMultDirFUN(),
                            logScoreParameters = list(hyperparameters = "qi"),
@@ -752,10 +754,27 @@ BNGibbsSampler <- function(data,
                            keepTape           = F,
                            parentsTables      = NULL,
                            scoresParents      = NULL){
+  numberOfNodes <- length(initial)
+  nodesSeq <- seq_len(numberOfNodes)
+  if (is.null(maxNumberParents)){
+    maxNumberParents <- 3
+  }
+  if (is.null(localPriors)){
+    localPriors <- lapply(nodesSeq, function(x){
+      function(parents){
+        if (length(parents) > maxNumberParents){
+          0
+        } else {
+          1
+        }
+      }
+    })
+  }
   stopifnot("bn" %in% class(initial),
             is.valid(initial),
             ncol(as.matrix(data)) ==   length(initial),
-            is.function(prior),
+            length(localPriors)   == length(initial),
+            all(sapply(localPriors, is.function)),
             return               %in% c("network", "contingency"),
             class(statistics)     == "list",
             all(lapply(statistics, class) == "function"),
@@ -763,13 +782,13 @@ BNGibbsSampler <- function(data,
             is.logical(keepTape),
             length(keepTape)      ==   1,
             sum(moveprobs)        ==   1)
-  if (is.null(maxNumberParents)){
-    maxNumberParents <- 3
+
+  prior <- function(net){
+    locals <- sapply(nodesSeq, function(node){
+      localPriors[[node]](net[[node]])
+    })
+    sum(locals)
   }
-
-  numberOfNodes <- length(initial)
-  nodesSeq <- seq_len(numberOfNodes)
-
   # Set up for fast computation of logScore
   logScoreLocalFUN <- logScoreFUN$local
   prepareDataFUN <- logScoreFUN$prepare
@@ -800,7 +819,7 @@ BNGibbsSampler <- function(data,
     scoresParents <- scoreParentsTable(parentsTables,
                                        logScoreLocalFUN,
                                        logScoreParameters,
-                                       prior,
+                                       localPriors,
                                        verbose = verbose)
   }
 
