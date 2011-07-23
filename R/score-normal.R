@@ -107,7 +107,7 @@ localLogScoreNormal <- function(node,
                                 logScoreParameters,
                                 cache,
                                 checkInput = T){
-  if (isTRUE(checkInput)){
+  if (checkInput){
     stopifnot(class(node)                    %in% c("numeric", "integer"),
               length(node)                   ==   1,
               class(parents)                 %in% c("numeric", "integer"),
@@ -123,17 +123,17 @@ localLogScoreNormal <- function(node,
   }
   else {
     eta <- length(parents)
-    n <- nrow(logScoreParameters$data)
-    Xi <- logScoreParameters$data[, node]
-    phi <- matrix(data = c(rep(1, n), logScoreParameters$data[, parents]),
-                  ncol = eta + 1,
-                  nrow = n)
-    # solve should throw an error on singularity, or ill-conditioning.
-    mx <- crossprod(Xi) -
-          n/(n + 1) * crossprod(Xi, phi) %*%
-          solve(crossprod(phi)) %*% crossprod(phi, Xi)
-    # phiQR <- qr(phi)
-    # mx <- crossprod(Xi) - n/(n + 1) * crossprod(crossprod(qr.Q(phiQR), Xi))
+    n <- dim(logScoreParameters[["data"]])[1L]
+    Xi <- logScoreParameters[["data"]][, node]
+    phi <- .Internal(cbind(0, 1, logScoreParameters$data[, parents]))
+    crprodphi <- .Internal(crossprod(phi, NULL))
+    d <- array(0, c(eta + 1L, eta + 1L))
+    d[1L + 0L:eta * (eta + 2L)] <- 1L
+    solvephi <- .Call("La_dgesv", crprodphi, d, tol = 1e-07, PACKAGE = "base")
+    crossprodphixi <- .Internal(crossprod(Xi, phi))
+    mx <- .Internal(crossprod(Xi, NULL)) -
+          n/(n + 1) * crossprodphixi %*%
+          solvephi %*% .Internal(t.default(crossprodphixi))
     out <- -(eta + 1)/2 * log(1 + n) - n/2 * log(mx)
     (cache[[id]] <- out)
   }
