@@ -43,7 +43,7 @@ Bayesian Network}
 pre-computation required by the logScore functions.}
 }
 For Multinomial-Dirichlet models, \code{\link{logScoreMultDirFUN}} 
-returns the appropriate list; for Normal models with Zellner g-gs,
+returns the appropriate list; for Normal models with Zellner g-priors,
 \code{\link{logScoreNormalFUN}} returns the appropriate list.}
   \item{logScoreParameters}{A list of parameters that are passed to
 logScoreFUN.}
