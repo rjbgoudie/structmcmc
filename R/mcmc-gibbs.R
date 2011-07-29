@@ -679,6 +679,279 @@ sampleTriple <- function(currentNetwork,
   currentNetwork
 }
 
+
+#' Sample the parents of a quadruple of nodes (Gibbs sampler).
+#'
+#' Sample from posterior distribution on graph, conditional on
+#' all the edges, except for those corresponding to the parents sets of 
+#' four nodes.
+#'
+#' @param currentNetwork A \code{currentNetwork} object
+#' @param numberOfNodes The number of nodes in the network. A numeric vector 
+#'   of length 1.
+#' @param nodesSeq The vector 1:nNodes(currentNetwork). (Supplied as an 
+#'   argument for possible speed gain)
+#' @param scoresParents A list of the form returned by 
+#'   \code{scoreParentsTable()}
+#' @param parentsTables A list of tables of the form returned by 
+#'   \code{enumerateParentsTable()}
+#' @param allRows The vector 1:nrow(parentsTables). (Supplied as an 
+#'   argument for possible speed gain)
+#' @param rowsThatContain A list of the form created by 
+#'   \code{getRowsThatContain()}
+#' @param logScoreFUN A list of four elements:
+#'   \describe{
+#'     \item{offline}{A function that computes the logScore of a Bayesian 
+#'                    Network}
+#'     \item{online}{A function that incrementally computes the logScore of a 
+#'                   Bayesian Network}
+#'     \item{local}{A function that computes the local logScore of a 
+#'                  Bayesian Network}
+#'     \item{prepare}{A function that prepares the data, and any further 
+#'                    pre-computation required by the logScore functions.}
+#'   }
+#'   For Multinomial-Dirichlet models, \code{\link{logScoreMultDirFUN}} 
+#'   returns the appropriate list; for Normal models with Zellner g-priors,
+#'   \code{\link{logScoreNormalFUN}} returns the appropriate list.
+#' @param logScoreParameters A list of parameters that are passed to
+#'   logScoreFUN.
+#' @return Returns the sampled network. A \code{currentNetwork} object.
+#' @export
+#' @seealso \code{\link{BNGibbsSampler}}, \code{\link{sampleNode}}
+sampleQuadruple <- function(currentNetwork,
+                            numberOfNodes,
+                            nodesSeq,
+                            scoresParents,
+                            parentsTables,
+                            allRows,
+                            rowsThatContain,
+                            logScoreFUN,
+                            logScoreParameters){
+  node1 <- sample.int(numberOfNodes, size = 1)
+  choices <- setdiff3(nodesSeq, node1)
+  node2 <- choices[sample.int(length(choices), size = 1)]
+  choices <- setdiff3(choices, node2)
+  node3 <- choices[sample.int(length(choices), size = 1)]
+  choices <- setdiff3(choices, node3)
+  node4 <- choices[sample.int(length(choices), size = 1)]
+
+  nodes <- c(node1, node2, node3, node4)
+  currentNetwork[[2]] <- routesRemoveEdges(currentNetwork[[2]],
+                                           currentNetwork[[1]][[node1]],
+                                           node1)
+  currentNetwork[[2]] <- routesRemoveEdges(currentNetwork[[2]],
+                                           currentNetwork[[1]][[node2]],
+                                           node2)
+  currentNetwork[[2]] <- routesRemoveEdges(currentNetwork[[2]],
+                                           currentNetwork[[1]][[node3]],
+                                           node3)
+  currentNetwork[[2]] <- routesRemoveEdges(currentNetwork[[2]],
+                                           currentNetwork[[1]][[node4]],
+                                           node4)
+
+  # indexed by node1, node2, node3
+  # output is for real node numbers
+  nonDescendants <- vector("list", 4)
+  descendants <- vector("list", 4)
+  nonDescendants[[1]] <- nonDescendants(currentNetwork[[2]], node1)
+  descendants[[1]] <- setdiff3(nodesSeq, nonDescendants[[1]])
+  nonDescendants[[2]] <- nonDescendants(currentNetwork[[2]], node2)
+  descendants[[2]] <- setdiff3(nodesSeq, nonDescendants[[2]])
+  nonDescendants[[3]] <- nonDescendants(currentNetwork[[2]], node3)
+  descendants[[3]] <- setdiff3(nodesSeq, nonDescendants[[3]])
+  nonDescendants[[4]] <- nonDescendants(currentNetwork[[2]], node4)
+  descendants[[4]] <- setdiff3(nodesSeq, nonDescendants[[4]])
+
+  optionsGivenGraph <- function(net){
+    intersectAll <- intersection(nonDescendants[[1]],
+                                 nonDescendants[[2]],
+                                 nonDescendants[[3]],
+                                 nonDescendants[[4]])
+
+    newNonDescendants1 <- intersectAll
+    newNonDescendants2 <- intersectAll
+    newNonDescendants3 <- intersectAll
+    newNonDescendants4 <- intersectAll
+
+    needOneOf1 <- NULL
+    needOneOf2 <- NULL
+    needOneOf3 <- NULL
+    needOneOf4 <- NULL
+
+    four <- 1:4
+
+    if (length(net[[1]]) > 0){
+      descendantOfParent <- descendants[net[[1]]]
+      descendantOfNonParent <- unlist(descendants[setdiff3(four, net[[1]])],
+                                      use.names = F)
+      needOneOf1 <- lapply(descendantOfParent, function(x){
+        setdiff3(x, descendantOfNonParent)
+      })
+      newNonDescendants1 <- c(intersectAll, unlist(needOneOf1, use.names = F))
+    }
+    if (length(net[[2]]) > 0){
+      descendantOfParent <- descendants[net[[2]]]
+      descendantOfNonParent <- unlist(descendants[setdiff3(four, net[[2]])],
+                                      use.names = F)
+      needOneOf2 <- lapply(descendantOfParent, function(x){
+        setdiff3(x, descendantOfNonParent)
+      })
+      newNonDescendants2 <- c(intersectAll, unlist(needOneOf2, use.names = F))
+    }
+    if (length(net[[3]]) > 0){
+      descendantOfParent <- descendants[net[[3]]]
+      descendantOfNonParent <- unlist(descendants[setdiff3(four, net[[3]])],
+                                      use.names = F)
+      needOneOf3 <- lapply(descendantOfParent, function(x){
+        setdiff3(x, descendantOfNonParent)
+      })
+      newNonDescendants3 <- c(intersectAll, unlist(needOneOf3, use.names = F))
+    }
+    if (length(net[[4]]) > 0){
+      descendantOfParent <- descendants[net[[4]]]
+      descendantOfNonParent <- unlist(descendants[setdiff3(four, net[[4]])],
+                                      use.names = F)
+      needOneOf4 <- lapply(descendantOfParent, function(x){
+        setdiff3(x, descendantOfNonParent)
+      })
+      newNonDescendants4 <- c(intersectAll, unlist(needOneOf4, use.names = F))
+    }
+    rows1 <- whichParentSetRows(node            = node1,
+                                nonDescendants  = newNonDescendants1,
+                                needOneOf       = needOneOf1,
+                                numberOfNodes   = numberOfNodes,
+                                allRows         = allRows,
+                                rowsThatContain = rowsThatContain)
+
+    rows2 <- whichParentSetRows(node            = node2,
+                                nonDescendants  = newNonDescendants2,
+                                needOneOf       = needOneOf2,
+                                numberOfNodes   = numberOfNodes,
+                                allRows         = allRows,
+                                rowsThatContain = rowsThatContain)
+
+    rows3 <- whichParentSetRows(node            = node3,
+                                nonDescendants  = newNonDescendants3,
+                                needOneOf       = needOneOf3,
+                                numberOfNodes   = numberOfNodes,
+                                allRows         = allRows,
+                                rowsThatContain = rowsThatContain)
+    rows4 <- whichParentSetRows(node            = node4,
+                                nonDescendants  = newNonDescendants4,
+                                needOneOf       = needOneOf4,
+                                numberOfNodes   = numberOfNodes,
+                                allRows         = allRows,
+                                rowsThatContain = rowsThatContain)
+    list(rows1, rows2, rows3, rows4)
+  }
+
+  getScoreFromRows <- function(rows){
+    if (length(rows[[1]]) > 0 &&
+        length(rows[[2]]) > 0 &&
+        length(rows[[3]]) > 0 &&
+        length(rows[[4]]) > 0){
+      logsumexp(scoresParents[[node1]][rows[[1]]]) +
+        logsumexp(scoresParents[[node2]][rows[[2]]]) +
+        logsumexp(scoresParents[[node3]][rows[[3]]]) +
+        logsumexp(scoresParents[[node3]][rows[[4]]])
+    } else {
+      -Inf
+    }
+  }
+
+  nets <- enumerateBNSpace(4)
+
+  # each rows component refers to node1, node2, node3
+  rows <- lapply(nets, optionsGivenGraph)
+
+  groupScoresOld <- sapply(rows, getScoreFromRows)
+
+  # sample group
+  groupWeights <- exp(groupScoresOld - logsumexp(groupScoresOld))
+  sampGroup <- sample.int(length(nets), size = 1, prob = groupWeights)
+
+  # sample 'node1' parents
+  n1scoresGroup <- scoresParents[[node1]][rows[[sampGroup]][[1]]]
+  n1probs <- exp(n1scoresGroup - logsumexp(n1scoresGroup))
+  n1samp <- sample.int(length(n1scoresGroup), size = 1, prob = n1probs)
+
+  # sample 'node2' parents
+  n2scoresGroup <- scoresParents[[node2]][rows[[sampGroup]][[2]]]
+  n2probs <- exp(n2scoresGroup - logsumexp(n2scoresGroup))
+  n2samp <- sample.int(length(n2scoresGroup), size = 1, prob = n2probs)
+
+  # sample 'node3' parents
+  n3scoresGroup <- scoresParents[[node3]][rows[[sampGroup]][[3]]]
+  n3probs <- exp(n3scoresGroup - logsumexp(n3scoresGroup))
+  n3samp <- sample.int(length(n3scoresGroup), size = 1, prob = n3probs)
+
+  # sample 'node4' parents
+  n4scoresGroup <- scoresParents[[node4]][rows[[sampGroup]][[4]]]
+  n4probs <- exp(n4scoresGroup - logsumexp(n4scoresGroup))
+  n4samp <- sample.int(length(n4scoresGroup), size = 1, prob = n4probs)
+
+  # generate the new graph
+  parents1 <- rows[[sampGroup]][[1]]
+  new <- parentsTables[[node1]][parents1[n1samp], ]
+  currentNetwork[[1]][[node1]] <- new[!is.na(new)]
+
+  parents2 <- rows[[sampGroup]][[2]]
+  new <- parentsTables[[node2]][parents2[n2samp], ]
+  currentNetwork[[1]][[node2]] <- new[!is.na(new)]
+
+  parents3 <- rows[[sampGroup]][[3]]
+  new <- parentsTables[[node3]][parents3[n3samp], ]
+  currentNetwork[[1]][[node3]] <- new[!is.na(new)]
+
+  parents4 <- rows[[sampGroup]][[4]]
+  new <- parentsTables[[node4]][parents4[n4samp], ]
+  currentNetwork[[1]][[node4]] <- new[!is.na(new)]
+
+  currentNetwork[[2]] <- routesAddEdges(currentNetwork[[2]],
+                                        currentNetwork[[1]][[node1]],
+                                        node1)
+  currentNetwork[[2]] <- routesAddEdges(currentNetwork[[2]],
+                                        currentNetwork[[1]][[node2]],
+                                        node2)
+  currentNetwork[[2]] <- routesAddEdges(currentNetwork[[2]],
+                                        currentNetwork[[1]][[node3]],
+                                        node3)
+  currentNetwork[[2]] <- routesAddEdges(currentNetwork[[2]],
+                                        currentNetwork[[1]][[node4]],
+                                        node4)
+  currentNetwork[[4]][currentNetwork[[1]][[node1]], node1] <- 1
+  if (length(currentNetwork[[1]][[node1]]) == 0){
+    currentNetwork[[4]][, node1] <- 0
+  } else {
+    currentNetwork[[4]][-currentNetwork[[1]][[node1]], node1] <- 0
+  }
+  currentNetwork[[4]][currentNetwork[[1]][[node2]], node2] <- 1
+  if (length(currentNetwork[[1]][[node2]]) == 0){
+    currentNetwork[[4]][, node2] <- 0
+  } else {
+    currentNetwork[[4]][-currentNetwork[[1]][[node2]], node2] <- 0
+  }
+  currentNetwork[[4]][currentNetwork[[1]][[node3]], node3] <- 1
+  if (length(currentNetwork[[1]][[node3]]) == 0){
+    currentNetwork[[4]][, node3] <- 0
+  } else {
+    currentNetwork[[4]][-currentNetwork[[1]][[node3]], node3] <- 0
+  }
+  currentNetwork[[4]][currentNetwork[[1]][[node4]], node4] <- 1
+  if (length(currentNetwork[[1]][[node4]]) == 0){
+    currentNetwork[[4]][, node4] <- 0
+  } else {
+    currentNetwork[[4]][-currentNetwork[[1]][[node4]], node4] <- 0
+  }
+
+  currentNetwork[[5]][node1] <- n1scoresGroup[n1samp]
+  currentNetwork[[5]][node2] <- n2scoresGroup[n2samp]
+  currentNetwork[[5]][node3] <- n3scoresGroup[n3samp]
+  currentNetwork[[5]][node4] <- n3scoresGroup[n4samp]
+
+  currentNetwork
+}
+
 #' Gibbs sampler for Bayesian Networks.
 #'
 #' Create a MCMC sampler for Bayesian Networks. The sampler samples Bayesian
@@ -749,7 +1022,7 @@ BNGibbsSampler <- function(data,
                            constraint         = NULL,
                            statistics         = list(nEdges = nEdges),
                            maxNumberParents   = NULL,
-                           moveprobs          = c(0.9, 0.1, 0),
+                           moveprobs          = c(0.9, 0.1, 0, 0),
                            verbose            = F,
                            keepTape           = F,
                            parentsTables      = NULL,
@@ -1001,6 +1274,16 @@ BNGibbsSampler <- function(data,
                                     rowsThatContain = rowsThatContain)
     } else if (u < sum(moveprobs[1:3])) {
       currentNetwork <<- sampleTriple(currentNetwork  = currentNetwork,
+                                      numberOfNodes   = numberOfNodes,
+                                      nodesSeq        = nodesSeq,
+                                      scoresParents   = scoresParents,
+                                      parentsTables   = parentsTables,
+                                      allRows         = allRows,
+                                      rowsThatContain = rowsThatContain,
+                                      logScoreFUN     = logScoreFUN,
+                                      logScoreParameters = logScoreParameters)
+    } else if (u < sum(moveprobs[1:4])) {
+      currentNetwork <<- sampleQuadruple(currentNetwork  = currentNetwork,
                                       numberOfNodes   = numberOfNodes,
                                       nodesSeq        = nodesSeq,
                                       scoresParents   = scoresParents,

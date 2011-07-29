@@ -6,8 +6,8 @@
     logScoreFUN=logScoreMultDirFUN(),
     logScoreParameters=list(hyperparameters = "qi"),
     constraint, statistics=list(nEdges = nEdges),
-    maxNumberParents, moveprobs=c(0.9, 0.1, 0), verbose=F,
-    keepTape=F, parentsTables, scoresParents)}
+    maxNumberParents, moveprobs=c(0.9, 0.1, 0, 0),
+    verbose=F, keepTape=F, parentsTables, scoresParents)}
 
 \description{
   Gibbs sampler for Bayesian Networks.
