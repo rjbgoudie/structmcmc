@@ -323,6 +323,54 @@ dagGivenOrder <- function(order,
   out
 }
 
+#' Get modal graph given an order.
+#' 
+#' @param order A vector length \code{numberOfNodes}, giving a permuation
+#'   of \code{1:numberOfNodes}.
+#' @param numberOfNodes The number of nodes in the network. A numeric vector 
+#'   of length 1.
+#' @param nodesSeq The vector 1:nNodes(currentNetwork). (Supplied as an 
+#'   argument for possible speed gain)
+#' @param scoresParents A list of the form returned by 
+#'   \code{scoreParentsTable()}
+#' @param parentsTables A list of tables of the form returned by 
+#'   \code{enumerateParentsTable()}
+#' @param allRows The vector 1:nrow(parentsTables). (Supplied as an 
+#'   argument for possible speed gain)
+#' @param rowsThatContain A list of the form created by 
+#'   \code{getRowsThatContain()}
+#' @return Returns the modal network. A \code{currentNetwork} object.
+#' @export
+topScoringGraph <- function(order,
+                            numberOfNodes,
+                            nodesSeq,
+                            scoresParents,
+                            parentsTables,
+                            allRows,
+                            rowsThatContain){
+  out <- empty(numberOfNodes, "bn")
+  scoreGivenOrder <- vector("numeric", numberOfNodes)
+  for (i in seq_along(order)){
+    predecessors <- order[seq_len(i)]
+    node <- order[i]
+    rows <- whichParentSetRows(node            = node,
+                               nonDescendants  = predecessors,
+                               numberOfNodes   = numberOfNodes,
+                               allRows         = allRows,
+                               rowsThatContain = rowsThatContain)
+    scores <- scoresParents[[node]][rows]
+    scoresNormalised <- exp(scores - logsumexp(scores))
+
+    # sample a new parent set, according to the condtional probability
+    samp <- which(scoresNormalised == max(scoresNormalised))[1]
+    scoreGivenOrder[i] <- scoresNormalised[samp]
+    new <- parentsTables[[node]][rows[samp], ]
+    out[[node]] <- new[!is.na(new)]
+  }
+  attr(out, "scoreGivenOrder") <- prod(scoreGivenOrder)
+  out
+}
+
 #' Probability of a graph given an order.
 #'
 #' @param x A BN
@@ -440,6 +488,7 @@ numberOrdersGivenDAG <- function(x){
   sum(ok)
 }
 
+
 ellisWong <- function(orders, sampler, epsilon = 0.05){
   numberOfNodes <- get("numberOfNodes", env = environment(sampler))
   nodesSeq <- get("nodesSeq", env = environment(sampler))
@@ -460,6 +509,13 @@ ellisWong <- function(orders, sampler, epsilon = 0.05){
     i <- 1
 
     while (!enough){
+      p1 <- topScoringGraph(order,
+                            numberOfNodes,
+                            nodesSeq,
+                            scoresParents,
+                            parentsTables,
+                            allRows,
+                            rowsThatContain)
       new <- dagGivenOrder(order,
                           numberOfNodes,
                           nodesSeq,
@@ -475,34 +531,51 @@ ellisWong <- function(orders, sampler, epsilon = 0.05){
         uniqueScores <- c(uniqueScores, attr(new, "scoreGivenOrder"))
       }
       i <- i + 1
-      if (i > 1000){
-        enough <- sampledEnough(uniqueScores, scores, epsilon)
+      if (i > 10){
+        enough <- sampledEnough(uniqueScores = uniqueScores,
+                                n            = length(scores),
+                                epsilon      = epsilon,
+                                p1           = p1)
       }
-      if (i > 10000){
-        warning("not finishing")
+      if (i > 100){
+        cat("Not finishing")
+        enough <- T
+      }
+
+      if (enough){
+        cat("Finishing after:", n)
       }
     }
     samples <- c(samples, thisSamples)
   }
+  samples
 }
 
-sampledEnough <- function(uniqueScores, scores, epsilon){
+sampledEnough <- function(uniqueScores, n, epsilon, p1){
+  # what happens if two graphs have the same probability given a graph
+  # then 
+
   sorted <- sort(uniqueScores, decreasing = T)
   uniqueScoresSeq <- seq_len(length(uniqueScores) - 1)
   ratios <- sorted[uniqueScoresSeq + 1]/sorted[uniqueScoresSeq]
   alpha <- max(ratios, na.rm = T)
 
-  k <- log(epsilon * (1 - alpha) / max(uniqueScores))/log(alpha)
-  k <- ceiling(k)
+  if (alpha < 1 && alpha > 0){
+    k <- log(epsilon * (1 - alpha) / attr(p1, "scoreGivenOrder"))/log(alpha)
+    k <- ceiling(k)
 
-  numerator <- log(epsilon) - log(k)
+    numerator <- log(epsilon) - log(k)
+    # cat("k: ", k, "\n")
 
-  if (length(uniqueScores) >= k){
-    denominator <- log(1 - uniqueScores[k])
-
-    n <- length(scores)
-    if (n >= numerator/denominator){
-      T
+    if (length(uniqueScores) >= k){
+      denominator <- log(1 - sorted[k])
+      # cat("numerator/denominator: ", numerator/denominator, "\n")
+      # cat("n: ", n, "\n")
+      if (n >= numerator/denominator){
+        T
+      } else {
+        F
+      }
     } else {
       F
     }

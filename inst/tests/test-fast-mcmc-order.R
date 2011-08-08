@@ -134,3 +134,86 @@ test_that("Simple test", {
   expect_equal(actual, expected)
 })
 
+test_that("4 node problem", {
+  set.seed(5141)
+  x1 <- as.factor(c(1, 1, 0, 1, 0, 0, 1, 0, 1, 0))
+  x2 <- as.factor(c(0, 1, 0, 1, 0, 1, 1, 0, 1, 0))
+  x3 <- as.factor(c(0, 1, 1, 0, 0, 1, 1, 0, 1, 0))
+  x4 <- as.factor(c(0, 1, 0, 0, 0, 0, 0, 0, 1, 0))
+  theData <- data.frame(x1 = x1, x2 = x2,  x3 = x3, x4 = x4)
+
+  fam <- enumerateBNSpace(4)
+  scores <- logScoreMultDir(fam, theData)
+
+  priors <- 1
+  scores <- scores - max(scores)
+  expected <- exp(scores)*priors/sum(exp(scores)*priors)
+
+  numberOfBurnIn <- 15000
+  numberOfSamples <- 15000
+
+  expectedTable <- data.frame(expected = expected * numberOfSamples)
+  row.names(expectedTable) <- lapply(fam, function(network){
+    paste(network, sep = "", collapse = ",")
+  })
+
+  empty <- list(c(),c(),c())
+
+  priorFlat <- function(network) {
+    1
+  }
+
+  sampler <- BNOrderSampler(data             = theData,
+                            initial          = 1:4,
+                            prior            = priorFlat,
+                            maxNumberParents = 2)
+
+  orders <- lapply(seq_len(numberOfBurnIn), sampler)
+  orders <- lapply(seq_len(numberOfSamples), sampler)
+
+  samples <- ellisWong(orders, sampler)
+
+  graphProbGivenOrder(uniqueSamples[[2]],
+                      order,
+                      numberOfNodes,
+                      nodesSeq,
+                      scoresParents,
+                      parentsTables,
+                      allRows,
+                      rowsThatContain)
+})
+
+
+test_that("9 node problem", {
+  set.seed(5141)
+  x1 <- as.factor(sample(c(0, 1), size = 25, replace = T))
+  x2 <- as.factor(sample(c(0, 1), size = 25, replace = T))
+  x3 <- as.factor(sample(c(0, 1), size = 25, replace = T))
+  x4 <- as.factor(sample(c(0, 1), size = 25, replace = T))
+  x5 <- as.factor(sample(c(0, 1), size = 25, replace = T))
+  x6 <- as.factor(sample(c(0, 1), size = 25, replace = T))
+  x7 <- as.factor(sample(c(0, 1), size = 25, replace = T))
+  x8 <- as.factor(sample(c(0, 1), size = 25, replace = T))
+  x9 <- as.factor(sample(c(0, 1), size = 25, replace = T))
+  theData <- data.frame(x1 = x1, x2 = x2,  x3 = x3, x4 = x4, x5 = x5,
+                        x6 = x6, x7 = x7,  x8 = x8, x9 = x9)
+
+  sampler <- BNOrderSampler(data             = theData,
+                            initial          = 1:9,
+                            prior            = priorFlat,
+                            maxNumberParents = 2)
+
+  orders <- lapply(seq_len(numberOfBurnIn), sampler)
+  orders <- lapply(seq_len(numberOfSamples), sampler)
+
+  samples <- ellisWong(orders, sampler)
+
+  graphProbGivenOrder(uniqueSamples[[2]],
+                      order,
+                      numberOfNodes,
+                      nodesSeq,
+                      scoresParents,
+                      parentsTables,
+                      allRows,
+                      rowsThatContain)
+})
