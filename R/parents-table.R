@@ -268,30 +268,12 @@ whichParentSetRows <- function(node,
                                needOneOf = NULL,
                                numberOfNodes,
                                allRows,
-                               rowsThatContain,
-                               parentsTables,
-                               parentsTablesStr){
+                               rowsThatContain){
   nodesSeq <- seq_len(numberOfNodes)
   nodesNotAllowed <- setdiff3(nodesSeq, nonDescendants)
   rowsNotAllowed <- rowsThatContain[[node]][nodesNotAllowed]
   rowsNotAllowed <- unlist(rowsNotAllowed, use.names = F)
   rowsNeeded <- allRows[[node]]
-
-  # rowsNeeded <- whichRowsNeeded(rowsNeeded, node, needOneOf, rowsThatContain,
-  #                               parentsTables, nonDescendants)
-  # one <- setdiff3(rowsNeeded, rowsNotAllowed)
-
-  rowsNeeded <- allRows[[node]]
-  two <- whichRowsNeeded2(rowsNeeded, node, needOneOf, rowsThatContain,
-                                parentsTables, parentsTablesStr, nonDescendants, rowsNotAllowed)
-  # if (!identical(sort.int(one), sort.int(two))){
-  #   browser()
-  # }
-  two
-}
-
-whichRowsNeeded <- function(rowsNeeded, node, needOneOf, rowsThatContain,
-                            parentsTables, nonDescendants){
   if (!is.null(needOneOf)){
     if (is.list(needOneOf)){
       rowsNeeded <- lapply(needOneOf, function(needed){
@@ -303,124 +285,5 @@ whichRowsNeeded <- function(rowsNeeded, node, needOneOf, rowsThatContain,
       rowsNeeded <- unique(unlist(rowsNeeded, use.names = F))
     }
   }
-  rowsNeeded
-}
-
-whichRowsNeeded2 <- function(rowsNeeded, node, needOneOf, rowsThatContain,
-                             parentsTables, parentsTablesStr, nonDescendants, rowsNotAllowed){
-  if (!is.null(needOneOf)){
-    if (is.list(needOneOf)){
-      notEssential <- setdiff(nonDescendants, unlist(needOneOf))
-      parentSets <- rjbg(needOneOf)
-      if (length(notEssential) > 0){
-        parentSets <- set_outer_product(parentSets, powerset(notEssential))
-      }
-      parentSets <- lapply(parentSets, sort.int)
-      parentSetsString <- unlist(lapply(parentSets, paste, collapse = ","), use.names = F)
-      rowsNeeded <- match(parentSetsString, parentsTablesStr[[node]])
-    } else {
-      rowsNeeded <- rowsThatContain[[node]][needOneOf]
-      rowsNeeded <- unique(unlist(rowsNeeded, use.names = F))
-      rowsNeeded <- setdiff3(rowsNeeded, rowsNotAllowed)
-    }
-  } else {
-    rowsNeeded <- setdiff3(rowsNeeded, rowsNotAllowed)
-  }
-  rowsNeeded
-}
-
-remove_duplicates <- function(x){
-  already <- vector()
-  for (i in 1:length(x)){
-    x[[i]] <- x[[i]][!x[[i]] %in% already]
-    already <- c(already, x[[i]])
-  }
-  x
-}
-
-set_outer_product <- function(x, y){
-  l <- vector("list", length = length(x) * length(y))
-  for (i in 1:length(x)){
-    for (j in 1:length(y)){
-      l[[(i - 1) * length(y) + j]] <- c(x[[i]], y[[j]])
-    }
-  }
-  l
-}
-
-set_outer_products <- function(x, y, ...){
-  if (missing(...)) {
-      set_outer_product(x, y)
-  }
-  else {
-      set_outer_product(x, set_outer_products(y, ...))
-  }
-}
-
-powerset_except_empty <- function(x){
-  unlist(lapply(seq_along(x),
-    function(numberOfParents) {
-      combn3(x, numberOfParents)
-  }), recursive = F)
-}
-
-powerset <- function(x){
-  unlist(lapply(c(0, seq_along(x)),
-    function(numberOfParents) {
-      combn3(x, numberOfParents)
-  }), recursive = F)
-}
-
-whichParentSetRows2 <- function(node,
-                               nonDescendants,
-                               needOneOf = NULL,
-                               numberOfNodes,
-                               allRows,
-                               rowsThatContain){
-  #needOneOf <- remove_duplicates(needOneOf)
-  powersets <- lapply(needOneOf, powerset_except_empty)
-  out <- do.call("set_outer_products", powersets)
-  out <- lapply(out, unique)
-  out <- lapply(out, sort.int)
-  unique(out)
-}
-
-whichParentSetRows3 <- function(node,
-                               nonDescendants,
-                               needOneOf = NULL,
-                               numberOfNodes,
-                               allRows,
-                               rowsThatContain){
-  
-}
-
-rjbg <- function(needOneOf, already = vector("numeric", 0), accountedfor = vector("numeric", 0), level = 0){
-  if (length(needOneOf) > 0){
-    new <- list()
-    left <- setdiff(needOneOf[[1]], c(already, accountedfor))
-    power <- powerset_except_empty(left)
-    for (this in power){
-      fresh <- rjbg(needOneOf[-1], c(already, this), c(accountedfor, needOneOf[[1]]), level = level + 1)
-      if (length(fresh) > 0){
-        new <- c(new, lapply(fresh, function(x) c(this, x)))
-      } else {
-        new <- c(new, list(this))
-      }
-    }
-
-    # Don't need anything more to satisfy this condition
-    if (length(intersect(needOneOf[[1]], already)) > 0){
-      fresh <- rjbg(needOneOf[-1], already, c(accountedfor, needOneOf[[1]]), level = level + 1)
-      if (length(fresh) > 0){
-        new <- c(new, fresh)
-      } else {
-        new <- c(new, list(integer(0)))
-      }
-    }
-    #cat(paste(new, collapse = ","), "\n")
-    new
-  } else {
-    #cat("empty\n")
-    list()
-  }
+  setdiff3(rowsNeeded, rowsNotAllowed)
 }

@@ -43,7 +43,7 @@ test_that("2-node Bayesian Network", {
 
   sampler <- BNGibbsSampler(data             = theData,
                             initial          = empty(ncol(theData), "bn"),
-                            localPriors      = priorUniform(),
+                            prior            = priorUniform(),
                             maxNumberParents = 2,
                             moveprobs = c(0, 1, 0))
 

@@ -7,8 +7,7 @@
     logScoreParameters=list(hyperparameters = "qi"),
     constraint, statistics=list(nEdges = nEdges),
     maxNumberParents, moveprobs=c(0.9, 0.1, 0, 0),
-    verbose=F, keepTape=F, parentsTables, parentsTablesStr,
-    scoresParents)}
+    verbose=F, keepTape=F, parentsTables, scoresParents)}
 
 \description{
   Gibbs sampler for Bayesian Networks.
@@ -72,7 +71,6 @@ output should be printed.}
 Enabling this option can be very memory-intensive.}
   \item{parentsTables}{A list of tables of the form returned by 
 \code{enumerateParentsTable()}}
-  \item{parentsTablesStr}{...}
   \item{scoresParents}{A list of the form returned by 
 \code{scoreParentsTable()}}
 }

@@ -2,9 +2,8 @@
 \alias{sampleTriple}
 \title{Sample the parents of a triple of nodes (Gibbs sampler).}
 \usage{sampleTriple(currentNetwork, numberOfNodes, nodesSeq,
-    scoresParents, parentsTables, parentsTablesStr,
-    allRows, rowsThatContain, logScoreFUN,
-    logScoreParameters)}
+    scoresParents, parentsTables, allRows, rowsThatContain,
+    logScoreFUN, logScoreParameters)}
 
 \description{
   Sample the parents of a triple of nodes (Gibbs sampler).
@@ -27,7 +26,6 @@ argument for possible speed gain)}
 \code{scoreParentsTable()}}
   \item{parentsTables}{A list of tables of the form returned by 
 \code{enumerateParentsTable()}}
-  \item{parentsTablesStr}{...}
   \item{allRows}{The vector 1:nrow(parentsTables). (Supplied as an 
 argument for possible speed gain)}
   \item{rowsThatContain}{A list of the form created by 
