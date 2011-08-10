@@ -2,7 +2,8 @@
 \alias{whichParentSetRows}
 \title{Find relevants rows of a parentsTable.}
 \usage{whichParentSetRows(node, nonDescendants, needOneOf,
-    numberOfNodes, allRows, rowsThatContain)}
+    numberOfNodes, allRows, rowsThatContain, parentsTables,
+    parentsTablesStr)}
 
 \description{
   Find relevants rows of a parentsTable.

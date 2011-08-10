@@ -2,7 +2,8 @@
 \alias{sampleNode}
 \title{Sample the parents of a single node (Gibbs sampler).}
 \usage{sampleNode(currentNetwork, numberOfNodes, nodesSeq,
-    scoresParents, parentsTables, allRows, rowsThatContain)}
+    scoresParents, parentsTables, parentsTablesStr,
+    allRows, rowsThatContain)}
 
 \description{
   Sample the parents of a single node (Gibbs sampler).
@@ -25,6 +26,7 @@ argument for possible speed gain)}
 \code{scoreParentsTable()}}
   \item{parentsTables}{A list of tables of the form returned by 
 \code{enumerateParentsTable()}}
+  \item{parentsTablesStr}{...}
   \item{allRows}{The vector 1:nrow(parentsTables). (Supplied as an 
 argument for possible speed gain)}
   \item{rowsThatContain}{A list of the form created by 
