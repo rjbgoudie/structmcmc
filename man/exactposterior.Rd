@@ -1,7 +1,8 @@
 \name{exactposterior}
 \alias{exactposterior}
 \title{Posterior distribution on Bayesian networks.}
-\usage{exactposterior(data, prior=priorUniform(),
+\usage{exactposterior(data,
+    localPriors=priorUniform(empty(ncol(data), "bn")),
     logScoreFUN=logScoreMultDirFUN(),
     logScoreParameters=list(hyperparameters = "qi"),
     constraint, maxNumberParents, verbose=T)}
@@ -19,8 +20,10 @@
 \code{\link{priorGraph}}, \code{\link{priorUniform}}.}
 \arguments{
   \item{data}{The data.}
-  \item{prior}{A function that returns the prior score of the
-supplied bn.}
+  \item{localPriors}{A list of functions of the same length as \code{initial}
+that returns the local prior score of the corresponding node, given a
+numeric vector of parents. The default value \code{NULL} uses an
+improper uniform prior.}
   \item{logScoreFUN}{A list of four elements:
 \describe{
 \item{offline}{A function that computes the logScore of a Bayesian 

@@ -2,7 +2,8 @@
 \alias{mcmcposterior}
 \title{Posterior distribution on Bayesian networks.}
 \usage{mcmcposterior(data, sampler=BNSampler,
-    prior=priorUniform(), logScoreFUN=logScoreMultDirFUN(),
+    localPriors=priorUniform(initial),
+    logScoreFUN=logScoreMultDirFUN(),
     logScoreParameters=list(hyperparameters = "qi"),
     constraint, maxNumberParents, nSamples=50000, time=F,
     nBurnin=10000, initial=empty(ncol(data), "bn"),
@@ -22,8 +23,10 @@ Example priors \code{\link{priorGraph}}, \code{\link{priorUniform}}.}
 \arguments{
   \item{data}{The data.}
   \item{sampler}{A BNSampler. eg BNSampler or BNGibbsSampler etc}
-  \item{prior}{A function that returns the prior score of the
-supplied bn.}
+  \item{localPriors}{A list of functions of the same length as \code{initial}
+that returns the local prior score of the corresponding node, given a
+numeric vector of parents. The default value \code{NULL} uses an
+improper uniform prior.}
   \item{logScoreFUN}{A list of four elements:
 \describe{
 \item{offline}{A function that computes the logScore of a Bayesian 

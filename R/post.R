@@ -15,8 +15,10 @@
 #' @param data The data.
 #' @param method One of "exact", "mc3", "gibbs", "mj-mcmc". "mh-mcmc" is a 
 #'   synonym of "mc3".
-#' @param prior A function that returns the prior score of the
-#'                       supplied bn.
+#' @param localPriors A list of functions of the same length as \code{initial}
+#'   that returns the local prior score of the corresponding node, given a
+#'   numeric vector of parents. The default value \code{NULL} uses an
+#'   improper uniform prior.
 #' @param logScoreFUN A list of four elements:
 #'   \describe{
 #'     \item{offline}{A function that computes the logScore of a Bayesian 
@@ -70,7 +72,7 @@
 #' ep(mcmc)
 posterior <- function(data,
                       method             = "mc3",
-                      prior              = priorUniform(),
+                      localPriors        = priorUniform(initial),
                       logScoreFUN        = logScoreMultDirFUN(),
                       logScoreParameters = list(hyperparameters = "qi"),
                       constraint         = NULL,
@@ -85,7 +87,7 @@ posterior <- function(data,
 
   if (method == "exact"){
     exactposterior(data,
-                   prior,
+                   localPriors,
                    logScoreFUN,
                    logScoreParameters,
                    constraint,
@@ -94,7 +96,7 @@ posterior <- function(data,
   } else if (method == "mc3" || method == "mh-mcmc"){
     mcmcposterior(data,
                   sampler = BNSampler,
-                  prior,
+                  localPriors,
                   logScoreFUN,
                   logScoreParameters,
                   constraint,
@@ -107,7 +109,7 @@ posterior <- function(data,
   } else if (method == "gibbs") {
     mcmcposterior(data,
                   sampler = BNGibbsSampler,
-                  prior,
+                  localPriors,
                   logScoreFUN,
                   logScoreParameters,
                   constraint,
@@ -120,7 +122,7 @@ posterior <- function(data,
   } else if (method == "mj-mcmc") {
     mcmcposterior(data,
                   sampler = BNSamplerMJ,
-                  prior,
+                  localPriors,
                   logScoreFUN,
                   logScoreParameters,
                   constraint,
@@ -140,8 +142,10 @@ posterior <- function(data,
 #' Use one of a number of methods to get the posterior distribution
 #'
 #' @param data The data.
-#' @param prior A function that returns the prior score of the
-#'                       supplied bn.
+#' @param localPriors A list of functions of the same length as \code{initial}
+#'   that returns the local prior score of the corresponding node, given a
+#'   numeric vector of parents. The default value \code{NULL} uses an
+#'   improper uniform prior.
 #' @param logScoreFUN A list of four elements:
 #'   \describe{
 #'     \item{offline}{A function that computes the logScore of a Bayesian 
@@ -170,7 +174,8 @@ posterior <- function(data,
 #' @seealso \code{\link{posterior}}. Example priors
 #'   \code{\link{priorGraph}}, \code{\link{priorUniform}}.
 exactposterior <- function(data,
-                           prior              = priorUniform(),
+                           localPriors        =
+                             priorUniform(empty(ncol(data), "bn")),
                            logScoreFUN        = logScoreMultDirFUN(),
                            logScoreParameters = list(hyperparameters = "qi"),
                            constraint         = NULL,
@@ -211,7 +216,7 @@ exactposterior <- function(data,
     close(progress)
   }
 
-  logpriors <- log(sapply(bnspace, prior))
+  logpriors <- log(sapply(bnspace, function(x) eval.prior(x, localPriors)))
   logScore <- lsmd + logpriors
   
   bnpost(bnspace     = bnspace,
@@ -226,8 +231,10 @@ exactposterior <- function(data,
 #'
 #' @param data The data.
 #' @param sampler A BNSampler. eg BNSampler or BNGibbsSampler etc
-#' @param prior A function that returns the prior score of the
-#'                       supplied bn.
+#' @param localPriors A list of functions of the same length as \code{initial}
+#'   that returns the local prior score of the corresponding node, given a
+#'   numeric vector of parents. The default value \code{NULL} uses an
+#'   improper uniform prior.
 #' @param logScoreFUN A list of four elements:
 #'   \describe{
 #'     \item{offline}{A function that computes the logScore of a Bayesian 
@@ -266,7 +273,7 @@ exactposterior <- function(data,
 #' @export
 mcmcposterior <- function(data,
                           sampler            = BNSampler,
-                          prior              = priorUniform(),
+                          localPriors        = priorUniform(initial),
                           logScoreFUN        = logScoreMultDirFUN(),
                           logScoreParameters = list(hyperparameters = "qi"),
                           constraint         = NULL,
@@ -285,7 +292,7 @@ mcmcposterior <- function(data,
 
   sampler <- sampler(data               = data,
                      initial            = initial,
-                     prior              = prior,
+                     localPriors        = localPriors,
                      logScoreFUN        = logScoreFUN,
                      logScoreParameters = logScoreParameters,
                      constraint         = constraint,
@@ -331,17 +338,17 @@ gp <- function(x, ...){
 #' x2 <- factor(c(0, 1, 0, 1))
 #' dat <- data.frame(x1 = x1, x2 = x2)
 #' 
-#' prior <- function(net) 1
 #' initial <- bn(c(), c())
+#' localPriors <- priorUniform(initial)
 #' 
-#' sampler <- BNSampler(dat, initial, prior)
+#' sampler <- BNSampler(dat, initial, localPriors)
 #' samples <- draw(sampler, n = 50)
 #' mpost <- bnpostmcmc(sampler, samples)
 #' 
 #' ep(mpost)
 #' 
 #' initial <- bn(c(), c(1))
-#' sampler2 <- BNSampler(dat, initial, prior)
+#' sampler2 <- BNSampler(dat, initial, localPriors)
 #' samples2 <- draw(sampler2, n = 50)
 #' mpost2 <- bnpostmcmc(sampler2, samples2)
 #' 
