@@ -32,11 +32,8 @@ test_that("3-node Bayesian Network", {
 
   empty <- list(c(),c(),c())
 
-  priorFlat <- function(network) {
-    1/length(fam)
-  }
-
-  sampler <- BNSampler(theData, bn(integer(0), integer(0), integer(0)), priorFlat)
+  initial <- bn(integer(0), integer(0), integer(0))
+  sampler <- BNSampler(theData, initial, localPriors = priorUniform(initial))
   samples <- lapply(seq_len(numberOfBurnIn), sampler)
   samples <- lapply(seq_len(numberOfSamples), sampler)
 
@@ -72,11 +69,8 @@ test_that("2-node Bayesian Network", {
 
   empty <- list(c(),c(),c())
 
-  priorFlat <- function(network) {
-    1/length(fam)
-  }
-
-  sampler <- BNSampler(theData, do.call("bn", lapply(seq_len(numberOfNodes),function(i) integer(0))), priorFlat)
+  initial <- empty(ncol(theData), "bn")
+  sampler <- BNSampler(theData, initial, localPriors = priorUniform(initial))
   samples <- lapply(seq_len(numberOfBurnIn), sampler)
   samples <- lapply(seq_len(numberOfSamples), sampler)
 

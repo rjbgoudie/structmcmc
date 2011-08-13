@@ -41,9 +41,10 @@ test_that("2-node Bayesian Network", {
 
   expectedProbs <- exp(scores - logsumexp(exactScores))
 
+  initial <- empty(ncol(theData), "bn")
   sampler <- BNGibbsSampler(data             = theData,
-                            initial          = empty(ncol(theData), "bn"),
-                            prior            = priorUniform(),
+                            initial          = initial,
+                            localPriors      = priorUniform(initial),
                             maxNumberParents = 2,
                             moveprobs = c(0, 1, 0))
 
@@ -99,25 +100,26 @@ test_that("5-node Bayesian Network", {
   actual[is.na(actual)] <- 0
   d <- cbind(expected = round(expected), actual = actual)
   d <- transform(d, diff = round(actual - expected))
-  
+
   chisq.test(actual, p = expectedProbs)
 
+  initial <- empty(ncol(theData), "bn")
   sampler2 <- BNSampler(data             = theData,
-                            initial          = empty(ncol(theData), "bn"),
-                            prior            = priorUniform(),
-                            maxNumberParents = 5)
+                        initial          = initial,
+                        localPriors      = priorUniform(initial),
+                        maxNumberParents = 5)
 
   samples2 <- draw(sampler = sampler2,
                   n       = 50000,
                   burnin  = 10000,
                   verbose = T)
   mh <- bnpostmcmc(sampler2, samples2)
-  
-  
-  
+
+
+  initial <- empty(ncol(theData), "bn")
   sampler <- BNGibbsSampler(data             = theData,
-                            initial          = empty(ncol(theData), "bn"),
-                            prior            = priorUniform(),
+                            initial          = initial,
+                            localPriors      = priorUniform(initial),
                             maxNumberParents = 5,
                             moveprobs = c(0, 1, 0))
 
@@ -135,9 +137,10 @@ test_that("5-node Bayesian Network", {
                   burnin  = 10,
                   verbose = T)
 
+  initial <- empty(ncol(theData), "bn")
   sampler3 <- BNGibbsSampler(data             = theData,
-                             initial          = empty(ncol(theData), "bn"),
-                             prior            = priorUniform(),
+                             initial          = initial,
+                             localPriors      = priorUniform(initial),
                              maxNumberParents = 5,
                              moveprobs = c(0, 0.9, 0.1))
 
@@ -146,10 +149,11 @@ test_that("5-node Bayesian Network", {
                    burnin  = 10000,
                    verbose = T)
    gibbs3 <- bnpostmcmc(sampler3, samples3)
-   
+
+   initial <- empty(ncol(theData), "bn")
    sampler4 <- BNGibbsSampler(data             = theData,
-                              initial          = empty(ncol(theData), "bn"),
-                              prior            = priorUniform(),
+                              initial          = initial,
+                              localPriors      = priorUniform(initial),
                               maxNumberParents = 5,
                               moveprobs = c(0.75, 0.2, 0.05))
 
@@ -159,9 +163,10 @@ test_that("5-node Bayesian Network", {
                     verbose = T)
     gibbs4 <- bnpostmcmc(sampler4, samples4)
 
+    initial <- empty(ncol(theData), "bn")
     sampler5 <- BNGibbsSampler(data             = theData,
-                               initial          = empty(ncol(theData), "bn"),
-                               prior            = priorUniform(),
+                               initial          = initial,
+                               localPriors      = priorUniform(initial),
                                maxNumberParents = 5,
                                moveprobs = c(0, 0, 1))
 
@@ -200,9 +205,10 @@ test_that("2-node Bayesian Network", {
   scores <- scores - max(scores)
   expectedProbs <- exp(scores)*priors/sum(exp(scores)*priors)
 
+  initial <- empty(ncol(dat), "bn")
   sampler <- BNGibbsSampler(data             = theData,
-                            initial          = empty(ncol(dat), "bn"),
-                            prior            = priorUniform(),
+                            initial          = initial,
+                            localPriors      = priorUniform(initial),
                             maxNumberParents = 2,
                             moveprobs = c(0, 0, 1))
 

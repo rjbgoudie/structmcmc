@@ -19,7 +19,7 @@ test_that("Two node, very simple", {
 
   sampler <- BNSampler(data = data,
                        initial = initial,
-                       prior = function(x) 1,
+                       localPriors = priorUniform(initial),
                        logScoreFUN = list(offline = logScoreNormalOffline,
                                           online  = logScoreNormalIncremental,
                                           prepare = logScoreNormalPrepare))
@@ -157,15 +157,12 @@ test_that("Steven Hill's example", {
   row.names(expectedTable) <- lapply(fam, function(network){
     paste(network, sep = "", collapse = ",")})
 
-  priorFlat <- function(network) {
-    1/length(fam)
-  }
   initial <- bn(integer(0), integer(0), integer(0))
 
   set.seed(2221)
   sampler <- BNSampler(data = dat,
                        initial = initial,
-                       prior = priorFlat,
+                       localPriors = priorUniform(initial),
                        logScoreFUN = list(offline = logScoreNormalOffline,
                                           online  = logScoreNormalIncremental,
                                           prepare = logScoreNormalPrepare))

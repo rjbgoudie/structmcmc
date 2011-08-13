@@ -17,11 +17,10 @@ test_that("cumep", {
   dat <- data.frame(x1 = x1, x2 = x2)
 
   nSamples <- 5
-  prior <- function(net) 1
   initial <- bn(integer(0), integer(0))
 
-  sampler1 <- BNSampler(dat, initial, prior)
-  sampler2 <- BNSampler(dat, initial, prior)
+  sampler1 <- BNSampler(dat, initial, localPriors = priorUniform(initial))
+  sampler2 <- BNSampler(dat, initial, localPriors = priorUniform(initial))
   sink(tempfile())
   samples1 <- draw(sampler1, n = nSamples, burnin = 0)
   
@@ -234,11 +233,10 @@ test_that("cumtvd", {
   dat <- data.frame(x1 = x1, x2 = x2)
 
   nSamples <- 5
-  prior <- function(net) 1
   initial <- bn(integer(0), integer(0))
 
-  sampler1 <- BNSampler(dat, initial, prior)
-  sampler2 <- BNSampler(dat, initial, prior)
+  sampler1 <- BNSampler(dat, initial, localPriors = priorUniform(initial))
+  sampler2 <- BNSampler(dat, initial, localPriors = priorUniform(initial))
   sink(tempfile())
   samples1 <- draw(sampler1, nSamples)
   # this is a mistake,
@@ -286,11 +284,10 @@ test_that("cumep with sampler", {
   dat <- data.frame(x1 = x1, x2 = x2)
 
   nSamples <- 5
-  prior <- function(net) 1
   initial <- bn(integer(0), integer(0))
 
-  sampler1 <- BNSampler(dat, initial, prior)
-  sampler2 <- BNSampler(dat, initial, prior)
+  sampler1 <- BNSampler(dat, initial, localPriors = priorUniform(initial))
+  sampler2 <- BNSampler(dat, initial, localPriors = priorUniform(initial))
   sink(tempfile())
   samples1 <- draw(sampler1, n = nSamples, burnin = 0)
 
@@ -335,14 +332,13 @@ test_that("gelman", {
   dat <- data.frame(x1 = x1, x2 = x2)
 
   nSamples <- 5000
-  prior <- function(net) 1
   initial <- bn(integer(0), integer(0))
 
-  sampler1 <- BNSampler(dat, initial, prior)
-  sampler2 <- BNSampler(dat, initial, prior)
+  sampler1 <- BNSampler(dat, initial, localPriors = priorUniform(initial))
+  sampler2 <- BNSampler(dat, initial, localPriors = priorUniform(initial))
 
-  samples1 <- draw(sampler1, n = nSamples, burnin = 0)
-  samples2 <- draw(sampler2, n = nSamples, burnin = 0)
+  samples1 <- draw(sampler1, n = nSamples, burnin = 0, verbose = F)
+  samples2 <- draw(sampler2, n = nSamples, burnin = 0, verbose = F)
 
   expected <- c(0.99980265162473, 0.999812178389246)
   expect_equal(gelman(samplers(sampler1, sampler2)), expected)
