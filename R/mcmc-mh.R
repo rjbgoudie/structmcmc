@@ -146,7 +146,10 @@ edgeIsFlippable <- function(routes, adjacency, constraintT, maxNumberParents){
 #'
 #' @param data The data.
 #' @param initial An object of class 'bn'. The starting value of the MCMC.
-#' @param prior A function that returns the prior score of the supplied bn.
+#' @param localPriors A list of functions of the same length as \code{initial}
+#'   that returns the local prior score of the corresponding node, given a
+#'   numeric vector of parents. The default value \code{NULL} uses an
+#'   improper uniform prior.
 #' @param return Either "network" or "contingency".
 #' @param logScoreFUN A list of four elements:
 #'   \describe{
@@ -197,16 +200,16 @@ edgeIsFlippable <- function(routes, adjacency, constraintT, maxNumberParents){
 #' x <- data.frame(x1 = x1, x2 = x2, x3 = x3)
 #' 
 #' initial <- empty(3, "bn")
-#' prior <- priorUniform()
+#' prior <- priorUniform(initial)
 #' 
-#' sampler <- BNSampler(data = x, initial = initial, prior = prior)
+#' sampler <- BNSampler(data = x, initial = initial, localPriors = prior)
 #' samples <- draw(sampler, n = 100, burnin = 10)
 #' 
 #' x <- bnpostmcmc(sampler, samples)
 #' ep(x)
 BNSampler <- function(data,
                       initial,
-                      prior,
+                      localPriors,
                       return      = "network",
                       logScoreFUN = logScoreMultDirFUN(),
                       logScoreParameters = list(hyperparameters = "qi"),
@@ -221,7 +224,7 @@ BNSampler <- function(data,
   stopifnot("bn"                  %in% class(initial),
             is.valid(initial),
             ncol(as.matrix(data)) ==   length(initial),
-            is.function(prior),
+            is.valid.localPriors(localPriors),
             return                %in% c("network", "contingency"),
             class(statistics)     == "list",
             all(lapply(statistics, class) == "function"),
@@ -234,7 +237,7 @@ BNSampler <- function(data,
   numberOfNodes <- length(initial)
   nodesSeq <- seq_len(numberOfNodes)
   cache <- new.env(hash = T, size = 10000L)
-  
+
   # Set up for fast computation of logScore
   logScoreOfflineFUN <- logScoreFUN$offline
   logScoreOnlineFUN <- logScoreFUN$online
@@ -255,7 +258,7 @@ BNSampler <- function(data,
   currentNetwork <- list(5, mode = "list")
   currentNetwork[[1]] <- initial
   currentNetwork[[2]] <- routes(currentNetwork[[1]])
-  currentNetwork[[3]] <- log(prior(currentNetwork[[1]]))
+  currentNetwork[[3]] <- log(eval.prior(currentNetwork[[1]], localPriors))
   if (!is.valid.prior(currentNetwork[[3]])){
     stop("Initial network has prior with 0 probability.")
   }
@@ -460,7 +463,7 @@ BNSampler <- function(data,
         # update the routes matrix for the proposal
         proposalNetwork[[2]] <- routesRemoveEdge(proposalNetwork[[2]], i, j)
 
-        pr <- prior(proposalNetwork[[1]])
+        pr <- eval.prior(proposalNetwork[[1]], localPriors)
         proposalNetwork[[3]] <- log(pr)
         proposalNetwork[[4]][i, j] <- 0
         proposalNetwork[[5]] <- logNumMHNeighbours(proposalNetwork[[2]],
@@ -496,7 +499,7 @@ BNSampler <- function(data,
 
         # update the routes matrix for the proposal
         proposalNetwork[[2]] <- routesAddEdge(proposalNetwork[[2]], i, j)
-        pr <- prior(proposalNetwork[[1]])
+        pr <- eval.prior(proposalNetwork[[1]], localPriors)
         proposalNetwork[[3]] <- log(pr)
         proposalNetwork[[4]][i, j] <- 1
         proposalNetwork[[5]] <- logNumMHNeighbours(proposalNetwork[[2]],
@@ -543,7 +546,7 @@ BNSampler <- function(data,
       proposalNetwork[[2]] <- routesRemoveEdge(proposalNetwork[[2]], i, j)
       proposalNetwork[[2]] <- routesAddEdge(proposalNetwork[[2]], j, i)
 
-      pr <- prior(proposalNetwork[[1]])
+      pr <- eval.prior(proposalNetwork[[1]], localPriors)
       proposalNetwork[[3]] <- log(pr)
       proposalNetwork[[5]] <- logNumMHNeighbours(proposalNetwork[[2]],
                                                  proposalNetwork[[4]],

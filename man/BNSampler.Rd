@@ -1,7 +1,7 @@
 \name{BNSampler}
 \alias{BNSampler}
 \title{Create a MCMC sampler (MC^3) for Bayesian Networks.}
-\usage{BNSampler(data, initial, prior, return="network",
+\usage{BNSampler(data, initial, localPriors, return="network",
     logScoreFUN=logScoreMultDirFUN(),
     logScoreParameters=list(hyperparameters = "qi"),
     constraint, statistics=list(nEdges = nEdges),
@@ -21,7 +21,10 @@
 \arguments{
   \item{data}{The data.}
   \item{initial}{An object of class 'bn'. The starting value of the MCMC.}
-  \item{prior}{A function that returns the prior score of the supplied bn.}
+  \item{localPriors}{A list of functions of the same length as \code{initial}
+that returns the local prior score of the corresponding node, given a
+numeric vector of parents. The default value \code{NULL} uses an
+improper uniform prior.}
   \item{return}{Either "network" or "contingency".}
   \item{logScoreFUN}{A list of four elements:
 \describe{
@@ -67,9 +70,9 @@ x3 <- factor(c(FALSE, FALSE, TRUE, FALSE, TRUE, TRUE, FALSE, FALSE, TRUE))
 x <- data.frame(x1 = x1, x2 = x2, x3 = x3)
 
 initial <- empty(3, "bn")
-prior <- priorUniform()
+prior <- priorUniform(initial)
 
-sampler <- BNSampler(data = x, initial = initial, prior = prior)
+sampler <- BNSampler(data = x, initial = initial, localPriors = prior)
 samples <- draw(sampler, n = 100, burnin = 10)
 
 x <- bnpostmcmc(sampler, samples)
