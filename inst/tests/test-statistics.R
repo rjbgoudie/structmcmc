@@ -35,14 +35,10 @@ test_that("nEdges", {
 
   empty <- list(c(),c(),c())
 
-  priorFlat <- function(network) {
-    1/length(fam)
-  }
-
   initial <- bn(integer(0), integer(0), integer(0))
   sampler <- BNGibbsSampler(data             = theData,
                             initial          = initial,
-                            prior            = priorFlat,
+                            localPriors      = priorUniform(initial),
                             maxNumberParents = 2)
 
   samples <- draw(sampler,
