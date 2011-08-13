@@ -158,7 +158,7 @@ test_that("2-node Bayesian Network, non contiguous factor levels", {
     paste(network, sep = "", collapse = ",")
   })
 
-  initial <- empty("bn", 2)
+  initial <- empty(2, "bn")
 
   sampler <- BNSampler(theData, initial, priorUniform(initial))
   samples <- lapply(seq_len(numberOfBurnIn), sampler)
@@ -719,14 +719,16 @@ test_that("Using Prior for indegree constraint", {
   dat <- data.frame(x1 = x1, x2 = x2,  x3 = x3)
 
   nSamples <- 850
-  prior <- function(net){
-    if (any(sapply(net, length) > 1)){
-      0
+  
+  localPriors <- lapply(seq_len(ncol(dat)), function(i){
+    function(x){
+      if (length(x) > 1){
+        0
+      } else {
+        1
+      }
     }
-    else {
-      1
-    }
-  }
+  })
 
   bnspace <- enumerateBNSpace(3)
   lsmd <- logScoreMultDir(bnspace, data = dat, hyperparameters = "qi")
@@ -745,7 +747,7 @@ test_that("Using Prior for indegree constraint", {
   initial <- bn(integer(0), integer(0), integer(0))
   sampler1 <- BNSampler(dat,
                         initial,
-                        prior)
+                        localPriors = localPriors)
   samples1 <- draw(sampler1, nSamples, verbose = F)
 
   outTable <- table(factor(unlist(lapply(samples1, function(l){
@@ -769,9 +771,6 @@ test_that("Proper indegree constraint", {
   dat <- data.frame(x1 = x1, x2 = x2,  x3 = x3)
 
   nSamples <- 850
-  prior <- function(net){
-    1
-  }
 
   bnspace <- enumerateBNSpace(3)
   lsmd <- logScoreMultDir(bnspace, data = dat, hyperparameters = "qi")
@@ -790,7 +789,7 @@ test_that("Proper indegree constraint", {
   initial <- bn(integer(0), integer(0), integer(0))
   sampler1 <- BNSampler(dat,
                         initial,
-                        prior,
+                        localPriors = priorUniform(initial),
                         maxNumberParents = 1)
   samples1 <- draw(sampler1, nSamples, verbose = F)
   samples1 <- draw(sampler1, nSamples, verbose = F)
@@ -816,7 +815,6 @@ test_that("Mode-jumping with constraint", {
   dat <- data.frame(x1 = x1, x2 = x2,  x3 = x3)
 
   nSamples <- 850
-  prior <- function(net) 1
   initial <- bn(3L, integer(0), integer(0))
   constraint <- matrix(c( 0,  0, -1,
                          -1,  0, -1,
@@ -843,7 +841,7 @@ test_that("Mode-jumping with constraint", {
   class(modes) <- c("bn.list", "parental.list")
   sampler1 <- BNSamplerMJ(dat,
                         initial,
-                        prior,
+                        localPriors = priorUniform(initial),
                         modejumping = list(modes = modes,
                                            modeJumpingProbability = 0.25),
                         constraint = constraint)

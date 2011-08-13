@@ -177,7 +177,6 @@ test_that("Nick Podd's example", {
   ##Generate Data
   theData <- BinSampler(LDAG,LTable,DataSize)
   ## MCMC Initialisation
-  Prrior <- function(dag) 1
   MCSize <- 1000
   MSSamples <- 1
   initial <- do.call("bn", lapply(1:length(LDAG),function(i) integer(0)))
@@ -186,7 +185,9 @@ test_that("Nick Podd's example", {
   numberOfSamples <- 20000
 
   theData <- data.frame(lapply(theData, factor))
-  sampler <- sampler <- BNSampler(theData, initial, Prrior)
+  sampler <- sampler <- BNSampler(theData,
+                                  initial,
+                                  localPriors = priorUniform(initial))
   samples <- lapply(seq_len(numberOfBurnIn), sampler)
   samples <- lapply(seq_len(numberOfSamples), sampler)
 

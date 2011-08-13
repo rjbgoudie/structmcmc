@@ -39,7 +39,7 @@ test_that("2-node Bayesian Network", {
   family <- enumerateBNSpace(2)
   exactScores <- logScoreMultDir(family, theData)
 
-  expectedProbs <- exp(scores - logsumexp(exactScores))
+  expectedProbs <- exp(exactScores - logsumexp(exactScores))
 
   initial <- empty(ncol(theData), "bn")
   sampler <- BNGibbsSampler(data             = theData,
@@ -92,6 +92,18 @@ test_that("5-node Bayesian Network", {
 
   expectedProbs <- exp(exactScores - logsumexp(exactScores))
 
+  initial <- empty(ncol(theData), "bn")
+  sampler <- BNGibbsSampler(data             = theData,
+                            initial          = initial,
+                            localPriors      = priorUniform(initial),
+                            maxNumberParents = 5,
+                            moveprobs = c(0, 1, 0))
+
+  samples <- draw(sampler = sampler,
+                  n       = 1000,
+                  burnin  = 10,
+                  verbose = T)
+  actual <- pltabulate(samples)
 
   expected <- expectedProbs * sum(actual)
   names(expected) <- as.character(family)
@@ -205,7 +217,7 @@ test_that("2-node Bayesian Network", {
   scores <- scores - max(scores)
   expectedProbs <- exp(scores)*priors/sum(exp(scores)*priors)
 
-  initial <- empty(ncol(dat), "bn")
+  initial <- empty(ncol(theData), "bn")
   sampler <- BNGibbsSampler(data             = theData,
                             initial          = initial,
                             localPriors      = priorUniform(initial),
