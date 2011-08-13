@@ -47,11 +47,7 @@ test_that("2-node Bayesian Network", {
   row.names(expectedTable) <- lapply(fam, function(network){
     paste(network, sep = "", collapse = ",")})
 
-  priorFlat <- function(network) {
-    1/length(fam)
-  }
-
-  sampler <- BNSampler(theData, bn(integer(0), integer(0)), priorFlat)
+  sampler <- BNSampler(theData, bn(integer(0), integer(0)), localPriors = priorUniform(bn(integer(0), integer(0))))
   samples <- lapply(seq_len(numberOfBurnIn), sampler)
   samples <- lapply(seq_len(numberOfSamples), sampler)
 
@@ -86,11 +82,9 @@ test_that("2-node Bayesian Network, all zeros", {
     paste(network, sep = "", collapse = ",")
   })
 
-  priorFlat <- function(network) {
-    1/length(fam)
-  }
+  initial <- empty(2, "bn")
 
-  sampler <- BNSampler(theData, bn(integer(0), integer(0)), priorFlat)
+  sampler <- BNSampler(theData, initial, priorUniform(initial))
   samples <- lapply(seq_len(numberOfBurnIn), sampler)
   samples <- lapply(seq_len(numberOfSamples), sampler)
 
@@ -126,11 +120,9 @@ test_that("2-node Bayesian Network, all 8s", {
     paste(network, sep = "", collapse = ",")
   })
 
-  priorFlat <- function(network) {
-    1/length(fam)
-  }
+  initial <- empty(2, "bn")
 
-  sampler <- BNSampler(theData, bn(integer(0), integer(0)), priorFlat)
+  sampler <- BNSampler(theData, initial, priorUniform(initial))
   samples <- lapply(seq_len(numberOfBurnIn), sampler)
   samples <- lapply(seq_len(numberOfSamples), sampler)
 
@@ -166,11 +158,9 @@ test_that("2-node Bayesian Network, non contiguous factor levels", {
     paste(network, sep = "", collapse = ",")
   })
 
-  priorFlat <- function(network) {
-    1/length(fam)
-  }
+  initial <- empty("bn", 2)
 
-  sampler <- BNSampler(theData, bn(integer(0), integer(0)), priorFlat)
+  sampler <- BNSampler(theData, initial, priorUniform(initial))
   samples <- lapply(seq_len(numberOfBurnIn), sampler)
   samples <- lapply(seq_len(numberOfSamples), sampler)
 
@@ -206,11 +196,9 @@ test_that("2-node Bayesian Network, non contiguous factor levels", {
     paste(network, sep = "", collapse = ",")
   })
 
-  priorFlat <- function(network) {
-    1/length(fam)
-  }
+  initial <- empty(2, "bn")
 
-  sampler <- BNSampler(theData, bn(integer(0), integer(0)), priorFlat)
+  sampler <- BNSampler(theData, initial, priorUniform(initial))
   samples <- lapply(seq_len(numberOfBurnIn), sampler)
   samples <- lapply(seq_len(numberOfSamples), sampler)
 
@@ -243,11 +231,9 @@ test_that("2-node Bayesian Network, non contiguous factor levels", {
     paste(network, sep = "", collapse = ",")
   })
 
-  priorFlat <- function(network) {
-    1/length(fam)
-  }
+  initial <- empty(2, "bn")
 
-  sampler <- BNSampler(theData, bn(integer(0), integer(0)), priorFlat)
+  sampler <- BNSampler(theData, initial, priorUniform(initial))
   samples <- lapply(seq_len(numberOfBurnIn), sampler)
   samples <- lapply(seq_len(numberOfSamples), sampler)
 
@@ -280,11 +266,9 @@ test_that("2-node Bayesian Network, non contiguous factor levels", {
     paste(network, sep = "", collapse = ",")
   })
 
-  priorFlat <- function(network) {
-    1/length(fam)
-  }
+  initial <- empty(2, "bn")
 
-  sampler <- BNSampler(theData, bn(integer(0), integer(0)), priorFlat)
+  sampler <- BNSampler(theData, initial, priorUniform(initial))
   samples <- lapply(seq_len(numberOfBurnIn), sampler)
   samples <- lapply(seq_len(numberOfSamples), sampler)
 
@@ -320,11 +304,9 @@ test_that("2-node Bayesian Network, with random noise", {
     paste(network, sep = "", collapse = ",")
   })
 
-  priorFlat <- function(network) {
-    1/length(fam)
-  }
+  initial <- empty(2, "bn")
 
-  sampler <- BNSampler(theData, bn(integer(0), integer(0)), priorFlat)
+  sampler <- BNSampler(theData, initial, priorUniform(initial))
   samples <- lapply(seq_len(numberOfBurnIn), sampler)
   samples <- lapply(seq_len(numberOfSamples), sampler)
 
@@ -361,11 +343,9 @@ test_that("2-node Bayesian Network, with random noise", {
     paste(network, sep = "", collapse = ",")
   })
 
-  priorFlat <- function(network) {
-    1/length(fam)
-  }
+  initial <- empty(2, "bn")
 
-  sampler <- BNSampler(theData, bn(integer(0), integer(0)), priorFlat)
+  sampler <- BNSampler(theData, initial, priorUniform(initial))
   samples <- lapply(seq_len(numberOfBurnIn), sampler)
   samples <- lapply(seq_len(numberOfSamples), sampler)
 
@@ -398,11 +378,9 @@ test_that("2-node Bayesian Network", {
     paste(network, sep = "", collapse = ",")
   })
 
-  priorFlat <- function(network) {
-    1/length(fam)
-  }
+  initial <- empty(2, "bn")
 
-  sampler <- BNSampler(theData, bn(integer(0), integer(0)), priorFlat)
+  sampler <- BNSampler(theData, initial, priorUniform(initial))
   samples <- lapply(seq_len(numberOfBurnIn), sampler)
   samples <- lapply(seq_len(numberOfSamples), sampler)
 
@@ -442,11 +420,9 @@ test_that("Non-factor input", {
   numberOfBurnIn <- 100
   numberOfSamples <- 1000
 
-  priorFlat <- function(network) {
-    1/length(fam)
-  }
+  initial <- empty(2, "bn")
 
-  expect_that(BNSampler(theData, bn(integer(0), integer(0)), priorFlat),
+  expect_that(BNSampler(theData, initial, priorUniform(initial)),
               throws_error())
 })
 
@@ -567,7 +543,6 @@ test_that("Constraints basics", {
   dat <- data.frame(x1 = x1, x2 = x2,  x3 = x3)
 
   nSamples <- 850
-  prior <- function(net) 1
   # Does not move out of constraint 1
   initial <- bn(integer(0), integer(0), integer(0))
   constraint <- matrix(c( 0, -1, -1,
@@ -575,7 +550,7 @@ test_that("Constraints basics", {
                           0, -1,  0), nrow = 3, ncol = 3, byrow = T)
   sampler1 <- BNSampler(dat,
                         initial,
-                        prior,
+                        priorUniform(initial),
                         constraint = constraint)
 
   samples1 <- draw(sampler1, nSamples, verbose = F)
@@ -594,7 +569,7 @@ test_that("Constraints basics", {
                           1,  0,  0), nrow = 3, ncol = 3, byrow = T)
   sampler1 <- BNSampler(dat,
                         initial,
-                        prior,
+                        priorUniform(initial),
                         constraint = constraint)
 
   samples1 <- draw(sampler1, nSamples, verbose = F)
@@ -613,7 +588,7 @@ test_that("Constraints basics", {
                          -1, -1,  0), nrow = 3, ncol = 3, byrow = T)
   sampler1 <- BNSampler(dat,
                         initial,
-                        prior,
+                        priorUniform(initial),
                         constraint = constraint)
 
   samples1 <- draw(sampler1, nSamples, verbose = F)
@@ -633,7 +608,7 @@ test_that("Constraints basics", {
 
   expect_that(BNSampler(dat,
                         initial,
-                        prior,
+                        priorUniform(initial),
                         constraint = constraint),
               throws_error("Initial network does not satisfy constraint"))
 
@@ -645,7 +620,7 @@ test_that("Constraints basics", {
 
   expect_that(BNSampler(dat,
                         initial,
-                        prior,
+                        priorUniform(initial),
                         constraint = constraint),
               throws_error("Initial network does not satisfy constraint"))
 
@@ -657,7 +632,7 @@ test_that("Constraints basics", {
 
   expect_that(BNSampler(dat,
                         initial,
-                        prior,
+                        priorUniform(initial),
                         constraint = constraint),
               throws_error("Initial network does not satisfy constraint"))
 
@@ -684,7 +659,7 @@ test_that("Constraints basics", {
   initial <- bn(integer(0), integer(0), integer(0))
   sampler1 <- BNSampler(dat,
                         initial,
-                        prior,
+                        priorUniform(initial),
                         constraint = constraint)
 
   samples1 <- draw(sampler1, nSamples, verbose = F)
@@ -721,7 +696,7 @@ test_that("Constraints basics", {
   initial <- bn(3L, integer(0), integer(0))
   sampler1 <- BNSampler(dat,
                         initial,
-                        prior,
+                        priorUniform(initial),
                         constraint = constraint)
 
   samples1 <- draw(sampler1, nSamples, verbose = F)
