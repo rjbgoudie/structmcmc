@@ -74,17 +74,22 @@ mukherjeeBioinformaticsPrior <- function(x, k0, kmax, lambda){
 priorGraph <- function(graph, lambda){
   stopifnot("bn" %in% class(graph),
             inherits(lambda, "numeric") || inherits(lambda, "integer"))
-  function(x){
-    difference <- psetdiff(x, graph)
-    difference <- length(unlist(difference))
-    exp(- lambda * difference)
-  }
+  lapply(seq_along(graph), function(i){
+    i <- i # make the scope of i local
+    function(x){
+      difference <- setdiff(x, graph[[i]])
+      difference <- length(difference)
+      browser()
+      exp(- lambda * difference)
+    }
+  })
 }
 
 #' A uniform prior for graphs.
 #' 
 #' A 'flat' improper prior that assigns equal probability to all the graphs.
 #' 
+#' @param graph The 'prior graph'. A \code{bn}.
 #' @return A function computes the prior score of the supplied graph. This 
 #'   This function is of a suitable form to be used as a prior
 #' @export
@@ -103,10 +108,13 @@ priorGraph <- function(graph, lambda){
 #' 
 #' x <- bnpostmcmc(sampler, samples)
 #' ep(x)
-priorUniform <- function(){
-  function(x){
-    1
-  }
+priorUniform <- function(graph){
+  stopifnot(inherits(graph, "bn"))
+  lapply(seq_along(graph), function(x){
+    function(x){
+      1
+    }
+  })
 }
 
 #' Check validity.
