@@ -152,3 +152,21 @@ is.valid.localPriors <- function(x){
     },
     error = function(e) F)
 }
+
+#' Compute prior score of a Bayesian network.
+#' 
+#' Computes the complete prior of a network, from a \code{localPriors} object
+#'
+#' @param x An object of class 'bn'. 
+#' @param localPriors A list of functions of the same length as \code{x}
+#'   that returns the local prior score of the corresponding node, given a
+#'   numeric vector of parents.
+#' @return The prior of the complete network \code{x}
+#' @export
+eval.prior <- function(x, localPriors){
+  s <- seq_along(x)
+  locals <- sapply(s, function(i){
+    localPriors[[i]](x[[i]])
+  })
+  sum(locals)
+}
