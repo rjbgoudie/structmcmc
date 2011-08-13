@@ -134,3 +134,21 @@ is.valid.prior <- function(x){
     },
     error = function(e) F)
 }
+
+
+#' Check validity.
+#' 
+#' Checks whether the supplied R object is a valid \code{localPriors}
+#'
+#' @param x An R object
+#' @return A logical of length 1, indicating the validity of x
+#' @S3method is.valid localPriors
+#' @method is.valid localPriors
+#' @export
+is.valid.localPriors <- function(x){
+  tryCatch({
+    all(inherits(x, "list"),
+        sapply(x, is.function))
+    },
+    error = function(e) F)
+}
