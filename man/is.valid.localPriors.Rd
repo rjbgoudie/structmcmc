@@ -1,7 +1,7 @@
 \name{is.valid.localPriors}
 \alias{is.valid.localPriors}
 \title{Check validity.}
-\usage{\method{is.valid}{localPriors} (x)}
+\usage{is.valid.localPriors(x)}
 
 \description{
   Check validity.

@@ -2,7 +2,7 @@
 \alias{scoreParentsTable}
 \title{Score a node-level parentsTable.}
 \usage{scoreParentsTable(parentsTables, logScoreLocalFUN,
-    logScoreParameters, localPriors, verbose=F)}
+    logScoreParameters, prior, verbose=F)}
 
 \description{
   Score a node-level parentsTable.

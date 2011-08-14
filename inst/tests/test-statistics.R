@@ -38,7 +38,7 @@ test_that("nEdges", {
   initial <- bn(integer(0), integer(0), integer(0))
   sampler <- BNGibbsSampler(data             = theData,
                             initial          = initial,
-                            localPriors      = priorUniform(initial),
+                            prior            = priorUniform(initial),
                             maxNumberParents = 2)
 
   samples <- draw(sampler,

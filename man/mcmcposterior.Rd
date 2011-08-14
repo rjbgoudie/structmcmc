@@ -2,7 +2,7 @@
 \alias{mcmcposterior}
 \title{Posterior distribution on Bayesian networks.}
 \usage{mcmcposterior(data, sampler=BNSampler,
-    localPriors=priorUniform(initial),
+    prior=priorUniform(initial),
     logScoreFUN=logScoreMultDirFUN(),
     logScoreParameters=list(hyperparameters = "qi"),
     constraint, maxNumberParents, nSamples=50000, time=F,
@@ -23,7 +23,7 @@ Example priors \code{\link{priorGraph}}, \code{\link{priorUniform}}.}
 \arguments{
   \item{data}{The data.}
   \item{sampler}{A BNSampler. eg BNSampler or BNGibbsSampler etc}
-  \item{localPriors}{A list of functions of the same length as \code{initial}
+  \item{prior}{A list of functions of the same length as \code{initial}
 that returns the local prior score of the corresponding node, given a
 numeric vector of parents. The default value \code{NULL} uses an
 improper uniform prior.}

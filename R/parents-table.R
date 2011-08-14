@@ -131,7 +131,7 @@ enumerateParentsTableNode <- function(node,
 scoreParentsTable <- function(parentsTables,
                               logScoreLocalFUN,
                               logScoreParameters,
-                              localPriors,
+                              prior,
                               verbose = F){
   numberOfNodes <- length(parentsTables)
   numberOfRows <- sapply(parentsTables, nrow)
@@ -144,7 +144,7 @@ scoreParentsTable <- function(parentsTables,
 
   scoresList <- vector("list", numberOfNodes)
   for (node in nodesSeq){
-    localPrior <- localPriors[[node]]
+    localPrior <- prior[[node]]
     scoresList[[node]] <- scoreParentsTableNode(
                           node               = node,
                           parentsTable       = parentsTables[[node]],

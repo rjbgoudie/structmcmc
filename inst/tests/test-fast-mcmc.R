@@ -47,7 +47,7 @@ test_that("2-node Bayesian Network", {
   row.names(expectedTable) <- lapply(fam, function(network){
     paste(network, sep = "", collapse = ",")})
 
-  sampler <- BNSampler(theData, bn(integer(0), integer(0)), localPriors = priorUniform(bn(integer(0), integer(0))))
+  sampler <- BNSampler(theData, bn(integer(0), integer(0)), prior = priorUniform(bn(integer(0), integer(0))))
   samples <- lapply(seq_len(numberOfBurnIn), sampler)
   samples <- lapply(seq_len(numberOfSamples), sampler)
 
@@ -747,7 +747,7 @@ test_that("Using Prior for indegree constraint", {
   initial <- bn(integer(0), integer(0), integer(0))
   sampler1 <- BNSampler(dat,
                         initial,
-                        localPriors = localPriors)
+                        prior = localPriors)
   samples1 <- draw(sampler1, nSamples, verbose = F)
 
   outTable <- table(factor(unlist(lapply(samples1, function(l){
@@ -789,7 +789,7 @@ test_that("Proper indegree constraint", {
   initial <- bn(integer(0), integer(0), integer(0))
   sampler1 <- BNSampler(dat,
                         initial,
-                        localPriors = priorUniform(initial),
+                        prior = priorUniform(initial),
                         maxNumberParents = 1)
   samples1 <- draw(sampler1, nSamples, verbose = F)
   samples1 <- draw(sampler1, nSamples, verbose = F)
@@ -841,7 +841,7 @@ test_that("Mode-jumping with constraint", {
   class(modes) <- c("bn.list", "parental.list")
   sampler1 <- BNSamplerMJ(dat,
                         initial,
-                        localPriors = priorUniform(initial),
+                        prior = priorUniform(initial),
                         modejumping = list(modes = modes,
                                            modeJumpingProbability = 0.25),
                         constraint = constraint)

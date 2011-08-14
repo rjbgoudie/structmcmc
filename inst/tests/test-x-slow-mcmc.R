@@ -33,7 +33,7 @@ test_that("3-node Bayesian Network", {
   empty <- list(c(),c(),c())
 
   initial <- bn(integer(0), integer(0), integer(0))
-  sampler <- BNSampler(theData, initial, localPriors = priorUniform(initial))
+  sampler <- BNSampler(theData, initial, prior = priorUniform(initial))
   samples <- lapply(seq_len(numberOfBurnIn), sampler)
   samples <- lapply(seq_len(numberOfSamples), sampler)
 
@@ -70,7 +70,7 @@ test_that("2-node Bayesian Network", {
   empty <- list(c(),c(),c())
 
   initial <- empty(ncol(theData), "bn")
-  sampler <- BNSampler(theData, initial, localPriors = priorUniform(initial))
+  sampler <- BNSampler(theData, initial, prior = priorUniform(initial))
   samples <- lapply(seq_len(numberOfBurnIn), sampler)
   samples <- lapply(seq_len(numberOfSamples), sampler)
 
@@ -187,7 +187,7 @@ test_that("Nick Podd's example", {
   theData <- data.frame(lapply(theData, factor))
   sampler <- sampler <- BNSampler(theData,
                                   initial,
-                                  localPriors = priorUniform(initial))
+                                  prior = priorUniform(initial))
   samples <- lapply(seq_len(numberOfBurnIn), sampler)
   samples <- lapply(seq_len(numberOfSamples), sampler)
 

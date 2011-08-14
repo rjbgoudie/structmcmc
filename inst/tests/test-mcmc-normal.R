@@ -19,7 +19,7 @@ test_that("Two node, very simple", {
 
   sampler <- BNSampler(data = data,
                        initial = initial,
-                       localPriors = priorUniform(initial),
+                       prior = priorUniform(initial),
                        logScoreFUN = list(offline = logScoreNormalOffline,
                                           online  = logScoreNormalIncremental,
                                           prepare = logScoreNormalPrepare))
@@ -162,7 +162,7 @@ test_that("Steven Hill's example", {
   set.seed(2221)
   sampler <- BNSampler(data = dat,
                        initial = initial,
-                       localPriors = priorUniform(initial),
+                       prior = priorUniform(initial),
                        logScoreFUN = list(offline = logScoreNormalOffline,
                                           online  = logScoreNormalIncremental,
                                           prepare = logScoreNormalPrepare))

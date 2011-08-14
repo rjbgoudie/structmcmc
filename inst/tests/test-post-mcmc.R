@@ -19,7 +19,7 @@ test_that("Two node example", {
   nSamples <- 5
   initial <- bn(integer(0), integer(0))
 
-  sampler <- BNSampler(dat, initial, localPriors = priorUniform(initial))
+  sampler <- BNSampler(dat, initial, prior = priorUniform(initial))
   sink(tempfile())
   samples <- draw(sampler, nSamples)
   sink()
@@ -51,8 +51,8 @@ test_that("Tabulate samples", {
   nSamples <- 5
   initial <- bn(integer(0), integer(0))
 
-  sampler1 <- BNSampler(dat, initial, localPriors = priorUniform(initial))
-  sampler2 <- BNSampler(dat, initial, localPriors = priorUniform(initial))
+  sampler1 <- BNSampler(dat, initial, prior = priorUniform(initial))
+  sampler2 <- BNSampler(dat, initial, prior = priorUniform(initial))
   sink(tempfile())
   samples1 <- draw(sampler1, nSamples)
   samples2 <- draw(sampler1, nSamples) # this is a mistake, but it doesn't matter here
@@ -80,7 +80,7 @@ test_that("map and top", {
   nSamples <- 20
   initial <- bn(integer(0), integer(0), integer(0))
 
-  sampler <- BNSampler(dat, initial, localPriors = priorUniform(initial))
+  sampler <- BNSampler(dat, initial, prior = priorUniform(initial))
   sink(tempfile())
   samples <- draw(sampler, nSamples)
   sink()
@@ -250,7 +250,7 @@ test_that("map and top", {
   nSamples <- 5
   initial <- bn(integer(0), integer(0))
 
-  sampler <- BNSampler(dat, initial, localPriors = priorUniform(initial))
+  sampler <- BNSampler(dat, initial, prior = priorUniform(initial))
   sink(tempfile())
   samples <- draw(sampler, nSamples)
   sink()

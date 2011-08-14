@@ -1,8 +1,7 @@
 \name{posterior}
 \alias{posterior}
 \title{Posterior distribution on Bayesian networks.}
-\usage{posterior(data, method="mc3",
-    localPriors=priorUniform(initial),
+\usage{posterior(data, method="mc3", prior=priorUniform(initial),
     logScoreFUN=logScoreMultDirFUN(),
     logScoreParameters=list(hyperparameters = "qi"),
     constraint, maxNumberParents, nSamples=50000, time=F,
@@ -25,7 +24,7 @@ e.g. \code{\link{BNSampler}}.  Example priors
   \item{data}{The data.}
   \item{method}{One of "exact", "mc3", "gibbs", "mj-mcmc". "mh-mcmc" is a 
 synonym of "mc3".}
-  \item{localPriors}{A list of functions of the same length as \code{initial}
+  \item{prior}{A list of functions of the same length as \code{initial}
 that returns the local prior score of the corresponding node, given a
 numeric vector of parents. The default value \code{NULL} uses an
 improper uniform prior.}

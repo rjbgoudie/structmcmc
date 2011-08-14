@@ -142,8 +142,6 @@ is.valid.prior <- function(x){
 #'
 #' @param x An R object
 #' @return A logical of length 1, indicating the validity of x
-#' @S3method is.valid localPriors
-#' @method is.valid localPriors
 #' @export
 is.valid.localPriors <- function(x){
   tryCatch({

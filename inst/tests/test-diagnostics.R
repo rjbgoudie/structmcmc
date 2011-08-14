@@ -19,8 +19,8 @@ test_that("cumep", {
   nSamples <- 5
   initial <- bn(integer(0), integer(0))
 
-  sampler1 <- BNSampler(dat, initial, localPriors = priorUniform(initial))
-  sampler2 <- BNSampler(dat, initial, localPriors = priorUniform(initial))
+  sampler1 <- BNSampler(dat, initial, prior = priorUniform(initial))
+  sampler2 <- BNSampler(dat, initial, prior = priorUniform(initial))
   sink(tempfile())
   samples1 <- draw(sampler1, n = nSamples, burnin = 0)
   
@@ -235,8 +235,8 @@ test_that("cumtvd", {
   nSamples <- 5
   initial <- bn(integer(0), integer(0))
 
-  sampler1 <- BNSampler(dat, initial, localPriors = priorUniform(initial))
-  sampler2 <- BNSampler(dat, initial, localPriors = priorUniform(initial))
+  sampler1 <- BNSampler(dat, initial, prior = priorUniform(initial))
+  sampler2 <- BNSampler(dat, initial, prior = priorUniform(initial))
   sink(tempfile())
   samples1 <- draw(sampler1, nSamples)
   # this is a mistake,
@@ -286,8 +286,8 @@ test_that("cumep with sampler", {
   nSamples <- 5
   initial <- bn(integer(0), integer(0))
 
-  sampler1 <- BNSampler(dat, initial, localPriors = priorUniform(initial))
-  sampler2 <- BNSampler(dat, initial, localPriors = priorUniform(initial))
+  sampler1 <- BNSampler(dat, initial, prior = priorUniform(initial))
+  sampler2 <- BNSampler(dat, initial, prior = priorUniform(initial))
   sink(tempfile())
   samples1 <- draw(sampler1, n = nSamples, burnin = 0)
 
@@ -334,8 +334,8 @@ test_that("gelman", {
   nSamples <- 5000
   initial <- bn(integer(0), integer(0))
 
-  sampler1 <- BNSampler(dat, initial, localPriors = priorUniform(initial))
-  sampler2 <- BNSampler(dat, initial, localPriors = priorUniform(initial))
+  sampler1 <- BNSampler(dat, initial, prior = priorUniform(initial))
+  sampler2 <- BNSampler(dat, initial, prior = priorUniform(initial))
 
   samples1 <- draw(sampler1, n = nSamples, burnin = 0, verbose = F)
   samples2 <- draw(sampler2, n = nSamples, burnin = 0, verbose = F)

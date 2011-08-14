@@ -44,14 +44,14 @@ test_that("2-node Bayesian Network", {
   initial <- empty(ncol(theData), "bn")
   sampler <- BNGibbsSampler(data             = theData,
                             initial          = initial,
-                            localPriors      = priorUniform(initial),
+                            prior            = priorUniform(initial),
                             maxNumberParents = 2,
                             moveprobs = c(0, 1, 0))
 
   samples <- draw(sampler = sampler,
                   n       = 50000,
                   burnin  = 10000,
-                  verbose = T)
+                  verbose = F)
   gibbs <- bnpostmcmc(sampler, samples)
   actual <- pltabulate(samples)
 
@@ -95,14 +95,14 @@ test_that("5-node Bayesian Network", {
   initial <- empty(ncol(theData), "bn")
   sampler <- BNGibbsSampler(data             = theData,
                             initial          = initial,
-                            localPriors      = priorUniform(initial),
+                            prior            = priorUniform(initial),
                             maxNumberParents = 5,
                             moveprobs = c(0, 1, 0))
 
   samples <- draw(sampler = sampler,
                   n       = 1000,
                   burnin  = 10,
-                  verbose = T)
+                  verbose = F)
   actual <- pltabulate(samples)
 
   expected <- expectedProbs * sum(actual)
@@ -118,27 +118,27 @@ test_that("5-node Bayesian Network", {
   initial <- empty(ncol(theData), "bn")
   sampler2 <- BNSampler(data             = theData,
                         initial          = initial,
-                        localPriors      = priorUniform(initial),
+                        prior            = priorUniform(initial),
                         maxNumberParents = 5)
 
   samples2 <- draw(sampler = sampler2,
                   n       = 50000,
                   burnin  = 10000,
-                  verbose = T)
+                  verbose = F)
   mh <- bnpostmcmc(sampler2, samples2)
 
 
   initial <- empty(ncol(theData), "bn")
   sampler <- BNGibbsSampler(data             = theData,
                             initial          = initial,
-                            localPriors      = priorUniform(initial),
+                            prior            = priorUniform(initial),
                             maxNumberParents = 5,
                             moveprobs = c(0, 1, 0))
 
   samples <- draw(sampler = sampler,
                   n       = 1000,
                   burnin  = 10,
-                  verbose = T)
+                  verbose = F)
   actual <- pltabulate(samples)
   gibbs <- bnpostmcmc(sampler, samples)
   exact <- bnpost(family, exactScores, theData)
@@ -147,45 +147,45 @@ test_that("5-node Bayesian Network", {
   samples <- draw(sampler = gsampler,
                   n       = 1000,
                   burnin  = 10,
-                  verbose = T)
+                  verbose = F)
 
   initial <- empty(ncol(theData), "bn")
   sampler3 <- BNGibbsSampler(data             = theData,
                              initial          = initial,
-                             localPriors      = priorUniform(initial),
+                             prior            = priorUniform(initial),
                              maxNumberParents = 5,
                              moveprobs = c(0, 0.9, 0.1))
 
    samples3 <- draw(sampler = sampler3,
                    n       = 50000,
                    burnin  = 10000,
-                   verbose = T)
+                   verbose = F)
    gibbs3 <- bnpostmcmc(sampler3, samples3)
 
    initial <- empty(ncol(theData), "bn")
    sampler4 <- BNGibbsSampler(data             = theData,
                               initial          = initial,
-                              localPriors      = priorUniform(initial),
+                              prior            = priorUniform(initial),
                               maxNumberParents = 5,
                               moveprobs = c(0.75, 0.2, 0.05))
 
     samples4 <- draw(sampler = sampler4,
                     n       = 50000,
                     burnin  = 10000,
-                    verbose = T)
+                    verbose = F)
     gibbs4 <- bnpostmcmc(sampler4, samples4)
 
     initial <- empty(ncol(theData), "bn")
     sampler5 <- BNGibbsSampler(data             = theData,
                                initial          = initial,
-                               localPriors      = priorUniform(initial),
+                               prior            = priorUniform(initial),
                                maxNumberParents = 5,
                                moveprobs = c(0, 0, 1))
 
      samples5 <- draw(sampler = sampler5,
                      n       = 50000,
                      burnin  = 10000,
-                     verbose = T)
+                     verbose = F)
      gibbs5 <- bnpostmcmc(sampler5, samples5)
 
      xyplot(cumtvd(gp(exact), bnpostmcmc.list(gibbs3 = gibbs3, gibbs5 = gibbs5)))
@@ -220,14 +220,14 @@ test_that("2-node Bayesian Network", {
   initial <- empty(ncol(theData), "bn")
   sampler <- BNGibbsSampler(data             = theData,
                             initial          = initial,
-                            localPriors      = priorUniform(initial),
+                            prior            = priorUniform(initial),
                             maxNumberParents = 2,
                             moveprobs = c(0, 0, 1))
 
   samples <- draw(sampler = sampler,
                   n       = 5000,
                   burnin  = 1000,
-                  verbose = T)
+                  verbose = F)
   actual <- pltabulate(samples)
 
   expected <- expectedProbs * sum(actual)
