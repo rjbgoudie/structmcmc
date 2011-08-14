@@ -88,12 +88,14 @@ top.bnpost <- function(x, head = 10, ...){
   ids <- names(top)
 
   out <- as.parental(ids)
-  out <- lapply(out, function(bn){
-    class(bn) <- c("bn", "parental")
-    bn
-  })
   if (length(ids) > 1){
+    out <- lapply(out, function(bn){
+      class(bn) <- c("bn", "parental")
+      bn
+    })
     class(out) <- c("bn.list", "parental.list")
+  } else {
+    class(out) <- c("bn", "parental")
   }
   out
 }
