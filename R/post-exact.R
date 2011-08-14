@@ -86,15 +86,18 @@ top.bnpost <- function(x, head = 10, ...){
   rk <- rank(-logScore, ties.method = "min") <= head
   top <- sort(logScore[rk], dec = T)
   ids <- names(top)
+  nm <- names(x$bnspace[[1]])
 
   out <- as.parental(ids)
   if (length(ids) > 1){
     out <- lapply(out, function(bn){
+      names(bn) <- nm
       class(bn) <- c("bn", "parental")
       bn
     })
     class(out) <- c("bn.list", "parental.list")
   } else {
+    names(out) <- nm
     class(out) <- c("bn", "parental")
   }
   out
@@ -188,6 +191,7 @@ gp.bnpost <- function(x, log = F, pretty = F, ...){
 ep.bnpost <- function(x, ...){
   logScore <- x$logScore
   family <- x$bnspace
+  nm <- names(family[[1]])
 
   numberOfNodes <- length(family[[1]])
   nodesSeq <- seq_len(numberOfNodes)
@@ -221,6 +225,8 @@ ep.bnpost <- function(x, ...){
   }
   out <- true
   class(out) <- c("ep", "matrix")
+  colnames(out) <- nm
+  rownames(out) <- nm
   out
 }
 

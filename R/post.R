@@ -199,6 +199,13 @@ exactposterior <- function(data,
     bnspace <- Filter(satisfiesConstraint, bnspace)
   }
 
+  nm <- colnames(data)
+  bnspace <- lapply(bnspace, function(x){
+    names(x) <- nm
+    x
+  })
+  class(bnspace) <- c("bn.list", "parental.list")
+
   logScoreOfflineFUN <- logScoreFUN$offline
   prepareDataFUN <- logScoreFUN$prepare
   logScoreParameters <- prepareDataFUN(data,
@@ -740,7 +747,11 @@ levelplot.bnpostmcmc <- levelplot.bnpost <- function(x){
 #' @seealso \code{\link{levelplot.ep}}
 prepareLevelPlot <- function(ep){
   n <- dim(ep)[1]
-  nodeSeq <- seq_len(n)
+  if (!is.null(colnames(ep))){
+    nodeSeq <- colnames(ep)
+  } else {
+    nodeSeq <- seq_len(n)
+  }
 
   data <- expand.grid(head = factor(nodeSeq, levels = rev(nodeSeq)),
                       tail = factor(nodeSeq, levels = nodeSeq))
