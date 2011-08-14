@@ -183,7 +183,10 @@ exactposterior <- function(data,
                            verbose            = T){
   stopifnot(is.valid.localPriors(prior) || is.function(prior))
   if (!is.function(prior)){
-    prior <- function(x) eval.prior(x, prior)
+    localPriors <- prior
+    prior <- function(x){
+      eval.prior(x, localPriors)
+    }
   }
 
   if (is.null(maxNumberParents)){

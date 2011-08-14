@@ -237,7 +237,10 @@ BNSampler <- function(data,
             length(keepTape)      ==   1)
 
   if (!is.function(prior)){
-    prior <- function(x) eval.prior(x, prior)
+    localPriors <- prior
+    prior <- function(x){
+      eval.prior(x, localPriors)
+    }
   }
 
   numberOfNodes <- length(initial)
