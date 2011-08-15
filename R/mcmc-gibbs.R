@@ -1056,7 +1056,7 @@ BNGibbsSampler <- function(data,
             length(keepTape)      ==   1,
             sum(moveprobs)        ==   1)
 
-  prior <- function(net){
+  complete.prior <- function(net){
     locals <- sapply(nodesSeq, function(node){
       prior[[node]](net[[node]])
     })
@@ -1103,7 +1103,7 @@ BNGibbsSampler <- function(data,
   currentNetwork <- vector(mode = "list", length = 5)
   currentNetwork[[1]] <- initial
   currentNetwork[[2]] <- routes(currentNetwork[[1]])
-  currentNetwork[[3]] <- log(prior(currentNetwork[[1]]))
+  currentNetwork[[3]] <- log(complete.prior(currentNetwork[[1]]))
   currentNetwork[[4]] <- as.adjacency(currentNetwork[[1]])
 
   for (node in nodesSeq){
