@@ -853,7 +853,7 @@ sampleQuadruple <- function(currentNetwork,
       logsumexp(scoresParents[[node1]][rows[[1]]]) +
         logsumexp(scoresParents[[node2]][rows[[2]]]) +
         logsumexp(scoresParents[[node3]][rows[[3]]]) +
-        logsumexp(scoresParents[[node3]][rows[[4]]])
+        logsumexp(scoresParents[[node4]][rows[[4]]])
     } else {
       -Inf
     }
