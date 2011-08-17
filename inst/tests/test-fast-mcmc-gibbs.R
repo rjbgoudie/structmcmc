@@ -114,84 +114,84 @@ test_that("5-node Bayesian Network", {
   d <- transform(d, diff = round(actual - expected))
 
   chisq.test(actual, p = expectedProbs)
-
-  initial <- empty(ncol(theData), "bn")
-  sampler2 <- BNSampler(data             = theData,
-                        initial          = initial,
-                        prior            = priorUniform(initial),
-                        maxNumberParents = 5)
-
-  samples2 <- draw(sampler = sampler2,
-                  n       = 50000,
-                  burnin  = 10000,
-                  verbose = F)
-  mh <- bnpostmcmc(sampler2, samples2)
-
-
-  initial <- empty(ncol(theData), "bn")
-  sampler <- BNGibbsSampler(data             = theData,
-                            initial          = initial,
-                            prior            = priorUniform(initial),
-                            maxNumberParents = 5,
-                            moveprobs = c(0, 1, 0))
-
-  samples <- draw(sampler = sampler,
-                  n       = 1000,
-                  burnin  = 10,
-                  verbose = F)
-  actual <- pltabulate(samples)
-  gibbs <- bnpostmcmc(sampler, samples)
-  exact <- bnpost(family, exactScores, theData)
-
-
-  samples <- draw(sampler = gsampler,
-                  n       = 1000,
-                  burnin  = 10,
-                  verbose = F)
-
-  initial <- empty(ncol(theData), "bn")
-  sampler3 <- BNGibbsSampler(data             = theData,
-                             initial          = initial,
-                             prior            = priorUniform(initial),
-                             maxNumberParents = 5,
-                             moveprobs = c(0, 0.9, 0.1))
-
-   samples3 <- draw(sampler = sampler3,
-                   n       = 50000,
-                   burnin  = 10000,
-                   verbose = F)
-   gibbs3 <- bnpostmcmc(sampler3, samples3)
-
-   initial <- empty(ncol(theData), "bn")
-   sampler4 <- BNGibbsSampler(data             = theData,
-                              initial          = initial,
-                              prior            = priorUniform(initial),
-                              maxNumberParents = 5,
-                              moveprobs = c(0.75, 0.2, 0.05))
-
-    samples4 <- draw(sampler = sampler4,
-                    n       = 50000,
-                    burnin  = 10000,
-                    verbose = F)
-    gibbs4 <- bnpostmcmc(sampler4, samples4)
-
-    initial <- empty(ncol(theData), "bn")
-    sampler5 <- BNGibbsSampler(data             = theData,
-                               initial          = initial,
-                               prior            = priorUniform(initial),
-                               maxNumberParents = 5,
-                               moveprobs = c(0, 0, 1))
-
-     samples5 <- draw(sampler = sampler5,
-                     n       = 50000,
-                     burnin  = 10000,
-                     verbose = F)
-     gibbs5 <- bnpostmcmc(sampler5, samples5)
-
-     xyplot(cumtvd(gp(exact), bnpostmcmc.list(gibbs3 = gibbs3, gibbs5 = gibbs5)))
-
-  xyplot(cumtvd(gp(exact), bnpostmcmc.list(gibbs = gibbs, mh = mh, gibbs3=gibbs3, gibbs4=gibbs4)))
-
+  #
+  #initial <- empty(ncol(theData), "bn")
+  #sampler2 <- BNSampler(data             = theData,
+  #                      initial          = initial,
+  #                      prior            = priorUniform(initial),
+  #                      maxNumberParents = 5)
+  #
+  #samples2 <- draw(sampler = sampler2,
+  #                n       = 50000,
+  #                burnin  = 10000,
+  #                verbose = F)
+  #mh <- bnpostmcmc(sampler2, samples2)
+  #
+  #
+  #initial <- empty(ncol(theData), "bn")
+  #sampler <- BNGibbsSampler(data             = theData,
+  #                          initial          = initial,
+  #                          prior            = priorUniform(initial),
+  #                          maxNumberParents = 5,
+  #                          moveprobs = c(0, 1, 0))
+  #
+  #samples <- draw(sampler = sampler,
+  #                n       = 1000,
+  #                burnin  = 10,
+  #                verbose = F)
+  #actual <- pltabulate(samples)
+  #gibbs <- bnpostmcmc(sampler, samples)
+  #exact <- bnpost(family, exactScores, theData)
+  #
+  #
+  #samples <- draw(sampler = sampler,
+  #                n       = 1000,
+  #                burnin  = 10,
+  #                verbose = F)
+  #
+  #initial <- empty(ncol(theData), "bn")
+  #sampler3 <- BNGibbsSampler(data             = theData,
+  #                           initial          = initial,
+  #                           prior            = priorUniform(initial),
+  #                           maxNumberParents = 5,
+  #                           moveprobs = c(0, 0.9, 0.1))
+  #
+  # samples3 <- draw(sampler = sampler3,
+  #                 n       = 50000,
+  #                 burnin  = 10000,
+  #                 verbose = F)
+  # gibbs3 <- bnpostmcmc(sampler3, samples3)
+  #
+  # initial <- empty(ncol(theData), "bn")
+  # sampler4 <- BNGibbsSampler(data             = theData,
+  #                            initial          = initial,
+  #                            prior            = priorUniform(initial),
+  #                            maxNumberParents = 5,
+  #                            moveprobs = c(0.75, 0.2, 0.05))
+  #
+  #  samples4 <- draw(sampler = sampler4,
+  #                  n       = 50000,
+  #                  burnin  = 10000,
+  #                  verbose = F)
+  #  gibbs4 <- bnpostmcmc(sampler4, samples4)
+  #
+  #  initial <- empty(ncol(theData), "bn")
+  #  sampler5 <- BNGibbsSampler(data             = theData,
+  #                             initial          = initial,
+  #                             prior            = priorUniform(initial),
+  #                             maxNumberParents = 5,
+  #                             moveprobs = c(0, 0, 1))
+  #
+  #   samples5 <- draw(sampler = sampler5,
+  #                   n       = 50000,
+  #                   burnin  = 10000,
+  #                   verbose = F)
+  #   gibbs5 <- bnpostmcmc(sampler5, samples5)
+  #
+  #   xyplot(cumtvd(gp(exact), bnpostmcmc.list(gibbs3 = gibbs3, gibbs5 = gibbs5)))
+  #
+  #xyplot(cumtvd(gp(exact), bnpostmcmc.list(gibbs = gibbs, mh = mh, gibbs3=gibbs3, gibbs4=gibbs4)))
+  #
 
   # expect_that(as.vector(outTable["integer(0),1,2"]),
   #             is_within(2463, 40))
