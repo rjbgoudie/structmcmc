@@ -227,7 +227,7 @@ getRowsThatContain <- function(numberOfNodes,
   lapply(nodesSeq, function(node){
     lapply(nodesSeq, function(parent){
       size <- nrow(parentsTables[[node]])
-      ind <- .Internal(match(parentsTables[[node]], parent, 0, NULL))
+      ind <- fmatch(parentsTables[[node]], parent, 0, NULL)
       tab <- matrix2(ind, nrow = size, ncol = maxNumberParents)
       tab <- rowSums2(tab)
       .Internal(which(tab > 0))

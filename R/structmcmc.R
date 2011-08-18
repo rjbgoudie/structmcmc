@@ -10,7 +10,7 @@
 
 #' The structmcmc package.
 #'
-#' @import parental lattice
+#' @import parental lattice fastmatch
 #' @docType package
 #' @name structmcmc
 #' @aliases structmcmc package-structmcmc
