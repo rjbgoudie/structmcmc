@@ -274,7 +274,7 @@ whichParentSetRows <- function(node,
   rowsNotAllowed <- rowsThatContain[[node]][nodesNotAllowed]
   rowsNotAllowed <- unlist(rowsNotAllowed, use.names = F)
   rowsNeeded <- allRows[[node]]
-  if (!is.null(needOneOf)){
+  if (!is.null(needOneOf) && length(needOneOf) > 0){
     if (is.list(needOneOf)){
       rowsNeeded <- lapply(needOneOf, function(needed){
         unlist(rowsThatContain[[node]][needed], use.names = F)
