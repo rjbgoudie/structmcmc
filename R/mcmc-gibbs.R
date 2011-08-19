@@ -347,9 +347,9 @@ samplePair2 <- function(currentNetwork,
     }
   }
 
-  nets <- bn.list(bn(integer(0), integer(0)),
-                  bn(2L, integer(0)),
-                  bn(integer(0), 1L))
+  nets <- data(structmcmc.internal.nets2)
+  nets <- structmcmc.internal.nets2
+
   rows <- lapply(nets, optionsGivenGraph)
   groupScoresOld <- sapply(rows, getScoreFromRows)
 
@@ -554,58 +554,8 @@ sampleTriple <- function(currentNetwork,
     }
   }
 
-  nets <- structure(list(
-    structure(list(integer(0), integer(0), integer(0)),
-              class = c("bn", "parental")),
-    structure(list(2L, integer(0), integer(0)),
-              class = c("bn", "parental")),
-    structure(list(3L, integer(0), integer(0)),
-              class = c("bn", "parental")),
-    structure(list(2:3, integer(0), integer(0)),
-              class = c("bn","parental")),
-    structure(list(integer(0), 1L, integer(0)),
-              class = c("bn", "parental")),
-    structure(list(3L, 1L, integer(0)),
-              class = c("bn", "parental")),
-    structure(list(integer(0), 3L, integer(0)),
-              class = c("bn", "parental")),
-    structure(list(2L, 3L, integer(0)),
-              class = c("bn", "parental")),
-    structure(list(3L, 3L, integer(0)),
-              class = c("bn", "parental")),
-    structure(list(2:3, 3L, integer(0)),
-              class = c("bn", "parental")),
-    structure(list(integer(0), c(1L, 3L), integer(0)),
-              class = c("bn", "parental")),
-    structure(list(3L, c(1L, 3L), integer(0)),
-              class = c("bn", "parental")),
-    structure(list(integer(0), integer(0), 1L),
-              class = c("bn", "parental")),
-    structure(list(2L, integer(0), 1L),
-              class = c("bn", "parental")),
-    structure(list(integer(0), 1L, 1L),
-              class = c("bn", "parental")),
-    structure(list(integer(0), 3L, 1L),
-              class = c("bn", "parental")),
-    structure(list(integer(0), c(1L, 3L), 1L),
-              class = c("bn", "parental")),
-    structure(list(integer(0), integer(0), 2L),
-              class = c("bn", "parental")),
-    structure(list(2L, integer(0), 2L),
-              class = c("bn", "parental")),
-    structure(list(3L, integer(0), 2L),
-              class = c("bn", "parental")),
-    structure(list(2:3, integer(0), 2L),
-              class = c("bn", "parental")),
-    structure(list(integer(0), 1L, 2L),
-              class = c("bn", "parental")),
-    structure(list(integer(0), integer(0), 1:2),
-              class = c("bn", "parental")),
-    structure(list(2L, integer(0), 1:2),
-              class = c("bn", "parental")),
-    structure(list(integer(0), 1L, 1:2),
-              class = c("bn", "parental"))),
-    class = c("bn.list", "parental.list"))
+  nets <- data(structmcmc.internal.nets3)
+  nets <- structmcmc.internal.nets3
 
   # each rows component refers to node1, node2, node3
   rows <- lapply(nets, optionsGivenGraph)
@@ -859,7 +809,8 @@ sampleQuadruple <- function(currentNetwork,
     }
   }
 
-  nets <- enumerateBNSpace(4)
+  data(structmcmc.internal.nets4)
+  nets <- structmcmc.internal.nets4
 
   # each rows component refers to node1, node2, node3
   rows <- lapply(nets, optionsGivenGraph)
