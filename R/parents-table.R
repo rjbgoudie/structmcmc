@@ -282,7 +282,11 @@ whichParentSetRows <- function(node,
       rowsNeeded <- lapply(needOneOf, function(needed){
         unlist(rowsThatContain[[node]][needed], use.names = F)
       })
-      rowsNeeded <- do.call("intersection", rowsNeeded)
+      if (length(rowsNeeded) == 2){
+        rowsNeeded <- intersect2(rowsNeeded[[1]], rowsNeeded[[2]])
+      } else {
+        rowsNeeded <- do.call("intersection", rowsNeeded)
+      }
     } else {
       rowsNeeded <- rowsThatContain[[node]][needOneOf]
       rowsNeeded <- unlist(rowsNeeded, use.names = F)
