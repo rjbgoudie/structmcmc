@@ -1,13 +1,18 @@
 \name{removeDuplicates}
 \alias{removeDuplicates}
-\title{Remove duplicates...}
-\usage{removeDuplicates(optionsForRequired, options)}
+\title{Remove duplicates}
+\usage{
+  removeDuplicates(optionsForRequired, options)
+}
+\arguments{
+  \item{optionsForRequired}{optionsForRequired}
 
+  \item{options}{options}
+}
+\value{
+  A list
+}
 \description{
   Remove duplicates
 }
-\value{A list}
-\arguments{
-  \item{optionsForRequired}{optionsForRequired}
-  \item{options}{options}
-}
+

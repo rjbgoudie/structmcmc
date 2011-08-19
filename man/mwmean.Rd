@@ -1,17 +1,18 @@
 \name{mwmean}
 \alias{mwmean}
 \title{Moving window mean.}
-\usage{mwmean(x, ...)}
-
-\description{
-  Moving window mean.
+\usage{
+  mwmean(x, ...)
 }
-
-\details{
-  method description
-}
-\seealso{\code{\link{mwmean.matrix}}}
 \arguments{
   \item{x}{...}
+
   \item{...}{Further arguments passed to method}
 }
+\description{
+  method description
+}
+\seealso{
+  \code{\link{mwmean.matrix}}
+}
+

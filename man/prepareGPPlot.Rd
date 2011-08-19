@@ -1,15 +1,13 @@
 \name{prepareGPPlot}
 \alias{prepareGPPlot}
 \title{Internal function.}
-\usage{prepareGPPlot(gplist)}
-
-\description{
-  Internal function.
-}
-
-\details{
-  method description
+\usage{
+  prepareGPPlot(gplist)
 }
 \arguments{
   \item{gplist}{An \code{gp.list} object}
 }
+\description{
+  method description
+}
+

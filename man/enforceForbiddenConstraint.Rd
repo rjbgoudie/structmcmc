@@ -1,17 +1,19 @@
 \name{enforceForbiddenConstraint}
 \alias{enforceForbiddenConstraint}
 \title{Undocumented.}
-\usage{enforceForbiddenConstraint(x, constraint)}
-
-\description{
-  Undocumented.
+\usage{
+  enforceForbiddenConstraint(x, constraint)
 }
-
-\details{
-  method description
-}
-\seealso{\code{\link{satisfiesConstraint}}, \code{\link{setupConstraint}}}
 \arguments{
   \item{x}{...}
+
   \item{constraint}{...}
 }
+\description{
+  method description
+}
+\seealso{
+  \code{\link{satisfiesConstraint}},
+  \code{\link{setupConstraint}}
+}
+

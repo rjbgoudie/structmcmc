@@ -1,17 +1,19 @@
 \name{nonDescendants}
 \alias{nonDescendants}
 \title{Find nonDescendants.}
-\usage{nonDescendants(x, node)}
-
-\description{
-  Find nonDescendants.
+\usage{
+  nonDescendants(x, node)
 }
-
-\details{
-  Find the non-descendants of a node
-}
-\seealso{\code{\link{routesAddEdges}}, \code{\link{routesRemoveEdges}}}
 \arguments{
   \item{x}{A routes matrix}
+
   \item{node}{A node}
 }
+\description{
+  Find the non-descendants of a node
+}
+\seealso{
+  \code{\link{routesAddEdges}},
+  \code{\link{routesRemoveEdges}}
+}
+

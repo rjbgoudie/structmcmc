@@ -1,18 +1,21 @@
 \name{statistics}
 \alias{statistics}
 \title{Extract statistics from a sampler.}
-\usage{statistics(x, ...)}
-
-\description{
-  Extract statistics from a sampler.
+\usage{
+  statistics(x, ...)
 }
-
-\details{
-  Extracts the statistics collected during an MCMC run
-}
-\value{A list of statistics collected during the MCMC run.}
-\seealso{\code{\link{statistics.sampler}}}
 \arguments{
   \item{x}{A sampler}
+
   \item{...}{Further arguments passed to method}
 }
+\value{
+  A list of statistics collected during the MCMC run.
+}
+\description{
+  Extracts the statistics collected during an MCMC run
+}
+\seealso{
+  \code{\link{statistics.sampler}}
+}
+

@@ -1,17 +1,18 @@
 \name{cummean}
 \alias{cummean}
 \title{Cumulative mean.}
-\usage{cummean(x, ...)}
-
-\description{
-  Cumulative mean.
+\usage{
+  cummean(x, ...)
 }
-
-\details{
-  method description
-}
-\seealso{\code{\link{cummean.matrix}}}
 \arguments{
   \item{x}{...}
+
   \item{...}{Further arguments passed to method}
 }
+\description{
+  method description
+}
+\seealso{
+  \code{\link{cummean.matrix}}
+}
+

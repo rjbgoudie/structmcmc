@@ -1,16 +1,16 @@
 \name{levelplot.bnpostmcmc}
 \alias{levelplot.bnpostmcmc}
 \title{Levelplot of BN Posterior from MCMC.}
-\usage{\method{levelplot}{bnpostmcmc} (x)}
-
-\description{
-  Levelplot of BN Posterior from MCMC.
+\usage{
+  \method{levelplot}{bnpostmcmc} (x)
 }
-
-\details{
-  method description
-}
-\seealso{\code{\link{plot.bnpostmcmc}}}
 \arguments{
   \item{x}{...}
 }
+\description{
+  method description
+}
+\seealso{
+  \code{\link{plot.bnpostmcmc}}
+}
+

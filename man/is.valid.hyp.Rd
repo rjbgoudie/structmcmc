@@ -1,18 +1,20 @@
 \name{is.valid.hyp}
 \alias{is.valid.hyp}
 \title{Checks validity.}
-\usage{\method{is.valid}{hyp} (x)}
-
-\description{
-  Checks validity.
+\usage{
+  \method{is.valid}{hyp} (x)
 }
-
-\details{
-  Checks whether the supplied hyperparameters parameter is
-  valid.
-}
-\value{A logical of length 1.}
-\seealso{\code{\link{logScoreMultDir}}}
 \arguments{
   \item{x}{The hyperparameters to test.}
 }
+\value{
+  A logical of length 1.
+}
+\description{
+  Checks whether the supplied hyperparameters parameter is
+  valid.
+}
+\seealso{
+  \code{\link{logScoreMultDir}}
+}
+

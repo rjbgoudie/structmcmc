@@ -1,16 +1,16 @@
 \name{prepareLevelPlot}
 \alias{prepareLevelPlot}
 \title{Internal function.}
-\usage{prepareLevelPlot(ep)}
-
-\description{
-  Internal function.
+\usage{
+  prepareLevelPlot(ep)
 }
-
-\details{
-  method description
-}
-\seealso{\code{\link{levelplot.ep}}}
 \arguments{
   \item{ep}{...}
 }
+\description{
+  method description
+}
+\seealso{
+  \code{\link{levelplot.ep}}
+}
+

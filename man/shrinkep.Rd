@@ -1,15 +1,13 @@
 \name{shrinkep}
 \alias{shrinkep}
 \title{Internal function.}
-\usage{shrinkep(ep)}
-
-\description{
-  Internal function.
-}
-
-\details{
-  method description
+\usage{
+  shrinkep(ep)
 }
 \arguments{
   \item{ep}{...}
 }
+\description{
+  method description
+}
+

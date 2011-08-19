@@ -1,24 +1,25 @@
 \name{dotplot.ep.list}
 \alias{dotplot.ep.list}
 \title{Dotplot of list of posterior edge probabilities.}
-\usage{\method{dotplot}{ep.list} (eplist, subsetBy="Exact",
-    head=30, ...)}
-
-\description{
-  Dotplot of list of posterior edge probabilities.
+\usage{
+  \method{dotplot}{ep.list} (eplist, subsetBy = "Exact",
+  head = 30, ...)
 }
-
-\details{
-  method description
-}
-\seealso{\code{\link{dotplot.ep}}}
 \arguments{
-  \item{eplist}{A *NAMED* list of edge probability matrices.}
+  \item{eplist}{A *NAMED* list of edge probability
+  matrices.}
+
   \item{subsetBy}{...}
+
   \item{head}{...}
+
   \item{...}{Further arguments passed to method}
 }
-\examples{x1 <- factor(c(1, 1, 0, 1))
+\description{
+  method description
+}
+\examples{
+x1 <- factor(c(1, 1, 0, 1))
 x2 <- factor(c(0, 1, 0, 1))
 x <- data.frame(x1 = x1, x2 = x2)
 
@@ -29,4 +30,9 @@ myep1 <- ep(exact)
 myep2 <- ep(mcmc)
 if (require(lattice)){
 dotplot(ep.list(Exact = myep1, MCMC = myep2))
-}}
+}
+}
+\seealso{
+  \code{\link{dotplot.ep}}
+}
+

@@ -1,14 +1,13 @@
+\docType{package}
 \name{structmcmc}
+\alias{"package-structmcmc"}
+\alias{structmcmc}
 \title{The structmcmc package.}
-
 \description{
   The structmcmc package.
 }
-\docType{package}
-\alias{structmcmc}
-\alias{package-structmcmc}
-\seealso{\code{\link{posterior}}}
-\examples{# Setup data frame
+\examples{
+# Setup data frame
 x1 <- factor(c("a", "a", "g", "c", "c", "a", "g", "a", "a"))
 x2 <- factor(c(2, 2, 4, 3, 1, 4, 4, 4, 1))
 x3 <- factor(c(FALSE, FALSE, TRUE, FALSE, TRUE, TRUE, FALSE, FALSE, TRUE))
@@ -28,4 +27,9 @@ epexact <- ep(exact)
 
 # Comparing multiple MCMC runs
 mcmc2 <- posterior(x, "mh-mcmc", nSamples = 1000, nBurnin = 100)
-epmcmc2 <- ep(mcmc2)}
+epmcmc2 <- ep(mcmc2)
+}
+\seealso{
+  \code{\link{posterior}}
+}
+
