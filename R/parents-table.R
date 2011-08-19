@@ -275,6 +275,9 @@ whichParentSetRows <- function(node,
   rowsNotAllowed <- unlist(rowsNotAllowed, use.names = F)
   rowsNeeded <- allRows[[node]]
   if (!is.null(needOneOf) && length(needOneOf) > 0){
+    if (is.list(needOneOf) && length(needOneOf) == 1){
+      needOneOf <- needOneOf[[1]]
+    }
     if (is.list(needOneOf)){
       rowsNeeded <- lapply(needOneOf, function(needed){
         unlist(rowsThatContain[[node]][needed], use.names = F)
@@ -282,7 +285,8 @@ whichParentSetRows <- function(node,
       rowsNeeded <- do.call("intersection", rowsNeeded)
     } else {
       rowsNeeded <- rowsThatContain[[node]][needOneOf]
-      rowsNeeded <- unique(unlist(rowsNeeded, use.names = F))
+      rowsNeeded <- unlist(rowsNeeded, use.names = F)
+      rowsNeeded <- .Internal(unique(rowsNeeded, F, F))
     }
   }
   setdiff3(rowsNeeded, rowsNotAllowed)
