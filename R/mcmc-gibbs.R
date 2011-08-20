@@ -898,7 +898,7 @@ sampleQuadruple <- function(currentNetwork,
   currentNetwork[[5]][node1] <- n1scoresGroup[n1samp]
   currentNetwork[[5]][node2] <- n2scoresGroup[n2samp]
   currentNetwork[[5]][node3] <- n3scoresGroup[n3samp]
-  currentNetwork[[5]][node4] <- n3scoresGroup[n4samp]
+  currentNetwork[[5]][node4] <- n4scoresGroup[n4samp]
 
   currentNetwork
 }
@@ -1216,8 +1216,8 @@ sampleQuintuple <- function(currentNetwork,
   currentNetwork[[5]][node1] <- n1scoresGroup[n1samp]
   currentNetwork[[5]][node2] <- n2scoresGroup[n2samp]
   currentNetwork[[5]][node3] <- n3scoresGroup[n3samp]
-  currentNetwork[[5]][node4] <- n3scoresGroup[n4samp]
-  currentNetwork[[5]][node5] <- n3scoresGroup[n5samp]
+  currentNetwork[[5]][node4] <- n4scoresGroup[n4samp]
+  currentNetwork[[5]][node5] <- n5scoresGroup[n5samp]
 
   currentNetwork
 }
