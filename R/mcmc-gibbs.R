@@ -1324,7 +1324,7 @@ BNGibbsSampler <- function(data,
             all(nchar(names(statistics)) > 0),
             is.logical(keepTape),
             length(keepTape)      ==   1,
-            sum(moveprobs)        ==   1)
+            all.equal(sum(moveprobs), 1))
 
   complete.prior <- function(net){
     locals <- sapply(nodesSeq, function(node){
