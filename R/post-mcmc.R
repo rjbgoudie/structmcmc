@@ -66,8 +66,6 @@ bnpostmcmc <- function(sampler, samples, logScoreFUN){
 #' method description
 #'
 #' @param ... Further arguments passed to method
-#' @S3method bnpostmcmc list
-#' @method bnpostmcmc list
 #' @export
 #' @seealso \code{\link{bnpostmcmc}}, \code{\link{gp.bnpostmcmc.list}},
 #'   \code{\link{ep.bnpostmcmc.list}}

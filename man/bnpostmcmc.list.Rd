@@ -2,7 +2,7 @@
 \alias{bnpostmcmc.list}
 \title{List of BN Posteriors from MCMC.}
 \usage{
-  \method{bnpostmcmc}{list} (...)
+  bnpostmcmc.list(...)
 }
 \arguments{
   \item{...}{Further arguments passed to method}
