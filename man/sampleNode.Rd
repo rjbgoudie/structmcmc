@@ -3,8 +3,7 @@
 \title{Sample the parents of a single node (Gibbs sampler).}
 \usage{
   sampleNode(currentNetwork, numberOfNodes, nodesSeq,
-  scoresParents, parentsTables, allRows, rowsThatContain,
-  whichParentSetRowsM)
+  scoresParents, parentsTables, allRows, rowsThatContain)
 }
 \arguments{
   \item{currentNetwork}{A \code{currentNetwork} object}
@@ -26,9 +25,6 @@
 
   \item{rowsThatContain}{A list of the form created by
   \code{getRowsThatContain()}}
-
-  \item{whichParentSetRowsM}{A memoised
-  \code{\link{whichParentSetRows}}}
 }
 \value{
   Returns the sampled network. A \code{currentNetwork}

@@ -4,7 +4,7 @@
 \usage{
   sampleQuintuple(currentNetwork, numberOfNodes, nodesSeq,
   scoresParents, parentsTables, allRows, rowsThatContain,
-  logScoreFUN, logScoreParameters, whichParentSetRowsM)
+  logScoreFUN, logScoreParameters)
 }
 \arguments{
   \item{currentNetwork}{A \code{currentNetwork} object}
@@ -43,9 +43,6 @@
 
   \item{logScoreParameters}{A list of parameters that are
   passed to logScoreFUN.}
-
-  \item{whichParentSetRowsM}{A memoised
-  \code{\link{whichParentSetRows}}}
 }
 \value{
   Returns the sampled network. A \code{currentNetwork}

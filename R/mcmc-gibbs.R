@@ -26,7 +26,6 @@
 #'   argument for possible speed gain)
 #' @param rowsThatContain A list of the form created by 
 #'   \code{getRowsThatContain()}
-#' @param whichParentSetRowsM A memoised \code{\link{whichParentSetRows}}
 #' @return Returns the sampled network. A \code{currentNetwork} object.
 #' @export
 #' @seealso \code{\link{BNGibbsSampler}}, \code{\link{samplePair}}
@@ -36,8 +35,7 @@ sampleNode <- function(currentNetwork,
                        scoresParents,
                        parentsTables,
                        allRows,
-                       rowsThatContain,
-                       whichParentSetRowsM){
+                       rowsThatContain){
   # choose a node to sample the parents of
   node <- sample.int(numberOfNodes, size = 1)
 
@@ -49,11 +47,11 @@ sampleNode <- function(currentNetwork,
   # get the conditional probability for the parents of
   # node 'node', given the rest of the graph
   nonDescendants <- nonDescendants(currentNetwork[[2]], node)
-  rows <- whichParentSetRowsM(node            = node,
-                              nonDescendants  = nonDescendants,
-                              numberOfNodes   = numberOfNodes,
-                              allRows         = allRows,
-                              rowsThatContain = rowsThatContain)
+  rows <- whichParentSetRows(node            = node,
+                             nonDescendants  = nonDescendants,
+                             numberOfNodes   = numberOfNodes,
+                             allRows         = allRows,
+                             rowsThatContain = rowsThatContain)
   scores <- scoresParents[[node]][rows]
   scoresNormalised <- exp(scores - logsumexp(scores))
 
@@ -99,7 +97,6 @@ sampleNode <- function(currentNetwork,
 #'   argument for possible speed gain)
 #' @param rowsThatContain A list of the form created by 
 #'   \code{getRowsThatContain()}
-#' @param whichParentSetRowsM A memoised \code{\link{whichParentSetRows}}
 #' @return Returns the sampled network. A \code{currentNetwork} object.
 #' @export
 #' @seealso \code{\link{BNGibbsSampler}}, \code{\link{sampleNode}}
@@ -109,8 +106,7 @@ samplePair <- function(currentNetwork,
                        scoresParents,
                        parentsTables,
                        allRows,
-                       rowsThatContain,
-                       whichParentSetRowsM){
+                       rowsThatContain){
   node1 <- sample.int(numberOfNodes, size = 1)
   choices <- setdiff3(nodesSeq, node1)
   node2 <- choices[sample.int(length(choices), size = 1)]
@@ -137,21 +133,21 @@ samplePair <- function(currentNetwork,
 
   # get the conditional probability for the parents of
   # node 'node1', given the rest of the graph
-  rows1[[1]] <- whichParentSetRowsM(node            = node1,
-                                    nonDescendants  = newNonDescendants1,
-                                    numberOfNodes   = numberOfNodes,
-                                    allRows         = allRows,
-                                    rowsThatContain = rowsThatContain)
+  rows1[[1]] <- whichParentSetRows(node            = node1,
+                                   nonDescendants  = newNonDescendants1,
+                                   numberOfNodes   = numberOfNodes,
+                                   allRows         = allRows,
+                                   rowsThatContain = rowsThatContain)
 
   # haveNewDescendants == F
   # no new nonDescendants2
   newNonDescendants2 <- intersect2(nonDescendants1, nonDescendants2)
 
-  rows2[[1]] <- whichParentSetRowsM(node            = node2,
-                                    nonDescendants  = newNonDescendants2,
-                                    numberOfNodes   = numberOfNodes,
-                                    allRows         = allRows,
-                                    rowsThatContain = rowsThatContain)
+  rows2[[1]] <- whichParentSetRows(node            = node2,
+                                   nonDescendants  = newNonDescendants2,
+                                   numberOfNodes   = numberOfNodes,
+                                   allRows         = allRows,
+                                   rowsThatContain = rowsThatContain)
   if (length(rows1[[1]]) > 0 && length(rows2[[1]]) > 0){
     group1Score <- logsumexp(scoresParents[[node1]][rows1[[1]]]) +
                    logsumexp(scoresParents[[node2]][rows2[[1]]])
@@ -163,22 +159,22 @@ samplePair <- function(currentNetwork,
   newNonDescendants1 <- nonDescendants1
   # get the conditional probability for the parents of
   # node 'node1', given the rest of the graph
-  rows1[[2]] <- whichParentSetRowsM(node            = node1,
-                                    nonDescendants  = newNonDescendants1,
-                                    needOneOf       = descendants2,
-                                    numberOfNodes   = numberOfNodes,
-                                    allRows         = allRows,
-                                    rowsThatContain = rowsThatContain)
+  rows1[[2]] <- whichParentSetRows(node            = node1,
+                                   nonDescendants  = newNonDescendants1,
+                                   needOneOf       = descendants2,
+                                   numberOfNodes   = numberOfNodes,
+                                   allRows         = allRows,
+                                   rowsThatContain = rowsThatContain)
 
   # haveNewDescendants == T
   # nonDescendants2 = nonDescendants2 + descendants1
   # == intersect2(nonDescendants1, nonDescendants2)
   newNonDescendants2 <- intersect2(nonDescendants2, nonDescendants1)
-  rows2[[2]] <- whichParentSetRowsM(node            = node2,
-                                    nonDescendants  = newNonDescendants2,
-                                    numberOfNodes   = numberOfNodes,
-                                    allRows         = allRows,
-                                    rowsThatContain = rowsThatContain)
+  rows2[[2]] <- whichParentSetRows(node            = node2,
+                                   nonDescendants  = newNonDescendants2,
+                                   numberOfNodes   = numberOfNodes,
+                                   allRows         = allRows,
+                                   rowsThatContain = rowsThatContain)
   if (length(rows1[[2]]) > 0 && length(rows2[[2]]) > 0){
     group2Score <- logsumexp(scoresParents[[node1]][rows1[[2]]]) +
                    logsumexp(scoresParents[[node2]][rows2[[2]]])
@@ -191,22 +187,22 @@ samplePair <- function(currentNetwork,
 
   # get the conditional probability for the parents of
   # node 'node1', given the rest of the graph
-  rows1[[3]] <- whichParentSetRowsM(node            = node1,
-                                    nonDescendants  = newNonDescendants1,
-                                    numberOfNodes   = numberOfNodes,
-                                    allRows         = allRows,
-                                    rowsThatContain = rowsThatContain)
+  rows1[[3]] <- whichParentSetRows(node            = node1,
+                                   nonDescendants  = newNonDescendants1,
+                                   numberOfNodes   = numberOfNodes,
+                                   allRows         = allRows,
+                                   rowsThatContain = rowsThatContain)
 
   # haveNewDescendants == T
   # nonDescendants2 = nonDescendants2 + descendants1
   # == intersect2(nonDescendants1, nonDescendants2)
   newNonDescendants2 <- nonDescendants2
-  rows2[[3]] <- whichParentSetRowsM(node            = node2,
-                                    nonDescendants  = newNonDescendants2,
-                                    needOneOf       = descendants1,
-                                    numberOfNodes   = numberOfNodes,
-                                    allRows         = allRows,
-                                    rowsThatContain = rowsThatContain)
+  rows2[[3]] <- whichParentSetRows(node            = node2,
+                                   nonDescendants  = newNonDescendants2,
+                                   needOneOf       = descendants1,
+                                   numberOfNodes   = numberOfNodes,
+                                   allRows         = allRows,
+                                   rowsThatContain = rowsThatContain)
   if (length(rows1[[3]]) > 0 && length(rows2[[3]]) > 0){
     group3Score <- logsumexp(scoresParents[[node1]][rows1[[3]]]) +
                    logsumexp(scoresParents[[node2]][rows2[[3]]])
@@ -319,12 +315,12 @@ samplePair2 <- function(currentNetwork,
       newNonDescendants1 <- intersect2(nonDescendants1, nonDescendants2)
       needOneOf <- NULL
     }
-    rows1 <- whichParentSetRowsM(node            = node1,
-                                 nonDescendants  = newNonDescendants1,
-                                 needOneOf       = needOneOf,
-                                 numberOfNodes   = numberOfNodes,
-                                 allRows         = allRows,
-                                 rowsThatContain = rowsThatContain)
+    rows1 <- whichParentSetRows(node            = node1,
+                                nonDescendants  = newNonDescendants1,
+                                needOneOf       = needOneOf,
+                                numberOfNodes   = numberOfNodes,
+                                allRows         = allRows,
+                                rowsThatContain = rowsThatContain)
 
     if (identical(net[[2]], 1L)){
       newNonDescendants2 <- nonDescendants2
@@ -333,12 +329,12 @@ samplePair2 <- function(currentNetwork,
       newNonDescendants2 <- intersect2(nonDescendants2, nonDescendants1)
       needOneOf <- NULL
     }
-    rows2 <- whichParentSetRowsM(node            = node2,
-                                 nonDescendants  = newNonDescendants2,
-                                 needOneOf       = needOneOf,
-                                 numberOfNodes   = numberOfNodes,
-                                 allRows         = allRows,
-                                 rowsThatContain = rowsThatContain)
+    rows2 <- whichParentSetRows(node            = node2,
+                                nonDescendants  = newNonDescendants2,
+                                needOneOf       = needOneOf,
+                                numberOfNodes   = numberOfNodes,
+                                allRows         = allRows,
+                                rowsThatContain = rowsThatContain)
     list(rows1, rows2)
   }
 
@@ -441,7 +437,6 @@ samplePair2 <- function(currentNetwork,
 #'   \code{\link{logScoreNormalFUN}} returns the appropriate list.
 #' @param logScoreParameters A list of parameters that are passed to
 #'   logScoreFUN.
-#' @param whichParentSetRowsM A memoised \code{\link{whichParentSetRows}}
 #' @return Returns the sampled network. A \code{currentNetwork} object.
 #' @export
 #' @seealso \code{\link{BNGibbsSampler}}, \code{\link{sampleNode}}
@@ -453,8 +448,7 @@ sampleTriple <- function(currentNetwork,
                          allRows,
                          rowsThatContain,
                          logScoreFUN,
-                         logScoreParameters,
-                         whichParentSetRowsM){
+                         logScoreParameters){
   node1 <- sample.int(numberOfNodes, size = 1)
   choices <- setdiff3(nodesSeq, node1)
   node2 <- choices[sample.int(length(choices), size = 1)]
@@ -525,26 +519,26 @@ sampleTriple <- function(currentNetwork,
       })
       newNonDescendants3 <- c(intersectAll, unlist(needOneOf3, use.names = F))
     }
-    rows1 <- whichParentSetRowsM(node            = node1,
-                                 nonDescendants  = newNonDescendants1,
-                                 needOneOf       = needOneOf1,
-                                 numberOfNodes   = numberOfNodes,
-                                 allRows         = allRows,
-                                 rowsThatContain = rowsThatContain)
+    rows1 <- whichParentSetRows(node            = node1,
+                                nonDescendants  = newNonDescendants1,
+                                needOneOf       = needOneOf1,
+                                numberOfNodes   = numberOfNodes,
+                                allRows         = allRows,
+                                rowsThatContain = rowsThatContain)
 
-    rows2 <- whichParentSetRowsM(node            = node2,
-                                 nonDescendants  = newNonDescendants2,
-                                 needOneOf       = needOneOf2,
-                                 numberOfNodes   = numberOfNodes,
-                                 allRows         = allRows,
-                                 rowsThatContain = rowsThatContain)
+    rows2 <- whichParentSetRows(node            = node2,
+                                nonDescendants  = newNonDescendants2,
+                                needOneOf       = needOneOf2,
+                                numberOfNodes   = numberOfNodes,
+                                allRows         = allRows,
+                                rowsThatContain = rowsThatContain)
 
-    rows3 <- whichParentSetRowsM(node            = node3,
-                                 nonDescendants  = newNonDescendants3,
-                                 needOneOf       = needOneOf3,
-                                 numberOfNodes   = numberOfNodes,
-                                 allRows         = allRows,
-                                 rowsThatContain = rowsThatContain)
+    rows3 <- whichParentSetRows(node            = node3,
+                                nonDescendants  = newNonDescendants3,
+                                needOneOf       = needOneOf3,
+                                numberOfNodes   = numberOfNodes,
+                                allRows         = allRows,
+                                rowsThatContain = rowsThatContain)
     list(rows1, rows2, rows3)
   }
 
@@ -671,7 +665,6 @@ sampleTriple <- function(currentNetwork,
 #'   \code{\link{logScoreNormalFUN}} returns the appropriate list.
 #' @param logScoreParameters A list of parameters that are passed to
 #'   logScoreFUN.
-#' @param whichParentSetRowsM A memoised \code{\link{whichParentSetRows}}
 #' @return Returns the sampled network. A \code{currentNetwork} object.
 #' @export
 #' @seealso \code{\link{BNGibbsSampler}}, \code{\link{sampleNode}}
@@ -683,8 +676,7 @@ sampleQuadruple <- function(currentNetwork,
                             allRows,
                             rowsThatContain,
                             logScoreFUN,
-                            logScoreParameters,
-                            whichParentSetRowsM){
+                            logScoreParameters){
   node1 <- sample.int(numberOfNodes, size = 1)
   choices <- setdiff3(nodesSeq, node1)
   node2 <- choices[sample.int(length(choices), size = 1)]
@@ -774,32 +766,32 @@ sampleQuadruple <- function(currentNetwork,
       })
       newNonDescendants4 <- c(intersectAll, unlist(needOneOf4, use.names = F))
     }
-    rows1 <- whichParentSetRowsM(node            = node1,
-                                 nonDescendants  = newNonDescendants1,
-                                 needOneOf       = needOneOf1,
-                                 numberOfNodes   = numberOfNodes,
-                                 allRows         = allRows,
-                                 rowsThatContain = rowsThatContain)
+    rows1 <- whichParentSetRows(node            = node1,
+                                nonDescendants  = newNonDescendants1,
+                                needOneOf       = needOneOf1,
+                                numberOfNodes   = numberOfNodes,
+                                allRows         = allRows,
+                                rowsThatContain = rowsThatContain)
 
-    rows2 <- whichParentSetRowsM(node            = node2,
-                                 nonDescendants  = newNonDescendants2,
-                                 needOneOf       = needOneOf2,
-                                 numberOfNodes   = numberOfNodes,
-                                 allRows         = allRows,
-                                 rowsThatContain = rowsThatContain)
+    rows2 <- whichParentSetRows(node            = node2,
+                                nonDescendants  = newNonDescendants2,
+                                needOneOf       = needOneOf2,
+                                numberOfNodes   = numberOfNodes,
+                                allRows         = allRows,
+                                rowsThatContain = rowsThatContain)
 
-    rows3 <- whichParentSetRowsM(node            = node3,
-                                 nonDescendants  = newNonDescendants3,
-                                 needOneOf       = needOneOf3,
-                                 numberOfNodes   = numberOfNodes,
-                                 allRows         = allRows,
-                                 rowsThatContain = rowsThatContain)
-    rows4 <- whichParentSetRowsM(node            = node4,
-                                 nonDescendants  = newNonDescendants4,
-                                 needOneOf       = needOneOf4,
-                                 numberOfNodes   = numberOfNodes,
-                                 allRows         = allRows,
-                                 rowsThatContain = rowsThatContain)
+    rows3 <- whichParentSetRows(node            = node3,
+                                nonDescendants  = newNonDescendants3,
+                                needOneOf       = needOneOf3,
+                                numberOfNodes   = numberOfNodes,
+                                allRows         = allRows,
+                                rowsThatContain = rowsThatContain)
+    rows4 <- whichParentSetRows(node            = node4,
+                                nonDescendants  = newNonDescendants4,
+                                needOneOf       = needOneOf4,
+                                numberOfNodes   = numberOfNodes,
+                                allRows         = allRows,
+                                rowsThatContain = rowsThatContain)
     list(rows1, rows2, rows3, rows4)
   }
 
@@ -946,7 +938,6 @@ sampleQuadruple <- function(currentNetwork,
 #'   \code{\link{logScoreNormalFUN}} returns the appropriate list.
 #' @param logScoreParameters A list of parameters that are passed to
 #'   logScoreFUN.
-#' @param whichParentSetRowsM A memoised \code{\link{whichParentSetRows}}
 #' @return Returns the sampled network. A \code{currentNetwork} object.
 #' @export
 #' @seealso \code{\link{BNGibbsSampler}}, \code{\link{sampleNode}}
@@ -958,8 +949,7 @@ sampleQuintuple <- function(currentNetwork,
                             allRows,
                             rowsThatContain,
                             logScoreFUN,
-                            logScoreParameters,
-                            whichParentSetRowsM){
+                            logScoreParameters){
   node1 <- sample.int(numberOfNodes, size = 1)
   choices <- setdiff3(nodesSeq, node1)
   node2 <- choices[sample.int(length(choices), size = 1)]
@@ -1068,38 +1058,38 @@ sampleQuintuple <- function(currentNetwork,
       })
       newNonDescendants5 <- c(intersectAll, unlist(needOneOf5, use.names = F))
     }
-    rows1 <- whichParentSetRowsM(node            = node1,
-                                 nonDescendants  = newNonDescendants1,
-                                 needOneOf       = needOneOf1,
-                                 numberOfNodes   = numberOfNodes,
-                                 allRows         = allRows,
-                                 rowsThatContain = rowsThatContain)
+    rows1 <- whichParentSetRows(node            = node1,
+                                nonDescendants  = newNonDescendants1,
+                                needOneOf       = needOneOf1,
+                                numberOfNodes   = numberOfNodes,
+                                allRows         = allRows,
+                                rowsThatContain = rowsThatContain)
 
-    rows2 <- whichParentSetRowsM(node            = node2,
-                                 nonDescendants  = newNonDescendants2,
-                                 needOneOf       = needOneOf2,
-                                 numberOfNodes   = numberOfNodes,
-                                 allRows         = allRows,
-                                 rowsThatContain = rowsThatContain)
+    rows2 <- whichParentSetRows(node            = node2,
+                                nonDescendants  = newNonDescendants2,
+                                needOneOf       = needOneOf2,
+                                numberOfNodes   = numberOfNodes,
+                                allRows         = allRows,
+                                rowsThatContain = rowsThatContain)
 
-    rows3 <- whichParentSetRowsM(node            = node3,
-                                 nonDescendants  = newNonDescendants3,
-                                 needOneOf       = needOneOf3,
-                                 numberOfNodes   = numberOfNodes,
-                                 allRows         = allRows,
-                                 rowsThatContain = rowsThatContain)
-    rows4 <- whichParentSetRowsM(node            = node4,
-                                 nonDescendants  = newNonDescendants4,
-                                 needOneOf       = needOneOf4,
-                                 numberOfNodes   = numberOfNodes,
-                                 allRows         = allRows,
-                                 rowsThatContain = rowsThatContain)
-    rows5 <- whichParentSetRowsM(node            = node5,
-                                 nonDescendants  = newNonDescendants5,
-                                 needOneOf       = needOneOf5,
-                                 numberOfNodes   = numberOfNodes,
-                                 allRows         = allRows,
-                                 rowsThatContain = rowsThatContain)
+    rows3 <- whichParentSetRows(node            = node3,
+                                nonDescendants  = newNonDescendants3,
+                                needOneOf       = needOneOf3,
+                                numberOfNodes   = numberOfNodes,
+                                allRows         = allRows,
+                                rowsThatContain = rowsThatContain)
+    rows4 <- whichParentSetRows(node            = node4,
+                                nonDescendants  = newNonDescendants4,
+                                needOneOf       = needOneOf4,
+                                numberOfNodes   = numberOfNodes,
+                                allRows         = allRows,
+                                rowsThatContain = rowsThatContain)
+    rows5 <- whichParentSetRows(node            = node5,
+                                nonDescendants  = newNonDescendants5,
+                                needOneOf       = needOneOf5,
+                                numberOfNodes   = numberOfNodes,
+                                allRows         = allRows,
+                                rowsThatContain = rowsThatContain)
     list(rows1, rows2, rows3, rows4, rows5)
   }
 
@@ -1407,21 +1397,6 @@ BNGibbsSampler <- function(data,
     seq_len(nrow(parentsTables[[node]]))
   })
 
-  wpsrCache <- new.env(hash = T)
-  whichParentSetRowsM <- function(node,
-                                  nonDescendants,
-                                  needOneOf = NULL,
-                                  ...){
-    id <- paste(paste(node, collapse = ","),
-                paste(nonDescendants, collapse = ","),
-                paste(needOneOf, collapse = ","), sep = "|")
-    if (!is.null(wpsrCache[[id]])){
-      wpsrCache[[id]]
-    } else {
-      (wpsrCache[[id]] <- whichParentSetRows(node, nonDescendants, needOneOf, ...))
-    }
-  }
-
   # Set up internal counters and logs etc
   nSteps <- 0
 
@@ -1552,56 +1527,51 @@ BNGibbsSampler <- function(data,
 
     u <- runif(1, min = 0, max = 1)
     if (u < moveprobs[1]){
-      currentNetwork <<- sampleNode(currentNetwork     = currentNetwork,
-                                    numberOfNodes      = numberOfNodes,
-                                    nodesSeq           = nodesSeq,
-                                    scoresParents      = scoresParents,
-                                    parentsTables      = parentsTables,
-                                    allRows            = allRows,
-                                    rowsThatContain    = rowsThatContain,
-                                    whichParentSetRowsM = whichParentSetRowsM)
+      currentNetwork <<- sampleNode(currentNetwork  = currentNetwork,
+                                    numberOfNodes   = numberOfNodes,
+                                    nodesSeq        = nodesSeq,
+                                    scoresParents   = scoresParents,
+                                    parentsTables   = parentsTables,
+                                    allRows         = allRows,
+                                    rowsThatContain = rowsThatContain)
     } else if (u < moveprobs[1] + moveprobs[2]){
-      currentNetwork <<- samplePair(currentNetwork     = currentNetwork,
-                                    numberOfNodes      = numberOfNodes,
-                                    nodesSeq           = nodesSeq,
-                                    scoresParents      = scoresParents,
-                                    parentsTables      = parentsTables,
-                                    allRows            = allRows,
-                                    rowsThatContain    = rowsThatContain,
-                                    whichParentSetRowsM = whichParentSetRowsM)
+      currentNetwork <<- samplePair(currentNetwork  = currentNetwork,
+                                    numberOfNodes   = numberOfNodes,
+                                    nodesSeq        = nodesSeq,
+                                    scoresParents   = scoresParents,
+                                    parentsTables   = parentsTables,
+                                    allRows         = allRows,
+                                    rowsThatContain = rowsThatContain)
     } else if (u < sum(moveprobs[1:3])) {
       currentNetwork <<- sampleTriple(currentNetwork  = currentNetwork,
-                                    numberOfNodes      = numberOfNodes,
-                                    nodesSeq           = nodesSeq,
-                                    scoresParents      = scoresParents,
-                                    parentsTables      = parentsTables,
-                                    allRows            = allRows,
-                                    rowsThatContain    = rowsThatContain,
-                                    logScoreFUN        = logScoreFUN,
-                                    logScoreParameters = logScoreParameters,
-                                    whichParentSetRowsM = whichParentSetRowsM)
+                                      numberOfNodes   = numberOfNodes,
+                                      nodesSeq        = nodesSeq,
+                                      scoresParents   = scoresParents,
+                                      parentsTables   = parentsTables,
+                                      allRows         = allRows,
+                                      rowsThatContain = rowsThatContain,
+                                      logScoreFUN     = logScoreFUN,
+                                      logScoreParameters = logScoreParameters)
     } else if (u < sum(moveprobs[1:4])) {
       currentNetwork <<- sampleQuadruple(currentNetwork  = currentNetwork,
-                                    numberOfNodes      = numberOfNodes,
-                                    nodesSeq           = nodesSeq,
-                                    scoresParents      = scoresParents,
-                                    parentsTables      = parentsTables,
-                                    allRows            = allRows,
-                                    rowsThatContain    = rowsThatContain,
-                                    logScoreFUN        = logScoreFUN,
-                                    logScoreParameters = logScoreParameters,
-                                    whichParentSetRowsM = whichParentSetRowsM)
+                                      numberOfNodes   = numberOfNodes,
+                                      nodesSeq        = nodesSeq,
+                                      scoresParents   = scoresParents,
+                                      parentsTables   = parentsTables,
+                                      allRows         = allRows,
+                                      rowsThatContain = rowsThatContain,
+                                      logScoreFUN     = logScoreFUN,
+                                      logScoreParameters = logScoreParameters)
     } else if (u < sum(moveprobs[1:5])) {
       currentNetwork <<- sampleQuintuple(currentNetwork  = currentNetwork,
-                                    numberOfNodes      = numberOfNodes,
-                                    nodesSeq           = nodesSeq,
-                                    scoresParents      = scoresParents,
-                                    parentsTables      = parentsTables,
-                                    allRows            = allRows,
-                                    rowsThatContain    = rowsThatContain,
-                                    logScoreFUN        = logScoreFUN,
-                                    logScoreParameters = logScoreParameters,
-                                    whichParentSetRowsM = whichParentSetRowsM)
+                                      numberOfNodes   = numberOfNodes,
+                                      nodesSeq        = nodesSeq,
+                                      scoresParents   = scoresParents,
+                                      parentsTables   = parentsTables,
+                                      allRows         = allRows,
+                                      rowsThatContain = rowsThatContain,
+                                      logScoreFUN     = logScoreFUN,
+                                      logScoreParameters = logScoreParameters)
     } else {
       stop("Not implemented")
     }
