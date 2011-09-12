@@ -159,17 +159,15 @@ new_stack <- function(size = 1000L)
 new_queue <- function(threshold){
   queue <- list()
   priorities <- c()
-  len <- 0
   queue_reset <- function(){
-    queue <<- list()
-    priorities <<- c()
-    len <<- 0
+    queue <<- vector("list", length = 0)
+    priorities <<- vector("numeric", length = 0)
   }
   queue_list <- function(){
     queue
   }
   queue_which <- function(element){
-    if (len > 0){
+    if (length(queue) > 0){
       which(sapply(queue, function(this){
         identical(this, element)
       }))
@@ -185,7 +183,6 @@ new_queue <- function(threshold){
     if (length(wh) > 0){
       priorities <<- priorities[-wh]
       queue <<- queue[-wh]
-      len <<- len - 1
     }
   }
   queue_top_priority <- function(element){
