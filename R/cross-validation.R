@@ -43,15 +43,15 @@ residualsMultDir <- function(x,
             inherits(train, "data.frame"),
             inherits(test, "data.frame"))
   if (is_bn){
-    s <- seq_along(x)
+    n <- length(x)
   } else {
-    s <- seq_along(x[[1]])
+    n <- length(x[[1]])
   }
   if (isTRUE(verbose)){
-    progress <- txtProgressBar(max = numberOfNodes, style = 3)
+    progress <- txtProgressBar(max = n, style = 3)
     setTxtProgressBar(progress, 0)
   }
-  for (node in s){
+  for (node in seq_len(n)){
     out <- residualsMultDirNode(node    = node,
                                 x       = x,
                                 weights = weights,
