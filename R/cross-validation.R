@@ -47,13 +47,26 @@ residualsMultDir <- function(x,
   } else {
     s <- seq_along(x[[1]])
   }
-  sapply(s, residualsMultDirNode,
-            x       = x,
-            weights = weights,
-            train   = train,
-            test    = test,
-            metric  = metric,
-            verbose = verbose)
+  if (isTRUE(verbose)){
+    progress <- txtProgressBar(max = numberOfNodes, style = 3)
+    setTxtProgressBar(progress, 0)
+  }
+  for (node in s){
+    out <- residualsMultDirNode(node    = node,
+                                x       = x,
+                                weights = weights,
+                                train   = train,
+                                test    = test,
+                                metric  = metric,
+                                verbose = verbose)
+    if (isTRUE(verbose)){
+      setTxtProgressBar(progress, node)
+    }
+  }
+  if (isTRUE(verbose)){
+    close(progress)
+  }
+  out
 }
 
 #' Residuals for a single node for a Multinomial-Dirichlet model
