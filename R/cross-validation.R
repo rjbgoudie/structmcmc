@@ -10,47 +10,109 @@
 
 #' Residuals from a Multinomial-Dirichlet model
 #'
-#' ..
+#' Given a Bayesian network, some training data and some test data,
+#' the model given by fitting the Bayesian network to the training data is
+#' used to predict each node of the test data, given the parents of that
+#' node in the Bayesian network.
+#' 
+#' The residual is then computed, using the supplied \code{metric}.
+#' 
+#' Alternatively, a \code{bn.list} of Bayesian networks can be supplied,
+#' together with a vector of weights. The models (Bayesian networks) are then
+#' averaged over, according to the supplied weights, to give a model
+#' averaging prediction.
+#' 
+#' The residuals are again computed, using the suppplied \code{metric}.
 #'
-#' @param x A BN
+#' @param x A BN, or a \code{bn.list}
+#' @param weights A numeric vector weights for the models \code{x}
 #' @param train A data frame of training data
 #' @param test A data frame of test data
 #' @param metric A function that measures the distance between the
 #'   predictions and the true values
 #' @param verbose Logical indicating whether verbose output should be given
 #' @export
-residualsMultDir <- function(x, train, test, metric = kronecker_delta, verbose = F){
-  stopifnot(inherits(x, "bn"),
+residualsMultDir <- function(x,
+                             weights = 1,
+                             train,
+                             test,
+                             metric = kronecker_delta,
+                             verbose = F){
+  is_bn <- inherits(x, "bn")
+  stopifnot(is_bn || inherits(x, "bn.list"),
             inherits(train, "data.frame"),
             inherits(test, "data.frame"))
-  param <- bayes(x, train)
-  sapply(seq_along(x), residualsMultDirNode,
-                       x       = x,
-                       param   = param,
-                       test    = test,
-                       metric  = metric,
-                       verbose = verbose)
+  if (is_bn){
+    s <- seq_along(x)
+  } else {
+    s <- seq_along(x[[1]])
+  }
+  sapply(s, residualsMultDirNode,
+            x       = x,
+            weights = weights,
+            train   = train,
+            test    = test,
+            metric  = metric,
+            verbose = verbose)
 }
 
 #' Residuals for a single node for a Multinomial-Dirichlet model
+#'
+#' Given a Bayesian network, some training data and some test data,
+#' the model given by fitting the Bayesian network to the training data is
+#' used to predict \code{node} of the test data, given the parents of that
+#' node in the Bayesian network.
 #' 
+#' The residual is then computed, using the supplied \code{metric}.
+#' 
+#' Alternatively, a \code{bn.list} of Bayesian networks can be supplied,
+#' together with a vector of weights. The models (Bayesian networks) are then
+#' averaged over, according to the supplied weights, to give a model
+#' averaging prediction. Only a single node is considered.
+#' 
+#' The residuals are again computed, using the suppplied \code{metric}.
+#'
 #' @inheritParams residualsMultDir
 #' @param node An integer, giving the node
 #' @export
-residualsMultDirNode <- function(node, x, param, test, metric, verbose){
-  pred <- predictNode(node, x, param, test)
-  metric(pred, test[, node])
+residualsMultDirNode <- function(node,
+                                 weights = 1,
+                                 x,
+                                 train,
+                                 test,
+                                 metric,
+                                 verbose){
+  if (inherits(x, "bn")){
+    param <- bayes(x, train)
+    pred <- predictNode(node = node,
+                        x = x,
+                        param = param,
+                        test = test)
+    metric(pred, test[, node])
+  } else {
+    pred <- predictModelAverageNode(node = node,
+                                    x = x,
+                                    weights = weights,
+                                    train = train,
+                                    newdata = test)
+    metric(pred, test[, node])
+  }
 }
 
 #' Predict a Multinomial-Dirichlet model
 #'
-#' ..
+#' Predict each variable, given the model in the supplied Bayesian Network
+#' \code{x}.
 #'
 #' @param x A BN
 #' @param param Parameters for the model
 #' @param newdata A data frame of new data
+#' @param type The type of prediction required.
 #' @export
-predict.bn <- function(x, param, newdata){
+predict.bn <- function(x,
+                       param,
+                       newdata,
+                       type = c("response", "probabilities")){
   sapply(seq_along(x), predictNode,
                        x       = x,
                        param   = param,
@@ -58,72 +120,165 @@ predict.bn <- function(x, param, newdata){
 }
 
 #' Predict a Multinomial-Dirichlet model
-#' 
+#'
+#' Predict a node of a Bayesian network, given a collection of Bayesian
+#' networks. The predictions from each supplied Bayesian network are averaged
+#' over, according to their weights.
+#'
 #' @inheritParams predict.bn
 #' @param node An integer, giving the node
 #' @export
-predictNode <- function(node, x, param, newdata){
+predictModelAverageNode <- function(node,
+                                    x,
+                                    weights,
+                                    train,
+                                    newdata){
+  probabilities <- lapply(x, function(model){
+    param <- bayes(model, train)
+    predictNode(node, model, param, newdata, type = "probabilities")
+  })
+  probabilities <- Map("*", probabilities, weights)
+  probabilities <- Reduce("+", probabilities)
+  response <- adply(probabilities, 1, rowProbabiltiesToResponse,
+                                      names = levels(newdata[, node]))
+  ol <- levels(newdata[, node])
+  factor(response[, ncol(response)], levels = ol)
+}
+
+#' Get prediction for a row
+#'
+#' @param prob A numeric vector of probabilities
+#' @param names A vector of level names
+rowProbabiltiesToResponse <- function(prob, names){
+  names[which.max(prob)]
+}
+
+#' Predict a Multinomial-Dirichlet model
+#'
+#' @inheritParams predict.bn
+#' @param node An integer, giving the node
+#' @export
+predictNode <- function(node,
+                        x,
+                        param,
+                        newdata,
+                        type = c("response", "probabilities")){
+  if (length(x[[node]]) > 0){
+    predictGivenParents(node, x, param, newdata, type = type)
+  } else {
+    predictGivenNoParents(node, x, param, newdata, type = type)
+  }
+}
+
+#' Adjust the predictions
+#'
+#' Due to rounding, too many or too few predictions may be made. This
+#' functions makes the adjustments in a reasonable manner
+#'
+#' @param predictions An integer vector of the number of each category that
+#'   have been predicted.
+#' @param probabilities A vector of probabilities
+#' @param n How many predictions should there be
+adjustPredictions <- function(predictions, probabilities, n){
+  while (sum(predictions) > n){
+    o <- sort(decim(probabilities), decreasing = F)
+
+    done <- F
+    allowed <- seq_along(probabilities)
+    while (!done){
+      if (predictions[allowed[1]] > 0){
+        predictions[allowed[1]] <- predictions[allowed[1]] - 1
+        done <- T
+      } else {
+        allowed <- allowed[-1]
+      }
+    }
+  }
+  while (sum(predictions) < n){
+    w <- which.max(decim(probabilities))
+    predictions[w] <- predictions[w] + 1
+  }
+  predictions
+}
+
+#' Predict a node, given parents
+#'
+#' Predicts a particular node, given the parents in a Bayesian network
+#'
+#' @inheritParams predict.bn
+#' @param node An integer, specifying the node
+predictGivenParents <- function(node, x, param, newdata, type){
   param <- param[[node]]
   parents <- x[[node]]
-  if (length(parents) > 0){
-    ol <- levels(newdata[, node])
-    newdata <- newdata[, parents, drop = F]
-    if (require(plyr)){
-      predictions <- adply(newdata, 1, makeRowPredictions,
-                                       predictors = parents,
-                                       param = param)
+  if (require(plyr)){
+    predictions <- adply(newdata, 1, makeRowPredictions,
+                                     predictors = parents,
+                                     param = param,
+                                     type = type)
+    if (type[1] == "response"){
+      ol <- levels(newdata[, node])
       factor(predictions[, ncol(predictions)], levels = ol)
     } else {
-      stop("need plyr")
+      predictions[-seq_len(ncol(newdata))]
     }
   } else {
-    ol <- levels(newdata[, node])
-    n <- nrow(newdata)
-    probabilities <- param[[1]]
+    stop("need plyr")
+  }
+}
+
+#' Predict a node, given no parents
+#'
+#' Predicts a particular node
+#'
+#' @inheritParams predict.bn
+#' @param node An integer, specifying the node
+predictGivenNoParents <- function(node,
+                             x,
+                             param,
+                             newdata,
+                             type = c("response", "probabilities")){
+  param <- param[[node]]
+  ol <- levels(newdata[, node])
+  n <- nrow(newdata)
+  probabilities <- param[[1]]
+
+  if (type[1] == "response"){
     predictions <- ceiling(probabilities * n)
 
     # adjust for rounding errors
-    while (sum(predictions) > n){
-      o <- sort(decim(probabilities), decreasing = F)
+    predictions <- adjustPredictions(predictions, probabilities, n)
 
-      done <- F
-      allowed <- seq_along(probabilities)
-      while (!done){
-        if (predictions[allowed[1]] > 0){
-          predictions[allowed[1]] <- predictions[allowed[1]] - 1
-          done <- T
-        } else {
-          allowed <- allowed[-1]
-        }
-      }
-    }
-    while (sum(predictions) < n){
-      w <- which.max(decim(probabilities))
-      predictions[w] <- predictions[w] + 1
-    }
-
-    # output final factor
     out <- c()
     for (i in seq_along(predictions)){
       out <- c(out, rep(names(predictions)[i], predictions[i]))
     }
     factor(out, levels = ol)
+  } else {
+    matrix(rep(probabilities, each = nrow(newdata)), nrow = nrow(newdata))
   }
 }
 
 #' Make row predictions
-#' 
-#' @param row A row
-#' @param predictors
-#' @param param 
-makeRowPredictions <- function(row, predictors, param){
-  id <- paste(unname(unlist(row)), collapse = ",")
+#'
+#' @param row A vector containing the predictors in the model
+#' @param predictors The parents of the node
+#' @param param A list of parameters
+#' @param type The type of prediction required.
+makeRowPredictions <- function(row,
+                               predictors,
+                               param,
+                               type = c("response", "probabilities")){
+  id <- paste(unname(unlist(row[predictors])), collapse = ",")
   probabilities <- param[[id]]
-  names(probabilities)[which.max(probabilities)]
+  if (type[1] == "response"){
+    names(probabilities)[which.max(probabilities)]
+  } else {
+    probabilities
+  }
 }
 
 #' Find the non-integer part of a number
-#' 
+#'
 #' @param x A numeric vector
 #' @examples
 #' decim(2.3)
@@ -148,7 +303,7 @@ residsNormal <- function(x, train, test, metric = square_error){
 }
 
 #' Residuals for a single node for a Normal model
-#' 
+#'
 #' @inheritParams residsNormal
 #' @param node An integer, giving the node
 #' @export
@@ -177,7 +332,7 @@ residsNormalNode <- function(node, x, train, test, metric, verbose){
 }
 
 #' Metric: Kronecker delta
-#' 
+#'
 #' @param predictions A factor variable
 #' @param true A factor variable
 #' @export

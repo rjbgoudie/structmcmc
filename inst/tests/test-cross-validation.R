@@ -11,33 +11,36 @@
 context("Cross-validation tests")
 
 test_that("3-node Bayesian Network", {
+  x1 <- as.factor(c(1, 1, 0, 1, 0, 0, 1, 0, 1, 0))
+  x2 <- as.factor(c(0, 1, 0, 1, 0, 1, 1, 0, 1, 0))
+  x3 <- as.factor(c(0, 1, 1, 1, 0, 1, 1, 0, 1, 0))
+  train <- data.frame(x1 = x1, x2 = x2,  x3 = x3)
 
-  if (require(reshape) && require(nnet)){
-    x1 <- as.factor(c(1, 1, 0, 1, 0, 0, 1, 0, 1, 0))
-    x2 <- as.factor(c(0, 1, 0, 1, 0, 1, 1, 0, 1, 0))
-    x3 <- as.factor(c(0, 1, 1, 1, 0, 1, 1, 0, 1, 0))
-    theData <- data.frame(x1 = x1, x2 = x2,  x3 = x3)
+  x <- bn(integer(0), c(1,3), integer(0))
 
-    modal_graph <- bn(integer(0), c(1,3), integer(0))
+  test <- data.frame(x1 = x1[c(2,3,4,2,3)],
+                     x2 = x2[c(6,4,2,4,2)],
+                     x3 = x3[c(2,3,4,3,4)])
 
-    set.seed(3012)
-    cv <- dagcv(modal_graph, 2, theData, fold = list(c(seq_len(5)), c(seq_len(5) + 5)), predictiveReplications = 1)
+  bayes(x, train)
 
-    set.seed(3012)
-    #pt2
-    sample.int(2, replace = T, prob = c(9/10, 1/10), size = 1)
-    sample.int(2, replace = T, prob = c(1/6, 5/6), size = 1)
-    sample.int(2, replace = T, prob = c(1/2, 1/2), size = 1)
-    sample.int(2, replace = T, prob = c(1/10, 9/10), size = 2)
+  residualsMultDir(x, train, test)
+})
 
-    sample.int(2, replace = T, size = 5)
+test_that("3-node Bayesian Network", {
+  x1 <- as.factor(c(1, 1, 0, 1, 0, 0, 1, 0, 1, 0))
+  x2 <- as.factor(c(0, 1, 0, 1, 0, 1, 1, 0, 1, 0))
+  x3 <- as.factor(c(0, 1, 1, 1, 0, 1, 1, 0, 1, 0))
+  train <- data.frame(x1 = x1, x2 = x2,  x3 = x3)
 
-    #pt1
-    sample.int(2, replace = T, prob = c(5/6, 1/6), size = 2)
-    sample.int(2, replace = T, prob = c(5/6, 1/6), size = 1)
-    sample.int(2, replace = T, prob = c(1/10, 9/10), size = 2)
+  x <- bn(integer(0), c(3), integer(0))
+  y <- bn(integer(0), c(1), integer(0))
 
-    expect_that(cv$overall["bn"], equals(structure(3, .Names = "bn")))
-    expect_that(cv$numberIncorrectByFold, equals(c(2,1)))
-  }
+  test <- data.frame(x1 = x1[c(2,3,4,2,3,8,7)],
+                     x2 = x2[c(6,4,2,4,2,7,8)],
+                     x3 = x3[c(2,3,4,3,4,7,7)])
+
+  predictModelAverageNode(2, list(x, y), train, test, weights = c(0.1, 0.9))
+
+  expect_that(residualsMultDir(bn.list(x, y), weights = c(0.1, 0.9), train, test), equals(c(4, 4, 0))
 })
