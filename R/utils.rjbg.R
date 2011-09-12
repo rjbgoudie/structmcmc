@@ -146,3 +146,71 @@ new_stack <- function(size = 1000L)
        keys = function() ls(cache),
        keys_used = function() keys_used)
 }
+
+#' Priority queue
+#'
+#' A priority queue, at least of sorts
+#'
+#' Based upon Hadley Wickham's memoise (MIT License)
+#' http://cran.r-project.org/web/packages/memoise/
+#'
+#' @param threshold The amount below the top that should be kept
+#' @export
+new_queue <- function(threshold){
+  queue <- list()
+  priorities <- c()
+  len <- 0
+  queue_reset <- function(){
+    queue <<- list()
+    priorities <<- c()
+    len <<- 0
+  }
+  queue_list <- function(){
+    queue
+  }
+  queue_which <- function(element){
+    if (len > 0){
+      which(sapply(queue, function(this){
+        identical(this, element)
+      }))
+    } else {
+      integer(0)
+    }
+  }
+  queue_is_element <- function(element){
+    length(queue_which(element)) > 0
+  }
+  queue_rm <- function(element){
+    wh <- queue_which(element)
+    if (length(wh) > 0){
+      priorities <<- priorities[-wh]
+      queue <<- queue[-wh]
+      len <<- len - 1
+    }
+  }
+  queue_top_priority <- function(element){
+    max(priorities)
+  }
+  queue_prune <- function(){
+    cutoff <- queue_top_priority() - threshold
+    keep <- which(priorities > cutoff)
+    queue <<- queue[keep]
+    priorities <<- priorities[keep]
+  }
+  queue_add <- function(element, priority){
+    if (!queue_is_element(element)){
+      queue <<- c(queue, list(element))
+      priorities <<- c(priorities, priority)
+      queue_prune()
+    }
+  }
+  queue_browser <- function(){
+    browser()
+  }
+  queue_reset()
+  list(reset = queue_reset,
+       add = queue_add,
+       ls = queue_list,
+       rm = queue_rm,
+       browser = queue_browser)
+}
