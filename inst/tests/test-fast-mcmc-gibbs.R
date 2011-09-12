@@ -103,6 +103,18 @@ test_that("5-node Bayesian Network", {
                   n       = 1000,
                   burnin  = 10,
                   verbose = F)
+
+  initial <- empty(ncol(theData), "bn")
+  sampler <- BNGibbsSampler(data             = theData,
+                            initial          = initial,
+                            prior            = priorUniform(initial),
+                            maxNumberParents = 5,
+                            moveprobs = c(0, 1, 0))
+  system.time(samples <- draw(sampler = sampler,
+                  n       = 10000,
+                  burnin  = 10,
+                  verbose = F)) # 8.8
+
   actual <- pltabulate(samples)
 
   expected <- expectedProbs * sum(actual)
