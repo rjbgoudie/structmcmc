@@ -51,14 +51,15 @@ residualsMultDir <- function(x,
     progress <- txtProgressBar(max = n, style = 3)
     setTxtProgressBar(progress, 0)
   }
+  out <- list()
   for (node in seq_len(n)){
-    out <- residualsMultDirNode(node    = node,
-                                x       = x,
-                                weights = weights,
-                                train   = train,
-                                test    = test,
-                                metric  = metric,
-                                verbose = verbose)
+    out[[node]] <- residualsMultDirNode(node    = node,
+                                        x       = x,
+                                        weights = weights,
+                                        train   = train,
+                                        test    = test,
+                                        metric  = metric,
+                                        verbose = verbose)
     if (isTRUE(verbose)){
       setTxtProgressBar(progress, node)
     }
@@ -100,7 +101,7 @@ residualsMultDirNode <- function(node,
     pred <- predictNode(node = node,
                         x = x,
                         param = param,
-                        test = test)
+                        newdata = test)
     metric(pred, test[, node])
   } else {
     pred <- predictModelAverageNode(node = node,
