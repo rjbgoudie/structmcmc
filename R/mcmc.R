@@ -371,3 +371,54 @@ summary.sampler <- function(x, ...){
   cat("Number of steps: ", length(x))
   invisible(x)
 }
+
+#' Retreive MAP from sampler
+#'
+#' \code{map} method for class "\code{sampler}"
+#'
+#' @param x A sampler
+#' @param ... Further arguments, currently unused
+#' @S3method map sampler
+#' @method map sampler
+map.sampler <- function(x, ...){
+  count <- get("count", envir = environment(x))
+  count <- unlist(as.list(count))
+  id <- names(count)[order(count, decreasing = T)[1]]
+  as.bn(id)
+}
+
+#' Retreive top graph from sampler
+#'
+#' \code{top} method for class "\code{sampler}"
+#'
+#' @param x A sampler
+#' @param head The number of graphs to consider
+#' @param ... Further arguments, currently unused
+#' @S3method top sampler
+#' @method top sampler
+top.sampler <- function(x, head = 10, ...){
+  count <- get("count", envir = environment(x))
+  count <- unlist(as.list(count))
+  o <- order(count, decreasing = T)
+  s <- seq_len(min(head, length(count)))
+  id <- names(count)[o[s]]
+  as.bn(id)
+}
+
+#' Retreive graph probabilities from sampler
+#'
+#' \code{gp} method for class "\code{sampler}"
+#'
+#' @param x A sampler
+#' @param head The number of graphs to consider
+#' @param ... Further arguments, currently unused
+#' @S3method gp sampler
+#' @method gp sampler
+gp.sampler <- function(x, head = 10000, ...){
+  count <- get("count", envir = environment(x))
+  count <- unlist(as.list(count))
+  o <- order(count, decreasing = T)
+  s <- seq_len(min(head, length(count)))
+  count <- count[o[s]]
+  count/sum(count)
+}
