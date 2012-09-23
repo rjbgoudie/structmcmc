@@ -337,6 +337,19 @@ burnin <- function(x, ...){
 #' Returns the number of samples (MCMC steps) drawn in the supplied sampler.
 #'
 #' @param x A sampler
+#' @param ... Further arguments passed to method
+#' @return The number of samples (steps) that have been drawn.
+#' @export
+#' @seealso \code{\link{steps.sampler}}
+steps <- function(x, ...){
+  UseMethod("steps")
+}
+
+#' Number of samples drawn.
+#'
+#' Returns the number of samples (MCMC steps) drawn in the supplied sampler.
+#'
+#' @param x A sampler
 #' @param ... Further arguments, currently unused
 #' @return The number of samples (steps) that have been drawn.
 #' @S3method length sampler
