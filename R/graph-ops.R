@@ -1,6 +1,6 @@
 
 #' List graphs in change node neighbourhood.
-#' 
+#'
 #' Given a list of nodes \code{change}, get a list of \code{bn}.
 #'
 #' @param currentNetwork A list, containing in the first position the
@@ -55,7 +55,7 @@ getNewGraph <- function(currentNetwork,
 }
 
 #' Get non-descendants of all nodes.
-#' 
+#'
 #' @param currentNetwork A list, containing in the first position the
 #'   starting \code{bn}, and in the second position the routes matrix for
 #'   that BN.
@@ -70,9 +70,9 @@ allNonDescendants <- function(currentNetwork){
 }
 
 #' Get descendants of all nodes.
-#' 
+#'
 #' Note that the descendants of each node includes that node!
-#' 
+#'
 #' @param currentNetwork A list, containing in the first position the
 #'   starting \code{bn}, and in the second position the routes matrix for
 #'   that BN.
@@ -88,13 +88,13 @@ allDescendants <- function(currentNetwork){
 }
 
 #' Get possible parents.
-#' 
+#'
 #' Given a sub-bn, get the possible parents of each node.
-#' 
+#'
 #' The possible parents for a node j that changes (a "change node") are
 #' those that are not descendants of any other change node, except for
 #' any change node that is an immediate parents of j in bn (the "sub-bn").
-#' 
+#'
 #' @param bn A sub-bn
 #' @param nonDescendantsList The output of \code{\link{allNonDescendants}}
 #' @param descendantsList The output of \code{\link{allDescendants}}
@@ -120,7 +120,7 @@ getPossibleParents <- function(bn,
 }
 
 #' Maximal banned list.
-#' 
+#'
 #' @param nodesSeq A sequence \code{1:numberOfNodes}
 #' @return A list, which each element containing a numeric vector of the
 #'   nodes that are banned from being parents of the corresponding node.
@@ -132,10 +132,10 @@ defaultBanned <- function(nodesSeq){
 }
 
 #' Each changes choices for required.
-#' 
+#'
 #' Returns of list, with a component corresponding to each node.
 #' Each component of this list corresponds to a node?
-#' 
+#'
 #' @param i The node
 #' @param possibleParents The output of \code{\link{getPossibleParents}}
 #' @param currentNetwork A list, containing in the first position the
@@ -153,7 +153,7 @@ eachChangesChoicesForRequired <- function(i,
                                           descendantsList){
   pp <- possibleParents[[i]]
   numberOfNodes <- length(possibleParents)
-  
+
   # does this only need to be length(change) long?
   options <- do.call(list, lapply(seq_len(numberOfNodes), function(i) {
       integer(0)
@@ -169,7 +169,7 @@ eachChangesChoicesForRequired <- function(i,
 }
 
 #' Remove options that don't duplicate required duplicates.
-#' 
+#'
 #' @param ll A list
 #' @param duplicates A table giving the number of appearances of each
 #' @return A logical vector
@@ -178,7 +178,7 @@ checkForNonDuplicated <- function(ll, duplicates){
   sapply(ll, function(anoption){
     anoption2 <- unlist(anoption)
     anoption2table <- table(factor(anoption2, levels = seq_along(anoption)))
-    
+
     ok <- T
     for (i in seq_along(anoption)){
       thisok <- anoption2table[i] == duplicates[i]
@@ -192,7 +192,7 @@ checkForNonDuplicated <- function(ll, duplicates){
 }
 
 #' Remove duplicates
-#' 
+#'
 #' @param optionsForRequired optionsForRequired
 #' @param options options
 #' @return A list
@@ -202,10 +202,10 @@ removeDuplicates <- function(optionsForRequired, options){
   for (i in seq_along(options)){
     thisoptions <- options[[i]]
     thisOptionsForRequired <- optionsForRequired[[i]]
-    
+
     thisoptions2 <- unlist(thisoptions)
     duplicates <- table(factor(thisoptions2, levels = seq_along(options)))
-    
+
     if (length(duplicates) > 0){
       ok <- checkForNonDuplicated(thisOptionsForRequired, duplicates)
       # if (any(!ok)){
@@ -218,7 +218,7 @@ removeDuplicates <- function(optionsForRequired, options){
 }
 
 #' Require something from each parent.
-#' 
+#'
 #' @param numberOfNodes The number of nodes
 #' @param nodesSeq A sequence \code{1:numberOfNodes}
 #' @param possibleParents The output of \code{\link{getPossibleParents}}
@@ -244,7 +244,7 @@ requireSomethingFromEachParent <- function(numberOfNodes,
 
   optionsForRequired <- lapply(options, options.grid, maxIndegree)
   optionsForRequired <- removeDuplicates(optionsForRequired, options)
-  
+
   ol <- lapply(optionsForRequired, length)
   ols <- lapply(ol, seq_len)
   opgrid <- expand.grid(ols)
@@ -253,7 +253,7 @@ requireSomethingFromEachParent <- function(numberOfNodes,
   i <- 1
   for (row in seq_len(nrow(opgrid))){
     wh <- opgrid[row, ]
-    
+
     gr <- empty(length(wh), "bn")
     for (k in 1:length(wh)){
       this <- wh[, k]
@@ -263,14 +263,14 @@ requireSomethingFromEachParent <- function(numberOfNodes,
     required[[i]] <- gr
     i <- i + 1
   }
-  
+
   toBanIfNotRequired <- lapply(options, unlist)
-  
+
   out <- list()
   z <- 1
   for (thisrequired in required){
     thisrequired <- lapply(thisrequired, unique)
-    
+
     banned <- allBannedExceptPPNotBannedIfNotRequired(nodesSeq,
                                                       possibleParents,
                                                       change,
@@ -308,9 +308,9 @@ enumerateRest <- function(numberOfNodes, currentNetwork, change, banned,
 }
 
 #' Make a banned list.
-#' 
+#'
 #' All banned except possible parents that are not required
-#' 
+#'
 #' @param nodesSeq A sequence \code{1:numberOfNodes}
 #' @param possibleParents The output of \code{\link{getPossibleParents}}
 #' @param change A numeric vector, containing the nodes whose parents
@@ -334,7 +334,7 @@ allBannedExceptPPNotBannedIfNotRequired <- function(nodesSeq,
 }
 
 #' Get all consistent with DAG
-#' 
+#'
 #' @param bn A sub-bn
 #' @param currentNetwork A list, containing in the first position the
 #'   starting \code{bn}, and in the second position the routes matrix for
@@ -352,7 +352,7 @@ getAllConsistentWithDAG <- function(bn,
                                     nodesSeq,
                                     change,
                                     maxIndegree){
-  
+
   nonDescendantsList <- allNonDescendants(currentNetwork)
   descendantsList <- allDescendants(currentNetwork)
 
@@ -364,7 +364,7 @@ getAllConsistentWithDAG <- function(bn,
                                         numberOfNodes,
                                         change,
                                         maxIndegree)
-  
+
   out <- requireSomethingFromEachParent(numberOfNodes,
                                  nodesSeq,
                                  possibleParents,
@@ -372,12 +372,12 @@ getAllConsistentWithDAG <- function(bn,
                                  descendantsList,
                                  currentNetwork,
                                  maxIndegree)
-  
+
   out
 }
 
 #' input a list x.
-#' 
+#'
 #' return a list that includes all options, including those of varying sizes
 #'
 #' eg x = list(c(1,2), c(2, 3))
@@ -390,7 +390,7 @@ getAllConsistentWithDAG <- function(bn,
 #'            list(c(1), c(2, 3)),
 #'            list(c(2), c(2, 3)),
 #'            list(c(1, 2), c(2, 3)))
-#' 
+#'
 #' @param x A list
 #' @param maxIndegree Maximum indegree
 #' @param required ...

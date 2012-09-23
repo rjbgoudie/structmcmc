@@ -1,9 +1,9 @@
 # Part of the "structmcmc" package, https://github.com/rjbgoudie/structmcmc
-# 
+#
 # This software is distributed under the GPL-3 license.  It is free,
 # open source, and has the attribution requirements (GPL Section 7) in
 #   https://github.com/rjbgoudie/structmcmc
-# 
+#
 # Note that it is required that attributions are retained with each function.
 #
 # Copyright 2008 Robert J. B. Goudie, University of Warwick
@@ -16,21 +16,21 @@
 #' @param samples ...
 #' @param logScoreFUN A list of four elements:
 #'   \describe{
-#'     \item{offline}{A function that computes the logScore of a Bayesian 
+#'     \item{offline}{A function that computes the logScore of a Bayesian
 #'                    Network}
-#'     \item{online}{A function that incrementally computes the logScore of a 
+#'     \item{online}{A function that incrementally computes the logScore of a
 #'                   Bayesian Network}
-#'     \item{local}{A function that computes the local logScore of a 
+#'     \item{local}{A function that computes the local logScore of a
 #'                  Bayesian Network}
-#'     \item{prepare}{A function that prepares the data, and any further 
+#'     \item{prepare}{A function that prepares the data, and any further
 #'                    pre-computation required by the logScore functions.}
 #'   }
-#'   For Multinomial-Dirichlet models, \code{\link{logScoreMultDirFUN}} 
+#'   For Multinomial-Dirichlet models, \code{\link{logScoreMultDirFUN}}
 #'   returns the appropriate list; for Normal models with Zellner g-priors,
 #'   \code{\link{logScoreNormalFUN}} returns the appropriate list.
 #' @export
 #' @seealso \code{\link{bnpost}}, \code{\link{bnpostmcmc.list}}.
-#'   \code{\link{length.bnpostmcmc}}, \code{\link{top.bnpostmcmc}}, 
+#'   \code{\link{length.bnpostmcmc}}, \code{\link{top.bnpostmcmc}},
 #'   \code{\link{map.bnpostmcmc}}, \code{\link{logScoreMultDir.bnpostmcmc}},
 #'   \code{\link{gp.bnpostmcmc}}, \code{\link{ep.bnpostmcmc}}
 bnpostmcmc <- function(sampler, samples, logScoreFUN){
@@ -76,7 +76,7 @@ bnpostmcmc.list <- function(...){
 }
 
 #' Number of samples drawn.
-#' 
+#'
 #' Returns the number of samples draw in the supplied object of class
 #' 'bnpostmcmc' x.
 #'
@@ -92,7 +92,7 @@ length.bnpostmcmc <- function(x, ...){
 }
 
 #' Top graph from BN Posterior.
-#' 
+#'
 #' Returns the most commonly encountered graphs during the MCMC sampling
 #' 'x'. The top 'head' graphs with respect to MCMC sampling are returned.
 #' ie if the MCMC sampler has converged, the top graphs with respect to the
@@ -139,7 +139,7 @@ top.bnpostmcmc <- function(x, head = 10, ...){
 }
 
 #' Maximum aposteriori graph.
-#' 
+#'
 #' Returns the most commonly encountered graph(s) during the MCMC sampling
 #' 'x'. ie the maximum aposteriori graph(s).
 #'
@@ -160,7 +160,7 @@ map.bnpostmcmc <- function(x, ...){
 }
 
 #' Log scores of best graphs.
-#' 
+#'
 #' Returns the log scores of the best graphs encountered by the sampler.
 #'
 #' @param x An object of class 'bnpostmcmc'
@@ -328,7 +328,7 @@ gp.bnpostmcmc.list <- function(x, ...){
 }
 
 #' Posterior edge probabiities.
-#' 
+#'
 #' Computes the edge probabilities implied by the MCMC samples
 #' contained in the 'bnpostmcmc' object x.
 #'
@@ -357,14 +357,14 @@ gp.bnpostmcmc.list <- function(x, ...){
 #' x1 <- factor(c(1, 1, 0, 1))
 #' x2 <- factor(c(0, 1, 0, 1))
 #' dat <- data.frame(x1 = x1, x2 = x2)
-#' 
+#'
 #' prior <- function(net) 1
 #' initial <- bn(c(), c())
-#' 
+#'
 #' sampler <- BNSampler(dat, initial, prior)
 #' samples <- draw(sampler, n = 50)
 #' mpost <- bnpostmcmc(sampler, samples)
-#' 
+#'
 #' ep(mpost)
 ep.bnpostmcmc <- function(x, nbin = 1, start, end, method = "et",
                           verbose = F, ...){
@@ -403,7 +403,7 @@ ep.bnpostmcmc <- function(x, nbin = 1, start, end, method = "et",
 }
 
 #' Extract posterior edge probabiities from a sampler.
-#' 
+#'
 #' Computes the edge probabilities implied by the MCMC samples
 #' contained in a MCMC sampler function.
 #'
@@ -467,18 +467,18 @@ ep.sampler <- function(x, start, end, verbose = F, ...){
 #' x1 <- factor(c(1, 1, 0, 1))
 #' x2 <- factor(c(0, 1, 0, 1))
 #' dat <- data.frame(x1 = x1, x2 = x2)
-#' 
+#'
 #' prior <- function(net) 1
 #' initial <- bn(c(), c())
 #' sampler <- BNSampler(dat, initial, prior)
 #' samples <- draw(sampler, n = 50)
 #' mpost <- bnpostmcmc(sampler, samples)
-#' 
+#'
 #' initial <- bn(c(), c(1))
 #' sampler2 <- BNSampler(dat, initial, prior)
 #' samples2 <- draw(sampler2, n = 50)
 #' mpost2 <- bnpostmcmc(sampler2, samples2)
-#' 
+#'
 #' ep(bnpostmcmc.list(mpost, mpost2))
 ep.bnpostmcmc.list <- function(x, start, end, ...){
   stopifnot(class(x) == "bnpostmcmc.list")

@@ -1,9 +1,9 @@
 # Part of the "structmcmc" package, https://github.com/rjbgoudie/structmcmc
-# 
+#
 # This software is distributed under the GPL-3 license.  It is free,
 # open source, and has the attribution requirements (GPL Section 7) in
 #   https://github.com/rjbgoudie/structmcmc
-# 
+#
 # Note that it is required that attributions are retained with each function.
 #
 # Copyright 2008 Robert J. B. Goudie, University of Warwick
@@ -72,7 +72,7 @@ test_that("Basic test", {
     expect_that(querygrain(g2, nodes = c("c"), type = "marginal"),
                 equals(exp))
 
-    g2 <- setFinding(g, nodes = c("a", "b"), states = c("1", "2"))   
+    g2 <- setFinding(g, nodes = c("a", "b"), states = c("1", "2"))
     exp <- list(c = array(data     = c(5/6, 1/6),
                           dim      = 2,
                           dimnames = list(c = c("1", "2"))))

@@ -1,9 +1,9 @@
 # Part of the "structmcmc" package, https://github.com/rjbgoudie/structmcmc
-# 
+#
 # This software is distributed under the GPL-3 license.  It is free,
 # open source, and has the attribution requirements (GPL Section 7) in
 #   https://github.com/rjbgoudie/structmcmc
-# 
+#
 # Note that it is required that attributions are retained with each function.
 #
 # Copyright 2008 Robert J. B. Goudie, University of Warwick
@@ -13,7 +13,7 @@
 #' Use one of a number of methods to get the posterior distribution.
 #'
 #' @param data The data.
-#' @param method One of "exact", "mc3", "gibbs", "mj-mcmc". "mh-mcmc" is a 
+#' @param method One of "exact", "mc3", "gibbs", "mj-mcmc". "mh-mcmc" is a
 #'   synonym of "mc3".
 #' @param prior A list of functions of the same length as \code{initial}
 #'   that returns the local prior score of the corresponding node, given a
@@ -21,16 +21,16 @@
 #'   improper uniform prior.
 #' @param logScoreFUN A list of four elements:
 #'   \describe{
-#'     \item{offline}{A function that computes the logScore of a Bayesian 
+#'     \item{offline}{A function that computes the logScore of a Bayesian
 #'                    Network}
-#'     \item{online}{A function that incrementally computes the logScore of a 
+#'     \item{online}{A function that incrementally computes the logScore of a
 #'                   Bayesian Network}
-#'     \item{local}{A function that computes the local logScore of a 
+#'     \item{local}{A function that computes the local logScore of a
 #'                  Bayesian Network}
-#'     \item{prepare}{A function that prepares the data, and any further 
+#'     \item{prepare}{A function that prepares the data, and any further
 #'                    pre-computation required by the logScore functions.}
 #'   }
-#'   For Multinomial-Dirichlet models, \code{\link{logScoreMultDirFUN}} 
+#'   For Multinomial-Dirichlet models, \code{\link{logScoreMultDirFUN}}
 #'   returns the appropriate list; for Normal models with Zellner g-priors,
 #'   \code{\link{logScoreNormalFUN}} returns the appropriate list.
 #' @param logScoreParameters A list of parameters that are passed to
@@ -58,7 +58,7 @@
 #' @param verbose A logical. Should a progress bar be displayed?
 #' @return Either a \code{bnpost} or a \code{bnpostmcmc} object.
 #' @export
-#' @seealso For more control, use the MCMC sampler directly, 
+#' @seealso For more control, use the MCMC sampler directly,
 #'   e.g. \code{\link{BNSampler}}.  Example priors
 #'   \code{\link{priorGraph}}, \code{\link{priorUniform}}.
 #' @examples
@@ -66,7 +66,7 @@
 #' x2 <- factor(c(2, 2, 4, 3, 1, 4, 4, 4, 1))
 #' x3 <- factor(c(FALSE, FALSE, TRUE, FALSE, TRUE, TRUE, FALSE, FALSE, TRUE))
 #' x <- data.frame(x1 = x1, x2 = x2, x3 = x3)
-#' 
+#'
 #' set.seed(1234)
 #' mcmc <- posterior(data = x, "mc3", nSamples = 500, nBurnin = 100)
 #' ep(mcmc)
@@ -148,13 +148,13 @@ posterior <- function(data,
 #'   improper uniform prior.
 #' @param logScoreFUN A list of four elements:
 #'   \describe{
-#'     \item{offline}{A function that computes the logScore of a Bayesian 
+#'     \item{offline}{A function that computes the logScore of a Bayesian
 #'                    Network}
-#'     \item{online}{A function that incrementally computes the logScore of a 
+#'     \item{online}{A function that incrementally computes the logScore of a
 #'                   Bayesian Network}
-#'     \item{local}{A function that computes the local logScore of a 
+#'     \item{local}{A function that computes the local logScore of a
 #'                  Bayesian Network}
-#'     \item{prepare}{A function that prepares the data, and any further 
+#'     \item{prepare}{A function that prepares the data, and any further
 #'                    pre-computation required by the logScore functions.}
 #'   }
 #' @param logScoreParameters A list of parameters that are passed to
@@ -217,7 +217,7 @@ exactposterior <- function(data,
     setTxtProgressBar(progress, 0)
   }
   prog <- 0
-  
+
   lsmd <- sapply(bnspace, function(x){
     if (isTRUE(verbose)){
       prog <<- prog + 1
@@ -226,14 +226,14 @@ exactposterior <- function(data,
     logScoreOfflineFUN(x                  = x,
                        logScoreParameters = logScoreParameters)
   })
-  
+
   if (isTRUE(verbose)){
     close(progress)
   }
 
   logpriors <- log(sapply(bnspace, prior))
   logScore <- lsmd + logpriors
-  
+
   bnpost(bnspace     = bnspace,
          logScore    = logScore,
          data        = data,
@@ -252,13 +252,13 @@ exactposterior <- function(data,
 #'   improper uniform prior.
 #' @param logScoreFUN A list of four elements:
 #'   \describe{
-#'     \item{offline}{A function that computes the logScore of a Bayesian 
+#'     \item{offline}{A function that computes the logScore of a Bayesian
 #'                    Network}
-#'     \item{online}{A function that incrementally computes the logScore of a 
+#'     \item{online}{A function that incrementally computes the logScore of a
 #'                   Bayesian Network}
-#'     \item{local}{A function that computes the local logScore of a 
+#'     \item{local}{A function that computes the local logScore of a
 #'                  Bayesian Network}
-#'     \item{prepare}{A function that prepares the data, and any further 
+#'     \item{prepare}{A function that prepares the data, and any further
 #'                    pre-computation required by the logScore functions.}
 #'   }
 #' @param logScoreParameters A list of parameters that are passed to
@@ -282,7 +282,7 @@ exactposterior <- function(data,
 #'                       MCMC.
 #' @param verbose A logical. Should a progress bar be displayed?
 #' @return A \code{bnpostmcmc} object.
-#' @seealso For more control, use the MCMC sampler directly, 
+#' @seealso For more control, use the MCMC sampler directly,
 #'   e.g. \code{\link{BNSampler}}. See also \code{\link{posterior}}.
 #'    Example priors \code{\link{priorGraph}}, \code{\link{priorUniform}}.
 #' @export
@@ -299,7 +299,7 @@ mcmcposterior <- function(data,
                           initial            = empty(ncol(data), "bn"),
                           verbose            = T){
   stopifnot(identical(nSamples, F) + identical(time, F) == 1)
-  
+
   nVar <- ncol(data)
   if (is.null(initial)){
     initial <- empty(nVar, class = "bn")
@@ -329,8 +329,8 @@ mcmcposterior <- function(data,
 #'
 #' @param x ...
 #' @param ... Further arguments passed to method
-#' @seealso \code{\link{summary.gp}}, 
-#'   \code{\link{gp.bnpostmcmc}}, \code{\link{gp.bnpost}}, 
+#' @seealso \code{\link{summary.gp}},
+#'   \code{\link{gp.bnpostmcmc}}, \code{\link{gp.bnpost}},
 #'   \code{\link{gp.bnpostmcmc.list}}, \code{\link{gp.list}}
 #' @export
 gp <- function(x, ...){
@@ -345,28 +345,28 @@ gp <- function(x, ...){
 #' @param x An object
 #' @param ... Further arguments, passed to method
 #' @export
-#' @seealso \code{\link{ep.bnpostmcmc.list}}, \code{\link{ep.parental.list}}, 
+#' @seealso \code{\link{ep.bnpostmcmc.list}}, \code{\link{ep.parental.list}},
 #'   \code{\link{ep.bnpost}}, \code{\link{ep.table}},
 #'   \code{\link{ep.parental.contingency}}
 #' @examples
 #' x1 <- factor(c(1, 1, 0, 1))
 #' x2 <- factor(c(0, 1, 0, 1))
 #' dat <- data.frame(x1 = x1, x2 = x2)
-#' 
+#'
 #' initial <- bn(c(), c())
 #' prior <- priorUniform(initial)
-#' 
+#'
 #' sampler <- BNSampler(dat, initial, prior)
 #' samples <- draw(sampler, n = 50)
 #' mpost <- bnpostmcmc(sampler, samples)
-#' 
+#'
 #' ep(mpost)
-#' 
+#'
 #' initial <- bn(c(), c(1))
 #' sampler2 <- BNSampler(dat, initial, prior)
 #' samples2 <- draw(sampler2, n = 50)
 #' mpost2 <- bnpostmcmc(sampler2, samples2)
-#' 
+#'
 #' ep(bnpostmcmc.list(mpost, mpost2))
 ep <- function(x, ...){
   UseMethod("ep")
@@ -423,7 +423,7 @@ bf <- function(bn1, bn2, data, ...){
 }
 
 #' Posterior edge probabilities.
-#' 
+#'
 #' Calculate edge probabilities given a list of
 #' parental graphs (of class parental.list)
 #'
@@ -528,7 +528,7 @@ ep.parental.list <- function(x, nbin = 1, start = 1, end = length(x),
                            recursive = F,
                            use.names = F)
 
-      # use tabulateNULL because if head never has any parents in this bin, 
+      # use tabulateNULL because if head never has any parents in this bin,
       # then flatten will contain a NULL and tabulate throws an error on NULL.
       # Place the output in every numberOfNodes th column
       if (verbose){
@@ -559,7 +559,7 @@ ep.parental.list <- function(x, nbin = 1, start = 1, end = length(x),
 #' Computes the edge probabilities implied by a table.
 #'
 #' Computes the edge probabilities implied by a table.
-#' 
+#'
 #' @param x An object of class 'table'. The table should have names that
 #'   can be converted into objects of class parental using
 #'   \code{as.parental.character}. ie they should be serializations of
@@ -578,7 +578,7 @@ ep.table <- function(x, verbose = F, ...){
   tablenames <- names(x)
   if (verbose) cat("Converting names to parental\n")
   tablebn <- as.parental(tablenames)
-  
+
   pc <- list(parental.list = tablebn,
              contingency   = as.numeric(x))
   class(pc) <- "parental.contingency"
@@ -586,7 +586,7 @@ ep.table <- function(x, verbose = F, ...){
 }
 
 #' Posterior edge probabilities.
-#' 
+#'
 #' Computes the edge probabilities from a \code{parental.contingency},
 #' which is a list, whose first component is \code{parental.list}, and
 #' whose second component is a contingency table of counts of the
@@ -620,10 +620,10 @@ ep.parental.contingency <- function(x, FUN, verbose = F, ...){
 
   tablebn <- x$parental.list
   counts <- x$contingency
-  
+
   tablebn <- unname(tablebn)
   counts <- unname(counts)
-  
+
   # apply FUN if supplied
   if (!missing(FUN)){
     if (verbose) cat("Applying FUN to parental.list\n")
@@ -644,7 +644,7 @@ ep.parental.contingency <- function(x, FUN, verbose = F, ...){
     setTxtProgressBar(progress, 0)
     prog <- 0
   }
-  
+
   # t <- system.time({
   # for (i in seq_along(tablebn)){
   #   for (head in nodeSeq){
@@ -656,9 +656,9 @@ ep.parental.contingency <- function(x, FUN, verbose = F, ...){
   #   #   setTxtProgressBar(progress, prog)
   #   # }
   # }})
-  # 
+  #
   # browser()
-  
+
   for (head in nodeSeq){
     thishead <- lapply(tablebn, "[[", head)
     lenhead <- sapply(thishead, length)
@@ -675,14 +675,14 @@ ep.parental.contingency <- function(x, FUN, verbose = F, ...){
   if (verbose){
     close(progress)
   }
-  
+
   res <- res/lengthOfRuns
   class(res) <- c("ep", "matrix")
   res
 }
 
 #' Plot top graphs.
-#' 
+#'
 #' Plot the the top() Bayesian Networks from a posterior distribution.
 #' The top graphs are those with the highest score with respect to the
 #' posterior distribution, which for converged MCMC will be most commonly
@@ -773,9 +773,9 @@ prepareLevelPlot <- function(ep){
 #' x1 <- factor(c(1, 1, 0, 1))
 #' x2 <- factor(c(0, 1, 0, 1))
 #' x <- data.frame(x1 = x1, x2 = x2)
-#' 
+#'
 #' exact <- posterior(data = x, "exact")
-#' 
+#'
 #' myep <- ep(exact)
 #' if (require(lattice)){
 #'   levelplot(myep)
@@ -808,10 +808,10 @@ levelplot.ep <- function(ep){
 #' x1 <- factor(c(1, 1, 0, 1))
 #' x2 <- factor(c(0, 1, 0, 1))
 #' x <- data.frame(x1 = x1, x2 = x2)
-#' 
+#'
 #' exact <- posterior(data = x, "exact")
 #' mcmc <- posterior(data = x, "mc3", nSamples = 500, nBurnin = 100)
-#' 
+#'
 #' myep1 <- ep(exact)
 #' myep2 <- ep(mcmc)
 #' if (require(lattice)){
@@ -870,9 +870,9 @@ shrinkep <- function(ep){
 #' x1 <- factor(c(1, 1, 0, 1))
 #' x2 <- factor(c(0, 1, 0, 1))
 #' x <- data.frame(x1 = x1, x2 = x2)
-#' 
+#'
 #' exact <- posterior(data = x, "exact")
-#' 
+#'
 #' myep <- ep(exact)
 #' if (require(lattice)){
 #'   dotplot(myep)
@@ -921,10 +921,10 @@ dotplot.ep <- function(ep, head = 30, ...){
 #' x1 <- factor(c(1, 1, 0, 1))
 #' x2 <- factor(c(0, 1, 0, 1))
 #' x <- data.frame(x1 = x1, x2 = x2)
-#' 
+#'
 #' exact <- posterior(data = x, "exact")
 #' mcmc <- posterior(data = x, "mc3", nSamples = 500, nBurnin = 100)
-#' 
+#'
 #' myep1 <- ep(exact)
 #' myep2 <- ep(mcmc)
 #' ep.list(Exact = myep1, MCMC = myep2)
@@ -949,10 +949,10 @@ ep.list <- function(...){
 #' x1 <- factor(c(1, 1, 0, 1))
 #' x2 <- factor(c(0, 1, 0, 1))
 #' x <- data.frame(x1 = x1, x2 = x2)
-#' 
+#'
 #' exact <- posterior(data = x, "exact")
 #' mcmc <- posterior(data = x, "mc3", nSamples = 500, nBurnin = 100)
-#' 
+#'
 #' myep1 <- ep(exact)
 #' myep2 <- ep(mcmc)
 #' if (require(lattice)){
@@ -1051,9 +1051,9 @@ prepareGPPlot <- function(gplist){
 #' x1 <- factor(c(1, 1, 0, 1))
 #' x2 <- factor(c(0, 1, 0, 1))
 #' x <- data.frame(x1 = x1, x2 = x2)
-#' 
+#'
 #' exact <- posterior(data = x, "exact")
-#' 
+#'
 #' mygp <- gp(exact)
 #' if (require(lattice)){
 #'   dotplot(mygp)
@@ -1097,9 +1097,9 @@ dotplot.gp <- function(gp, head = 30, ...){
 #' x1 <- factor(c(1, 1, 0, 1))
 #' x2 <- factor(c(0, 1, 0, 1))
 #' x <- data.frame(x1 = x1, x2 = x2)
-#' 
+#'
 #' exact <- posterior(data = x, "exact")
-#' 
+#'
 #' mygp <- gp(exact)
 #' if (require(lattice)){
 #'   xyplot(mygp)
@@ -1145,10 +1145,10 @@ xyplot.gp <- function(gp, head = 30, ...){
 #' x1 <- factor(c(1, 1, 0, 1))
 #' x2 <- factor(c(0, 1, 0, 1))
 #' x <- data.frame(x1 = x1, x2 = x2)
-#' 
+#'
 #' exact <- posterior(data = x, "exact")
 #' mcmc <- posterior(data = x, "mc3", nSamples = 500, nBurnin = 100)
-#' 
+#'
 #' mygp1 <- gp(exact)
 #' mygp2 <- gp(mcmc)
 #' gp.list(Exact = mygp1, MCMC = mygp2)
@@ -1173,10 +1173,10 @@ gp.list <- function(...){
 #' x1 <- factor(c(1, 1, 0, 1))
 #' x2 <- factor(c(0, 1, 0, 1))
 #' x <- data.frame(x1 = x1, x2 = x2)
-#' 
+#'
 #' exact <- posterior(data = x, "exact")
 #' mcmc <- posterior(data = x, "mc3", nSamples = 500, nBurnin = 100)
-#' 
+#'
 #' mygp1 <- gp(exact)
 #' mygp2 <- gp(mcmc)
 #' if (require(lattice)){
@@ -1230,10 +1230,10 @@ dotplot.gp.list <- function(gplist, subsetBy = "Exact", head = 30, ...){
 #' x1 <- factor(c(1, 1, 0, 1))
 #' x2 <- factor(c(0, 1, 0, 1))
 #' x <- data.frame(x1 = x1, x2 = x2)
-#' 
+#'
 #' exact <- posterior(data = x, "exact")
 #' mcmc <- posterior(data = x, "mc3", nSamples = 500, nBurnin = 100)
-#' 
+#'
 #' mygp1 <- gp(exact)
 #' mygp2 <- gp(mcmc)
 #' if (require(lattice)){
@@ -1312,9 +1312,9 @@ xyplot.gp.list <- function(gplist, head = 30,
 #' x1 <- factor(c(1, 1, 0, 1))
 #' x2 <- factor(c(0, 1, 0, 1))
 #' x <- data.frame(x1 = x1, x2 = x2)
-#' 
+#'
 #' exact <- posterior(data = x, "exact")
-#' 
+#'
 #' mygp <- gp(exact)
 #' summary(mygp)
 summary.gp <- function(object, ...){
@@ -1325,7 +1325,7 @@ summary.gp <- function(object, ...){
 }
 
 #' Threshold posterior edge probabilities.
-#' 
+#'
 #' Return the parental given by thresholding a edge probability matrix
 #' at a given level. The inequality is >=. Note this may well be cyclic.
 #'
@@ -1338,9 +1338,9 @@ summary.gp <- function(object, ...){
 #' x1 <- factor(c(1, 1, 0, 1))
 #' x2 <- factor(c(0, 1, 0, 1))
 #' x <- data.frame(x1 = x1, x2 = x2)
-#' 
+#'
 #' exact <- posterior(data = x, "exact")
-#' 
+#'
 #' myep <- ep(exact)
 #' parentalFromEPThreshold(myep, 0.2)
 #' parentalFromEPThreshold(myep, 0.4)
@@ -1413,7 +1413,7 @@ parentalToCPDAG <- function(x, verbose = T){
 #' @seealso For actual graphs, see \code{\link{as.roc.parental}} and
 #'   \code{\link{as.roc.parental.list}}. For edge probability matrices see
 #'   \code{\link{as.roc.ep}} and \code{\link{as.roc.ep.list}}.
-#'   For plotting \code{\link{rocplot}}. The methods defined are 
+#'   For plotting \code{\link{rocplot}}. The methods defined are
 #'   \code{\link{as.roc.parental}}, \code{\link{as.roc.parental.list}},
 #'   \code{\link{as.roc.ep}}, \code{\link{as.roc.ep.list}}
 #' @return A data frame, with columns \code{estimate}, \code{tp}, and
@@ -1543,9 +1543,9 @@ as.roc.ep.list <- function(x, true, thresholds, labels, verbose, ...){
 }
 
 #' Plot an ROC curve.
-#' 
+#'
 #' Print a ROC curve given a variety of estimation methods.
-#' 
+#'
 #'
 #' An alternative is given by:
 #' Werhli et al. Comparative evaluation of reverse engineering gene
@@ -1559,10 +1559,10 @@ as.roc.ep.list <- function(x, true, thresholds, labels, verbose, ...){
 #'   converted to CPDAG.
 #' @param bnpmls An object of class \code{bnpostmcmc.list}. An object
 #'   encapsulating a number of MCMC runs.
-#' @param eps An object of class \code{ep.list}. 
+#' @param eps An object of class \code{ep.list}.
 #' @param thresholds An object of class numeric, giving the thresholds at
 #'   which to plot the graphs given by MCMC and PC-MCMC estimates
-#' @param use.cpdags A logical of length 1 indicating whether DAG should be 
+#' @param use.cpdags A logical of length 1 indicating whether DAG should be
 #'   converted to CPDAGs before computing the ROC curves.
 #' @param verbose A logical indicating whether to show progress bars etc.
 #' @param ... Further arguments
@@ -1574,11 +1574,11 @@ as.roc.ep.list <- function(x, true, thresholds, labels, verbose, ...){
 #' x2 <- factor(c(0, 1, 0, 1, 0, 1))
 #' x3 <- factor(c(0, 1, 0, 0, 0, 0))
 #' x <- data.frame(x1 = x1, x2 = x2, x3 = x3)
-#' 
+#'
 #' exact <- posterior(x, "exact")
 #' eppost <- ep(exact)
 #' mcmc <- posterior(x, "mc3", nSamples = 1000, nBurnin = 100)
-#' 
+#'
 #' rocplot(true = bn(integer(0), c(1,3), integer(0)),
 #'         eps = ep.list(eppost))
 #' rocplot(true = bn(integer(0), integer(0), 2),
@@ -1791,12 +1791,12 @@ auroc.ep.list <- function(x, true, thresholds, labels, verbose, ...){
 #' x2 <- factor(c(0, 1, 0, 1, 0, 1))
 #' x3 <- factor(c(0, 1, 0, 0, 0, 0))
 #' x <- data.frame(x1 = x1, x2 = x2, x3 = x3)
-#' 
+#'
 #' exact <- posterior(x, "exact")
 #' exactgp <- gp(exact)
 #' mcmc1 <- posterior(x, "mc3", nSamples = 1000, nBurnin = 100)
 #' mcmc2 <- posterior(x, "mc3", nSamples = 1000, nBurnin = 100)
-#' 
+#'
 #' tvd <- cumtvd(exactgp = exactgp,
 #'               bnpostmcmclist = bnpostmcmc.list(mcmc1, mcmc2))
 cumtvd <- function(exactgp, bnpostmcmclist, start = 1, end,
@@ -1884,12 +1884,12 @@ cumtvd <- function(exactgp, bnpostmcmclist, start = 1, end,
 #' x2 <- factor(c(0, 1, 0, 1, 0, 1))
 #' x3 <- factor(c(0, 1, 0, 0, 0, 0))
 #' x <- data.frame(x1 = x1, x2 = x2, x3 = x3)
-#' 
+#'
 #' exact <- posterior(x, "exact")
 #' exactgp <- gp(exact)
 #' mcmc1 <- posterior(x, "mc3", nSamples = 1000, nBurnin = 100)
 #' mcmc2 <- posterior(x, "mc3", nSamples = 1000, nBurnin = 100)
-#' 
+#'
 #' tvd <- cumtvd(exactgp = exactgp,
 #'               bnpostmcmclist = bnpostmcmc.list(mcmc1, mcmc2))
 #' if (require(lattice)){

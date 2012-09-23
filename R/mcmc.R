@@ -1,9 +1,9 @@
 # Part of the "structmcmc" package, https://github.com/rjbgoudie/structmcmc
-# 
+#
 # This software is distributed under the GPL-3 license.  It is free,
 # open source, and has the attribution requirements (GPL Section 7) in
 #   https://github.com/rjbgoudie/structmcmc
-# 
+#
 # Note that it is required that attributions are retained with each function.
 #
 # Copyright 2008 Robert J. B. Goudie, University of Warwick
@@ -33,10 +33,10 @@
 #' x1 <- factor(c(1, 1, 0, 1))
 #' x2 <- factor(c(0, 1, 0, 1))
 #' dat <- data.frame(x1 = x1, x2 = x2)
-#' 
+#'
 #' prior <- function(net) 1
 #' initial <- bn(c(), c())
-#' 
+#'
 #' sampler <- BNSampler(dat, initial, prior)
 #' samples <- draw(sampler, n = 5)
 draw <- function(sampler, n = F, time = F, burnin = 0, thin = 1, verbose = T){
@@ -46,7 +46,7 @@ draw <- function(sampler, n = F, time = F, burnin = 0, thin = 1, verbose = T){
             inherits(burnin, c("integer", "numeric")),
             is.wholenumber(burnin),
             inherits(verbose, "logical"),
-            inherits(thin, "logical") || 
+            inherits(thin, "logical") ||
               (inherits(thin, c("integer", "numeric")) &&
                is.wholenumber(thin)))
 
@@ -60,7 +60,7 @@ draw <- function(sampler, n = F, time = F, burnin = 0, thin = 1, verbose = T){
   } else {
     burninleft <- 0
   }
-  
+
   runLengthByTime <- identical(n, F)
   if (runLengthByTime){
     drawSamplesByTime(sampler    = sampler,
@@ -103,10 +103,10 @@ draw <- function(sampler, n = F, time = F, burnin = 0, thin = 1, verbose = T){
 #' x1 <- factor(c(1, 1, 0, 1))
 #' x2 <- factor(c(0, 1, 0, 1))
 #' dat <- data.frame(x1 = x1, x2 = x2)
-#' 
+#'
 #' prior <- function(net) 1
 #' initial <- bn(c(), c())
-#' 
+#'
 #' sampler <- BNSampler(dat, initial, prior)
 #' samples <- draw(sampler, time = 15)
 drawSamplesByTime <- function(sampler,
@@ -129,7 +129,7 @@ drawSamplesByTime <- function(sampler,
   elapsed <- 1
   start <- proc.time()
   while (elapsed < time + 1){
-    
+
     out <- sampler(i, burnin = burnin)
 
     if (i %% thin == 0 && i > burninleft){
@@ -151,12 +151,12 @@ drawSamplesByTime <- function(sampler,
     }
     i <- i + 1
   }
-  
+
   if (verbose){
     close(pb)
     cat("Drew", i, "samples in", elapsed, "seconds")
   }
-  
+
   samples <- samples[seq_len(max(0,i-burninleft - 1))]
   class(samples) <- c("mcmcbn", "bn.list", "parental.list")
   samples
@@ -182,10 +182,10 @@ drawSamplesByTime <- function(sampler,
 #' x1 <- factor(c(1, 1, 0, 1))
 #' x2 <- factor(c(0, 1, 0, 1))
 #' dat <- data.frame(x1 = x1, x2 = x2)
-#' 
+#'
 #' prior <- function(net) 1
 #' initial <- bn(c(), c())
-#' 
+#'
 #' sampler <- BNSampler(dat, initial, prior)
 #' samples <- draw(sampler, n = 100)
 drawSamplesByStepCount <- function(sampler,
@@ -203,7 +203,7 @@ drawSamplesByStepCount <- function(sampler,
     progress <- txtProgressBar(max = n, style = 3)
     setTxtProgressBar(progress, 0)
   }
-  
+
   start <- proc.time()
   i <- 1
   while (i <= n){
@@ -213,13 +213,13 @@ drawSamplesByStepCount <- function(sampler,
       class(out) <- c("bn", "parental")
       samples[[(i-burninleft)/thin]] <- out
     }
-    
+
     if (verbose){
       setTxtProgressBar(progress, i)
     }
     i <- i + 1
   }
-  
+
   if (verbose){
     close(progress)
     elapsed <- (proc.time() - start)[[3]]

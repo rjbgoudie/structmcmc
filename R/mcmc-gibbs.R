@@ -1,9 +1,9 @@
 # Part of the "structmcmc" package, https://github.com/rjbgoudie/structmcmc
-# 
+#
 # This software is distributed under the GPL-3 license.  It is free,
 # open source, and has the attribution requirements (GPL Section 7) in
 #   https://github.com/rjbgoudie/structmcmc
-# 
+#
 # Note that it is required that attributions are retained with each function.
 #
 # Copyright 2008 Robert J. B. Goudie, University of Warwick
@@ -14,17 +14,17 @@
 #' all the edges, except those that go into node \code{node}.
 #'
 #' @param currentNetwork A \code{currentNetwork} object
-#' @param numberOfNodes The number of nodes in the network. A numeric vector 
+#' @param numberOfNodes The number of nodes in the network. A numeric vector
 #'   of length 1.
-#' @param nodesSeq The vector 1:nNodes(currentNetwork). (Supplied as an 
+#' @param nodesSeq The vector 1:nNodes(currentNetwork). (Supplied as an
 #'   argument for possible speed gain)
-#' @param scoresParents A list of the form returned by 
+#' @param scoresParents A list of the form returned by
 #'   \code{scoreParentsTable()}
-#' @param parentsTables A list of tables of the form returned by 
+#' @param parentsTables A list of tables of the form returned by
 #'   \code{enumerateParentsTable()}
-#' @param allRows The vector 1:nrow(parentsTables). (Supplied as an 
+#' @param allRows The vector 1:nrow(parentsTables). (Supplied as an
 #'   argument for possible speed gain)
-#' @param rowsThatContain A list of the form created by 
+#' @param rowsThatContain A list of the form created by
 #'   \code{getRowsThatContain()}
 #' @return Returns the sampled network. A \code{currentNetwork} object.
 #' @export
@@ -81,21 +81,21 @@ sampleNode <- function(currentNetwork,
 #' Sample the parents of a pair of nodes (Gibbs sampler).
 #'
 #' Sample from posterior distribution on graph, conditional on
-#' all the edges, except for those corresponding to the parents sets of 
+#' all the edges, except for those corresponding to the parents sets of
 #' two nodes.
 #'
 #' @param currentNetwork A \code{currentNetwork} object
-#' @param numberOfNodes The number of nodes in the network. A numeric vector 
+#' @param numberOfNodes The number of nodes in the network. A numeric vector
 #'   of length 1.
-#' @param nodesSeq The vector 1:nNodes(currentNetwork). (Supplied as an 
+#' @param nodesSeq The vector 1:nNodes(currentNetwork). (Supplied as an
 #'   argument for possible speed gain)
-#' @param scoresParents A list of the form returned by 
+#' @param scoresParents A list of the form returned by
 #'   \code{scoreParentsTable()}
-#' @param parentsTables A list of tables of the form returned by 
+#' @param parentsTables A list of tables of the form returned by
 #'   \code{enumerateParentsTable()}
-#' @param allRows The vector 1:nrow(parentsTables). (Supplied as an 
+#' @param allRows The vector 1:nrow(parentsTables). (Supplied as an
 #'   argument for possible speed gain)
-#' @param rowsThatContain A list of the form created by 
+#' @param rowsThatContain A list of the form created by
 #'   \code{getRowsThatContain()}
 #' @return Returns the sampled network. A \code{currentNetwork} object.
 #' @export
@@ -405,34 +405,34 @@ samplePair2 <- function(currentNetwork,
 #' Sample the parents of a triple of nodes (Gibbs sampler).
 #'
 #' Sample from posterior distribution on graph, conditional on
-#' all the edges, except for those corresponding to the parents sets of 
+#' all the edges, except for those corresponding to the parents sets of
 #' two nodes.
 #'
 #' @param currentNetwork A \code{currentNetwork} object
-#' @param numberOfNodes The number of nodes in the network. A numeric vector 
+#' @param numberOfNodes The number of nodes in the network. A numeric vector
 #'   of length 1.
-#' @param nodesSeq The vector 1:nNodes(currentNetwork). (Supplied as an 
+#' @param nodesSeq The vector 1:nNodes(currentNetwork). (Supplied as an
 #'   argument for possible speed gain)
-#' @param scoresParents A list of the form returned by 
+#' @param scoresParents A list of the form returned by
 #'   \code{scoreParentsTable()}
-#' @param parentsTables A list of tables of the form returned by 
+#' @param parentsTables A list of tables of the form returned by
 #'   \code{enumerateParentsTable()}
-#' @param allRows The vector 1:nrow(parentsTables). (Supplied as an 
+#' @param allRows The vector 1:nrow(parentsTables). (Supplied as an
 #'   argument for possible speed gain)
-#' @param rowsThatContain A list of the form created by 
+#' @param rowsThatContain A list of the form created by
 #'   \code{getRowsThatContain()}
 #' @param logScoreFUN A list of four elements:
 #'   \describe{
-#'     \item{offline}{A function that computes the logScore of a Bayesian 
+#'     \item{offline}{A function that computes the logScore of a Bayesian
 #'                    Network}
-#'     \item{online}{A function that incrementally computes the logScore of a 
+#'     \item{online}{A function that incrementally computes the logScore of a
 #'                   Bayesian Network}
-#'     \item{local}{A function that computes the local logScore of a 
+#'     \item{local}{A function that computes the local logScore of a
 #'                  Bayesian Network}
-#'     \item{prepare}{A function that prepares the data, and any further 
+#'     \item{prepare}{A function that prepares the data, and any further
 #'                    pre-computation required by the logScore functions.}
 #'   }
-#'   For Multinomial-Dirichlet models, \code{\link{logScoreMultDirFUN}} 
+#'   For Multinomial-Dirichlet models, \code{\link{logScoreMultDirFUN}}
 #'   returns the appropriate list; for Normal models with Zellner g-priors,
 #'   \code{\link{logScoreNormalFUN}} returns the appropriate list.
 #' @param logScoreParameters A list of parameters that are passed to
@@ -633,34 +633,34 @@ sampleTriple <- function(currentNetwork,
 #' Sample the parents of a quadruple of nodes (Gibbs sampler).
 #'
 #' Sample from posterior distribution on graph, conditional on
-#' all the edges, except for those corresponding to the parents sets of 
+#' all the edges, except for those corresponding to the parents sets of
 #' four nodes.
 #'
 #' @param currentNetwork A \code{currentNetwork} object
-#' @param numberOfNodes The number of nodes in the network. A numeric vector 
+#' @param numberOfNodes The number of nodes in the network. A numeric vector
 #'   of length 1.
-#' @param nodesSeq The vector 1:nNodes(currentNetwork). (Supplied as an 
+#' @param nodesSeq The vector 1:nNodes(currentNetwork). (Supplied as an
 #'   argument for possible speed gain)
-#' @param scoresParents A list of the form returned by 
+#' @param scoresParents A list of the form returned by
 #'   \code{scoreParentsTable()}
-#' @param parentsTables A list of tables of the form returned by 
+#' @param parentsTables A list of tables of the form returned by
 #'   \code{enumerateParentsTable()}
-#' @param allRows The vector 1:nrow(parentsTables). (Supplied as an 
+#' @param allRows The vector 1:nrow(parentsTables). (Supplied as an
 #'   argument for possible speed gain)
-#' @param rowsThatContain A list of the form created by 
+#' @param rowsThatContain A list of the form created by
 #'   \code{getRowsThatContain()}
 #' @param logScoreFUN A list of four elements:
 #'   \describe{
-#'     \item{offline}{A function that computes the logScore of a Bayesian 
+#'     \item{offline}{A function that computes the logScore of a Bayesian
 #'                    Network}
-#'     \item{online}{A function that incrementally computes the logScore of a 
+#'     \item{online}{A function that incrementally computes the logScore of a
 #'                   Bayesian Network}
-#'     \item{local}{A function that computes the local logScore of a 
+#'     \item{local}{A function that computes the local logScore of a
 #'                  Bayesian Network}
-#'     \item{prepare}{A function that prepares the data, and any further 
+#'     \item{prepare}{A function that prepares the data, and any further
 #'                    pre-computation required by the logScore functions.}
 #'   }
-#'   For Multinomial-Dirichlet models, \code{\link{logScoreMultDirFUN}} 
+#'   For Multinomial-Dirichlet models, \code{\link{logScoreMultDirFUN}}
 #'   returns the appropriate list; for Normal models with Zellner g-priors,
 #'   \code{\link{logScoreNormalFUN}} returns the appropriate list.
 #' @param logScoreParameters A list of parameters that are passed to
@@ -1237,16 +1237,16 @@ sampleQuintuple <- function(currentNetwork,
 #' @param return Either "network" or "contingency".
 #' @param logScoreFUN A list of four elements:
 #'   \describe{
-#'     \item{offline}{A function that computes the logScore of a Bayesian 
+#'     \item{offline}{A function that computes the logScore of a Bayesian
 #'                    Network}
-#'     \item{online}{A function that incrementally computes the logScore of a 
+#'     \item{online}{A function that incrementally computes the logScore of a
 #'                   Bayesian Network}
-#'     \item{local}{A function that computes the local logScore of a 
+#'     \item{local}{A function that computes the local logScore of a
 #'                  Bayesian Network}
-#'     \item{prepare}{A function that prepares the data, and any further 
+#'     \item{prepare}{A function that prepares the data, and any further
 #'                    pre-computation required by the logScore functions.}
 #'   }
-#'   For Multinomial-Dirichlet models, \code{\link{logScoreMultDirFUN}} 
+#'   For Multinomial-Dirichlet models, \code{\link{logScoreMultDirFUN}}
 #'   returns the appropriate list; for Normal models with Zellner g-priors,
 #'   \code{\link{logScoreNormalFUN}} returns the appropriate list.
 #' @param logScoreParameters A list of parameters that are passed to
@@ -1263,7 +1263,7 @@ sampleQuintuple <- function(currentNetwork,
 #'   object of class \code{bn} and return a scalar output. Each item in
 #'   the list must be named so that it can be referred to.
 #' @param maxNumberParents Integer of length 1. The maximum number of
-#'   parents of any node. A \code{NULL} value gives the default restriction 
+#'   parents of any node. A \code{NULL} value gives the default restriction
 #'   of 3.
 #' @param moveprobs A numeric vector of length 3. Specifies the probability
 #'   that moves updating the parent sets of 1, 2 and 3 nodes simultaneously.
@@ -1273,15 +1273,15 @@ sampleQuintuple <- function(currentNetwork,
 #' @param keepTape A logical of length 1, indicating whether a full log
 #'                       ('tape') of the MCMC sampler should be kept.
 #'                       Enabling this option can be very memory-intensive.
-#' @param parentsTables A list of tables of the form returned by 
+#' @param parentsTables A list of tables of the form returned by
 #'   \code{enumerateParentsTable()}
-#' @param scoresParents A list of the form returned by 
+#' @param scoresParents A list of the form returned by
 #'   \code{scoreParentsTable()}
 #' @return A function, which when called draws the next sample of the MCMC.
 #' @export
-#' @seealso \code{\link{BNSampler}}, \code{\link{BNSamplerBigFlips}}, 
+#' @seealso \code{\link{BNSampler}}, \code{\link{BNSamplerBigFlips}},
 #'   \code{\link{BNSamplerPT}}, \code{\link{BNSamplerMJ}},
-#'   \code{\link{BNSamplerGrzeg}}. Internally uses 
+#'   \code{\link{BNSamplerGrzeg}}. Internally uses
 #'   \code{\link{samplePair}} and \code{\link{sampleNode}}.
 BNGibbsSampler <- function(data,
                            initial            = empty(ncol(data) - 1),

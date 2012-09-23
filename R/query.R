@@ -1,9 +1,9 @@
 # Part of the "structmcmc" package, https://github.com/rjbgoudie/structmcmc
-# 
+#
 # This software is distributed under the GPL-3 license.  It is free,
 # open source, and has the attribution requirements (GPL Section 7) in
 #   https://github.com/rjbgoudie/structmcmc
-# 
+#
 # Note that it is required that attributions are retained with each function.
 #
 # Copyright 2008 Robert J. B. Goudie, University of Warwick
@@ -35,10 +35,10 @@
 #'   b = factor(c(2, rep(1, 4), rep(2, 5))),
 #'   c = factor(c(2, rep(2, 3), rep(1, 6)))
 #' )
-#' 
+#'
 #' net <- bn(integer(0), integer(0), c(1,2))
 #' out <- ml(net, d)
-#' 
+#'
 #' as.grain(out, net, d)
 as.grain <- function(x, net, dat){
   stopifnot(class(x)   ==   "list",
@@ -220,7 +220,7 @@ marginalGivenIntervention <- function(net,
     net[[i]] <- integer(0)
     estimate <- bayes(net, dat, prior = "qi")
     x <- as.grain(estimate, net, dat)
-    
+
     thisNodeLevels <- ll[[nodeWithState]]
     result <- lapply(thisNodeLevels, function(nodeState){
       queryFinding(x             = x,

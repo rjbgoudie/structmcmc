@@ -1,9 +1,9 @@
 # Part of the "structmcmc" package, https://github.com/rjbgoudie/structmcmc
-# 
+#
 # This software is distributed under the GPL-3 license.  It is free,
 # open source, and has the attribution requirements (GPL Section 7) in
 #   https://github.com/rjbgoudie/structmcmc
-# 
+#
 # Note that it is required that attributions are retained with each function.
 #
 # Copyright 2008 Robert J. B. Goudie, University of Warwick
@@ -14,14 +14,14 @@
 #' the model given by fitting the Bayesian network to the training data is
 #' used to predict each node of the test data, given the parents of that
 #' node in the Bayesian network.
-#' 
+#'
 #' The residual is then computed, using the supplied \code{metric}.
-#' 
+#'
 #' Alternatively, a \code{bn.list} of Bayesian networks can be supplied,
 #' together with a vector of weights. The models (Bayesian networks) are then
 #' averaged over, according to the supplied weights, to give a model
 #' averaging prediction.
-#' 
+#'
 #' The residuals are again computed, using the suppplied \code{metric}.
 #'
 #' @param x A BN, or a \code{bn.list}
@@ -76,14 +76,14 @@ residualsMultDir <- function(x,
 #' the model given by fitting the Bayesian network to the training data is
 #' used to predict \code{node} of the test data, given the parents of that
 #' node in the Bayesian network.
-#' 
+#'
 #' The residual is then computed, using the supplied \code{metric}.
-#' 
+#'
 #' Alternatively, a \code{bn.list} of Bayesian networks can be supplied,
 #' together with a vector of weights. The models (Bayesian networks) are then
 #' averaged over, according to the supplied weights, to give a model
 #' averaging prediction. Only a single node is considered.
-#' 
+#'
 #' The residuals are again computed, using the suppplied \code{metric}.
 #'
 #' @inheritParams residualsMultDir
@@ -359,7 +359,7 @@ kronecker_delta <- function(predictions, true){
 }
 
 #' Metric: Square error
-#' 
+#'
 #' @param predictions A numeric variable
 #' @param true A numeric variable
 #' @export

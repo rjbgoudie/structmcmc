@@ -1,9 +1,9 @@
 # Part of the "structmcmc" package, https://github.com/rjbgoudie/structmcmc
-# 
+#
 # This software is distributed under the GPL-3 license.  It is free,
 # open source, and has the attribution requirements (GPL Section 7) in
 #   https://github.com/rjbgoudie/structmcmc
-# 
+#
 # Note that it is required that attributions are retained with each function.
 #
 # Copyright 2008 Robert J. B. Goudie, University of Warwick
@@ -14,11 +14,11 @@
 #' graphs are removed according to a heuristic involving scores.
 #'
 #' @param x A list of graphs
-#' @param logScores A numeric vector containing the log score of the 
+#' @param logScores A numeric vector containing the log score of the
 #'   corresponding graph in \code{x}
 #' @param verbose Should verbose output be shown. A logical of length 1.
 #' @param head The rank of the worst graph to return.
-#' @return A numeric vector, giving the indicies \code{x} which are 
+#' @return A numeric vector, giving the indicies \code{x} which are
 #'   not neighbours.
 #' @export
 #' @seealso \code{\link{BNSamplerMJ}}
@@ -107,7 +107,7 @@ whichGraphsNotNeighbours <- function(x, logScores, verbose = F, head){
 }
 
 #' Mode-jumping MCMC sampler for Bayesian Networks.
-#' 
+#'
 #' The sampler samples Bayesian Networks (ie models).
 #'
 #' @param data The data.
@@ -116,16 +116,16 @@ whichGraphsNotNeighbours <- function(x, logScores, verbose = F, head){
 #' @param return Either "network" or "contingency".
 #' @param logScoreFUN A list of four elements:
 #'   \describe{
-#'     \item{offline}{A function that computes the logScore of a Bayesian 
+#'     \item{offline}{A function that computes the logScore of a Bayesian
 #'                    Network}
-#'     \item{online}{A function that incrementally computes the logScore of a 
+#'     \item{online}{A function that incrementally computes the logScore of a
 #'                   Bayesian Network}
-#'     \item{local}{A function that computes the local logScore of a 
+#'     \item{local}{A function that computes the local logScore of a
 #'                  Bayesian Network}
-#'     \item{prepare}{A function that prepares the data, and any further 
+#'     \item{prepare}{A function that prepares the data, and any further
 #'                    pre-computation required by the logScore functions.}
 #'   }
-#'   For Multinomial-Dirichlet models, \code{\link{logScoreMultDirFUN}} 
+#'   For Multinomial-Dirichlet models, \code{\link{logScoreMultDirFUN}}
 #'   returns the appropriate list; for Normal models with Zellner g-priors,
 #'   \code{\link{logScoreNormalFUN}} returns the appropriate list.
 #' @param logScoreParameters A list of parameters that are passed to
@@ -139,11 +139,11 @@ whichGraphsNotNeighbours <- function(x, logScores, verbose = F, head){
 #'   }
 #'   The diagonal of constraint must be all 0.
 #' @param modejumping Either a logical of length 1, or a list. When no
-#'   mode-jumping is desired, use modejumping = F. For mode-jumping, use a 
+#'   mode-jumping is desired, use modejumping = F. For mode-jumping, use a
 #'   list with the following components:
 #'   \describe{
 #'     \item{modes}{A bn.list of modes.}
-#'     \item{modesLogScores}{Optionally, a numeric vector, containing the 
+#'     \item{modesLogScores}{Optionally, a numeric vector, containing the
 #'                           logScores of the modes.}
 #'     \item{checkModesAcyclic}{A logical of length 1}
 #'     \item{modesPreFiltered}{A logical of length 1}
@@ -153,13 +153,13 @@ whichGraphsNotNeighbours <- function(x, logScores, verbose = F, head){
 #' @param verbose A logical of length 1, indicating whether verbose
 #'  output should be printed.
 #' @param keepTape A logical of length 1, indicating whether a full log
-#'   (\code{tape}) of the MCMC sampler should be kept. Enabling this option 
+#'   (\code{tape}) of the MCMC sampler should be kept. Enabling this option
 #'   can be very memory-intensive.
 #' @return A function, which when called draws the next sample of the MCMC.
 #' @export
 #' @seealso \code{\link{BNSampler}}, \code{\link{BNGibbsSampler}},
 #'   \code{\link{BNSamplerPT}}, \code{\link{BNSamplerGrzeg}},
-#'   \code{\link{BNSamplerBigFlips}}. Internally uses 
+#'   \code{\link{BNSamplerBigFlips}}. Internally uses
 #'   \code{\link{whichGraphsNotNeighbours}}
 BNSamplerMJ <- function(data,
                         initial,

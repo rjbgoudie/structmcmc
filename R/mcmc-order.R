@@ -1,9 +1,9 @@
 # Part of the "structmcmc" package, https://github.com/rjbgoudie/structmcmc
-# 
+#
 # This software is distributed under the GPL-3 license.  It is free,
 # open source, and has the attribution requirements (GPL Section 7) in
 #   https://github.com/rjbgoudie/structmcmc
-# 
+#
 # Note that it is required that attributions are retained with each function.
 #
 # Copyright 2008 Robert J. B. Goudie, University of Warwick
@@ -15,17 +15,17 @@
 #'
 #' @param order A vector length \code{numberOfNodes}, giving a permuation
 #'   of \code{1:numberOfNodes}.
-#' @param numberOfNodes The number of nodes in the network. A numeric vector 
+#' @param numberOfNodes The number of nodes in the network. A numeric vector
 #'   of length 1.
-#' @param nodesSeq The vector 1:nNodes(currentNetwork). (Supplied as an 
+#' @param nodesSeq The vector 1:nNodes(currentNetwork). (Supplied as an
 #'   argument for possible speed gain)
-#' @param scoresParents A list of the form returned by 
+#' @param scoresParents A list of the form returned by
 #'   \code{scoreParentsTable()}
-#' @param parentsTables A list of tables of the form returned by 
+#' @param parentsTables A list of tables of the form returned by
 #'   \code{enumerateParentsTable()}
-#' @param allRows The vector 1:nrow(parentsTables). (Supplied as an 
+#' @param allRows The vector 1:nrow(parentsTables). (Supplied as an
 #'   argument for possible speed gain)
-#' @param rowsThatContain A list of the form created by 
+#' @param rowsThatContain A list of the form created by
 #'   \code{getRowsThatContain()}
 #' @return Returns the sampled network. A \code{currentNetwork} object.
 #' @export
@@ -57,12 +57,12 @@ logOrderLikelihood <- function(order,
 }
 
 #' Draw order proposal using flip-operator
-#' 
+#'
 #' Draws a proposal order, given a current order, using the single
 #' flip-operator. See Grzegorcyck & Husmeier (2008) eq 12.
-#' 
+#'
 #' @param order A permutation of \code{nodesSeq}
-#' @param nodesSeq The vector 1:nNodes(currentNetwork). (Supplied as an 
+#' @param nodesSeq The vector 1:nNodes(currentNetwork). (Supplied as an
 #'   argument for possible speed gain)
 #' @return A new order
 #' @export
@@ -89,16 +89,16 @@ orderFlipOperator <- function(order, nodesSeq){
 #' @param return Either "network" or "contingency".
 #' @param logScoreFUN A list of four elements:
 #'   \describe{
-#'     \item{offline}{A function that computes the logScore of a Bayesian 
+#'     \item{offline}{A function that computes the logScore of a Bayesian
 #'                    Network}
-#'     \item{online}{A function that incrementally computes the logScore of a 
+#'     \item{online}{A function that incrementally computes the logScore of a
 #'                   Bayesian Network}
-#'     \item{local}{A function that computes the local logScore of a 
+#'     \item{local}{A function that computes the local logScore of a
 #'                  Bayesian Network}
-#'     \item{prepare}{A function that prepares the data, and any further 
+#'     \item{prepare}{A function that prepares the data, and any further
 #'                    pre-computation required by the logScore functions.}
 #'   }
-#'   For Multinomial-Dirichlet models, \code{\link{logScoreMultDirFUN}} 
+#'   For Multinomial-Dirichlet models, \code{\link{logScoreMultDirFUN}}
 #'   returns the appropriate list; for Normal models with Zellner g-priors,
 #'   \code{\link{logScoreNormalFUN}} returns the appropriate list.
 #' @param logScoreParameters A list of parameters that are passed to
@@ -115,7 +115,7 @@ orderFlipOperator <- function(order, nodesSeq){
 #'   object of class \code{bn} and return a scalar output. Each item in
 #'   the list must be named so that it can be referred to.
 #' @param maxNumberParents Integer of length 1. The maximum number of
-#'   parents of any node. A \code{NULL} value gives the default restriction 
+#'   parents of any node. A \code{NULL} value gives the default restriction
 #'   of 3.
 #' @param moveprobs A numeric vector of length 3. Specifies the probability
 #'   that moves updating the parent sets of 1, 2 and 3 nodes simultaneously.
@@ -125,15 +125,15 @@ orderFlipOperator <- function(order, nodesSeq){
 #' @param keepTape A logical of length 1, indicating whether a full log
 #'                       ('tape') of the MCMC sampler should be kept.
 #'                       Enabling this option can be very memory-intensive.
-#' @param parentsTables A list of tables of the form returned by 
+#' @param parentsTables A list of tables of the form returned by
 #'   \code{enumerateParentsTable()}
-#' @param scoresParents A list of the form returned by 
+#' @param scoresParents A list of the form returned by
 #'   \code{scoreParentsTable()}
 #' @return A function, which when called draws the next sample of the MCMC.
 #' @export
-#' @seealso \code{\link{BNSampler}}, \code{\link{BNSamplerBigFlips}}, 
+#' @seealso \code{\link{BNSampler}}, \code{\link{BNSamplerBigFlips}},
 #'   \code{\link{BNSamplerPT}}, \code{\link{BNSamplerMJ}},
-#'   \code{\link{BNSamplerGrzeg}}. Internally uses 
+#'   \code{\link{BNSamplerGrzeg}}. Internally uses
 #'   \code{\link{samplePair}} and \code{\link{sampleNode}}.
 BNOrderSampler <- function(data,
                            initial            = 1:ncol(data),
@@ -271,23 +271,23 @@ BNOrderSampler <- function(data,
 }
 
 #' Sample a DAG given an order (weighted)
-#' 
-#' Sample a DAG given an order, using the parent weights. See Grzegorcyck & 
+#'
+#' Sample a DAG given an order, using the parent weights. See Grzegorcyck &
 #' Husmeier (2008), eq 15.
-#' 
+#'
 #' @param order A vector length \code{numberOfNodes}, giving a permuation
 #'   of \code{1:numberOfNodes}.
-#' @param numberOfNodes The number of nodes in the network. A numeric vector 
+#' @param numberOfNodes The number of nodes in the network. A numeric vector
 #'   of length 1.
-#' @param nodesSeq The vector 1:nNodes(currentNetwork). (Supplied as an 
+#' @param nodesSeq The vector 1:nNodes(currentNetwork). (Supplied as an
 #'   argument for possible speed gain)
-#' @param scoresParents A list of the form returned by 
+#' @param scoresParents A list of the form returned by
 #'   \code{scoreParentsTable()}
-#' @param parentsTables A list of tables of the form returned by 
+#' @param parentsTables A list of tables of the form returned by
 #'   \code{enumerateParentsTable()}
-#' @param allRows The vector 1:nrow(parentsTables). (Supplied as an 
+#' @param allRows The vector 1:nrow(parentsTables). (Supplied as an
 #'   argument for possible speed gain)
-#' @param rowsThatContain A list of the form created by 
+#' @param rowsThatContain A list of the form created by
 #'   \code{getRowsThatContain()}
 #' @return Returns the sampled network. A \code{currentNetwork} object.
 #' @export
@@ -324,20 +324,20 @@ dagGivenOrder <- function(order,
 }
 
 #' Get modal graph given an order.
-#' 
+#'
 #' @param order A vector length \code{numberOfNodes}, giving a permuation
 #'   of \code{1:numberOfNodes}.
-#' @param numberOfNodes The number of nodes in the network. A numeric vector 
+#' @param numberOfNodes The number of nodes in the network. A numeric vector
 #'   of length 1.
-#' @param nodesSeq The vector 1:nNodes(currentNetwork). (Supplied as an 
+#' @param nodesSeq The vector 1:nNodes(currentNetwork). (Supplied as an
 #'   argument for possible speed gain)
-#' @param scoresParents A list of the form returned by 
+#' @param scoresParents A list of the form returned by
 #'   \code{scoreParentsTable()}
-#' @param parentsTables A list of tables of the form returned by 
+#' @param parentsTables A list of tables of the form returned by
 #'   \code{enumerateParentsTable()}
-#' @param allRows The vector 1:nrow(parentsTables). (Supplied as an 
+#' @param allRows The vector 1:nrow(parentsTables). (Supplied as an
 #'   argument for possible speed gain)
-#' @param rowsThatContain A list of the form created by 
+#' @param rowsThatContain A list of the form created by
 #'   \code{getRowsThatContain()}
 #' @return Returns the modal network. A \code{currentNetwork} object.
 #' @export
@@ -376,17 +376,17 @@ topScoringGraph <- function(order,
 #' @param x A BN
 #' @param order A vector length \code{numberOfNodes}, giving a permuation
 #'   of \code{1:numberOfNodes}.
-#' @param numberOfNodes The number of nodes in the network. A numeric vector 
+#' @param numberOfNodes The number of nodes in the network. A numeric vector
 #'   of length 1.
-#' @param nodesSeq The vector 1:nNodes(currentNetwork). (Supplied as an 
+#' @param nodesSeq The vector 1:nNodes(currentNetwork). (Supplied as an
 #'   argument for possible speed gain)
-#' @param scoresParents A list of the form returned by 
+#' @param scoresParents A list of the form returned by
 #'   \code{scoreParentsTable()}
-#' @param parentsTables A list of tables of the form returned by 
+#' @param parentsTables A list of tables of the form returned by
 #'   \code{enumerateParentsTable()}
-#' @param allRows The vector 1:nrow(parentsTables). (Supplied as an 
+#' @param allRows The vector 1:nrow(parentsTables). (Supplied as an
 #'   argument for possible speed gain)
-#' @param rowsThatContain A list of the form created by 
+#' @param rowsThatContain A list of the form created by
 #'   \code{getRowsThatContain()}
 #' @return The probabilty of that graph given the order.
 #' @export
@@ -553,7 +553,7 @@ ellisWong <- function(orders, sampler, epsilon = 0.05){
 
 sampledEnough <- function(uniqueScores, n, epsilon, p1){
   # what happens if two graphs have the same probability given a graph
-  # then 
+  # then
 
   sorted <- sort(uniqueScores, decreasing = T)
   uniqueScoresSeq <- seq_len(length(uniqueScores) - 1)

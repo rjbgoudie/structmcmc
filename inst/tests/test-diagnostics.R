@@ -1,9 +1,9 @@
 # Part of the "structmcmc" package, https://github.com/rjbgoudie/structmcmc
-# 
+#
 # This software is distributed under the GPL-3 license.  It is free,
 # open source, and has the attribution requirements (GPL Section 7) in
 #   https://github.com/rjbgoudie/structmcmc
-# 
+#
 # Note that it is required that attributions are retained with each function.
 #
 # Copyright 2008 Robert J. B. Goudie, University of Warwick
@@ -23,12 +23,12 @@ test_that("cumep", {
   sampler2 <- BNSampler(dat, initial, prior = priorUniform(initial))
   sink(tempfile())
   samples1 <- draw(sampler1, n = nSamples, burnin = 0)
-  
+
   # this is a mistake,
   # but it doesn't matter here
   # but do have to work around it, due to draw() being smarter
   samples2 <- draw(sampler2, n = nSamples, burnin = 0)
-  
+
   sink()
 
   mpost1 <- bnpostmcmc(sampler1, samples1)
@@ -243,7 +243,7 @@ test_that("cumtvd", {
   # but it doesn't matter here
   # but do have to work around it, due to draw() being smarter
   samples2 <- draw(sampler1, nSamples)
-  
+
   sink()
 
   mpost1 <- bnpostmcmc(sampler1, samples1)
@@ -257,8 +257,8 @@ test_that("cumtvd", {
   lsmd <- logScoreMultDir(bnspace, data = dat, hyperparameters = "qi")
   post <- bnpost(bnspace = bnspace, data = dat, logScore = lsmd)
 
-  # integer(0),1          2,integer(0) integer(0),integer(0) 
-  #    0.3260870             0.3260870             0.3478261 
+  # integer(0),1          2,integer(0) integer(0),integer(0)
+  #    0.3260870             0.3260870             0.3478261
   pgp <- gp(post)
 
   expect_that(

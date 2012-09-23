@@ -1,9 +1,9 @@
 # Part of the "structmcmc" package, https://github.com/rjbgoudie/structmcmc
-# 
+#
 # This software is distributed under the GPL-3 license.  It is free,
 # open source, and has the attribution requirements (GPL Section 7) in
 #   https://github.com/rjbgoudie/structmcmc
-# 
+#
 # Note that it is required that attributions are retained with each function.
 #
 # Copyright 2008 Robert J. B. Goudie, University of Warwick
@@ -62,7 +62,7 @@ test_that("2-node Bayesian Network", {
   actual[is.na(actual)] <- 0
   d <- cbind(expected = round(expected), actual = actual)
   d <- transform(d, diff = round(actual - expected))
-  
+
   chisq.test(actual, p = expectedProbs)
 
 
@@ -261,7 +261,7 @@ test_that("2-node Bayesian Network", {
   #             is_within(879, 35))
 
 })
-# 
+#
 # test_that("4-node example", {
 #   set.seed(7101)
 #   dat <- data.frame(x1 = sample.int(3, size = 100, replace = T),
@@ -272,7 +272,7 @@ test_that("2-node Bayesian Network", {
 #   fam <- enumerateBNSpace(4)
 #   scores <- logScoreMultDir(fam, dat)
 #   epost <- bnpost(bnspace = fam, logScore = scores, data = dat)
-# 
+#
 #   numberOfBurnIn <- 10
 #   numberOfSamples <- 75
 #   initial <- bn(integer(0), integer(0), integer(0), integer(0))
@@ -283,7 +283,7 @@ test_that("2-node Bayesian Network", {
 #                        moveprobs = c(0, 1, 0),
 #                        fam =fam,
 #                        exactScore = scores)
-# 
+#
 #   samples <- draw(sampler,
 #                   numberOfSamples,
 #                   burnin = numberOfBurnIn,
@@ -291,8 +291,8 @@ test_that("2-node Bayesian Network", {
 #   mpost <- bnpostmcmc(sampler, samples)
 #   ep(epost)
 #   ep(mpost)
-#   
-#   
+#
+#
 #   numberOfBurnIn <- 100
 #   numberOfSamples <- 75000
 #   initial <- bn(integer(0), integer(0), integer(0), integer(0))
@@ -300,15 +300,15 @@ test_that("2-node Bayesian Network", {
 #                        initial          = initial,
 #                        prior            = function(x) 1,
 #                        maxNumberParents = 3, moveprobs = c(1, 0, 0))
-# 
+#
 #   samples2 <- draw(sampler2,
 #                   numberOfSamples,
 #                   burnin = numberOfBurnIn,
 #                   verbose = T)
 #   mpost2 <- bnpostmcmc(sampler2, samples2)
-#   
-#   
-#   
+#
+#
+#
 #   numberOfBurnIn <- 100
 #   numberOfSamples <- 1000
 #   initial <- bn(integer(0), integer(0), integer(0), integer(0))
@@ -316,18 +316,18 @@ test_that("2-node Bayesian Network", {
 #                        initial          = initial,
 #                        prior            = function(x) 1,
 #                        maxNumberParents = 3, moveprobs = c(0, 0, 1))
-# 
+#
 #   samples3 <- draw(sampler3,
 #                   numberOfSamples,
 #                   burnin = numberOfBurnIn,
 #                   verbose = T)
 #   mpost3 <- bnpostmcmc(sampler3, samples3)
-#   
+#
 #   xyplot(cumtvd(gp(epost), bnpostmcmc.list(mpost, mpost2, mpost3)))
-#   
+#
 # })
-# 
-# 
+#
+#
 # test_that("5 node 1", {
 #   set.seed(711)
 #   dat <- data.frame(x1 = sample.int(3, size = 100, replace = T),
@@ -339,7 +339,7 @@ test_that("2-node Bayesian Network", {
 #   fam <- enumerateBNSpace(5)
 #   scores <- logScoreMultDir(fam, dat)
 #   epost <- bnpost(bnspace = fam, logScore = scores, data = dat)
-# 
+#
 #   numberOfBurnIn <- 100
 #   numberOfSamples <- 100000
 #   initial <- bn(integer(0), integer(0), integer(0), integer(0), integer(0))
@@ -349,7 +349,7 @@ test_that("2-node Bayesian Network", {
 #                        maxNumberParents = 4, moveprobs = c(0, 1, 0),
 #                        fam = fam,
 #                        exactScore = scores)
-# 
+#
 #   samples <- draw(sampler,
 #                   numberOfSamples,
 #                   burnin = numberOfBurnIn,
@@ -357,8 +357,8 @@ test_that("2-node Bayesian Network", {
 #   mpost <- bnpostmcmc(sampler, samples)
 #   ep(epost)
 #   ep(mpost)
-#   
-#   
+#
+#
 #   numberOfBurnIn <- 100
 #   numberOfSamples <- 100000
 #   initial <- bn(integer(0), integer(0), integer(0), integer(0), integer(0))
@@ -366,15 +366,15 @@ test_that("2-node Bayesian Network", {
 #                        initial          = initial,
 #                        prior            = function(x) 1,
 #                        maxNumberParents = 3, moveprobs = c(1, 0, 0))
-# 
+#
 #   samples2 <- draw(sampler2,
 #                   numberOfSamples,
 #                   burnin = numberOfBurnIn,
 #                   verbose = T)
 #   mpost2 <- bnpostmcmc(sampler2, samples2)
-#   
-#   
-#   
+#
+#
+#
 #   numberOfBurnIn <- 100
 #   numberOfSamples <- 2000
 #   initial <- bn(integer(0), integer(0), integer(0), integer(0), integer(0))
@@ -382,17 +382,17 @@ test_that("2-node Bayesian Network", {
 #                        initial          = initial,
 #                        prior            = function(x) 1,
 #                        maxNumberParents = 3, moveprobs = c(0, 0, 1))
-# 
+#
 #   samples3 <- draw(sampler3,
 #                   numberOfSamples,
 #                   burnin = numberOfBurnIn,
 #                   verbose = T)
 #   mpost3 <- bnpostmcmc(sampler3, samples3)
-#   
+#
 #   xyplot(cumtvd(gp(epost), bnpostmcmc.list(mpost, mpost2, mpost3)))
-#   
+#
 # })
-# 
+#
 # test_that("3 node 1", {
 #   set.seed(711)
 #   dat <- data.frame(x1 = sample.int(3, size = 100, replace = T),
@@ -402,7 +402,7 @@ test_that("2-node Bayesian Network", {
 #   fam <- enumerateBNSpace(3)
 #   scores <- logScoreMultDir(fam, dat)
 #   epost <- bnpost(bnspace = fam, logScore = scores, data = dat)
-# 
+#
 #   numberOfBurnIn <- 100
 #   numberOfSamples <- 100000
 #   initial <- bn(integer(0), integer(0), integer(0))
@@ -410,7 +410,7 @@ test_that("2-node Bayesian Network", {
 #                        initial          = initial,
 #                        prior            = function(x) 1,
 #                        maxNumberParents = 3, moveprobs = c(0, 1, 0))
-# 
+#
 #   samples <- draw(sampler,
 #                   numberOfSamples,
 #                   burnin = numberOfBurnIn,
@@ -418,8 +418,8 @@ test_that("2-node Bayesian Network", {
 #   mpost <- bnpostmcmc(sampler, samples)
 #   ep(epost)
 #   ep(mpost)
-#   
-#   
+#
+#
 #   numberOfBurnIn <- 100
 #   numberOfSamples <- 100000
 #   initial <- bn(integer(0), integer(0), integer(0))
@@ -427,15 +427,15 @@ test_that("2-node Bayesian Network", {
 #                        initial          = initial,
 #                        prior            = function(x) 1,
 #                        maxNumberParents = 3, moveprobs = c(1, 0, 0))
-# 
+#
 #   samples2 <- draw(sampler2,
 #                   numberOfSamples,
 #                   burnin = numberOfBurnIn,
 #                   verbose = T)
 #   mpost2 <- bnpostmcmc(sampler2, samples2)
-#   
-#   
-#   
+#
+#
+#
 #   numberOfBurnIn <- 100
 #   numberOfSamples <- 2000
 #   initial <- bn(integer(0), integer(0), integer(0))
@@ -443,17 +443,17 @@ test_that("2-node Bayesian Network", {
 #                        initial          = initial,
 #                        prior            = function(x) 1,
 #                        maxNumberParents = 3, moveprobs = c(0, 0, 1))
-# 
+#
 #   samples3 <- draw(sampler3,
 #                   numberOfSamples,
 #                   burnin = numberOfBurnIn,
 #                   verbose = T)
 #   mpost3 <- bnpostmcmc(sampler3, samples3)
-#   
+#
 #   xyplot(cumtvd(gp(epost), bnpostmcmc.list(mpost, mpost2, mpost3)))
-#   
+#
 # })
-# 
+#
 # test_that("5-node example", {
 #   source("~/Desktop/fam5.R")
 #   library(structmcmc)
@@ -464,7 +464,7 @@ test_that("2-node Bayesian Network", {
 #                     x4 = sample.int(2, size = 100, replace = T),
 #                     x5 = sample.int(2, size = 100, replace = T))
 #   dat <- intAsFDF(dat)
-# 
+#
 #   numberOfBurnIn <- 100
 #   numberOfSamples <- 2000
 #   initial <- empty(5, "bn")
@@ -474,17 +474,17 @@ test_that("2-node Bayesian Network", {
 #                             maxNumberParents = 4,
 #                             moveprobs = c(0, 1, 0))
 #   sapply(1:10, sampler)
-# 
+#
 #   samples <- draw(sampler,
 #                   numberOfSamples,
 #                   burnin = numberOfBurnIn,
 #                   verbose = F)
 #   mpost <- bnpostmcmc(sampler, samples)
-#   
+#
 #   fam <- enumerateBNSpace(5)
 #   scores <- logScoreMultDir(fam, dat)
 #   epost <- bnpost(bnspace = fam, logScore = scores, data = dat)
-#   
+#
 #   rows2graph <- function(rows, change, currentNetwork, parentsTables){
 #     net <- currentNetwork[[1]]
 #     numberOfNodes <- nNodes(net)
@@ -492,7 +492,7 @@ test_that("2-node Bayesian Network", {
 #     nodesSeq <- seq_len(numberOfNodes)
 #     notchange <- setdiff(nodesSeq, change)
 #     base[notchange] <- net[notchange]
-#     
+#
 #     out <- lapply(rows, function(row){
 #       ops <- expand.grid(row)
 #       out <- list()
@@ -514,16 +514,16 @@ test_that("2-node Bayesian Network", {
 #     out
 #   }
 #   out <- rows2graph(rows, nodes, currentNetwork, parentsTables)
-#   
+#
 #   out <- unlist(out, rec = F)
-#   
+#
 #   net <- currentNetwork[[1]]
 #   numberOfNodes <- nNodes(net)
 #   nodesSeq <- seq_len(numberOfNodes)
 #   notchange <- setdiff(nodesSeq, nodes)
-# 
+#
 #   fam <- enumerateBNSpace(5)
-#   
+#
 #   filter <- function(x){
 #     if (identical(x[[2]], integer(0)) && identical(x[[4]], integer(0))){
 #       T
@@ -531,20 +531,20 @@ test_that("2-node Bayesian Network", {
 #       F
 #     }
 #   }
-#   
-#   
+#
+#
 #   actual <- fam[sapply(fam, filter)]
 #   expected <- unlist(out, rec = F)
-#   
+#
 #   find <- function(x, y){
 #     any(sapply(y, function(z){
 #       identical(x, z)
 #     }))
 #   }
-#   
+#
 #   stopifnot(all(sapply(actual, function(x) find(x, expected))),
 #             all(sapply(expected, function(x) find(x, actual))))
-# 
+#
 #   filter2 <- function(x, net, notchange){
 #     is.ok <- T
 #     for (i in notchange){
@@ -554,9 +554,9 @@ test_that("2-node Bayesian Network", {
 #     }
 #     is.ok
 #   }
-#   
+#
 #   sapply(fam, filter2, currentNetwork[[1]], notchange)
-# 
+#
 #   ep(epost)
 #   ep(mpost)
 # })
@@ -565,7 +565,7 @@ test_that("2-node Bayesian Network", {
 
 test_that("10-node Bayesian Network", {
   # set.seed(7101)
-  # 
+  #
   # net <- bn(integer(0), 4L, integer(0), c(22L, 40L), 41L,
   #     22L, integer(0), integer(0), 32L, integer(0), 8L, c(9L,
   #     13L), 1L, c(6L), c(29L, 28L), c(43L, 34L), c(13L,
@@ -575,18 +575,18 @@ test_that("10-node Bayesian Network", {
   #     45L), integer(0), 45L, c(1L, 37L), c(2L, 7L), c(4L,
   #     40L), 13L, integer(0), integer(0), c(38L, 10L), integer(0), c(1L,
   #     40L), c(1L, 31L), 4L)
-  # 
+  #
   # root <- as.table(array(c(
   #       0.5, # prob of 1
   #       0.5  # prob of 2
   #     ), 2))
-  # 
+  #
   # oneParent <- as.table(array(c(
   #             # prob of 1 then 2 given
   #   0.8, 0.2, # p = 1
   #   0.2, 0.8  # p = 2
   # ), c(2, 2)))
-  # 
+  #
   # twoParents <- as.table(array(c(
   #             # prob of 1 then 2 given
   #   0.8, 0.2, # p1 = 1, p2 = 1
@@ -594,7 +594,7 @@ test_that("10-node Bayesian Network", {
   #   0.2, 0.8, # p1 = 1, p2 = 2
   #   0.2, 0.8  # p1 = 2, p2 = 2
   # ), c(2, 2, 2)))
-  # 
+  #
   # threeParents <- as.table(array(c(
   #             # prob of 1 then 2 given
   #   0.8, 0.2, # p1 = 1, p2 = 1, p3 = 1
@@ -606,17 +606,17 @@ test_that("10-node Bayesian Network", {
   #   0.2, 0.8, # p1 = 1, p2 = 2, p3 = 2
   #   0.2, 0.8  # p1 = 2, p2 = 2, p3 = 2
   # ), c(2, 2, 2, 2)))
-  # 
+  #
   # cpts <- list(root, oneParent, twoParents, threeParents)
-  # 
+  #
   # numberOfParents <- sapply(net, length)
-  # 
+  #
   # cpt <- lapply(seq_along(net), function(i){
   #   cpts[[numberOfParents[i] + 1]]
   # })
-  # 
+  #
   # theData <- simulate(net, nsim = 300, seed = 1234, ptables = cpt)
-  # 
+  #
   # priorFlat <- function(network) {
   #   1
   # }
@@ -632,9 +632,9 @@ test_that("10-node Bayesian Network", {
   #   }
   #   sampler(i)
   # })
-  # 
+  #
   # numberOfSamples <- 100
-  # 
+  #
   # progress <- txtProgressBar(max = numberOfSamples, style = 3)
   # setTxtProgressBar(progress, 0)
   # prog <- 0
@@ -645,8 +645,8 @@ test_that("10-node Bayesian Network", {
   # })
   # outTable <- table(factor(unlist(lapply(samples,function(l){
   #   paste(l,sep = "",collapse = ",")}))))
-  #  
-  #  
+  #
+  #
   # expect_that(as.vector(outTable["integer(0),1,2"]),
   #             is_within(2463, 40))
   # expect_that(as.vector(outTable["2:3,integer(0),integer(0)"]),
@@ -667,7 +667,7 @@ test_that("10-node Bayesian Network", {
   #   nodesSeq <- seq_len(numberOfNodes)
   #   notchange <- setdiff(nodesSeq, change)
   #    base[notchange] <- net[notchange]
-  # 
+  #
   #   out <- lapply(rows, function(row){
   #     ops <- expand.grid(row)
   #     out <- list()
@@ -689,7 +689,7 @@ test_that("10-node Bayesian Network", {
   #   out
   # }
   # out <- rows2graph(rows, nodes, currentNetwork, parentsTables)
-  # 
+  #
   # filter2 <- function(x, net, notchange){
   #   is.ok <- T
   #   for (i in notchange){
@@ -699,61 +699,61 @@ test_that("10-node Bayesian Network", {
   #   }
   #   is.ok
   # }
-  # 
+  #
   # net <- currentNetwork[[1]]
   # numberOfNodes <- nNodes(net)
   # nodesSeq <- seq_len(numberOfNodes)
   # notchange <- setdiff(nodesSeq, nodes)
-  # 
+  #
   # whFam <- sapply(fam, filter2, currentNetwork[[1]], notchange)
   # expected <- fam[whFam]
   # expectedScores <- exactScore[whFam]
   # expectedScoresN <- exp(expectedScores - logsumexp(expectedScores))
   # actual <- unlist(out, rec = F)
-  # 
+  #
   # find <- function(x, y){
   #   any(sapply(y, function(z){
   #     identical(x, z)
   #   }))
   # }
-  # 
+  #
   # if (!isTRUE(all(sapply(expected, function(x) find(x, actual))))){
   #   browser()
   # }
-  # 
+  #
   # if (!isTRUE(all(sapply(actual, function(x) find(x, expected))))){
   #   browser()
   # }
-  # 
+  #
   # if (!isTRUE(length(expected) == length(actual))){
   #   browser()
   # }
-  # 
-  # 
+  #
+  #
   # sampleGraph <- function(groupWeights, rows1, rows2){
   #   n2SampGroup <- sample.int(3, size = 1, prob = groupWeights)
-  # 
+  #
   #   # sample 'node1' parents
   #   n1scoresGroup <- scoresParents[[node1]][rows1[[n2SampGroup]]]
   #   n1probs <- exp(n1scoresGroup - logsumexp(n1scoresGroup))
   #   n1samp <- sample.int(length(n1scoresGroup), size = 1, prob = n1probs)
-  # 
+  #
   #   # sample 'node2' parents
   #   n2scoresGroup <- scoresParents[[node2]][rows2[[n2SampGroup]]]
   #   n2probs <- exp(n2scoresGroup - logsumexp(n2scoresGroup))
   #   n2samp <- sample.int(length(n2scoresGroup), size = 1, prob = n2probs)
-  # 
+  #
   #   # generate the new graph
   #   parents1 <- rows1[[n2SampGroup]]
   #   new <- parentsTables[[node1]][parents1[n1samp], ]
   #   currentNetwork[[1]][[node1]] <- new[!is.na(new)]
-  # 
+  #
   #   parents2 <- rows2[[n2SampGroup]]
   #   new <- parentsTables[[node2]][parents2[n2samp], ]
   #   currentNetwork[[1]][[node2]] <- new[!is.na(new)]
   #   currentNetwork[[1]]
   # }
-  # 
+  #
   # actual <- lapply(1:1000, function(i){
   #   sampleGraph(groupWeights, rows1, rows2)
   # })
@@ -771,9 +771,9 @@ test_that("10-node Bayesian Network", {
   #   browser()
   # }
   #
-  
-  
-  
+
+
+
   # rows2graph <- function(rows, change, currentNetwork, parentsTables){
   #   net <- currentNetwork[[1]]
   #   numberOfNodes <- nNodes(net)
@@ -781,7 +781,7 @@ test_that("10-node Bayesian Network", {
   #   nodesSeq <- seq_len(numberOfNodes)
   #   notchange <- setdiff(nodesSeq, change)
   #   base[notchange] <- net[notchange]
-  #   
+  #
   #   out <- lapply(rows, function(row){
   #     ops <- expand.grid(row)
   #     out <- list()
@@ -803,7 +803,7 @@ test_that("10-node Bayesian Network", {
   #   out
   # }
   # out <- rows2graph(rows, nodes, currentNetwork, parentsTables)
-  # 
+  #
   # filter2 <- function(x, net, notchange){
   #   is.ok <- T
   #   for (i in notchange){
@@ -813,67 +813,67 @@ test_that("10-node Bayesian Network", {
   #   }
   #   is.ok
   # }
-  # 
+  #
   # net <- currentNetwork[[1]]
   # numberOfNodes <- nNodes(net)
   # nodesSeq <- seq_len(numberOfNodes)
   # notchange <- setdiff(nodesSeq, nodes)
-  # 
+  #
   # expected <- fam[sapply(fam, filter2, currentNetwork[[1]], notchange)]
   # actual <- unlist(out, rec = F)
-  # 
+  #
   # find <- function(x, y){
   #   any(sapply(y, function(z){
   #     identical(x, z)
   #   }))
   # }
-  # 
+  #
   # if (!isTRUE(all(sapply(expected, function(x) find(x, actual))))){
   #   browser()
   # }
-  # 
+  #
   # if (!isTRUE(all(sapply(actual, function(x) find(x, expected))))){
   #   browser()
   # }
-  # 
+  #
   # if (!isTRUE(length(expected) == length(actual))){
   #   browser()
   # }
-  # 
-  # 
+  #
+  #
   # sampleGraph <- function(groupWeights, rows1, rows2){
   #   sampGroup <- sample.int(25, size = 1, prob = groupWeights)
-  #   
+  #
   #   # sample 'node1' parents
   #   n1scoresGroup <- scoresParents[[node1]][rows[[sampGroup]][[1]]]
   #   n1probs <- exp(n1scoresGroup - logsumexp(n1scoresGroup))
   #   n1samp <- sample.int(length(n1scoresGroup), size = 1, prob = n1probs)
-  # 
+  #
   #   # sample 'node2' parents
   #   n2scoresGroup <- scoresParents[[node2]][rows[[sampGroup]][[2]]]
   #   n2probs <- exp(n2scoresGroup - logsumexp(n2scoresGroup))
   #   n2samp <- sample.int(length(n2scoresGroup), size = 1, prob = n2probs)
-  # 
+  #
   #   # sample 'node3' parents
   #   n3scoresGroup <- scoresParents[[node3]][rows[[sampGroup]][[3]]]
   #   n3probs <- exp(n3scoresGroup - logsumexp(n3scoresGroup))
   #   n3samp <- sample.int(length(n3scoresGroup), size = 1, prob = n3probs)
-  # 
+  #
   #   # generate the new graph
   #   parents1 <- rows[[sampGroup]][[1]]
   #   new <- parentsTables[[node1]][parents1[n1samp], ]
   #   currentNetwork[[1]][[node1]] <- new[!is.na(new)]
-  # 
+  #
   #   parents2 <- rows[[sampGroup]][[2]]
   #   new <- parentsTables[[node2]][parents2[n2samp], ]
   #   currentNetwork[[1]][[node2]] <- new[!is.na(new)]
-  # 
+  #
   #   parents3 <- rows[[sampGroup]][[3]]
   #   new <- parentsTables[[node3]][parents3[n3samp], ]
   #   currentNetwork[[1]][[node3]] <- new[!is.na(new)]
   #   currentNetwork[[1]]
   # }
-  # 
+  #
   # actual <- lapply(1:1000, function(i){
   #   sampleGraph(groupWeights, rows1, rows2)
   # })
@@ -890,12 +890,5 @@ test_that("10-node Bayesian Network", {
   # if (p < 0.05){
   #   browser()
   # }
-  # 
-  
-
-
+  #
 })
-
-
-
-

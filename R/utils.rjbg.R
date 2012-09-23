@@ -1,9 +1,9 @@
 # Part of the "structmcmc" package, https://github.com/rjbgoudie/structmcmc
-# 
+#
 # This software is distributed under the GPL-3 license.  It is free,
 # open source, and has the attribution requirements (GPL Section 7) in
 #   https://github.com/rjbgoudie/structmcmc
-# 
+#
 # Note that it is required that attributions are retained with each function.
 #
 # Copyright 2008 Robert J. B. Goudie, University of Warwick
@@ -14,8 +14,8 @@
 #' \code{data.frame} consisting of integers
 #'
 #' @param x an object of class \code{data.frame}
-#' @param useLevelNames logical, indicating whether the labels of the 
-#'   levels should be converted to integers. This only makes sense if the 
+#' @param useLevelNames logical, indicating whether the labels of the
+#'   levels should be converted to integers. This only makes sense if the
 #'   levels are integers stored as characters. e.g. factor(c("3", "2", "3"))
 #' @return The data.frame with columns converted to integers
 #' @export

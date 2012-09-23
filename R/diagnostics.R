@@ -1,9 +1,9 @@
 # Part of the "structmcmc" package, https://github.com/rjbgoudie/structmcmc
-# 
+#
 # This software is distributed under the GPL-3 license.  It is free,
 # open source, and has the attribution requirements (GPL Section 7) in
 #   https://github.com/rjbgoudie/structmcmc
-# 
+#
 # Note that it is required that attributions are retained with each function.
 #
 # Copyright 2008 Robert J. B. Goudie, University of Warwick
@@ -22,7 +22,7 @@ epmx <- function(x, ...){
 }
 
 #' Edge probabilities matrix.
-#' 
+#'
 #' Computes the edge probabilities and return a matrix with these. The
 #' format of the matrix is designed for the plotting function splom.epmx.
 #'
@@ -181,7 +181,7 @@ epmx.sampler <- function(x, verbose = F, ...){
 #' Convert edge prob matrix to a column matrix
 #'
 #' Want to convert the ep list to a matrix with individual edges in the
-#' columns with the edges ordered according to as.table in splom 
+#' columns with the edges ordered according to as.table in splom
 #'
 #' ie 1->1, 1->2, 1->3, ... , 2->1, 2->2, ...
 #' @param epl A matrix of edge probability matrices, each corresponding to
@@ -251,7 +251,7 @@ cummean <- function(x, ...){
 }
 
 #' Cumulative mean.
-#' 
+#'
 #' Compute the cumulative means of the columns of a matrix x.
 #' ie each column is treated separately
 #'
@@ -332,7 +332,7 @@ mwmean <- function(x, ...){
 }
 
 #' Moving window mean.
-#' 
+#'
 #' Compute the moving window means of the columns of a matrix x.
 #' ie each column is treated separately
 #'
@@ -403,7 +403,7 @@ mwep.samplers <- function(x, window = 10, ...){
 }
 
 #' Plot of cumulative edge probabilities.
-#' 
+#'
 #' Returns a splom of the cumulative edge probabilities through time
 #' for bnpostmcmc.list and bvspostmcmc.list
 #'
@@ -739,12 +739,12 @@ splom.bnpostmcmc.list <- splom.list <- function(x, start = 1, end, plot = F){
 #   if (is.null(tabulated)){
 #     tabulated <- tabulate.samples(samples, prettyPrint = T)
 #   }
-#  
+#
 #   dat <- data.frame(probability = as.numeric(tabulated/length(samples)))
 #
 #   dat$name <- names(tabulated)
 #   dat$name <- with(dat, reorder(factor(names(tabulated)), probability))
-#  
+#
 #   if (!is.null(rank)){
 #     dat <- dat[seq_len(rank), ]
 #   }

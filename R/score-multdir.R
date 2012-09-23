@@ -1,9 +1,9 @@
 # Part of the "structmcmc" package, https://github.com/rjbgoudie/structmcmc
-# 
+#
 # This software is distributed under the GPL-3 license.  It is free,
 # open source, and has the attribution requirements (GPL Section 7) in
 #   https://github.com/rjbgoudie/structmcmc
-# 
+#
 # Note that it is required that attributions are retained with each function.
 #
 # Copyright 2008 Robert J. B. Goudie, University of Warwick
@@ -19,7 +19,7 @@ fastid <- function(id){
 }
 
 #' Checks validity.
-#' 
+#'
 #' Checks whether the supplied hyperparameters parameter is valid.
 #'
 #' @param x The hyperparameters to test.
@@ -38,7 +38,7 @@ is.valid.hyp <- function(x){
 }
 
 #' Local Multinomial-Dirichlet Log marginal likelihood.
-#' 
+#'
 #' Compute the LOCAL log marginal likelihood of the supplied
 #' Bayesian Networks. ie the contribution to the log marginal liklihood from
 #' one individual node.
@@ -60,7 +60,7 @@ is.valid.hyp <- function(x){
 #'                 in the range 0, 1, 2, ....  giving the values of each
 #'                 random variable.
 #'                 **** The integers MUST start  numbering at 0 NOT 1    ****}
-#'     \item{nl}{A numeric vector of length ncol(data), specifying the number 
+#'     \item{nl}{A numeric vector of length ncol(data), specifying the number
 #'               of levels that each random variable takes.}
 #'     \item{hyperparameters}{A character vector of length one.
 #'                            Either "qi", "one", or "point9"}
@@ -227,13 +227,13 @@ logScoreMultDir.bn <- function(x,
 }
 
 #' Multinomial-Dirichlet Log marginal likelihood (offline).
-#' 
+#'
 #' Compute the log marginal likelihood of the supplied Bayesian Network.
 #'
 #' This function is an alternative interface to logScoreMultDir.
 #' This interface is required by the MCMC sampler.
 #'
-#' @param x An object of class "bn". The Bayesian Network by for which the 
+#' @param x An object of class "bn". The Bayesian Network by for which the
 #'   marginal likelihood is computed.
 #' @param logScoreParameters A list with the following components:
 #'   \describe{
@@ -241,12 +241,12 @@ logScoreMultDir.bn <- function(x,
 #'                 in the range 0, 1, 2, ....  giving the values of each
 #'                 random variable.
 #'                 **** The integers MUST start  numbering at 0 NOT 1    ****}
-#'     \item{nl}{A numeric vector of length ncol(data), specifying the number 
+#'     \item{nl}{A numeric vector of length ncol(data), specifying the number
 #'               of levels that each random variable takes.}
 #'     \item{hyperparameters}{A character vector of length one.
 #'                            Either "qi", "one", or "point9"}
 #'   }
-#' @param cache Optionally, provide an environment with cached local scores 
+#' @param cache Optionally, provide an environment with cached local scores
 #'   for this data.
 #' @param checkInput A logical of length 1, specifying whether to check the
 #'   inputs to the function.
@@ -281,7 +281,7 @@ logScoreMultDirOffline <- function(x,
 }
 
 #' Multinomial-Dirichlet Log marginal likelihood.
-#' 
+#'
 #' Compute the log marginal likelihood of the supplied Bayesian Networks.
 #'
 #' The data must be discrete. The conditional distributions of each
@@ -339,7 +339,7 @@ logScoreMultDir.bn.list <- function(x,
 }
 
 #' Internal functions.
-#' 
+#'
 #' Convert a data frame to the appropriate format for the fast/incremental
 #' logScoreMultDir functions, and return as part of the logScoreParameters
 #' list.
@@ -347,7 +347,7 @@ logScoreMultDir.bn.list <- function(x,
 #' In particular, the data is converted to a matrix, and the factor levels
 #' taken integer values from 0, 1, .... ie not on 1, 2, 3.
 #'
-#' @param data A data.frame, with columns being factors giving the values of 
+#' @param data A data.frame, with columns being factors giving the values of
 #'    each random variable.
 #' @param logScoreParameters A list, optionally containing other parameters.
 #'   In particular, it may contain 'hyperparameters'.
@@ -356,7 +356,7 @@ logScoreMultDir.bn.list <- function(x,
 #'                 in the range 0, 1, 2, ....  giving the values of each
 #'                 random variable.
 #'                 **** The integers MUST start  numbering at 0 NOT 1    ****}
-#'     \item{nl}{A numeric vector of length ncol(data), specifying the number 
+#'     \item{nl}{A numeric vector of length ncol(data), specifying the number
 #'               of levels that each random variable takes.}
 #'     \item{hyperparameters}{A character vector of length one.
 #'                            Either "qi", "one", or "point9"}
@@ -369,7 +369,7 @@ logScoreMultDir.bn.list <- function(x,
 #'     \item{data}{A matrix (NOT data.frame), with columns being integers
 #'                 in the range 0, 1, 2, ....  giving the values of each
 #'                 random variable.}
-#'     \item{nl}{A numeric vector of length ncol(data), specifying the number 
+#'     \item{nl}{A numeric vector of length ncol(data), specifying the number
 #'               of levels that each random variable takes.}
 #'   }
 #' @export
@@ -385,7 +385,7 @@ logScoreMultDirPrepare <- function(data, logScoreParameters, checkInput = T){
 }
 
 #' Multinomial-Dirichlet Log marginal likelihood (online).
-#' 
+#'
 #' Compute the difference in log marginal likelihood of the supplied
 #' Bayesian Networks, quickly.
 #'
@@ -411,7 +411,7 @@ logScoreMultDirPrepare <- function(data, logScoreParameters, checkInput = T){
 #'                 in the range 0, 1, 2, ....  giving the values of each
 #'                 random variable.
 #'                 **** The integers MUST start  numbering at 0 NOT 1    ****}
-#'     \item{nl}{A numeric vector of length ncol(data), specifying the number 
+#'     \item{nl}{A numeric vector of length ncol(data), specifying the number
 #'               of levels that each random variable takes.}
 #'     \item{hyperparameters}{A character vector of length one.
 #'                            Either "qi", "one", or "point9"}
@@ -429,13 +429,13 @@ logScoreMultDirPrepare <- function(data, logScoreParameters, checkInput = T){
 #' x2 <- factor(c(0, 1, 0, 1, 0, 1, 1, 0, 1, 0))
 #' x3 <- factor(c(0, 1, 1, 1, 0, 1, 1, 0, 1, 0))
 #' data <- data.frame(x1 = x1, x2 = x2,  x3 = x3)
-#' 
+#'
 #' n1 <- bn(numeric(0), 1, 2)
 #' n2 <- bn(numeric(0), 1, numeric(0))
-#' 
+#'
 #' logScoreMultDir(n1, data)
 #' logScoreMultDir(n2, data)
-#' 
+#'
 #' data <- data.frame(lapply(data, as.factor))
 #' data <- data.matrix(data) - 1
 #' cc <- new.env(hash = TRUE, size = 10000L)

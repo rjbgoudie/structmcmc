@@ -1,9 +1,9 @@
 # Part of the "structmcmc" package, https://github.com/rjbgoudie/structmcmc
-# 
+#
 # This software is distributed under the GPL-3 license.  It is free,
 # open source, and has the attribution requirements (GPL Section 7) in
 #   https://github.com/rjbgoudie/structmcmc
-# 
+#
 # Note that it is required that attributions are retained with each function.
 #
 # Copyright 2008 Robert J. B. Goudie, University of Warwick
@@ -80,25 +80,25 @@ test_that("3-node Bayesian Network", {
 #  x2 <- as.factor(c(0, 1, 1, 0, 0))
 #  theData <- data.frame(x1 = x1, x2 = x2)
 #  numberOfNodes <- 2
-# 
+#
 #  fam <- enumerateBNSpace(numberOfNodes)
 #  scores <- logScoreMultDir(fam, theData)
-# 
+#
 #  priors <- rep(1/length(fam), length(fam))
 #  expected <- exp(scores)*priors/sum(exp(scores)*priors)
-# 
+#
 #  numberOfBurnIn <- 20000
 #  numberOfSamples <- 20000
-# 
+#
 #  expectedTable <- data.frame(expected = expected * numberOfSamples)
 #  row.names(expectedTable) <- lapply(fam, function(network) paste(network, sep = "", collapse = ","))
-# 
+#
 #  empty <- list(c(),c(),c())
 #
 #  priorFlat <- function(network) {
 #    1/length(fam)
 #  }
-# 
+#
 #  top10graphs <- fam[which(scores %in% sort(scores, dec = T)[1:20])]
 #  top10graphs <- lapply(seq_along(top10graphs), function(i){
 #    out <- lapply(top10graphs[[i]], function(x){
@@ -113,17 +113,17 @@ test_that("3-node Bayesian Network", {
 #    out
 #  })
 #  class(top10graphs) <- c("bn.list", "parental.list")
-#   
+#
 #  sampler <- BNSamplerMJ(theData, do.call("bn", lapply(seq_len(numberOfNodes),function(i) integer(0))), priorFlat, modejumping = TRUE, modes = top10graphs)
 #  samples <- lapply(seq_len(numberOfBurnIn), sampler)
 #  samples <- lapply(seq_len(numberOfSamples), sampler)
-# 
+#
 #  outTable <- table(factor(unlist(lapply(samples,function(l)paste(l,sep = "",collapse = ",")))))
-# 
+#
 #  count_NULL_1 <- as.vector(outTable["integer(0),1"])
 #  count_2_NULL <- as.vector(outTable["2,integer(0)"])
 #  count_NULL_NULL <- as.vector(outTable["integer(0),integer(0)"])
-# 
+#
 #  expect_that(count_NULL_1, is_within(9336, 100))
 #  expect_that(count_2_NULL, is_within(9336, 100))
 #  expect_that(count_NULL_NULL, is_within(1328, 70))
@@ -199,7 +199,7 @@ test_that("Nick Podd's example", {
         SampleTable[,i] <- (  RandomTable[,i] < LTable[[i]][1])
       }
       else
-      { 
+      {
 
         ts <- SampleTable[,States*AdjMat[,i]]
         tm <- as.matrix(2^(0:(LTableLen-1)))

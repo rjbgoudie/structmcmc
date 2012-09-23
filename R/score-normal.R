@@ -1,9 +1,9 @@
 # Part of the "structmcmc" package, https://github.com/rjbgoudie/structmcmc
-# 
+#
 # This software is distributed under the GPL-3 license.  It is free,
 # open source, and has the attribution requirements (GPL Section 7) in
 #   https://github.com/rjbgoudie/structmcmc
-# 
+#
 # Note that it is required that attributions are retained with each function.
 #
 # Copyright 2008 Robert J. B. Goudie, University of Warwick
@@ -19,11 +19,11 @@ nunique <- function(x){
 }
 
 #' Local Normal-inverse-gamma (with g-prior) Log marginal likelihood.
-#' 
+#'
 #' Compute the LOCAL log marginal likelihood of the supplied
 #' Bayesian Networks. ie the contribution to the log marginal liklihood from
 #' one individual node.
-#' 
+#'
 #' Let \eqn{X}{X} be a data matrix with a number of predictors (in columns),
 #' and \eqn{y}{y} be an response variable, and that \eqn{n}{n} observations
 #' are available for each. For a graph \eqn{G}{G} (since this is local score
@@ -32,15 +32,15 @@ nunique <- function(x){
 #' \eqn{y = \phi_{G} \beta + \epsilon}{y = phi_G * beta + epsilon}
 #' with \eqn{\epsilon \sim N(0, \sigma^{2} I)}{epsilon ~ N(0, sigma^{2} I)}.
 #' Note that the data needs to be standardised (zero-meaned).
-#' 
+#'
 #' The design matrix \eqn{\phi_{G}}{phi_{G}} is a column of 1s, and then
 #' columns corresponding to each of the parents of the node. No cross-terms
 #' are included.
 #'
 #' The prior used factorises as
 #' \eqn{p(\beta, \sigma) = p(\beta \mid \sigma)p(\sigma)}{
-#'     p(beta, sigma) = p(beta | sigma)p(sigma)}, 
-#' The variance has an uninformative, scale invariant Jeffrey's prior 
+#'     p(beta, sigma) = p(beta | sigma)p(sigma)},
+#' The variance has an uninformative, scale invariant Jeffrey's prior
 #' \eqn{p(\sigma) = 1/\sigma^{2}}{p(sigma) = 1/sigma^2}, and the coefficients
 #' have a zero-mean Normal prior (a Zellner g-prior), with \eqn{g = n}, so
 #' that
@@ -48,9 +48,9 @@ nunique <- function(x){
 #'      \sim
 #'      N(0, g \sigma^{2}\left(\phi_{G}^{\prime}\phi_{G}\right)^{-1})}{
 #'      beta | sigma ~ N(0, g * sigma^2 * (phi'_G phi_G)^-1)}
-#' 
+#'
 #' The above specification gives the following marginal likelihood.
-#' 
+#'
 #' \deqn{p(y \mid G)
 #'       \propto
 #'       (1 + n)^{-(\eta + 1)/2}
@@ -61,11 +61,11 @@ nunique <- function(x){
 #'       P(y | G)
 #'       propto
 #'       (1 + n)^(-(eta + 1)/2) *
-#'       (X' * X - (n/(n + 1)) * X' * 
+#'       (X' * X - (n/(n + 1)) * X' *
 #'        phi_G * (phi'_G * phi_G)^(-1) * phi_G *
 #'        X)^(-n/2)
 #'      }
-#' 
+#'
 #' @param node A numeric vector of length 1. The node to compute the local
 #'   log score for.
 #' @param parents A numeric vector. The parents of node.
@@ -92,7 +92,7 @@ nunique <- function(x){
 #'   Smith, M., & Kohn, R. (1996). \emph{Nonparametric Regression using
 #'   Bayesian Variable Selection}. Journal of Econometrics, 75, 317-343.
 #'   \url{http://dx.doi.org/10.1016/0304-4076(95)01763-1}.
-#' 
+#'
 #'   Geiger, D., & Heckerman, D. (1994). \emph{Learning Gaussian Networks}.
 #'   Proceedings of the 10th Conference Annual Conference on Uncertainty in
 #'   Artificial Intelligence (UAI-94), 235-240.
@@ -156,7 +156,7 @@ logScoreNormal <- function(x, ...){
 }
 
 #' Normal-inverse-gamma (with g-prior) Log marginal likelihood.
-#' 
+#'
 #' Compute the log marginal likelihood of the supplied Bayesian Network.
 #'
 #' The data is scored as continuous, using a form of the Normal Prior.
@@ -206,7 +206,7 @@ logScoreNormal.bn <- function(x,
 }
 
 #' Normal-inverse-gamma (with g-prior) Log marginal likelihood (offline).
-#' 
+#'
 #' Compute the log marginal likelihood of the supplied Bayesian Network.
 #'
 #' This function is an alternative interface to logScoreNormal.
@@ -254,7 +254,7 @@ logScoreNormalOffline <- function(x,
 }
 
 #' Normal-inverse-gamma (with g-prior) Log marginal likelihood.
-#' 
+#'
 #' Compute the log marginal likelihood of the supplied Bayesian Networks.
 #'
 #' The data is scored as continuous, using a form of the Normal Prior.
@@ -286,7 +286,7 @@ logScoreNormal.bn.list <- function(x,
 }
 
 #' Internal functions.
-#' 
+#'
 #' Convert a data frame to the appropriate format for the fast/incremental
 #' logScoreNormal functions, and return as part of the logScoreParameters
 #' list.
@@ -327,7 +327,7 @@ logScoreNormalPrepare <- function(data,
 }
 
 #' Normal-inverse-gamma (with g-prior) Log marginal likelihood (online).
-#' 
+#'
 #' Compute the difference in log marginal likelihood of the supplied
 #' Bayesian Networks, quickly.
 #'

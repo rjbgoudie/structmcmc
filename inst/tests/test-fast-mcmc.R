@@ -1,9 +1,9 @@
 # Part of the "structmcmc" package, https://github.com/rjbgoudie/structmcmc
-# 
+#
 # This software is distributed under the GPL-3 license.  It is free,
 # open source, and has the attribution requirements (GPL Section 7) in
 #   https://github.com/rjbgoudie/structmcmc
-# 
+#
 # Note that it is required that attributions are retained with each function.
 #
 # Copyright 2008 Robert J. B. Goudie, University of Warwick
@@ -719,7 +719,7 @@ test_that("Using Prior for indegree constraint", {
   dat <- data.frame(x1 = x1, x2 = x2,  x3 = x3)
 
   nSamples <- 850
-  
+
   localPriors <- lapply(seq_len(ncol(dat)), function(i){
     function(x){
       if (length(x) > 1){

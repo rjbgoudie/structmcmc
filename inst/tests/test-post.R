@@ -1,9 +1,9 @@
 # Part of the "structmcmc" package, https://github.com/rjbgoudie/structmcmc
-# 
+#
 # This software is distributed under the GPL-3 license.  It is free,
 # open source, and has the attribution requirements (GPL Section 7) in
 #   https://github.com/rjbgoudie/structmcmc
-# 
+#
 # Note that it is required that attributions are retained with each function.
 #
 # Copyright 2008 Robert J. B. Goudie, University of Warwick
@@ -15,11 +15,11 @@ context("Posterior methods")
 #   x1 <- as.factor(c(1, 1, 0, 1))
 #   x2 <- as.factor(c(0, 1, 0, 1))
 #   dat <- data.frame(x1 = x1, x2 = x2)
-# 
+#
 #   nSamples <- 5
 #   prior <- function(net) 1
 #   initial <- bn(integer(0), integer(0))
-# 
+#
 #   sampler1 <- BNSampler(dat, initial, prior)
 #   sampler2 <- BNSampler(dat, initial, prior)
 #   sink(tempfile())
@@ -27,13 +27,13 @@ context("Posterior methods")
 #   samples2 <- draw(sampler1, nSamples) # this is a mistake
 #                                        # but it doesn't matter here
 #   sink()
-# 
+#
 #   mpost1 <- bnpostmcmc(sampler1, samples1)
 #   mpost2 <- bnpostmcmc(sampler2, samples2)
-# 
+#
 #   testmpostl <- list(mpost1, mpost2)
 #   class(testmpostl) <- "bnpostmcmc.list"
-# 
+#
 #   # IMPORTANT:
 #   # This is a weird hack to get around scoping issues with graphicsQC
 #   # Instead dput the testmpostl to serialise this.
@@ -66,18 +66,18 @@ context("Posterior methods")
 # 2L, 1L, 2L), .Label = c("0", "1"), class = "factor")), .Names = c("x1",
 # "x2"), row.names = c(NA, -4L), class = "data.frame")), .Names = c("samples",
 # "tabulated", "data"), class = "bnpostmcmc")), class = "bnpostmcmc.list")'
-# 
+#
 #   set.seed(231)
 #   x1 <- as.factor(c(1, 1, 0, 1, 0, 0, 1, 0, 0, 1, 1, 0, 1))
 #   x2 <- as.factor(c(0, 1, 0, 1, 1, 1, 0, 1, 1, 0, 1, 0, 0))
 #   x3 <- as.factor(c(1, 0, 1, 1, 1, 0, 0, 1, 1, 1, 1, 0, 0))
 #   dat <- data.frame(x1 = x1, x2 = x2, x3 = x3)
-# 
+#
 #   nSamples <- 10
 #   prior <- function(net) 1
 #   initial1 <- bn(integer(0), integer(0), integer(0))
 #   initial2 <- bn(c(2L, 3L), 3L, integer(0))
-# 
+#
 #   samplerb1 <- BNSampler(dat, initial1, prior)
 #   samplerb2 <- BNSampler(dat, initial2, prior)
 #   sink(tempfile())
@@ -85,13 +85,13 @@ context("Posterior methods")
 #   samplesb2 <- draw(samplerb2, nSamples) # this is a mistake
 #                                          # but it doesn't matter here
 #   sink()
-# 
+#
 #   mpostb1 <- bnpostmcmc(samplerb1, samplesb1)
 #   mpostb2 <- bnpostmcmc(samplerb2, samplesb2)
-# 
+#
 #   testmpostlb <- list(mpostb1, mpostb2)
 #   class(testmpostlb) <- "bnpostmcmc.list"
-# 
+#
 #   serialisedb <- 'structure(list(structure(list(samples = structure(
 #     list(structure(list(
 #     2L, integer(0), integer(0)), class = c("bn", "parental")),
@@ -150,7 +150,7 @@ context("Posterior methods")
 # "x2", "x3"), row.names = c(NA, -13L), class = "data.frame")),
 # .Names = c("samples",
 # "tabulated", "data"), class = "bnpostmcmc")), class = "bnpostmcmc.list")'
-# 
+#
 #   plots <- c(paste("print(rocplot(true = bn(integer(0), 1L), mcmcs = ",
 #                  serialised,
 #                  "))"),
@@ -158,13 +158,13 @@ context("Posterior methods")
 #                    " mcmcs = ",
 #                    serialisedb,
 #                    ", map = bn.list(bn(integer(0), 1L, 1L))))"))
-# 
+#
 #   # for example 2, the 'MAP estimate' is of course not accurate,
 #   # it is just an example for testing.
-# 
+#
 #   controlfile <- system.file("tests", "data", "structmcmc-plot-control",
 #                              package = "structmcmc")
-# 
+#
 #   controlfn <- function(){
 #     # run this function to generate the controls
 #     # first cd into structmcmc/tests
@@ -181,7 +181,7 @@ context("Posterior methods")
 #                             prefix   = "control")
 #     #setwd(currentwd)
 #   }
-# 
+#
 #   if (require(graphicsQC) && R.version$os == "darwin9.8.0"){
 #     testfile <- system.file("tests", "data", "structmcmc-plot-test",
 #                             package = "structmcmc")
@@ -193,18 +193,18 @@ context("Posterior methods")
 #   #                           filetype = c("pdf", "png"),
 #                               filetype = "png",
 #                          prefix   = "test")
-# 
+#
 #     # compare test data to the controls
 #     sink(tempfile())
 #     res <- compare(test = plottest, control = controlfile)
 #     sink()
-# 
+#
 #     # check that tests and controls are identical
-# 
+#
 #     for (i in seq_along(plots)){
 #       expect_that(res$results$png[[i]]$result, is_identical_to("identical"))
 #     }
-# 
+#
 #     expect_that(print(rocplot(true = bn(integer(0), 1),
 #                       map = bn(integer(0), integer(0)))),
 #                 throws_error())
