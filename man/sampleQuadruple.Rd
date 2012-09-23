@@ -3,8 +3,8 @@
 \title{Sample the parents of a quadruple of nodes (Gibbs sampler).}
 \usage{
   sampleQuadruple(currentNetwork, numberOfNodes, nodesSeq,
-  scoresParents, parentsTables, allRows, rowsThatContain,
-  logScoreFUN, logScoreParameters)
+    scoresParents, parentsTables, allRows, rowsThatContain,
+    logScoreFUN, logScoreParameters)
 }
 \arguments{
   \item{currentNetwork}{A \code{currentNetwork} object}

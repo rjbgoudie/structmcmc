@@ -2,8 +2,8 @@
 \alias{predict.bn}
 \title{Predict a Multinomial-Dirichlet model}
 \usage{
-  predict.bn(x, param, newdata, type = c("response",
-  "probabilities"))
+  predict.bn(x, param, newdata,
+    type = c("response", "probabilities"))
 }
 \arguments{
   \item{x}{A BN}

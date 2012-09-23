@@ -3,7 +3,7 @@
 \title{Draw samples from a MCMC sampler.}
 \usage{
   draw(sampler, n = F, time = F, burnin = 0, thin = 1,
-  verbose = T)
+    verbose = T)
 }
 \arguments{
   \item{sampler}{A sampler object}

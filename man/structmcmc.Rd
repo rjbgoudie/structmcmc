@@ -1,7 +1,8 @@
 \docType{package}
 \name{structmcmc}
-\alias{"package-structmcmc"}
+\alias{package-structmcmc}
 \alias{structmcmc}
+\alias{structmcmc-package}
 \title{The structmcmc package.}
 \description{
   The structmcmc package.
@@ -16,7 +17,7 @@ x <- data.frame(x1 = x1, x2 = x2, x3 = x3)
 # Draw samples from the posterior using MC^3.
 set.seed(1234)
 mcmc <- posterior(data = x, method = "mh-mcmc",
-nSamples = 1000, nBurnin = 100)
+                  nSamples = 1000, nBurnin = 100)
 
 # Compute and plot estimated edge probabilities
 epmcmc <- ep(mcmc)

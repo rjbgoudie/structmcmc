@@ -3,7 +3,7 @@
 \title{Get modal graph given an order.}
 \usage{
   topScoringGraph(order, numberOfNodes, nodesSeq,
-  scoresParents, parentsTables, allRows, rowsThatContain)
+    scoresParents, parentsTables, allRows, rowsThatContain)
 }
 \arguments{
   \item{order}{A vector length \code{numberOfNodes}, giving

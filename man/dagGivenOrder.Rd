@@ -3,7 +3,7 @@
 \title{Sample a DAG given an order (weighted)}
 \usage{
   dagGivenOrder(order, numberOfNodes, nodesSeq,
-  scoresParents, parentsTables, allRows, rowsThatContain)
+    scoresParents, parentsTables, allRows, rowsThatContain)
 }
 \arguments{
   \item{order}{A vector length \code{numberOfNodes}, giving

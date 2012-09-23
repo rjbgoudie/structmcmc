@@ -3,7 +3,7 @@
 \title{Find flippable edges.}
 \usage{
   edgeIsFlippable(routes, adjacency, constraintT,
-  maxNumberParents)
+    maxNumberParents)
 }
 \arguments{
   \item{routes}{The routes matrix of the network}

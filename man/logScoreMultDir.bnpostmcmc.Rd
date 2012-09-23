@@ -3,7 +3,7 @@
 \title{Log scores of best graphs.}
 \usage{
   \method{logScoreMultDir}{bnpostmcmc} (x, sampler, data,
-  sort.by = "posterior", head = Inf, use.names = F, ...)
+    sort.by = "posterior", head = Inf, use.names = F, ...)
 }
 \arguments{
   \item{x}{An object of class 'bnpostmcmc'}
@@ -15,7 +15,7 @@
   logScoreMultDir()}
 
   \item{sort.by}{A character of length 1. Either
-  "posterior" or "logScoreMultDir". Determines the sorting
+  "posterior" or "logScoreMultDir".  Determines the sorting
   of the result, and if head is finite and smaller than the
   number of graphs encountered in the MCMC, it also
   determines the graphs for which the scores are returned.
@@ -24,7 +24,7 @@
   frequency that they are encountered. ie if the MCMC has
   converged, this returns best graphs with respect to the
   posterior distribution on graphs, sorted with respect to
-  the posterior distribution on graphs. if sort.by ==
+  the posterior distribution on graphs.  if sort.by ==
   "logScoreMultDir": the scores of the graphs encountered
   during MCMC that score the most highly according to
   logScoreMultDir() are returned. This will be slower,
@@ -34,9 +34,9 @@
 
   \item{head}{A numeric of length 1. The 1st to headth
   most-highly scoring (with respect to the sort.by metric)
-  will be returned. If the 'head'th most-commonly
+  will be returned.  If the 'head'th most-commonly
   encountered graph ties in score with other graphs, all of
-  the ties will be returned. Thus the result may NOT be of
+  the ties will be returned.  Thus the result may NOT be of
   length head.}
 
   \item{use.names}{A logical of length 1. If TRUE, the

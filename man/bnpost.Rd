@@ -2,8 +2,8 @@
 \alias{bnpost}
 \title{BN Exact Posterior.}
 \usage{
-  bnpost(bnspace, logScore, data, logScoreFUN =
-  logScoreMultDir)
+  bnpost(bnspace, logScore, data,
+    logScoreFUN = logScoreMultDir)
 }
 \arguments{
   \item{bnspace}{...}

@@ -3,10 +3,11 @@
 \title{Undocumented.}
 \usage{
   BNSamplerPT(data, initial, prior, return = "network",
-  logScoreFUN = logScoreMultDirFUN(), logScoreParameters =
-  list(hyperparameters = "qi"), constraint = NULL,
-  modejumping = F, verbose = F, keepTape = F, temp = 1,
-  cache = new.env(hash = T, size = 10000L))
+    logScoreFUN = logScoreMultDirFUN(),
+    logScoreParameters = list(hyperparameters = "qi"),
+    constraint = NULL, modejumping = F, verbose = F,
+    keepTape = F, temp = 1,
+    cache = new.env(hash = T, size = 10000L))
 }
 \arguments{
   \item{data}{...}

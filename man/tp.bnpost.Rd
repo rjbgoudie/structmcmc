@@ -3,7 +3,7 @@
 \title{Transition probabilities.}
 \usage{
   \method{tp}{bnpost} (x, sampler = "mh", allowFlips = T,
-  verbose = F, ...)
+    verbose = F, ...)
 }
 \arguments{
   \item{x}{An object of class "bnpost"}

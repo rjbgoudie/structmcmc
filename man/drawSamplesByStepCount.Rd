@@ -3,7 +3,7 @@
 \title{Draw samples from a MCMC sampler, by step count.}
 \usage{
   drawSamplesByStepCount(sampler, n, burnin, burninleft,
-  lengthout, thin, verbose)
+    lengthout, thin, verbose)
 }
 \arguments{
   \item{sampler}{A sampler object}

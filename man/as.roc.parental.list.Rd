@@ -3,7 +3,7 @@
 \title{Prepare a parental list for a ROC plot.}
 \usage{
   \method{as.roc}{parental.list} (x, true, labels, verbose,
-  ...)
+    ...)
 }
 \arguments{
   \item{x}{The object to be prepared for an ROC plot}

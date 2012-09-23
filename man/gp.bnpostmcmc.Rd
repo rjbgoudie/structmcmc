@@ -2,8 +2,8 @@
 \alias{gp.bnpostmcmc}
 \title{Posterior graph probabilities.}
 \usage{
-  \method{gp}{bnpostmcmc} (x, start, end, nbin = 1, log =
-  F, pretty = F, levels = NULL, ...)
+  \method{gp}{bnpostmcmc} (x, start, end, nbin = 1,
+    log = F, pretty = F, levels = NULL, ...)
 }
 \arguments{
   \item{x}{...}

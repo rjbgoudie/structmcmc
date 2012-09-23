@@ -3,7 +3,7 @@
 \title{Maximum likelihood estimates for parameters of a BN.}
 \usage{
   \method{ml}{bn} (x, data, nodes = seq_along(x),
-  regularisation = NaN, cache = new.env(hash = T), ...)
+    regularisation = NaN, cache = new.env(hash = T), ...)
 }
 \arguments{
   \item{x}{The Bayesian Network. An object of class 'bn'}

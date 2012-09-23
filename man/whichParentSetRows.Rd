@@ -2,8 +2,9 @@
 \alias{whichParentSetRows}
 \title{Find relevants rows of a parentsTable.}
 \usage{
-  whichParentSetRows(node, nonDescendants, needOneOf =
-  NULL, numberOfNodes, allRows, rowsThatContain)
+  whichParentSetRows(node, nonDescendants,
+    needOneOf = NULL, numberOfNodes, allRows,
+    rowsThatContain)
 }
 \arguments{
   \item{node}{The node. A numeric vector of length 1.}

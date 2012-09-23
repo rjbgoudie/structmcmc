@@ -3,22 +3,22 @@
 \title{Internal functions.}
 \usage{
   logScoreMultDirPrepare(data, logScoreParameters,
-  checkInput = T)
+    checkInput = T)
 }
 \arguments{
   \item{data}{A data.frame, with columns being factors
   giving the values of each random variable.}
 
   \item{logScoreParameters}{A list, optionally containing
-  other parameters. In particular, it may contain
-  'hyperparameters'. \describe{ \item{data}{A matrix (NOT
+  other parameters.  In particular, it may contain
+  'hyperparameters'.  \describe{ \item{data}{A matrix (NOT
   data.frame), with columns being integers in the range 0,
   1, 2, ....  giving the values of each random variable.
   **** The integers MUST start numbering at 0 NOT 1 ****}
   \item{nl}{A numeric vector of length ncol(data),
   specifying the number of levels that each random variable
   takes.} \item{hyperparameters}{A character vector of
-  length one. Either "qi", "one", or "point9"} }}
+  length one.  Either "qi", "one", or "point9"} }}
 
   \item{checkInput}{A logical of length 1, specifying
   whether to check the inputs to the function.}

@@ -3,7 +3,7 @@
 \title{Sample the parents of a single node (Gibbs sampler).}
 \usage{
   sampleNode(currentNetwork, numberOfNodes, nodesSeq,
-  scoresParents, parentsTables, allRows, rowsThatContain)
+    scoresParents, parentsTables, allRows, rowsThatContain)
 }
 \arguments{
   \item{currentNetwork}{A \code{currentNetwork} object}

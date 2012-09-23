@@ -2,8 +2,8 @@
 \alias{gelman.samplers}
 \title{Gelman and Rubin's convergence diagnostic}
 \usage{
-  \method{gelman}{samplers} (x, names = "nEdges", transform
-  = NULL, ...)
+  \method{gelman}{samplers} (x, names = "nEdges",
+    transform = NULL, ...)
 }
 \arguments{
   \item{x}{An MCMC sampler}

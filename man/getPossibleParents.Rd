@@ -3,7 +3,7 @@
 \title{Get possible parents.}
 \usage{
   getPossibleParents(bn, nonDescendantsList,
-  descendantsList, numberOfNodes, change, maxIndegree)
+    descendantsList, numberOfNodes, change, maxIndegree)
 }
 \arguments{
   \item{bn}{A sub-bn}

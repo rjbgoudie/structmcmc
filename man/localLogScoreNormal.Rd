@@ -3,7 +3,7 @@
 \title{Local Normal-inverse-gamma (with g-prior) Log marginal likelihood.}
 \usage{
   localLogScoreNormal(node, parents, logScoreParameters,
-  cache, checkInput = T)
+    cache, checkInput = T)
 }
 \arguments{
   \item{node}{A numeric vector of length 1. The node to
@@ -25,7 +25,7 @@
 }
 \value{
   A numeric vector of length 1, giving the log marginal
-  likelihood. The environment 'cache' will also be updated
+  likelihood.  The environment 'cache' will also be updated
   because its scope is global.
 }
 \description{
@@ -73,7 +73,7 @@
   Nott, D. J., & Green, P. J. (2004). \emph{Bayesian
   Variable Selection and the Swendsen-Wang Algorithm}.
   Journal of Computational and Graphical Statistics, 13,
-  141-157. \url{http://dx.doi.org/10.1198/1061860042958}
+  141-157.  \url{http://dx.doi.org/10.1198/1061860042958}
 
   Smith, M., & Kohn, R. (1996). \emph{Nonparametric
   Regression using Bayesian Variable Selection}. Journal of
@@ -81,7 +81,7 @@
   \url{http://dx.doi.org/10.1016/0304-4076(95)01763-1}.
 
   Geiger, D., & Heckerman, D. (1994). \emph{Learning
-  Gaussian Networks}. Proceedings of the 10th Conference
+  Gaussian Networks}.  Proceedings of the 10th Conference
   Annual Conference on Uncertainty in Artificial
   Intelligence (UAI-94), 235-240.
   \url{http://uai.sis.pitt.edu/displayArticleDetails.jsp?mmnu=1&smnu=2&

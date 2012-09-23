@@ -2,13 +2,13 @@
 \alias{posterior}
 \title{Posterior distribution on Bayesian networks.}
 \usage{
-  posterior(data, method = "mc3", prior =
-  priorUniform(initial), logScoreFUN =
-  logScoreMultDirFUN(), logScoreParameters =
-  list(hyperparameters = "qi"), constraint = NULL,
-  maxNumberParents = NULL, nSamples = 50000, time = F,
-  nBurnin = 10000, initial = empty(ncol(data), "bn"),
-  verbose = T)
+  posterior(data, method = "mc3",
+    prior = priorUniform(initial),
+    logScoreFUN = logScoreMultDirFUN(),
+    logScoreParameters = list(hyperparameters = "qi"),
+    constraint = NULL, maxNumberParents = NULL,
+    nSamples = 50000, time = F, nBurnin = 10000,
+    initial = empty(ncol(data), "bn"), verbose = T)
 }
 \arguments{
   \item{data}{The data.}
@@ -40,10 +40,10 @@
   passed to logScoreFUN.}
 
   \item{constraint}{A matrix of dimension ncol(data) x
-  ncol(data) giving constraints to the sample space. The
+  ncol(data) giving constraints to the sample space.  The
   (i, j) element is 1 if the edge i -> j is required -1 if
-  the edge i -> is excluded. 0 if the edge i -> j is not
-  constrained. The diagonal of constraint must be all 0.}
+  the edge i -> is excluded.  0 if the edge i -> j is not
+  constrained.  The diagonal of constraint must be all 0.}
 
   \item{maxNumberParents}{Integer of length 1. The maximum
   number of parents of any node. Default value is left to

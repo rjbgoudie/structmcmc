@@ -3,7 +3,7 @@
 \title{Local Multinomial-Dirichlet Log marginal likelihood.}
 \usage{
   localLogScoreMultDir(node, parents, logScoreParameters,
-  cache, checkInput = T)
+    cache, checkInput = T)
 }
 \arguments{
   \item{node}{A numeric vector of length 1. The node to
@@ -19,7 +19,7 @@
   \item{nl}{A numeric vector of length ncol(data),
   specifying the number of levels that each random variable
   takes.} \item{hyperparameters}{A character vector of
-  length one. Either "qi", "one", or "point9"} }}
+  length one.  Either "qi", "one", or "point9"} }}
 
   \item{cache}{Optionally, provide an environment with
   cached local scores for this data.}
@@ -29,7 +29,7 @@
 }
 \value{
   A numeric vector of length 1, giving the log marginal
-  likelihood. The environment 'cache' will also be updated
+  likelihood.  The environment 'cache' will also be updated
   because its scope is global.
 }
 \description{

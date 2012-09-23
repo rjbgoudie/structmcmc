@@ -3,10 +3,10 @@
 \title{Undocumented.}
 \usage{
   BNSamplerGrzeg(data, initial, prior, return = "network",
-  logScoreFUN = logScoreMultDirFUN(), logScoreParameters =
-  list(hyperparameters = "qi"), constraint = NULL,
-  modejumping = F, verbose = F, keepTape = F, grzeg =
-  list(grzegMoveProbability = 0.5))
+    logScoreFUN = logScoreMultDirFUN(),
+    logScoreParameters = list(hyperparameters = "qi"),
+    constraint = NULL, modejumping = F, verbose = F,
+    keepTape = F, grzeg = list(grzegMoveProbability = 0.5))
 }
 \arguments{
   \item{data}{...}

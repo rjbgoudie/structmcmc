@@ -23,7 +23,7 @@
   For actual graphs, see \code{\link{as.roc.parental}} and
   \code{\link{as.roc.parental.list}}. For edge probability
   matrices see \code{\link{as.roc.ep}} and
-  \code{\link{as.roc.ep.list}}. For plotting
+  \code{\link{as.roc.ep.list}}.  For plotting
   \code{\link{rocplot}}. The methods defined are
   \code{\link{as.roc.parental}},
   \code{\link{as.roc.parental.list}},

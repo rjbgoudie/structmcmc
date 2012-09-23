@@ -3,7 +3,7 @@
 \title{Get all consistent with DAG}
 \usage{
   getAllConsistentWithDAG(bn, currentNetwork,
-  numberOfNodes, nodesSeq, change, maxIndegree)
+    numberOfNodes, nodesSeq, change, maxIndegree)
 }
 \arguments{
   \item{bn}{A sub-bn}

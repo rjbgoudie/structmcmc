@@ -3,8 +3,8 @@
 \title{Sample the parents of a quintuple of nodes (Gibbs sampler).}
 \usage{
   sampleQuintuple(currentNetwork, numberOfNodes, nodesSeq,
-  scoresParents, parentsTables, allRows, rowsThatContain,
-  logScoreFUN, logScoreParameters)
+    scoresParents, parentsTables, allRows, rowsThatContain,
+    logScoreFUN, logScoreParameters)
 }
 \arguments{
   \item{currentNetwork}{A \code{currentNetwork} object}

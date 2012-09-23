@@ -2,8 +2,8 @@
 \alias{ep.bnpostmcmc}
 \title{Posterior edge probabiities.}
 \usage{
-  \method{ep}{bnpostmcmc} (x, nbin = 1, start, end, method
-  = "et", verbose = F, ...)
+  \method{ep}{bnpostmcmc} (x, nbin = 1, start, end,
+    method = "et", verbose = F, ...)
 }
 \arguments{
   \item{x}{An object of class 'bnpostmcmc'}

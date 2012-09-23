@@ -2,8 +2,8 @@
 \alias{ep.parental.list}
 \title{Posterior edge probabilities.}
 \usage{
-  \method{ep}{parental.list} (x, nbin = 1, start = 1, end =
-  length(x), verbose = F, ...)
+  \method{ep}{parental.list} (x, nbin = 1, start = 1,
+    end = length(x), verbose = F, ...)
 }
 \arguments{
   \item{x}{A parental.list}
@@ -13,7 +13,7 @@
   probabilities of each}
 
   \item{start}{An integer of length 1, specifying the
-  amount of burn-in. The samples start:end inclusive will
+  amount of burn-in.  The samples start:end inclusive will
   be used.}
 
   \item{end}{An integer of length 1, specifying the number

@@ -3,7 +3,7 @@
 \title{Compute the area under an ROC curve.}
 \usage{
   \method{auroc}{ep} (x, true, thresholds, label, verbose,
-  ...)
+    ...)
 }
 \arguments{
   \item{x}{A matrix of class \code{ep} of edge

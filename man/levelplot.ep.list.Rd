@@ -23,7 +23,7 @@ mcmc <- posterior(data = x, "mc3", nSamples = 500, nBurnin = 100)
 myep1 <- ep(exact)
 myep2 <- ep(mcmc)
 if (require(lattice)){
-levelplot(ep.list(Exact = myep1, MCMC = myep2))
+  levelplot(ep.list(Exact = myep1, MCMC = myep2))
 }
 }
 

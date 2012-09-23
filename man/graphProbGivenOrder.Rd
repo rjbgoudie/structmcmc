@@ -3,7 +3,7 @@
 \title{Probability of a graph given an order.}
 \usage{
   graphProbGivenOrder(x, order, numberOfNodes, nodesSeq,
-  scoresParents, parentsTables, allRows, rowsThatContain)
+    scoresParents, parentsTables, allRows, rowsThatContain)
 }
 \arguments{
   \item{x}{A BN}

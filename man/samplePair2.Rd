@@ -3,8 +3,8 @@
 \title{Sample the parents of a pair of nodes (Gibbs sampler) v2.}
 \usage{
   samplePair2(currentNetwork, numberOfNodes, nodesSeq,
-  scoresParents, parentsTables, allRows, rowsThatContain,
-  logScoreFUN, logScoreParameters)
+    scoresParents, parentsTables, allRows, rowsThatContain,
+    logScoreFUN, logScoreParameters)
 }
 \arguments{
   \item{currentNetwork}{A \code{currentNetwork} object}

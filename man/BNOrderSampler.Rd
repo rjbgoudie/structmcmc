@@ -2,14 +2,14 @@
 \alias{BNOrderSampler}
 \title{Order MCMC sampler for Bayesian Networks.}
 \usage{
-  BNOrderSampler(data, initial = 1:ncol(data), prior =
-  priorUniform(), orderPrior = orderPriorUniform, return =
-  "network", logScoreFUN = logScoreMultDirFUN(),
-  logScoreParameters = list(hyperparameters = "qi"),
-  constraint = NULL, statistics = list(nEdges = nEdges),
-  maxNumberParents = NULL, moveprobs = c(0.9, 0.1, 0),
-  verbose = F, keepTape = F, parentsTables = NULL,
-  scoresParents = NULL)
+  BNOrderSampler(data, initial = 1:ncol(data),
+    prior = priorUniform(), orderPrior = orderPriorUniform,
+    return = "network", logScoreFUN = logScoreMultDirFUN(),
+    logScoreParameters = list(hyperparameters = "qi"),
+    constraint = NULL, statistics = list(nEdges = nEdges),
+    maxNumberParents = NULL, moveprobs = c(0.9, 0.1, 0),
+    verbose = F, keepTape = F, parentsTables = NULL,
+    scoresParents = NULL)
 }
 \arguments{
   \item{data}{The data.}
@@ -43,10 +43,10 @@
   passed to logScoreFUN.}
 
   \item{constraint}{A matrix of dimension ncol(data) x
-  ncol(data) giving constraints to the sample space. The
+  ncol(data) giving constraints to the sample space.  The
   (i, j) element is 1 if the edge i -> j is required -1 if
-  the edge i -> is excluded. 0 if the edge i -> j is not
-  constrained. The diagonal of constraint must be all 0.}
+  the edge i -> is excluded.  0 if the edge i -> j is not
+  constrained.  The diagonal of constraint must be all 0.}
 
   \item{statistics}{A named list of functions which should
   be applied to the current network after each step. Each
@@ -60,7 +60,7 @@
 
   \item{moveprobs}{A numeric vector of length 3. Specifies
   the probability that moves updating the parent sets of 1,
-  2 and 3 nodes simultaneously. Must sum to 1.}
+  2 and 3 nodes simultaneously.  Must sum to 1.}
 
   \item{verbose}{A logical of length 1, indicating whether
   verbose output should be printed.}

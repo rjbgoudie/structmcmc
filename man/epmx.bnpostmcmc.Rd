@@ -2,9 +2,9 @@
 \alias{epmx.bnpostmcmc}
 \title{Edge probabilities matrix.}
 \usage{
-  \method{epmx}{bnpostmcmc} (x, nbin = floor((end - start +
-  1)/100), start = 1, end = length(x[[1]]), verbose = F,
-  ...)
+  \method{epmx}{bnpostmcmc} (x,
+    nbin = floor((end - start + 1)/100), start = 1,
+    end = length(x[[1]]), verbose = F, ...)
 }
 \arguments{
   \item{x}{An object of class "bnpostmcmc.list"}
@@ -14,7 +14,7 @@
   probabilities of each}
 
   \item{start}{An integer of length 1, specifying the
-  amount of burn-in. The samples start:end inclusive will
+  amount of burn-in.  The samples start:end inclusive will
   be used.}
 
   \item{end}{An integer of length 1, specifying the number

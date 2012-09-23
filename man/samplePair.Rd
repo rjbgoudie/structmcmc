@@ -3,7 +3,7 @@
 \title{Sample the parents of a pair of nodes (Gibbs sampler).}
 \usage{
   samplePair(currentNetwork, numberOfNodes, nodesSeq,
-  scoresParents, parentsTables, allRows, rowsThatContain)
+    scoresParents, parentsTables, allRows, rowsThatContain)
 }
 \arguments{
   \item{currentNetwork}{A \code{currentNetwork} object}

@@ -3,7 +3,7 @@
 \title{Score a node-level parentsTable.}
 \usage{
   scoreParentsTableNode(node, parentsTable,
-  logScoreLocalFUN, logScoreParameters, localPrior)
+    logScoreLocalFUN, logScoreParameters, localPrior)
 }
 \arguments{
   \item{node}{A node. A numeric vector of length 1.}

@@ -2,8 +2,8 @@
 \alias{residualsMultDir}
 \title{Residuals from a Multinomial-Dirichlet model}
 \usage{
-  residualsMultDir(x, weights = 1, train, test, metric =
-  kronecker_delta, verbose = F)
+  residualsMultDir(x, weights = 1, train, test,
+    metric = kronecker_delta, verbose = F)
 }
 \arguments{
   \item{x}{A BN, or a \code{bn.list}}

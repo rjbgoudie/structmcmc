@@ -3,7 +3,7 @@
 \title{Posterior edge probabilities.}
 \usage{
   \method{ep}{parental.contingency} (x, FUN, verbose = F,
-  ...)
+    ...)
 }
 \arguments{
   \item{x}{An object of class \code{parental.contingency},

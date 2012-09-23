@@ -3,7 +3,7 @@
 \title{Log likelihood of an order}
 \usage{
   logOrderLikelihood(order, numberOfNodes, nodesSeq,
-  scoresParents, parentsTables, allRows, rowsThatContain)
+    scoresParents, parentsTables, allRows, rowsThatContain)
 }
 \arguments{
   \item{order}{A vector length \code{numberOfNodes}, giving
@@ -40,7 +40,7 @@
   Friedman, N., & Koller, D. (2003). \emph{Being Bayesian
   about Network Structure. A Bayesian Approach to Structure
   Discovery in Bayesian Networks}. Machine Learning, 50,
-  95-125. \url{http://dx.doi.org/10.1023/A:1020249912095}
+  95-125.  \url{http://dx.doi.org/10.1023/A:1020249912095}
 }
 \seealso{
   \code{\link{BNGibbsSampler}}, \code{\link{samplePair}}

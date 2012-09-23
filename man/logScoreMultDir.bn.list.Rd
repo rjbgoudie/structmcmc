@@ -3,8 +3,8 @@
 \title{Multinomial-Dirichlet Log marginal likelihood.}
 \usage{
   \method{logScoreMultDir}{bn.list} (x, data,
-  hyperparameters = "qi", cache = new.env(hash = T),
-  verbose = F, ...)
+    hyperparameters = "qi", cache = new.env(hash = T),
+    verbose = F, ...)
 }
 \arguments{
   \item{x}{An object of class "bn.list", the Bayesian
@@ -26,7 +26,7 @@
 }
 \value{
   A numeric vector of length 1, giving the log marginal
-  likelihood. The environment 'cache' will also be updated
+  likelihood.  The environment 'cache' will also be updated
   because its scope is global.
 }
 \description{

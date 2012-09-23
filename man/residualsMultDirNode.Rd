@@ -3,7 +3,7 @@
 \title{Residuals for a single node for a Multinomial-Dirichlet model}
 \usage{
   residualsMultDirNode(node, weights = 1, x, train, test,
-  metric, verbose)
+    metric, verbose)
 }
 \arguments{
   \item{node}{An integer, giving the node}

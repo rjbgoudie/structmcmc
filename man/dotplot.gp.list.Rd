@@ -3,7 +3,7 @@
 \title{Dotplot of posterior graph probabilities.}
 \usage{
   \method{dotplot}{gp.list} (gplist, subsetBy = "Exact",
-  head = 30, ...)
+    head = 30, ...)
 }
 \arguments{
   \item{gplist}{...}
@@ -28,7 +28,7 @@ mcmc <- posterior(data = x, "mc3", nSamples = 500, nBurnin = 100)
 mygp1 <- gp(exact)
 mygp2 <- gp(mcmc)
 if (require(lattice)){
-dotplot(gp.list(Exact = mygp1, MCMC = mygp2))
+  dotplot(gp.list(Exact = mygp1, MCMC = mygp2))
 }
 }
 \seealso{

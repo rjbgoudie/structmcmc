@@ -2,8 +2,8 @@
 \alias{logScoreNormal.bn.list}
 \title{Normal-inverse-gamma (with g-prior) Log marginal likelihood.}
 \usage{
-  \method{logScoreNormal}{bn.list} (x, data, cache =
-  new.env(hash = TRUE), ...)
+  \method{logScoreNormal}{bn.list} (x, data,
+    cache = new.env(hash = TRUE), ...)
 }
 \arguments{
   \item{x}{An object of class "bn.list", the Bayesian
@@ -19,7 +19,7 @@
 }
 \value{
   A numeric vector of length 1, giving the log marginal
-  likelihood. The environment 'cache' will also be updated
+  likelihood.  The environment 'cache' will also be updated
   because its scope is global.
 }
 \description{

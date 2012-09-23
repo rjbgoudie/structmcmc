@@ -21,7 +21,7 @@ exact <- posterior(data = x, "exact")
 
 myep <- ep(exact)
 if (require(lattice)){
-levelplot(myep)
+  levelplot(myep)
 }
 }
 \seealso{

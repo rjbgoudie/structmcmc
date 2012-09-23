@@ -2,9 +2,9 @@
 \alias{logScoreMultDir.bn}
 \title{Compute the log marginal likelihood of the supplied Bayesian Network.}
 \usage{
-  \method{logScoreMultDir}{bn} (x, data, cache =
-  new.env(hash = T), hyperparameters = "qi", checkInput =
-  T, ...)
+  \method{logScoreMultDir}{bn} (x, data,
+    cache = new.env(hash = T), hyperparameters = "qi",
+    checkInput = T, ...)
 }
 \arguments{
   \item{x}{An object of class "bn". The Bayesian Network by
@@ -26,7 +26,7 @@
 }
 \value{
   A numeric vector of length 1, giving the log marginal
-  likelihood. The environment 'cache' will also be updated
+  likelihood.  The environment 'cache' will also be updated
   because its scope is global.
 }
 \description{

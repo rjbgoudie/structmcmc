@@ -3,10 +3,10 @@
 \title{Create a MCMC sampler (MC^3) for Bayesian Networks.}
 \usage{
   BNSampler(data, initial, prior, return = "network",
-  logScoreFUN = logScoreMultDirFUN(), logScoreParameters =
-  list(hyperparameters = "qi"), constraint = NULL,
-  statistics = list(nEdges = nEdges), maxNumberParents =
-  NULL, verbose = F, keepTape = F)
+    logScoreFUN = logScoreMultDirFUN(),
+    logScoreParameters = list(hyperparameters = "qi"),
+    constraint = NULL, statistics = list(nEdges = nEdges),
+    maxNumberParents = NULL, verbose = F, keepTape = F)
 }
 \arguments{
   \item{data}{The data.}
@@ -15,7 +15,7 @@
   value of the MCMC.}
 
   \item{prior}{EITHER A function that returns the prior
-  score of the supplied bn. OR A list of functions of the
+  score of the supplied bn.  OR A list of functions of the
   same length as \code{initial} that returns the local
   prior score of the corresponding node, given a numeric
   vector of parents. The default value \code{NULL} uses an

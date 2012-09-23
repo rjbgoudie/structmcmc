@@ -3,7 +3,7 @@
 \title{Each changes choices for required.}
 \usage{
   eachChangesChoicesForRequired(i, possibleParents,
-  currentNetwork, change, descendantsList)
+    currentNetwork, change, descendantsList)
 }
 \arguments{
   \item{i}{The node}

@@ -3,7 +3,7 @@
 \title{Internal functions.}
 \usage{
   logScoreNormalPrepare(data, logScoreParameters,
-  checkInput = T)
+    checkInput = T)
 }
 \arguments{
   \item{data}{A data.frame, with columns being factors

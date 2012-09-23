@@ -1,6 +1,5 @@
 \name{internal-onload}
 \alias{.onLoad}
-\alias{"internal-onload"}
 \alias{internal-onload}
 \title{Internal function.}
 \usage{

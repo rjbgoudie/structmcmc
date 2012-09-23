@@ -3,8 +3,8 @@
 \title{Undocumented.}
 \usage{
   localPartitionFunction(currentNetwork, proposalNetwork,
-  node, required = integer(0), logScoreOnlineFUN,
-  logScoreParameters, cache)
+    node, required = integer(0), logScoreOnlineFUN,
+    logScoreParameters, cache)
 }
 \arguments{
   \item{currentNetwork}{...}

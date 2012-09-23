@@ -2,10 +2,10 @@
 \alias{BNSamplerBigFlips}
 \title{Big flips MCMC sampler for Bayesian networks.}
 \usage{
-  BNSamplerBigFlips(data, initial, prior, return =
-  "network", logScoreFUN = logScoreMultDirFUN(),
-  logScoreParameters = list(hyperparameters = "qi"),
-  verbose = F, keepTape = F)
+  BNSamplerBigFlips(data, initial, prior,
+    return = "network", logScoreFUN = logScoreMultDirFUN(),
+    logScoreParameters = list(hyperparameters = "qi"),
+    verbose = F, keepTape = F)
 }
 \arguments{
   \item{data}{The data.}

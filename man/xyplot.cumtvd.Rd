@@ -22,9 +22,9 @@ mcmc1 <- posterior(x, "mc3", nSamples = 1000, nBurnin = 100)
 mcmc2 <- posterior(x, "mc3", nSamples = 1000, nBurnin = 100)
 
 tvd <- cumtvd(exactgp = exactgp,
-bnpostmcmclist = bnpostmcmc.list(mcmc1, mcmc2))
+              bnpostmcmclist = bnpostmcmc.list(mcmc1, mcmc2))
 if (require(lattice)){
-xyplot(tvd)
+  xyplot(tvd)
 }
 }
 \seealso{

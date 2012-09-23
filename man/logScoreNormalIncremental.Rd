@@ -3,7 +3,7 @@
 \title{Normal-inverse-gamma (with g-prior) Log marginal likelihood (online).}
 \usage{
   logScoreNormalIncremental(currentBN, proposalBN, heads,
-  logScoreParameters, cache, checkInput = T)
+    logScoreParameters, cache, checkInput = T)
 }
 \arguments{
   \item{currentBN}{An object of class "bn".}

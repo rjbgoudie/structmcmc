@@ -23,7 +23,7 @@ exact <- posterior(data = x, "exact")
 
 myep <- ep(exact)
 if (require(lattice)){
-dotplot(myep)
+  dotplot(myep)
 }
 }
 \seealso{

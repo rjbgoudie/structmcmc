@@ -3,7 +3,7 @@
 \title{Score a node-level parentsTable.}
 \usage{
   scoreParentsTable(parentsTables, logScoreLocalFUN,
-  logScoreParameters, prior, verbose = F)
+    logScoreParameters, prior, verbose = F)
 }
 \arguments{
   \item{parentsTables}{A component of a

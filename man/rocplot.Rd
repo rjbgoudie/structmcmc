@@ -2,8 +2,9 @@
 \alias{rocplot}
 \title{Plot an ROC curve.}
 \usage{
-  rocplot(true, maps, bnpmls, eps, thresholds = seq(from =
-  0, to = 1, by = 0.01), use.cpdags = F, verbose = F, ...)
+  rocplot(true, maps, bnpmls, eps,
+    thresholds = seq(from = 0, to = 1, by = 0.01),
+    use.cpdags = F, verbose = F, ...)
 }
 \arguments{
   \item{true}{An object of class bn giving the true graph.
@@ -56,9 +57,9 @@ eppost <- ep(exact)
 mcmc <- posterior(x, "mc3", nSamples = 1000, nBurnin = 100)
 
 rocplot(true = bn(integer(0), c(1,3), integer(0)),
-eps = ep.list(eppost))
+        eps = ep.list(eppost))
 rocplot(true = bn(integer(0), integer(0), 2),
-eps = ep.list(eppost))
+        eps = ep.list(eppost))
 }
 \seealso{
   \code{\link{as.roc}}

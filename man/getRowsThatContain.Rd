@@ -3,7 +3,7 @@
 \title{Create lookup table for parentsTable.}
 \usage{
   getRowsThatContain(numberOfNodes, parentsTables,
-  maxNumberParents)
+    maxNumberParents)
 }
 \arguments{
   \item{numberOfNodes}{The number of nodes. A numeric

@@ -2,8 +2,8 @@
 \alias{predictGivenNoParents}
 \title{Predict a node, given no parents}
 \usage{
-  predictGivenNoParents(node, x, param, newdata, type =
-  c("response", "probabilities"))
+  predictGivenNoParents(node, x, param, newdata,
+    type = c("response", "probabilities"))
 }
 \arguments{
   \item{node}{An integer, specifying the node}

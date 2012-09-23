@@ -3,8 +3,8 @@
 \title{Edge probabilities matrix.}
 \usage{
   \method{epmx}{bnpostmcmc.list} (x, method = "online",
-  nbin = floor((end - start + 1)/100), start = 1, end =
-  length(x[[1]]), verbose = F, ...)
+    nbin = floor((end - start + 1)/100), start = 1,
+    end = length(x[[1]]), verbose = F, ...)
 }
 \arguments{
   \item{x}{An object of class "bnpostmcmc.list"}
@@ -15,11 +15,11 @@
 
   \item{nbin}{The number of equally-sized bins into which
   the samples are divided into before computing the edge
-  probabilities of each. This applies only for \code{method
-  = "offline"}.}
+  probabilities of each.  This applies only for
+  \code{method = "offline"}.}
 
   \item{start}{An integer of length 1, specifying the
-  amount of burn-in. The samples start:end inclusive will
+  amount of burn-in.  The samples start:end inclusive will
   be used.}
 
   \item{end}{An integer of length 1, specifying the number

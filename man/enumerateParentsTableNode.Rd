@@ -3,7 +3,7 @@
 \title{Table of all possible parents of a node.}
 \usage{
   enumerateParentsTableNode(node, numberOfNodes,
-  maxNumberParents, required, banned)
+    maxNumberParents, required, banned)
 }
 \arguments{
   \item{node}{A node}
@@ -20,10 +20,10 @@
   excluded from every parent set for this node.}
 }
 \value{
-  A matrix with \code{maxNumberParents} columns. Each row
+  A matrix with \code{maxNumberParents} columns.  Each row
   is a possible parent set for node \code{node}, accounting
   for the restrictions given by \code{required} and
-  \code{banned}. Entries that are \code{NA} indicate no
+  \code{banned}.  Entries that are \code{NA} indicate no
   parent. e.g. there is only one parent, the other entries
   will be \code{NA}.
 }

@@ -2,8 +2,8 @@
 \alias{logScoreMultDirOffline}
 \title{Multinomial-Dirichlet Log marginal likelihood (offline).}
 \usage{
-  logScoreMultDirOffline(x, logScoreParameters, cache =
-  new.env(hash = T), checkInput = T)
+  logScoreMultDirOffline(x, logScoreParameters,
+    cache = new.env(hash = T), checkInput = T)
 }
 \arguments{
   \item{x}{An object of class "bn". The Bayesian Network by
@@ -17,7 +17,7 @@
   \item{nl}{A numeric vector of length ncol(data),
   specifying the number of levels that each random variable
   takes.} \item{hyperparameters}{A character vector of
-  length one. Either "qi", "one", or "point9"} }}
+  length one.  Either "qi", "one", or "point9"} }}
 
   \item{cache}{Optionally, provide an environment with
   cached local scores for this data.}
@@ -27,7 +27,7 @@
 }
 \value{
   A numeric vector of length 1, giving the log marginal
-  likelihood. The environment 'cache' will also be updated
+  likelihood.  The environment 'cache' will also be updated
   because its scope is global.
 }
 \description{

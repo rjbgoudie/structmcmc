@@ -2,8 +2,8 @@
 \alias{predictNode}
 \title{Predict a Multinomial-Dirichlet model}
 \usage{
-  predictNode(node, x, param, newdata, type = c("response",
-  "probabilities"))
+  predictNode(node, x, param, newdata,
+    type = c("response", "probabilities"))
 }
 \arguments{
   \item{node}{An integer, giving the node}

@@ -2,8 +2,8 @@
 \alias{makeRowPredictions}
 \title{Make row predictions}
 \usage{
-  makeRowPredictions(row, predictors, param, type =
-  c("response", "probabilities"))
+  makeRowPredictions(row, predictors, param,
+    type = c("response", "probabilities"))
 }
 \arguments{
   \item{row}{A vector containing the predictors in the

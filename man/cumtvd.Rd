@@ -2,8 +2,8 @@
 \alias{cumtvd}
 \title{Cumulative total variation distance.}
 \usage{
-  cumtvd(exactgp, bnpostmcmclist, start = 1, end, nbin =
-  (end - start + 1)/100)
+  cumtvd(exactgp, bnpostmcmclist, start = 1, end,
+    nbin = (end - start + 1)/100)
 }
 \arguments{
   \item{exactgp}{...}
@@ -33,7 +33,7 @@ mcmc1 <- posterior(x, "mc3", nSamples = 1000, nBurnin = 100)
 mcmc2 <- posterior(x, "mc3", nSamples = 1000, nBurnin = 100)
 
 tvd <- cumtvd(exactgp = exactgp,
-bnpostmcmclist = bnpostmcmc.list(mcmc1, mcmc2))
+              bnpostmcmclist = bnpostmcmc.list(mcmc1, mcmc2))
 }
 \seealso{
   \code{\link{xyplot.cumtvd}}, \code{\link{cumtvd.list}}

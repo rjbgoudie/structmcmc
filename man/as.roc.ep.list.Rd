@@ -3,7 +3,7 @@
 \title{Prepare an list of edge probability matrix for a ROC plot.}
 \usage{
   \method{as.roc}{ep.list} (x, true, thresholds, labels,
-  verbose, ...)
+    verbose, ...)
 }
 \arguments{
   \item{x}{A list of matrices of class \code{ep} of edge

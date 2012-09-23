@@ -19,7 +19,7 @@
   \code{\link[gRain]{querygrain}} FOR A PARTICULAR NODE.
   (Usaully \code{querygrain} returns a list, since it may
   provide the distribution of a number of nodes at once.
-  Here, we remove that list.) Any other arguments are
+  Here, we remove that list.)  Any other arguments are
   passed \code{...}}
 
   \item{...}{Passed to \code{FUN}}

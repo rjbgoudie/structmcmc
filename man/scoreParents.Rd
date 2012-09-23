@@ -3,7 +3,7 @@
 \title{Undocumented.}
 \usage{
   scoreParents(possibleParents, head, proposal, current,
-  logScoreOnlineFUN, logScoreParameters, cache)
+    logScoreOnlineFUN, logScoreParameters, cache)
 }
 \arguments{
   \item{possibleParents}{...}

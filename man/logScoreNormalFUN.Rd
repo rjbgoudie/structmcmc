@@ -1,6 +1,9 @@
 \name{logScoreNormalFUN}
 \alias{logScoreNormalFUN}
 \title{Normal Log marginal likelihood.}
+\usage{
+  logScoreNormalFUN()
+}
 \value{
   A list consisting of the functions that perform each of
   the following roles. \describe{ \item{offline}{A function

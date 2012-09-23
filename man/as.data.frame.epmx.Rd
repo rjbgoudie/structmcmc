@@ -2,8 +2,8 @@
 \alias{as.data.frame.epmx}
 \title{Convert epmx to a data.frame}
 \usage{
-  \method{as.data.frame}{epmx} (x, subset, plottype =
-  "xyplot")
+  \method{as.data.frame}{epmx} (x, subset,
+    plottype = "xyplot")
 }
 \arguments{
   \item{x}{An \code{epmx} object.}

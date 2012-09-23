@@ -1,6 +1,9 @@
 \name{logScoreMultDirFUN}
 \alias{logScoreMultDirFUN}
 \title{Multinomial-Dirichlet Log marginal likelihood.}
+\usage{
+  logScoreMultDirFUN()
+}
 \value{
   A list consisting of the functions that perform each of
   the following roles. \describe{ \item{offline}{A function

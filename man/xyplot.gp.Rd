@@ -23,7 +23,7 @@ exact <- posterior(data = x, "exact")
 
 mygp <- gp(exact)
 if (require(lattice)){
-xyplot(mygp)
+  xyplot(mygp)
 }
 }
 \seealso{

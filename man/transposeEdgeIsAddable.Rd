@@ -3,7 +3,7 @@
 \title{Find togglable edges.}
 \usage{
   transposeEdgeIsAddable(routes, adjacency, constraintT,
-  maxNumberParents)
+    maxNumberParents)
 }
 \arguments{
   \item{routes}{The routes matrix of the network}

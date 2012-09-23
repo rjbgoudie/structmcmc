@@ -2,8 +2,9 @@
 \alias{scoreBIC}
 \title{Undocumented.}
 \usage{
-  scoreBIC(bn, data, nodes = seq_along(bn), mlcache =
-  new.env(hash = T), nijkcache = new.env(hash = T))
+  scoreBIC(bn, data, nodes = seq_along(bn),
+    mlcache = new.env(hash = T),
+    nijkcache = new.env(hash = T))
 }
 \arguments{
   \item{bn}{...}

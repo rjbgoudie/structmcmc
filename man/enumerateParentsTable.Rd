@@ -3,7 +3,7 @@
 \title{Table of all possible parents of a node.}
 \usage{
   enumerateParentsTable(numberOfNodes, maxNumberParents,
-  required, banned, verbose = F)
+    required, banned, verbose = F)
 }
 \arguments{
   \item{numberOfNodes}{Number of nodes}

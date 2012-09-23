@@ -3,8 +3,8 @@
 \title{Require something from each parent.}
 \usage{
   requireSomethingFromEachParent(numberOfNodes, nodesSeq,
-  possibleParents, change, descendantsList, currentNetwork,
-  maxIndegree)
+    possibleParents, change, descendantsList,
+    currentNetwork, maxIndegree)
 }
 \arguments{
   \item{numberOfNodes}{The number of nodes}

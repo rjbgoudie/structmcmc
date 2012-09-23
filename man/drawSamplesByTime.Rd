@@ -3,7 +3,7 @@
 \title{Draw samples from a MCMC sampler, by time.}
 \usage{
   drawSamplesByTime(sampler, time, burnin, burninleft,
-  thin, verbose, samplesIncrement = 10000)
+    thin, verbose, samplesIncrement = 10000)
 }
 \arguments{
   \item{sampler}{A sampler object}
