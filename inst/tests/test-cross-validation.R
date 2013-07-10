@@ -42,5 +42,5 @@ test_that("3-node Bayesian Network", {
 
   predictModelAverageNode(2, list(x, y), train, test, weights = c(0.1, 0.9))
 
-  expect_that(residualsMultDir(bn.list(x, y), weights = c(0.1, 0.9), train, test), equals(c(4, 4, 0))
+  expect_that(residualsMultDir(bn.list(x, y), weights = c(0.1, 0.9), train, test), equals(c(4, 4, 0)))
 })
