@@ -40,3 +40,9 @@ Backup[ ]of[ ]*.numbers/
 
 src/structmcmc.o
 src/structmcmc.so
+
+doc/*.pdf
+doc/*.tikz
+doc/*.map
+doc/*.pdf
+doc/*.tex

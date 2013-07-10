@@ -1,0 +1,200 @@
+\documentclass{article}
+\usepackage[authoryear,round]{natbib}
+\bibliographystyle{plainnat}
+\usepackage{Sweave}
+%%\VignetteDepends{structmcmc}
+\SweaveOpts{engine=R,eps=FALSE,pdf=TRUE,width=5,height=3,strip.white=TRUE,keep.source=TRUE}
+\title{The \texttt{structmcmc} package: Structural inference of Bayesian networks using MCMC}
+\author{Robert J. B. Goudie}
+\date{\today}
+\begin{document}
+\maketitle
+
+\begin{abstract}
+\texttt{structmcmc} is a set of tools for performing structural inference for Bayesian Networks using MCMC in R, a free software environment for statistical computing and graphics.
+
+The widely-used MC\textsuperscript{3} algorithm \citep{madigan1994} is implemented, as well as a number of variants of the algorithm.
+The MC\textsuperscript{3} algorithm is a Metropolis-Hastings sampler for which the target distribution is the posterior distribution of Bayesian networks.
+Tools for exact solutions are also available, but for networks with more than, say, 6 nodes, these will be prohibitively slow.
+
+The implementation allows the local conditional distributions to be multinomial or Gaussian, using standard priors.
+Arbitrary structural priors for the Bayesian network can be specified.
+The main difficulty in sampling Bayesian networks efficiently is ensuring the acyclicity constraint is not violated.
+The package implements the cycle-checking methods introduced by \cite{King:2002gt}, which is an alternative to the method introduced by \cite{Giudici:2003cn}.
+To enable convergence to be assessed, a number of tools for creating diagnostic plots are included.
+
+Interfaces to a number of other R packages for Bayesian networks are available, including \texttt{deal} (hill-climbing and heuristic search), \texttt{bnlearn} (a number of constraint-based and score-based algorithms) and \texttt{pcalg} (PC-algorithm).
+An interface to gRain is also included to allow its probability propagation routines to be used easily.
+\end{abstract}
+
+<<preliminaries, echo=FALSE>>=
+options(width=75)
+@
+
+\section{Introduction}
+\label{sec:Intro}
+
+\section{Basic operation, discrete data}
+Each random variable has a Multinomial distribution, with the conjugate Dirichlet priors.
+
+Data must be supplied as a data.frame with p columns (corresponding to p random variables) and n columns (corresponding to the n samples). Each column must be a factor variable.
+
+<<cache=true>>=
+x1 <- factor(c("a", "a", "g", "c", "c", "a", "g", "a", "a"))
+x2 <- factor(c(2, 2, 4, 3, 1, 4, 4, 4, 1))
+x3 <- factor(c(FALSE, FALSE, TRUE, FALSE, TRUE, TRUE, FALSE, FALSE, TRUE))
+x <- data.frame(x1 = x1, x2 = x2, x3 = x3)
+@
+
+Draw samples from the posterior using MC3.
+
+
+<<results=hide>>=
+library(structmcmc)
+library(lattice)
+@
+<<cache=true>>=
+set.seed(1234)
+initial <- bn(c(), c(), c())
+priorgraph <- bn(c(), c(1), c(2))
+prior <- priorGraph(priorgraph, 0.5)
+@
+
+<<results=hide,cache=true>>=
+mcmc <- posterior(data = x, method = "mc3", prior = prior,
+                  nSamples = 10000, nBurnin = 1000, initial = initial)
+@
+
+Compute and plot estimated edge probabilities given by the MCMC run
+<<fig=TRUE,cache=true>>=
+epmcmc <- ep(mcmc)
+print(levelplot(epmcmc))
+@
+
+Since this is a problem with \(p = 3\), we can compute the posterior edge probabilies by exhaustive enumeration. This is only feasible for \(p <= 6\) or so.
+<<results=hide,cache=true>>=
+exact <- posterior(x, "exact", prior = prior)
+@
+<<cache=true>>=
+epexact <- ep(exact)
+@
+<<fig=TRUE,cache=true>>=
+print(levelplot(epexact))
+@
+
+Comparing multiple MCMC runs
+<<results=hide,cache=true>>=
+mcmc2 <- posterior(data = x, method = "mc3", prior = prior,
+                   nSamples = 10000, nBurnin = 1000, initial = initial)
+@
+
+<<fig=TRUE,cache=true>>=
+epmcmc2 <- ep(mcmc2)
+print(levelplot(epmcmc2))
+@
+
+Compare the final edge probabilities between runs
+<<fig=TRUE,cache=true>>=
+print(levelplot(ep.list(exact = epexact, mcmc = epmcmc)))
+@
+<<fig=TRUE,cache=true>>=
+print(splom(bnpostmcmc.list(mcmc, mcmc2)))
+@
+
+Plot how the cumulative edge probabilities change as samples are drawn.
+<<fig=TRUE,cache=true>>=
+print(xyplot(cumep(bnpostmcmc.list(mcmc, mcmc2))))
+@
+
+% % <<fig=TRUE,cache=true>>=
+% % print(xyplot(mwep(bnpostmcmc.list(mcmc, mcmc2))))
+% % @
+% Plot how the cumulative total variance distance changes as samples are drawn
+
+% % <<cache=true>>=
+% % exactgp <- gp(exact)
+% % xyplot(cumtvd(exactgp, bnpostmcmc.list(mcmc, mcmc2)))
+% % @
+Plot how the moving averaging edge probabilities change as samples are drawn.
+
+
+
+\section{Basic operation, continuous data}
+Each random variable is assumed to be Normally-distributed, with a G-prior.
+
+Data must be supplied as a matrix with \(p\) columns (corresponding to \(p\) random variables) and \(n\) columns (corresponding to the \(n\) samples). Each column must be a numeric variable.
+
+<<cache=true>>=
+x1 <- rnorm(20)
+x2 <- rnorm(20)
+x3 <- rnorm(20)
+x <- matrix(c(x1, x2, x3), ncol = 3)
+@
+
+Draw samples from the posterior using MC\textsuperscript{3}.
+<<cache=true>>=
+set.seed(1234)
+initial <- bn(c(), c(), c())
+@
+
+<<results=hide,cache=true>>=
+mcmc <- posterior(data = x, method = "mc3",
+                  logScoreFUN = logScoreNormalFUN(),
+                  nSamples = 10000, nBurnin = 1000, initial = initial)
+@
+
+Compute and plot estimated edge probabilities given by the MCMC run
+<<fig=TRUE,cache=true>>=
+epmcmc <- ep(mcmc)
+print(levelplot(epmcmc))
+@
+
+Since this is a problem with \(p = 3\), we can compute the posterior edge probabilies by exhaustive enumeration. This is only feasible for \(p <= 6\) or so.
+<<results=hide,cache=true>>=
+exact <- posterior(x, "exact", logScoreFUN = logScoreNormalFUN())
+@
+<<fig=TRUE,cache=true>>=
+epexact <- ep(exact)
+print(levelplot(epexact))
+@
+
+Comparing multiple MCMC runs
+<<results=hide,cache=true>>=
+mcmc2 <- posterior(data = x, method = "mc3",
+                   logScoreFUN = logScoreNormalFUN(),
+                   nSamples = 10000, nBurnin = 1000, initial = initial)
+@
+
+<<fig=TRUE,cache=true>>=
+epmcmc2 <- ep(mcmc2)
+print(levelplot(epmcmc2))
+@
+
+Compare the final edge probabilities between runs
+<<fig=TRUE,cache=true>>=
+print(splom(bnpostmcmc.list(mcmc, mcmc2)))
+@
+
+<<fig=TRUE,cache=true>>=
+print(levelplot(ep.list(exact = epexact, mcmc = epmcmc)))
+@
+
+Plot how the cumulative edge probabilities change as samples are drawn.
+<<fig=TRUE,cache=true>>=
+print(xyplot(cumep(bnpostmcmc.list(mcmc, mcmc2))))
+@
+
+Plot how the moving averaging edge probabilities change as samples are drawn.
+% <<fig=TRUE,cache=true>>=
+% print(xyplot(mwep(bnpostmcmc.list(mcmc, mcmc2))))
+% @
+
+Plot how the cumulative total variance distance changes as samples are drawn
+% <<fig=TRUE,cache=true>>=
+% exactgp <- gp(exact)
+% print(xyplot(cumtvd(exactgp, bnpostmcmc.list(mcmc, mcmc2))))
+% @
+
+
+\bibliography{../../../documents/bib/offline.bib,../../../documents/bib/papers.bib}
+\end{document}
