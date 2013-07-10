@@ -132,7 +132,7 @@ localLogScoreMultDir <- function(node,
             as.integer(length(bin)),
             as.integer(pd[sel]),
             ans = integer(pd[sel]),
-            PACKAGE = "base")$ans
+            PACKAGE = "structmcmc")$ans
     (cache[[id]] <- sum(lgamma(N_prime + N) -
                         lgamma(N_prime)) -
                     sum(lgamma(N_prime_marginals +

@@ -14,6 +14,7 @@
 #' @docType package
 #' @name structmcmc
 #' @aliases structmcmc package-structmcmc
+#' @useDynLib structmcmc
 #' @seealso \code{\link{posterior}}
 #' @examples
 #' # Setup data frame
