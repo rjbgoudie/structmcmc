@@ -7,7 +7,7 @@
     logScoreFUN = logScoreMultDirFUN(),
     logScoreParameters = list(hyperparameters = "qi"),
     constraint = NULL, statistics = list(nEdges = nEdges),
-    maxNumberParents = NULL, moveprobs = c(0.9, 0.1, 0, 0),
+    maxNumberParents = NULL, moveprobs = c(0, 0, 1, 0),
     verbose = F, keepTape = F, parentsTables = NULL,
     scoresParents = NULL)
 }

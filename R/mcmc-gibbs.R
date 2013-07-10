@@ -347,7 +347,6 @@ samplePair2 <- function(currentNetwork,
     }
   }
 
-  nets <- data(structmcmc.internal.nets2)
   nets <- structmcmc.internal.nets2
 
   rows <- lapply(nets, optionsGivenGraph)
@@ -554,7 +553,6 @@ sampleTriple <- function(currentNetwork,
     }
   }
 
-  nets <- data(structmcmc.internal.nets3)
   nets <- structmcmc.internal.nets3
 
   # each rows component refers to node1, node2, node3
@@ -809,7 +807,6 @@ sampleQuadruple <- function(currentNetwork,
     }
   }
 
-  data(structmcmc.internal.nets4)
   nets <- structmcmc.internal.nets4
 
   # each rows component refers to node1, node2, node3
@@ -1109,7 +1106,6 @@ sampleQuintuple <- function(currentNetwork,
     }
   }
 
-  data(structmcmc.internal.nets5)
   nets <- structmcmc.internal.nets5
 
   # each rows component refers to node1, node2, node3
@@ -1292,7 +1288,7 @@ BNGibbsSampler <- function(data,
                            constraint         = NULL,
                            statistics         = list(nEdges = nEdges),
                            maxNumberParents   = NULL,
-                           moveprobs          = c(0.9, 0.1, 0, 0),
+                           moveprobs          = c(0, 0, 1, 0),
                            verbose            = F,
                            keepTape           = F,
                            parentsTables      = NULL,
