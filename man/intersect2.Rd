@@ -2,7 +2,7 @@
 \alias{intersect2}
 \title{Fast, dangerous set intersect.}
 \usage{
-  intersect2(x, y)
+  intersect2(x, y, nmax = NA)
 }
 \arguments{
   \item{x}{A vector, of the same mode as \code{y}.}

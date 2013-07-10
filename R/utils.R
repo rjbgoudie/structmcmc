@@ -71,10 +71,11 @@ setdiff3 <- function(x, y){
 #' @param x A vector, of the same mode as \code{y}.
 #' @param y A vector, of the same mode as \code{x}.
 #' @return A vector of the same mode as the inputs.
-intersect2 <- function(x, y){
+intersect2 <- function(x, y, nmax = NA){
   .Internal(unique(x             = y[.Internal(match(x, y, 0L, NULL))],
                    incomparables = F,
-                   fromLast      = F))
+                   fromLast      = F,
+                   nmax          = nmax))
 }
 
 #' Fast, dangerous matrix generation.

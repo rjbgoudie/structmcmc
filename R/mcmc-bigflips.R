@@ -239,7 +239,7 @@ BNSamplerBigFlips <- function(data,
       edgesOnPath <- unlist(lapply(onRoute, function(node) {
         parentsOnRoute <- .Internal(unique(onRoute[.Internal(
           match(proposalNetwork[[1]][[node]], onRoute, F, NULL))],
-          F, F))
+          F, F, nmax = NA))
         lapply(parentsOnRoute, function(parent){
           c(node, parent)
         })

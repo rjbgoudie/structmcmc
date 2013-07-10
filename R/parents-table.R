@@ -290,7 +290,7 @@ whichParentSetRows <- function(node,
     } else {
       rowsNeeded <- rowsThatContain[[node]][needOneOf]
       rowsNeeded <- unlist(rowsNeeded, use.names = F)
-      rowsNeeded <- .Internal(unique(rowsNeeded, F, F))
+      rowsNeeded <- .Internal(unique(rowsNeeded, F, F, nmax = NA))
     }
   }
   setdiff3(rowsNeeded, rowsNotAllowed)

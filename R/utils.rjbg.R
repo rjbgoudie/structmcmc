@@ -92,7 +92,8 @@ intersection <- function(x, y, ...){
                                                       recursive = T,
                                                       use.names = F)),
                      incomparables = F,
-                     fromLast      = F))
+                     fromLast      = F,
+                     nmax          = NA))
   }
    else {
     if (missing(...)){
