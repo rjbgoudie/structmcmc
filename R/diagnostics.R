@@ -858,7 +858,7 @@ gelman.samplers <- function(x, names = "nEdges", transform = NULL, ...){
       mcmc(ml)
     })
     ml <- as.mcmc.list(ml)
-    gelman.diag(ml)
+    gelman.diag(ml)$psrf[1, ]
   } else {
     stop("Package 'coda' required to compute Gelman-Rubin statistic")
   }
