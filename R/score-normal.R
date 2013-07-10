@@ -129,7 +129,7 @@ localLogScoreNormal <- function(node,
     crprodphi <- .Internal(crossprod(phi, NULL))
     d <- array(0, c(eta + 1L, eta + 1L))
     d[1L + 0L:eta * (eta + 2L)] <- 1L
-    solvephi <- .Call("La_dgesv", crprodphi, d, tol = 1e-07, PACKAGE = "base")
+    solvephi <- solve.default(crprodphi, d, tol = 1e-07)
     crossprodphixi <- .Internal(crossprod(Xi, phi))
     mx <- .Internal(crossprod(Xi, NULL)) -
           n/(n + 1) * crossprodphixi %*%
