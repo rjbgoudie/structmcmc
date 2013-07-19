@@ -97,7 +97,12 @@ intersection <- function(x, y, ...){
   }
    else {
     if (missing(...)){
-      intersect2(x, y)
+      # intersect2
+      .Internal(unique(x             = y[.Call("fmatch", x, y, 0L, NULL,
+                                         PACKAGE = "fastmatch")],
+                       incomparables = F,
+                       fromLast      = F,
+                       nmax          = NA))
     } else {
       intersect2(x, intersection(y, ...))
     }
