@@ -146,3 +146,96 @@ SEXP R_bit_setdiff(SEXP b1_, SEXP b2_, SEXP ret_){
   UNPROTECT(1);
   return(ret_copy_);
 }
+
+
+
+#include <Rdefines.h>
+#include <Rmath.h>
+
+
+
+// Based upon code by Henrik Bengtsson from matrixStats
+// Artistic-2.0 License
+
+/*
+ logSumExp_double(x):
+
+  1. Scans for the maximum value of x=(x[0], x[1], ..., x[n-1])
+  2. Computes result from 'x'.
+
+  NOTE: The above sweeps the "contiguous" 'x' vector twice.
+*/
+double logSumExp_double(double *x, int n) {
+  int ii, iMax;
+  double xii, xMax, sum;
+
+  /* Quick return? */
+  if (n == 0) {
+    return(R_NegInf);
+  } else if (n == 1) {
+    return(x[0]);
+  }
+
+  /* Find the maximum value */
+  iMax = 0;
+  xMax = x[0];
+  for (ii=1; ii < n; ii++) {
+    /* Get the ii:th value */
+    xii = x[ii];
+
+    if (ISNAN(xii)) {
+      return(R_NaReal);
+    }
+
+    if (xii > xMax) {
+      iMax = ii;
+      xMax = xii;
+    }
+
+    if (ii % 1000000 == 0) {
+      R_CheckUserInterrupt();
+    }
+  } /* for (ii ...) */
+
+  /* Sum differences */
+  sum = 0.0;
+  for (ii=0; ii < n; ii++) {
+    if (ii == iMax) {
+      continue;
+    }
+
+    /* Get the ii:th value */
+    xii = x[ii];
+
+    if (ISNAN(xii)) {
+      return(R_NaReal);
+    } else {
+      sum += exp(xii - xMax);
+    }
+
+    if (ii % 1000000 == 0) {
+      R_CheckUserInterrupt();
+    }
+  } /* for (ii ...) */
+
+  sum = xMax + log1p(sum);
+
+  return(sum);
+} /* logSumExp_double() */
+
+
+SEXP logSumExp(SEXP lx) {
+  double *x;
+  int n;
+
+  /* Argument 'lx': */
+  if (!isReal(lx)) {
+    error("Argument 'lx' must be a numeric vector.");
+  }
+
+  /* Get the values */
+  x = REAL(lx);
+  n = length(lx);
+
+  return(Rf_ScalarReal(logSumExp_double(x, n)));
+} /* logSumExp() */

@@ -2,7 +2,7 @@
 \alias{logsumexp}
 \title{Undocumented.}
 \usage{
-  logsumexp(a)
+  logsumexp(x)
 }
 \arguments{
   \item{a}{...}
