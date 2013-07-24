@@ -481,14 +481,6 @@ sampleTriple <- function(currentNetwork,
                                  nonDescendants[[2]],
                                  nonDescendants[[3]])
 
-    newNonDescendants1 <- intersectAll
-    newNonDescendants2 <- intersectAll
-    newNonDescendants3 <- intersectAll
-
-    needOneOf1 <- NULL
-    needOneOf2 <- NULL
-    needOneOf3 <- NULL
-
     three <- 1:3
 
     if (length(net[[1]]) > 0){
@@ -499,6 +491,9 @@ sampleTriple <- function(currentNetwork,
         setdiff3(x, descendantOfNonParent)
       })
       newNonDescendants1 <- c(intersectAll, unlist(needOneOf1, use.names = F))
+    } else {
+      newNonDescendants1 <- intersectAll
+      needOneOf1 <- NULL
     }
     if (length(net[[2]]) > 0){
       descendantOfParent <- descendants[net[[2]]]
@@ -508,6 +503,9 @@ sampleTriple <- function(currentNetwork,
         setdiff3(x, descendantOfNonParent)
       })
       newNonDescendants2 <- c(intersectAll, unlist(needOneOf2, use.names = F))
+    } else {
+      newNonDescendants2 <- intersectAll
+      needOneOf2 <- NULL
     }
     if (length(net[[3]]) > 0){
       descendantOfParent <- descendants[net[[3]]]
@@ -517,6 +515,9 @@ sampleTriple <- function(currentNetwork,
         setdiff3(x, descendantOfNonParent)
       })
       newNonDescendants3 <- c(intersectAll, unlist(needOneOf3, use.names = F))
+    } else {
+      newNonDescendants3 <- intersectAll
+      needOneOf3 <- NULL
     }
     rows1 <- whichParentSetRows(node            = node1,
                                 nonDescendants  = newNonDescendants1,
