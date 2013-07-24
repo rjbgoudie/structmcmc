@@ -519,6 +519,8 @@ sampleTriple <- function(currentNetwork,
       newNonDescendants3 <- intersectAll
       needOneOf3 <- NULL
     }
+
+    # newNonDescendants may be unsorted!
     rows1 <- whichParentSetRows(node            = node1,
                                 nonDescendants  = newNonDescendants1,
                                 needOneOf       = needOneOf1,
