@@ -445,9 +445,7 @@ sampleTriple <- function(currentNetwork,
                          scoresParents,
                          parentsTables,
                          allRows,
-                         allRows2,
                          rowsThatContain,
-                         rowsThatContain2,
                          logScoreFUN,
                          logScoreParameters,
                          blankBit,
@@ -530,57 +528,29 @@ sampleTriple <- function(currentNetwork,
                                 needOneOf       = needOneOf1,
                                 numberOfNodes   = numberOfNodes,
                                 allRows         = allRows,
-                                rowsThatContain = rowsThatContain)
+                                rowsThatContain = rowsThatContain,
+                                blankBit = blankBit)
 
     rows2 <- whichParentSetRows(node            = node2,
                                 nonDescendants  = newNonDescendants2,
                                 needOneOf       = needOneOf2,
                                 numberOfNodes   = numberOfNodes,
                                 allRows         = allRows,
-                                rowsThatContain = rowsThatContain)
+                                rowsThatContain = rowsThatContain,
+                                blankBit = blankBit)
 
     rows3 <- whichParentSetRows(node            = node3,
                                 nonDescendants  = newNonDescendants3,
                                 needOneOf       = needOneOf3,
                                 numberOfNodes   = numberOfNodes,
                                 allRows         = allRows,
-                                rowsThatContain = rowsThatContain)
-
-    rows1b <- whichParentSetRows2(node            = node1,
-                                nonDescendants  = newNonDescendants1,
-                                needOneOf       = needOneOf1,
-                                numberOfNodes   = numberOfNodes,
-                                allRows         = allRows2,
-                                rowsThatContain = rowsThatContain2,
+                                rowsThatContain = rowsThatContain,
                                 blankBit = blankBit)
-
-    rows2b <- whichParentSetRows2(node            = node2,
-                                nonDescendants  = newNonDescendants2,
-                                needOneOf       = needOneOf2,
-                                numberOfNodes   = numberOfNodes,
-                                allRows         = allRows2,
-                                rowsThatContain = rowsThatContain2,
-                                blankBit = blankBit)
-
-    rows3b <- whichParentSetRows2(node            = node3,
-                                nonDescendants  = newNonDescendants3,
-                                needOneOf       = needOneOf3,
-                                numberOfNodes   = numberOfNodes,
-                                allRows         = allRows2,
-                                rowsThatContain = rowsThatContain2,
-                                blankBit = blankBit)
-
-    ok1 <- all.equal(as.numeric(as.which(rows1b)), sort(rows1), check.attr = F)
-    ok2 <- all.equal(as.numeric(as.which(rows2b)), sort(rows2), check.attr = F)
-    ok3 <- all.equal(as.numeric(as.which(rows3b)), sort(rows3), check.attr = F)
-    if (!isTRUE(ok1) || !isTRUE(ok2) || !isTRUE(ok3)){
-          browser()
-    }
 
     # list(rows1, rows2, rows3)
-    list(as.which.bit.fast(rows1b, bitLengths[[node1]]),
-         as.which.bit.fast(rows2b, bitLengths[[node2]]),
-         as.which.bit.fast(rows3b, bitLengths[[node3]]))
+    list(as.which.bit.fast(rows1, bitLengths[[node1]]),
+         as.which.bit.fast(rows2, bitLengths[[node2]]),
+         as.which.bit.fast(rows3, bitLengths[[node3]]))
   }
 
   getScoreFromRows <- function(rows){
@@ -1427,28 +1397,20 @@ BNGibbsSampler <- function(data,
     stop("Initial network has prior with 0 probability.")
   }
 
-  rowsThatContain2 <- getRowsThatContain2(numberOfNodes,
+  rowsThatContain <- getRowsThatContain(numberOfNodes,
                                           parentsTables,
                                           maxNumberParents)
 
-  rowsThatContain <- getRowsThatContain(numberOfNodes,
-                                        parentsTables,
-                                        maxNumberParents)
-
   blankBit <- sapply(nodesSeq, function(x){
-    bit(length(rowsThatContain2[[x]][[x]]))
+    bit(length(rowsThatContain[[x]][[x]]))
   })
 
   bitLengths <- sapply(nodesSeq, function(x){
-    length(rowsThatContain2[[x]][[x]])
-  })
-
-  allRows2 <- lapply(nodesSeq, function(node){
-    as.bit(seq_len(nrow(parentsTables[[node]])))
+    length(rowsThatContain[[x]][[x]])
   })
 
   allRows <- lapply(nodesSeq, function(node){
-    seq_len(nrow(parentsTables[[node]]))
+    as.bit(seq_len(nrow(parentsTables[[node]])))
   })
 
   # Set up internal counters and logs etc
@@ -1603,9 +1565,7 @@ BNGibbsSampler <- function(data,
                                       scoresParents   = scoresParents,
                                       parentsTables   = parentsTables,
                                       allRows         = allRows,
-                                      allRows2        = allRows2,
                                       rowsThatContain = rowsThatContain,
-                                      rowsThatContain2 = rowsThatContain2,
                                       logScoreFUN     = logScoreFUN,
                                       logScoreParameters = logScoreParameters,
                                       blankBit = blankBit,

@@ -4,7 +4,7 @@
 \usage{
   whichParentSetRows(node, nonDescendants,
     needOneOf = NULL, numberOfNodes, allRows,
-    rowsThatContain)
+    rowsThatContain, blankBit)
 }
 \arguments{
   \item{node}{The node. A numeric vector of length 1.}
