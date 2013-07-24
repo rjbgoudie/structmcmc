@@ -235,6 +235,39 @@ getRowsThatContain <- function(numberOfNodes,
   })
 }
 
+#' Create lookup table for parentsTable.
+#'
+#' Creates a list that allows quick lookup of a parentsTable. This is
+#' needed for \code{whichParentSetRows}.
+#'
+#' @param numberOfNodes The number of nodes. A numeric vector.
+#' @param parentsTables A list of tables of the form returned by
+#'   \code{enumerateParentsTable()}
+#' @param maxNumberParents The maximum indegree for each node. A numeric
+#'   vector of length 1.
+#' @return A list of length \code{numberOfNodes}. Each component of this
+#'   list is a list of length \code{numberOfNodes}, the i^{th} component of
+#'   which is a numeric vector containing the indicies of
+#'   \code{parentsTables[[node]]} that correspond to parent sets including
+#'   \code{i}.
+#' @export
+#' @seealso \code{\link{enumerateParentsTable}},
+#'   \code{\link{scoreParentsTable}}
+getRowsThatContain2 <- function(numberOfNodes,
+                                parentsTables,
+                                maxNumberParents){
+  nodesSeq <- seq_len(numberOfNodes)
+  lapply(nodesSeq, function(node){
+    lapply(nodesSeq, function(parent){
+      size <- nrow(parentsTables[[node]])
+      ind <- match(as.vector(parentsTables[[node]]), parent, 0, NULL)
+      tab <- matrix2(ind, nrow = size, ncol = maxNumberParents)
+      tab <- rowSums2(tab)
+      as.bit(tab)
+    })
+  })
+}
+
 #' Find relevants rows of a parentsTable.
 #'
 #' Finds the rows of a parentsTable that correspond to parent sets that
@@ -294,4 +327,145 @@ whichParentSetRows <- function(node,
     }
   }
   setdiff3(rowsNeeded, rowsNotAllowed)
+}
+
+#' Find relevants rows of a parentsTable.
+#'
+#' Finds the rows of a parentsTable that correspond to parent sets that
+#' could be added as parents of node \code{node}, given some set of
+#' nodes \code{nonDescendants} that can be added as parents without
+#' creating a cycle in the graph.
+#'
+#' Note that nodes that are banned do not need to be accounted
+#' for in the \code{nonDescendants} argument, since these should be
+#' accounted for when the parentsTable is created. Required nodes must be
+#' included in \code{nonDescendants}.
+#'
+#' @param node The node. A numeric vector of length 1.
+#' @param nonDescendants The nodes that can be added as descendants of
+#'   \code{node}. A numeric vector.
+#' @param needOneOf Nodes the MUST be included as parents of the node. This
+#'   is NOT the same as the required/banned list; this is to allow the
+#'   space to be partitioned.
+#' @param numberOfNodes The number of nodes in the network. A numeric vector
+#'   of length 1.
+#' @param allRows The vector 1:nrow(parentsTables). (Supplied as an
+#'   argument for possible speed gain)
+#' @param rowsThatContain A list of the form created by
+#'   \code{getRowsThatContain()}
+#' @return A numeric vector.
+#' @export
+#' @seealso \code{\link{enumerateParentsTable}},
+#'   \code{\link{scoreParentsTable}}
+whichParentSetRows2 <- function(node,
+                               nonDescendants,
+                               needOneOf = NULL,
+                               numberOfNodes,
+                               allRows,
+                               rowsThatContain,
+                               blankBit){
+  rowsNotAllowed <- getRowsNotNeeded(node = node,
+                                     nonDescendants = nonDescendants,
+                                     numberOfNodes = numberOfNodes,
+                                     rowsThatContain = rowsThatContain,
+                                     blankBit = blankBit)
+  rowsNeeded <- getRowsNeeded(node = node,
+                              needOneOf = needOneOf,
+                              allRows = allRows,
+                              rowsThatContain = rowsThatContain,
+                              blankBit = blankBit)
+
+  # setdiff4(rowsNeeded, rowsNotAllowed)
+  .Call("R_bit_setdiff",
+        rowsNeeded,
+        rowsNotAllowed,
+        blankBit[[node]],
+        PACKAGE = "structmcmc")
+}
+
+setdiff4 <- function(x, y){
+  if (length(y) == 0L){
+    x
+  } else {
+    !y & x
+  }
+}
+
+setdiff5 <- function(x, y, ret){
+  if (length(y) == 0L){
+    x
+  } else {
+
+  }
+}
+
+
+getRowsNotNeeded <- function(node,
+                             nonDescendants,
+                             numberOfNodes,
+                             rowsThatContain,
+                             blankBit){
+  nodesSeq <- seq_len(numberOfNodes)
+  nodesNotAllowed <- setdiff3(nodesSeq, c(nonDescendants, node))
+  if (length(nodesNotAllowed) > 0){
+    rowsNotAllowed <- rowsThatContain[[node]][nodesNotAllowed]
+    # Reduce("|", rowsNotAllowed)
+    .Call("R_bit_or_list",
+          rowsNotAllowed,
+          blankBit[[node]],
+          PACKAGE = "structmcmc")
+  } else {
+    rowsThatContain[[node]][[node]]
+  }
+}
+
+getRowsNeeded <- function(node, needOneOf, allRows, rowsThatContain, blankBit){
+  rowsNeeded <- allRows[[node]]
+  if (!is.null(needOneOf) && length(needOneOf) > 0){
+    if (is.list(needOneOf) && length(needOneOf) == 1){
+      needOneOf <- needOneOf[[1]]
+    }
+    if (is.list(needOneOf)){
+      rowsNeeded <- lapply(needOneOf, function(needed){
+        if (length(needed) > 0){
+          # rowsNeeded <- Reduce("|", rowsThatContain[[node]][needed])
+          .Call("R_bit_or_list",
+                        rowsThatContain[[node]][needed],
+                        blankBit[[node]],
+                        PACKAGE = "structmcmc")
+        } else {
+          rowsThatContain[[node]][[node]]
+        }
+      })
+      # rowsNeeded <- Reduce("&", rowsNeeded)
+      rowsNeeded <- .Call("R_bit_and_list",
+            rowsNeeded,
+            blankBit[[node]],
+            PACKAGE = "structmcmc")
+    } else {
+      if (length(needOneOf) > 0){
+        rowsNeeded <- rowsThatContain[[node]][needOneOf]
+        # rowsNeeded <- Reduce("|", rowsNeeded)
+        rowsNeeded <- .Call("R_bit_or_list",
+              rowsNeeded,
+              blankBit[[node]],
+              PACKAGE = "structmcmc")
+      } else {
+        rowsNeeded <- rowsThatContain[[node]][[node]]
+      }
+    }
+  }
+  rowsNeeded
+}
+
+as.which.bit.fast <- function(x, len){
+  s <- .Call("R_bit_sum", x, range = c(1L, len), PACKAGE = "bit")
+  n <- len
+  if (s == 0L) {
+    x <- integer()
+  } else if (s == n) {
+      as.integer(seq.int(from = 1L, to = len, by = 1))
+  } else {
+    .Call("R_bit_which", x, s, range = c(1L, len), negative = FALSE, PACKAGE = "bit")
+  }
 }

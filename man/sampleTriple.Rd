@@ -3,8 +3,9 @@
 \title{Sample the parents of a triple of nodes (Gibbs sampler).}
 \usage{
   sampleTriple(currentNetwork, numberOfNodes, nodesSeq,
-    scoresParents, parentsTables, allRows, rowsThatContain,
-    logScoreFUN, logScoreParameters)
+    scoresParents, parentsTables, allRows, allRows2,
+    rowsThatContain, rowsThatContain2, logScoreFUN,
+    logScoreParameters, blankBit, bitLengths)
 }
 \arguments{
   \item{currentNetwork}{A \code{currentNetwork} object}
