@@ -58,7 +58,7 @@ bayes <- function (x, ...) {
 bayes.bn <- function(x,
                   data,
                   nodes = seq_along(x),
-                  prior = "qi",
+                  prior = "bdeu",
                   ...){
   ml(x              = x,
      data           = data,

@@ -3,7 +3,7 @@
 \title{Compute the log marginal likelihood of the supplied Bayesian Network.}
 \usage{
   \method{logScoreMultDir}{bn} (x, data,
-    cache = new.env(hash = T), hyperparameters = "qi",
+    cache = new.env(hash = T), hyperparameters = "bdeu",
     checkInput = T, ...)
 }
 \arguments{
@@ -17,7 +17,7 @@
   cached local scores for this data.}
 
   \item{hyperparameters}{A character vector of length one.
-  Either "qi", "one", or "point9"}
+  Either "bdeu", "qi", "one", or "point9"}
 
   \item{checkInput}{A logical of length 1, specifying
   whether to check the inputs to the function.}

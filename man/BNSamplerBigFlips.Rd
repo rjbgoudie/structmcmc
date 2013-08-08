@@ -4,7 +4,7 @@
 \usage{
   BNSamplerBigFlips(data, initial, prior,
     return = "network", logScoreFUN = logScoreMultDirFUN(),
-    logScoreParameters = list(hyperparameters = "qi"),
+    logScoreParameters = list(hyperparameters = "bdeu"),
     verbose = F, keepTape = F)
 }
 \arguments{

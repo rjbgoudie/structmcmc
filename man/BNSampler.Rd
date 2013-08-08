@@ -4,7 +4,7 @@
 \usage{
   BNSampler(data, initial, prior, return = "network",
     logScoreFUN = logScoreMultDirFUN(),
-    logScoreParameters = list(hyperparameters = "qi"),
+    logScoreParameters = list(hyperparameters = "bdeu"),
     constraint = NULL, statistics = list(nEdges = nEdges),
     maxNumberParents = NULL, verbose = F, keepTape = F)
 }

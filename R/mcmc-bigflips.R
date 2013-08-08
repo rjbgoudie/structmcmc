@@ -49,7 +49,7 @@ BNSamplerBigFlips <- function(data,
                       prior,
                       return      = "network",
                       logScoreFUN = logScoreMultDirFUN(),
-                      logScoreParameters = list(hyperparameters = "qi"),
+                      logScoreParameters = list(hyperparameters = "bdeu"),
                       verbose     = F,
                       keepTape    = F){
   stopifnot(class(data)           ==   "data.frame",

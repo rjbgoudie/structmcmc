@@ -35,7 +35,7 @@ x2 <- factor(c(0, 1, 0, 1))
 dat <- data.frame(x1 = x1, x2 = x2)
 
 bnspace <- enumerateBNSpace(2)
-lsmd <- logScoreMultDir(bnspace, data = dat, hyperparameters = "qi")
+lsmd <- logScoreMultDir(bnspace, data = dat, hyperparameters = "bdeu")
 post <- bnpost(bnspace = bnspace, logScore = lsmd, data = dat)
 
 gp(post)

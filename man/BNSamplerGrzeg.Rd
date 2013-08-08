@@ -4,7 +4,7 @@
 \usage{
   BNSamplerGrzeg(data, initial, prior, return = "network",
     logScoreFUN = logScoreMultDirFUN(),
-    logScoreParameters = list(hyperparameters = "qi"),
+    logScoreParameters = list(hyperparameters = "bdeu"),
     constraint = NULL, modejumping = F, verbose = F,
     keepTape = F, grzeg = list(grzegMoveProbability = 0.5))
 }

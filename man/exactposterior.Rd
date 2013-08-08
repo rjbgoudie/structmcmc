@@ -5,7 +5,7 @@
   exactposterior(data,
     prior = priorUniform(empty(ncol(data), "bn")),
     logScoreFUN = logScoreMultDirFUN(),
-    logScoreParameters = list(hyperparameters = "qi"),
+    logScoreParameters = list(hyperparameters = "bdeu"),
     constraint = NULL, maxNumberParents = NULL,
     verbose = T)
 }

@@ -3,7 +3,7 @@
 \title{Multinomial-Dirichlet Log marginal likelihood.}
 \usage{
   \method{logScoreMultDir}{bn.list} (x, data,
-    hyperparameters = "qi", cache = new.env(hash = T),
+    hyperparameters = "bdeu", cache = new.env(hash = T),
     verbose = F, ...)
 }
 \arguments{
@@ -17,7 +17,7 @@
   cached local scores for this data.}
 
   \item{hyperparameters}{A character vector of length one.
-  Either "qi", "one", or "point9"}
+  Either "bdeu", "qi", "one", or "point9"}
 
   \item{verbose}{A logical of length 1. If true, a progress
   bar will be shown.}

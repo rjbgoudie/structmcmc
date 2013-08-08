@@ -40,7 +40,7 @@
 #' dat <- data.frame(x1 = x1, x2 = x2)
 #'
 #' bnspace <- enumerateBNSpace(2)
-#' lsmd <- logScoreMultDir(bnspace, data = dat, hyperparameters = "qi")
+#' lsmd <- logScoreMultDir(bnspace, data = dat, hyperparameters = "bdeu")
 #' post <- bnpost(bnspace = bnspace, logScore = lsmd, data = dat)
 #'
 #' gp(post)
@@ -76,7 +76,7 @@ bnpost <- function(bnspace, logScore, data, logScoreFUN = logScoreMultDir){
 #' dat <- data.frame(x1 = x1, x2 = x2)
 #'
 #' bnspace <- enumerateBNSpace(2)
-#' lsmd <- logScoreMultDir(bnspace, data = dat, hyperparameters = "qi")
+#' lsmd <- logScoreMultDir(bnspace, data = dat, hyperparameters = "bdeu")
 #' post <- bnpost(bnspace = bnspace, logScore = lsmd, data = dat)
 #'
 #' top(post)
@@ -118,7 +118,7 @@ top.bnpost <- function(x, head = 10, ...){
 #' dat <- data.frame(x1 = x1, x2 = x2)
 #'
 #' bnspace <- enumerateBNSpace(2)
-#' lsmd <- logScoreMultDir(bnspace, data = dat, hyperparameters = "qi")
+#' lsmd <- logScoreMultDir(bnspace, data = dat, hyperparameters = "bdeu")
 #' post <- bnpost(bnspace = bnspace, logScore = lsmd, data = dat)
 #'
 #' map(post)
@@ -143,7 +143,7 @@ map.bnpost <- function(x, ...){
 #' dat <- data.frame(x1 = x1, x2 = x2)
 #'
 #' bnspace <- enumerateBNSpace(2)
-#' lsmd <- logScoreMultDir(bnspace, data = dat, hyperparameters = "qi")
+#' lsmd <- logScoreMultDir(bnspace, data = dat, hyperparameters = "bdeu")
 #' post <- bnpost(bnspace = bnspace, logScore = lsmd, data = dat)
 #'
 #' gp(post)
@@ -183,7 +183,7 @@ gp.bnpost <- function(x, log = F, pretty = F, ...){
 #' dat <- data.frame(x1 = x1, x2 = x2)
 #'
 #' bnspace <- enumerateBNSpace(2)
-#' lsmd <- logScoreMultDir(bnspace, data = dat, hyperparameters = "qi")
+#' lsmd <- logScoreMultDir(bnspace, data = dat, hyperparameters = "bdeu")
 #' post <- bnpost(bnspace = bnspace, logScore = lsmd, data = dat)
 #'
 #' gp(post)
@@ -246,7 +246,7 @@ ep.bnpost <- function(x, ...){
 #' dat <- data.frame(x1 = x1, x2 = x2)
 #'
 #' bnspace <- enumerateBNSpace(2)
-#' lsmd <- logScoreMultDir(bnspace, data = dat, hyperparameters = "qi")
+#' lsmd <- logScoreMultDir(bnspace, data = dat, hyperparameters = "bdeu")
 #' post <- bnpost(bnspace = bnspace, logScore = lsmd, data = dat)
 #'
 #' entropy(post)
@@ -286,7 +286,7 @@ entropy.bnpost <- function(x, logNetworkPriors, ...){
 #' dat <- data.frame(x1 = x1, x2 = x2)
 #'
 #' bnspace <- enumerateBNSpace(2)
-#' lsmd <- logScoreMultDir(bnspace, data = dat, hyperparameters = "qi")
+#' lsmd <- logScoreMultDir(bnspace, data = dat, hyperparameters = "bdeu")
 #' post <- bnpost(bnspace = bnspace, logScore = lsmd, data = dat)
 #'
 #' tp(post)

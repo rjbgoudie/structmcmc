@@ -4,7 +4,7 @@
 \usage{
   BNSamplerPT(data, initial, prior, return = "network",
     logScoreFUN = logScoreMultDirFUN(),
-    logScoreParameters = list(hyperparameters = "qi"),
+    logScoreParameters = list(hyperparameters = "bdeu"),
     constraint = NULL, modejumping = F, verbose = F,
     keepTape = F, temp = 1,
     cache = new.env(hash = T, size = 10000L))

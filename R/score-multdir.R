@@ -32,7 +32,7 @@ is.valid.hyp <- function(x){
   tryCatch({
     all(class(x)  ==   "character",
         length(x) ==   1,
-        x         %in% c("qi", "one", "point9"))
+        x         %in% c("qi", "bdeu", "one", "point9"))
     },
     error = function(e) F)
 }
@@ -63,7 +63,7 @@ is.valid.hyp <- function(x){
 #'     \item{nl}{A numeric vector of length ncol(data), specifying the number
 #'               of levels that each random variable takes.}
 #'     \item{hyperparameters}{A character vector of length one.
-#'                            Either "qi", "one", or "point9"}
+#'                            Either "bdeu", "qi", "one", or "point9"}
 #'   }
 #' @param cache Optionally, provide an environment with cached local scores
 #'   for this data.
@@ -93,7 +93,7 @@ localLogScoreMultDir <- function(node,
               class(cache)                   ==   "environment")
   }
   if (is.null(logScoreParameters$hyperparameters)){
-    logScoreParameters$hyperparameters <- "qi"
+    logScoreParameters$hyperparameters <- "bdeu"
   }
   whichCols <- c(node, parents)
   id <- fastid(whichCols)
@@ -106,16 +106,19 @@ localLogScoreMultDir <- function(node,
     if (length(whichCols) > 1){
       N_prime <- switch(logScoreParameters$hyperparameters,
         qi = 1/prod(d[-1]),
+        bdeu = 1/prod(d),
         one = 1,
         point9 = 0.9,
-        1/prod(d[-1]) # default is qi
+        1/prod(d) # default is bdeu
       )
     }
     else {
       N_prime <- switch(logScoreParameters$hyperparameters,
           qi = 1,
+          bdeu = 1/d[1],
           one = 1,
-          point9 = 0.9
+          point9 = 0.9,
+          1
         )
     }
     N_prime_marginals <- d[1] * N_prime
@@ -179,7 +182,7 @@ logScoreMultDir <- function(x, ...){
 #'   each random variable.
 #' @param cache Optionally, provide an environment with cached local scores
 #'   for this data.
-#' @param hyperparameters A character vector of length one. Either "qi",
+#' @param hyperparameters A character vector of length one. Either "bdeu", "qi",
 #'   "one", or "point9"
 #' @param checkInput A logical of length 1, specifying whether to check the
 #'   inputs to the function.
@@ -200,7 +203,7 @@ logScoreMultDir <- function(x, ...){
 logScoreMultDir.bn <- function(x,
                                data,
                                cache           = new.env(hash = T),
-                               hyperparameters = "qi",
+                               hyperparameters = "bdeu",
                                checkInput      = T,
                                ...){
   if (isTRUE(checkInput)){
@@ -244,7 +247,7 @@ logScoreMultDir.bn <- function(x,
 #'     \item{nl}{A numeric vector of length ncol(data), specifying the number
 #'               of levels that each random variable takes.}
 #'     \item{hyperparameters}{A character vector of length one.
-#'                            Either "qi", "one", or "point9"}
+#'                            Either "bdeu", "qi", "one", or "point9"}
 #'   }
 #' @param cache Optionally, provide an environment with cached local scores
 #'   for this data.
@@ -298,8 +301,8 @@ logScoreMultDirOffline <- function(x,
 #'   each random variable.
 #' @param cache Optionally, provide an environment with cached local scores
 #'   for this data.
-#' @param hyperparameters  A character vector of length one. Either "qi",
-#'   "one", or "point9"
+#' @param hyperparameters  A character vector of length one. Either "bdeu",
+#'   "qi", "one", or "point9"
 #' @param verbose A logical of length 1. If true, a progress bar will
 #'   be shown.
 #' @param ... Further arguments (unused)
@@ -313,7 +316,7 @@ logScoreMultDirOffline <- function(x,
 #'   \code{\link{logScoreMultDirIncremental}}
 logScoreMultDir.bn.list <- function(x,
                                     data,
-                                    hyperparameters = "qi",
+                                    hyperparameters = "bdeu",
                                     cache           = new.env(hash = T),
                                     verbose = F,
                                     ...){
@@ -359,7 +362,7 @@ logScoreMultDir.bn.list <- function(x,
 #'     \item{nl}{A numeric vector of length ncol(data), specifying the number
 #'               of levels that each random variable takes.}
 #'     \item{hyperparameters}{A character vector of length one.
-#'                            Either "qi", "one", or "point9"}
+#'                            Either "bdeu", "qi", "one", or "point9"}
 #'   }
 #' @param checkInput A logical of length 1, specifying whether to check
 #'   the inputs to the function.
@@ -414,7 +417,7 @@ logScoreMultDirPrepare <- function(data, logScoreParameters, checkInput = T){
 #'     \item{nl}{A numeric vector of length ncol(data), specifying the number
 #'               of levels that each random variable takes.}
 #'     \item{hyperparameters}{A character vector of length one.
-#'                            Either "qi", "one", or "point9"}
+#'                            Either "bdeu", "qi", "one", or "point9"}
 #'   }
 #' @param cache Optionally, provide an environment with cached local scores
 #'   for this data.

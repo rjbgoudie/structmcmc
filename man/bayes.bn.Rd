@@ -3,7 +3,7 @@
 \title{Bayesian posterior parameter estimates.}
 \usage{
   \method{bayes}{bn} (x, data, nodes = seq_along(x),
-    prior = "qi", ...)
+    prior = "bdeu", ...)
 }
 \arguments{
   \item{x}{The Bayesian Network. An object of class 'bn'}

@@ -5,7 +5,7 @@
   posterior(data, method = "mc3",
     prior = priorUniform(initial),
     logScoreFUN = logScoreMultDirFUN(),
-    logScoreParameters = list(hyperparameters = "qi"),
+    logScoreParameters = list(hyperparameters = "bdeu"),
     constraint = NULL, maxNumberParents = NULL,
     nSamples = 50000, time = F, nBurnin = 10000,
     initial = empty(ncol(data), "bn"), verbose = T)

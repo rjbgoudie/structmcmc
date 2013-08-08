@@ -5,7 +5,7 @@
   BNGibbsSampler(data, initial = empty(ncol(data) - 1),
     prior = NULL, return = "network",
     logScoreFUN = logScoreMultDirFUN(),
-    logScoreParameters = list(hyperparameters = "qi"),
+    logScoreParameters = list(hyperparameters = "bdeu"),
     constraint = NULL, statistics = list(nEdges = nEdges),
     maxNumberParents = NULL, moveprobs = c(0, 0, 1, 0),
     verbose = F, keepTape = F, parentsTables = NULL,
