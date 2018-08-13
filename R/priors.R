@@ -79,7 +79,6 @@ priorGraph <- function(graph, lambda){
     function(x){
       difference <- setdiff(x, graph[[i]])
       difference <- length(difference)
-      browser()
       exp(- lambda * difference)
     }
   })
