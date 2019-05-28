@@ -58,8 +58,9 @@ rowSums2 <- function(x){
 #' @param y A vector, of the same mode as \code{x}.
 #' @return A vector of the same mode as the inputs.
 setdiff3 <- function(x, y){
-  x[.Call("fmatch", x, y, 0L, NULL, PACKAGE = "fastmatch") == 0L]
+  x[fastmatch::fmatch(x, y, 0L, NULL) == 0L]
 }
+
 
 #' Fast, dangerous set intersect.
 #'
@@ -72,8 +73,7 @@ setdiff3 <- function(x, y){
 #' @param y A vector, of the same mode as \code{x}.
 #' @return A vector of the same mode as the inputs.
 intersect2 <- function(x, y, nmax = NA){
-  .Internal(unique(x             = y[.Call("fmatch", x, y, 0L, NULL,
-                                     PACKAGE = "fastmatch")],
+  .Internal(unique(x             = y[fastmatch::fmatch(x, y, 0L, NULL)],
                    incomparables = F,
                    fromLast      = F,
                    nmax          = nmax))
