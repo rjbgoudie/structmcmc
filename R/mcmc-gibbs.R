@@ -1410,7 +1410,7 @@ BNGibbsSampler <- function(data,
   })
 
   allRows <- lapply(nodesSeq, function(node){
-    as.bit(seq_len(nrow(parentsTables[[node]])))
+    as.bit(rep(TRUE, nrow(parentsTables[[node]])))
   })
 
   # Set up internal counters and logs etc
