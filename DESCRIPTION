@@ -1,7 +1,9 @@
 Package: structmcmc
 Imports:
     parental,
-    lattice
+    lattice,
+    bit,
+    fastmatch
 Maintainer: R.J.B. Goudie <rjbgoudie@gmail.com>
 License: GPL-3
 Title: Structural inference for Bayesian Networks and
