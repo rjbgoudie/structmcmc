@@ -25,7 +25,8 @@ Suggests:
     testthat,
     deal,
     coda
-Remotes: rjbgoudie/parental
+Remotes: rjbgoudie/parental, bioc::release/gRbase, bioc::release/RBGL,
+    bioc::release/Rgraphviz
 Collate:
     'constraints.R'
     'cross-validation.R'
