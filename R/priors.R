@@ -122,7 +122,7 @@ priorUniform <- function(graph){
 #'
 #' @param x A numeric of length 1. The LOG output of a prior function.
 #' @return A logical of length 1, indicating the validity of x
-#' @S3method is.valid prior
+#' @export
 #' @method is.valid prior
 #' @export
 is.valid.prior <- function(x){

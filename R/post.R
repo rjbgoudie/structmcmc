@@ -442,7 +442,7 @@ bf <- function(bn1, bn2, data, ...){
 #'   if nbin > 1:
 #'     A list of class ep.list, containing matrices as described above for
 #'     each of the nbin bins into which the parental.list was split
-#' @S3method ep parental.list
+#' @export
 #' @method ep parental.list
 #' @seealso \code{\link{ep}}
 ep.parental.list <- function(x, nbin = 1, start = 1, end = length(x),
@@ -569,7 +569,7 @@ ep.parental.list <- function(x, nbin = 1, start = 1, end = length(x),
 #'   \code{\link{ep.parental.contingency}}
 #' @return A matrix of class 'ep' with entry (i,j) containing the probability
 #'   of an edge from node i --> j
-#' @S3method ep table
+#' @export
 #' @method ep table
 #' @seealso \code{\link{ep}}
 ep.table <- function(x, verbose = F, ...){
@@ -607,7 +607,7 @@ ep.table <- function(x, verbose = F, ...){
 #' @param ... Further arguments (unused)
 #' @return A matrix of class 'ep' with entry (i,j) containing the
 #'  probability of an edge from node \code{i} to \code{j}
-#' @S3method ep parental.contingency
+#' @export
 #' @method ep parental.contingency
 #' @seealso \code{\link{ep}}
 ep.parental.contingency <- function(x, FUN, verbose = F, ...){
@@ -694,7 +694,7 @@ ep.parental.contingency <- function(x, FUN, verbose = F, ...){
 #'
 #' @return A plot of the top graph, with their marginal likelihoods (without
 #'   priors)
-#' @S3method plot bnpostmcmc
+#' @export
 #' @method plot bnpostmcmc
 #' @seealso \code{\link{levelplot.bnpostmcmc}},
 #'   \code{\link{bnpostmcmc}}, \code{\link{bnpost}}
@@ -717,7 +717,7 @@ plot.bnpostmcmc <- plot.bnpost <- function(x, top = NULL, ...){
 #' @param data ...
 #' @param ... further arguments
 #'
-#' @S3method bf bnpostmcmc
+#' @export
 #' @method bf bnpostmcmc
 #' @seealso \code{\link{bf}}
 bf.bnpostmcmc <- bf.bnpost <- function(bn1, bn2, data, ...){
@@ -731,7 +731,7 @@ bf.bnpostmcmc <- bf.bnpost <- function(bn1, bn2, data, ...){
 #'
 #' @param x ...
 #'
-#' @S3method levelplot bnpostmcmc
+#' @export
 #' @method levelplot bnpostmcmc
 #' @seealso \code{\link{plot.bnpostmcmc}}
 levelplot.bnpostmcmc <- levelplot.bnpost <- function(x){
@@ -766,7 +766,7 @@ prepareLevelPlot <- function(ep){
 #' Plot a \code{\link[lattice]{levelplot}} displaying the edge probabilities.
 #'
 #' @param ep An object of class \code{ep}. A matrix of edge probabilities.
-#' @S3method levelplot ep
+#' @export
 #' @method levelplot ep
 #' @seealso \code{\link{levelplot.ep.list}}, \code{\link{dotplot.ep}}
 #' @examples
@@ -802,7 +802,7 @@ levelplot.ep <- function(ep){
 #'
 #' @param eplist An \code{ep.list} object. A list of edge probability
 #'   matrices
-#' @S3method levelplot ep.list
+#' @export
 #' @method levelplot ep.list
 #' @examples
 #' x1 <- factor(c(1, 1, 0, 1))
@@ -863,7 +863,7 @@ shrinkep <- function(ep){
 #' @param ep ...
 #' @param head ...
 #' @param ... Further arguments passed to method
-#' @S3method dotplot ep
+#' @export
 #' @method dotplot ep
 #' @seealso \code{\link{levelplot.ep}}, \code{\link{dotplot.ep.list}}
 #' @examples
@@ -942,7 +942,7 @@ ep.list <- function(...){
 #' @param subsetBy ...
 #' @param head ...
 #' @param ... Further arguments passed to method
-#' @S3method dotplot ep.list
+#' @export
 #' @method dotplot ep.list
 #' @seealso \code{\link{dotplot.ep}}
 #' @examples
@@ -1044,7 +1044,7 @@ prepareGPPlot <- function(gplist){
 #' @param gp ...
 #' @param head ...
 #' @param ... Further arguments passed to method
-#' @S3method dotplot gp
+#' @export
 #' @method dotplot gp
 #' @seealso \code{\link{xyplot.gp}}
 #' @examples
@@ -1090,7 +1090,7 @@ dotplot.gp <- function(gp, head = 30, ...){
 #' @param gp ...
 #' @param head ...
 #' @param ... Further arguments passed to method
-#' @S3method xyplot gp
+#' @export
 #' @method xyplot gp
 #' @seealso \code{\link{dotplot.gp}}
 #' @examples
@@ -1166,7 +1166,7 @@ gp.list <- function(...){
 #' @param subsetBy ...
 #' @param head ...
 #' @param ... Further arguments passed to method
-#' @S3method dotplot gp.list
+#' @export
 #' @method dotplot gp.list
 #' @seealso \code{\link{xyplot.gp.list}}, \code{\link{dotplot.gp}}
 #' @examples
@@ -1223,7 +1223,7 @@ dotplot.gp.list <- function(gplist, subsetBy = "Exact", head = 30, ...){
 #' @param scales ...
 #' @param highlight ...
 #' @param ... Further arguments passed to method
-#' @S3method xyplot gp.list
+#' @export
 #' @method xyplot gp.list
 #' @seealso \code{\link{dotplot.gp.list}}, \code{\link{xyplot.gp}}
 #' @examples
@@ -1305,7 +1305,7 @@ xyplot.gp.list <- function(gplist, head = 30,
 #'
 #' @param object ...
 #' @param ... Further arguments passed to method
-#' @S3method summary gp
+#' @export
 #' @method summary gp
 #' @seealso \code{\link{gp}}
 #' @examples
@@ -1439,7 +1439,7 @@ as.roc <- function(x, ...){
 #' @return A 1-row data frame, with columns \code{estimate}, \code{tp}, and
 #'   \code{fp}. The first contains the supplied label; the latter two
 #'   contain the number of true and false positives respectively
-#' @S3method as.roc parental
+#' @export
 #' @method as.roc parental
 as.roc.parental <- function(x, true, label, ...){
   tp <- pintersect(x, true, count = T)
@@ -1472,7 +1472,7 @@ as.roc.parental <- function(x, true, label, ...){
 #' @return A data frame, with columns \code{estimate}, \code{tp}, and
 #'   \code{fp}. The first contains the supplied label; the latter two
 #'   contain the number of true and false positives respectively
-#' @S3method as.roc parental.list
+#' @export
 #' @method as.roc parental.list
 as.roc.parental.list <- function(x, true, labels, verbose, ...){
   xSeq <- seq_along(x)
@@ -1500,7 +1500,7 @@ as.roc.parental.list <- function(x, true, labels, verbose, ...){
 #'   \code{fp}. The first contains the supplied label; the latter two
 #'   contain the number of true and false positives respectively. Rows
 #'   correspond to the supplied thresholds.
-#' @S3method as.roc ep
+#' @export
 #' @method as.roc ep
 as.roc.ep <- function(x, true, thresholds, label, verbose, ...){
   rocdata <- data.frame(estimate = c(), tp = c(), fp = c())
@@ -1532,7 +1532,7 @@ as.roc.ep <- function(x, true, thresholds, label, verbose, ...){
 #'   contain the number of true and false positives respectively. Rows
 #'   correspond to the supplied thresholds, for each element of the supplied
 #'   \code{ep.list}.
-#' @S3method as.roc ep.list
+#' @export
 #' @method as.roc ep.list
 as.roc.ep.list <- function(x, true, thresholds, labels, verbose, ...){
   xSeq <- seq_along(x)
@@ -1734,7 +1734,7 @@ auroc <- function(x, ...){
 #' @param ... Further arguments (unused)
 #' @seealso \code{\link{auroc}}, \code{\link{auroc.ep.list}}
 #' @return The area under the ROC curve.
-#' @S3method auroc ep
+#' @export
 #' @method auroc ep
 auroc.ep <- function(x, true, thresholds, label, verbose, ...){
   rocdata <- data.frame(estimate = c(), tp = c(), fp = c())
@@ -1765,7 +1765,7 @@ auroc.ep <- function(x, true, thresholds, label, verbose, ...){
 #' @seealso For individual edge probability matrices see
 #'   \code{\link{auroc.ep}}.
 #' @return A vector of areas under ROC.
-#' @S3method auroc ep.list
+#' @export
 #' @method auroc ep.list
 auroc.ep.list <- function(x, true, thresholds, labels, verbose, ...){
   xSeq <- seq_along(x)
@@ -1876,7 +1876,7 @@ cumtvd <- function(exactgp, bnpostmcmclist, start = 1, end,
 #' method description
 #'
 #' @param cumtvd ...
-#' @S3method xyplot cumtvd
+#' @export
 #' @method xyplot cumtvd
 #' @seealso \code{\link{cumtvd}}
 #' @examples
@@ -1942,7 +1942,7 @@ cumtvd.list <- function(...){
 #' method description
 #'
 #' @param cumtvdlist ...
-#' @S3method xyplot cumtvd.list
+#' @export
 #' @method xyplot cumtvd.list
 #' @seealso \code{\link{xyplot.cumtvd.list}}
 xyplot.cumtvd.list <- function(cumtvdlist){

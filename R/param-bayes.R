@@ -43,7 +43,7 @@ bayes <- function (x, ...) {
 #' @param prior Only \code{"qi"} is implemented at the moment
 #' @param ... Further arguments, passed to \code{\link{ml}}
 #' @return As \code{\link{ml}}
-#' @S3method bayes bn
+#' @export
 #' @method bayes bn
 #' @examples
 #' d <- data.frame(

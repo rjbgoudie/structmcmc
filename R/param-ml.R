@@ -54,7 +54,7 @@ ml <- function (x, ...) {
 #'   in the Bayesian Network \code{x}. Each of these components is a
 #'   numeric vector of probabilities that sum to 1, labelled with the
 #'   levels of the relevant node.
-#' @S3method ml bn
+#' @export
 #' @method ml bn
 #' @seealso \code{\link{ml}}
 ml.bn <- function(x,

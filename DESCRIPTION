@@ -6,7 +6,7 @@ Imports:
     fastmatch
 Maintainer: R.J.B. Goudie <rjbgoudie@gmail.com>
 License: GPL-3
-Title: Structural inference for Bayesian Networks and
+Title: Structural Inference for Bayesian Networks and
     Variable Selection.
 Type: Package
 Author: R.J.B. Goudie <rjbgoudie@gmail.com>
@@ -25,6 +25,7 @@ Suggests:
     testthat,
     deal,
     coda
+Remotes: rjbgoudie/parental, bioc::release/RBGL, bioc::release/Rgraphviz
 Collate:
     'constraints.R'
     'cross-validation.R'
@@ -54,3 +55,4 @@ Collate:
     'structmcmc.R'
     'utils.R'
     'utils.rjbg.R'
+RoxygenNote: 7.1.0

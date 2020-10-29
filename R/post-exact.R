@@ -67,7 +67,7 @@ bnpost <- function(bnspace, logScore, data, logScoreFUN = logScoreMultDir){
 #' @param x ...
 #' @param head ...
 #' @param ... Further arguments (unused)
-#' @S3method top bnpost
+#' @export
 #' @method top bnpost
 #' @seealso \code{\link{top}}, \code{\link{map.bnpost}}
 #' @examples
@@ -109,7 +109,7 @@ top.bnpost <- function(x, head = 10, ...){
 #'
 #' @param x ...
 #' @param ... Further arguments (unused)
-#' @S3method map bnpost
+#' @export
 #' @method map bnpost
 #' @seealso \code{\link{map}}, \code{\link{top.bnpost}}
 #' @examples
@@ -134,7 +134,7 @@ map.bnpost <- function(x, ...){
 #' @param log ...
 #' @param pretty ...
 #' @param ... Further arguments (unused)
-#' @S3method gp bnpost
+#' @export
 #' @method gp bnpost
 #' @seealso \code{\link{gp}}, \code{\link{ep.bnpost}}
 #' @examples
@@ -174,7 +174,7 @@ gp.bnpost <- function(x, log = F, pretty = F, ...){
 #'
 #' @param x ...
 #' @param ... Further arguments (unused)
-#' @S3method ep bnpost
+#' @export
 #' @method ep bnpost
 #' @seealso \code{\link{ep}}, \code{\link{gp.bnpost}}
 #' @examples
@@ -237,7 +237,7 @@ ep.bnpost <- function(x, ...){
 #' @param x ...
 #' @param logNetworkPriors ...
 #' @param ... Further arguments (unused)
-#' @S3method entropy bnpost
+#' @export
 #' @method entropy bnpost
 #' @seealso \code{\link{entropy}}
 #' @examples
@@ -277,7 +277,7 @@ entropy.bnpost <- function(x, logNetworkPriors, ...){
 #' @param verbose ...
 #' @param ... Further arguments (unused)
 #' @return A matrix of transition probabilities.
-#' @S3method tp bnpost
+#' @export
 #' @method tp bnpost
 #' @seealso \code{\link{tp}}
 #' @examples
@@ -367,7 +367,7 @@ eht <- function(x, ...){
 #' @param ... Further arguments (unused)
 #'
 #' @return A vector of the expected hitting times.
-#' @S3method eht bnpost
+#' @export
 #' @method eht bnpost
 #' @seealso \code{\link{eht}}, \code{\link{tp}}, \code{\link{hp}}
 eht.bnpost <- function(x, head = 5, tp = NULL, ...){

@@ -96,8 +96,7 @@ nunique <- function(x){
 #'   Geiger, D., & Heckerman, D. (1994). \emph{Learning Gaussian Networks}.
 #'   Proceedings of the 10th Conference Annual Conference on Uncertainty in
 #'   Artificial Intelligence (UAI-94), 235-240.
-#'   \url{http://uai.sis.pitt.edu/displayArticleDetails.jsp?mmnu=1&smnu=2&
-#'   article_id=509&proceeding_id=10}
+#'   \url{http://uai.sis.pitt.edu/displayArticleDetails.jsp?mmnu=1&smnu=2&article_id=509&proceeding_id=10}
 #' @export
 #' @seealso \code{\link{logScoreNormal}},
 #'   \code{\link{logScoreNormalOffline}},
@@ -172,7 +171,7 @@ logScoreNormal <- function(x, ...){
 #' @return A numeric vector of length 1, giving the log marginal likelihood.
 #'   The environment 'cache' will also be updated because its scope is
 #'   global.
-#' @S3method logScoreNormal bn
+#' @export
 #' @method logScoreNormal bn
 #' @seealso \code{\link{logScoreNormal}},
 #'   \code{\link{logScoreNormal.bn.list}}
@@ -270,7 +269,7 @@ logScoreNormalOffline <- function(x,
 #' @return A numeric vector of length 1, giving the log marginal likelihood.
 #'   The environment 'cache' will also be updated because its scope is
 #'   global.
-#' @S3method logScoreNormal bn.list
+#' @export
 #' @method logScoreNormal bn.list
 #' @seealso \code{\link{logScoreNormal.bn}}, \code{\link{logScoreNormal}}
 logScoreNormal.bn.list <- function(x,
