@@ -23,7 +23,7 @@ setupConstraint <- function(constraint, initial){
     matrix(0, numberOfNodes, numberOfNodes)
   }
   else {
-    stopifnot(class(constraint)    ==   "matrix",
+    stopifnot(inherits(constraint, "matrix"),
               all(constraint       %in% c(-1, 0, 1)),
               all(diag(constraint) ==   0))
 
@@ -46,7 +46,7 @@ setupConstraint <- function(constraint, initial){
 #'   \code{\link{enforceForbiddenConstraint}}
 satisfiesConstraint <- function(x, constraint){
   stopifnot("parental" %in% class(x),
-            class(constraint) == "matrix",
+            inherits(constraint, "matrix"),
             all(constraint %in% c(-1, 0, 1)),
             all(diag(constraint) == 0))
 
@@ -85,7 +85,7 @@ satisfiesConstraint <- function(x, constraint){
 #' @seealso \code{\link{satisfiesConstraint}}, \code{\link{setupConstraint}}
 enforceForbiddenConstraint <- function(x, constraint){
   stopifnot("parental" %in% class(x),
-            class(constraint) == "matrix",
+            inherits(constraint, "matrix"),
             all(constraint %in% c(-1, 0, 1)),
             all(diag(constraint) == 0))
 

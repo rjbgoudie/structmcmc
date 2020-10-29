@@ -178,7 +178,7 @@ BNSamplerPT <- function(data,
     if (is.list(modejumping)){
       warning("Mode jumping may not work with constraints at the moment.")
     }
-    stopifnot(class(constraint)    ==   "matrix",
+    stopifnot(inherits(constraint, "matrix"),
               all(constraint       %in% c(-1, 0, 1)),
               all(diag(constraint) ==   0))
     usingConstraint <- T

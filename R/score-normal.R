@@ -112,7 +112,7 @@ localLogScoreNormal <- function(node,
               length(node)                   ==   1,
               class(parents)                 %in% c("numeric", "integer"),
               is.list(logScoreParameters),
-              class(logScoreParameters$data) ==   "matrix",
+              inherits(logScoreParameters$data, "matrix"),
               class(logScoreParameters$nl)   %in% c("numeric", "integer"),
               class(cache)                   ==   "environment")
   }
@@ -188,7 +188,7 @@ logScoreNormal.bn <- function(x,
   if (isTRUE(checkInput)){
     stopifnot("bn"                            %in% class(x),
               is.valid(x),
-              class(data)                     ==   "matrix",
+              inherits(data, "matrix"),
               all(unlist(lapply(data, class)) %in% c("numeric", "integer")),
               class(cache)                    ==   "environment")
   }
@@ -239,7 +239,7 @@ logScoreNormalOffline <- function(x,
     stopifnot("bn"                           %in% class(x),
               is.valid(x),
               is.list(logScoreParameters),
-              class(logScoreParameters$data) ==   "matrix",
+              inherits(logScoreParameters$data, "matrix"),
               class(logScoreParameters$nl)   %in% c("numeric", "integer"),
               length(logScoreParameters$nl)  ==   nNodes(x),
               class(cache)                   ==   "environment")
@@ -277,7 +277,7 @@ logScoreNormal.bn.list <- function(x,
                                    data,
                                    cache = new.env(hash = TRUE),
                                    ...){
-  stopifnot(class(data)                     ==   "matrix",
+  stopifnot(inherits(data, "matrix"),
             all(unlist(lapply(data, class)) %in% c("numeric", "integer")),
             "bn.list"                       %in% class(x))
   unlist(lapply(x, function(bn){
@@ -368,7 +368,7 @@ logScoreNormalIncremental <- function(currentBN,
               nNodes(currentBN)              ==   nNodes(proposalBN),
               class(heads)                   %in% c("numeric", "integer"),
               is.list(logScoreParameters),
-              class(logScoreParameters$data) ==   "matrix",
+              inherits(logScoreParameters$data, "matrix"),
               class(logScoreParameters$nl)   %in% c("numeric", "integer"),
               length(logScoreParameters$nl)  ==   nNodes(currentBN),
               class(cache)                   ==   "environment")
