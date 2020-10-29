@@ -25,6 +25,7 @@ Suggests:
     testthat,
     deal,
     coda
+Remotes: rjbgoudie/parental
 Collate:
     'constraints.R'
     'cross-validation.R'
