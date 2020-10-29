@@ -285,7 +285,7 @@ statistics.sampler <- function(x, names, ...){
 #' @param x A sampler
 #' @param ... Further arguments, currently unused
 #' @return The number of samples (steps) that have been drawn.
-#' @S3method length sampler
+#' @export
 #' @method length sampler
 length.sampler <- function(x, ...){
   stopifnot(inherits(x, "sampler"))
@@ -312,7 +312,7 @@ burnin <- function(x, ...){
 #' @param x A sampler
 #' @param ... Further arguments, currently unused
 #' @return An integer amount of burnin
-#' @S3method burnin sampler
+#' @export
 #' @method burnin sampler
 burnin.sampler <- function(x, ...){
   stopifnot(inherits(x, "sampler"))
@@ -352,7 +352,7 @@ steps <- function(x, ...){
 #' @param x A sampler
 #' @param ... Further arguments, currently unused
 #' @return The number of samples (steps) that have been drawn.
-#' @S3method length sampler
+#' @export
 #' @method length sampler
 steps.sampler <- function(x, ...){
   stopifnot(inherits(x, "sampler"))
@@ -365,7 +365,7 @@ steps.sampler <- function(x, ...){
 #'
 #' @param x A sampler
 #' @param ... Further arguments, currently unused
-#' @S3method print sampler
+#' @export
 #' @method print sampler
 print.sampler <- function(x, ...){
   cat("Number of steps: ", length(x))
@@ -378,7 +378,7 @@ print.sampler <- function(x, ...){
 #'
 #' @param x A sampler
 #' @param ... Further arguments, currently unused
-#' @S3method summary sampler
+#' @export
 #' @method summary sampler
 summary.sampler <- function(x, ...){
   cat("Number of steps: ", length(x))
@@ -391,7 +391,7 @@ summary.sampler <- function(x, ...){
 #'
 #' @param x A sampler
 #' @param ... Further arguments, currently unused
-#' @S3method map sampler
+#' @export
 #' @method map sampler
 map.sampler <- function(x, ...){
   count <- get("count", envir = environment(x))
@@ -407,7 +407,7 @@ map.sampler <- function(x, ...){
 #' @param x A sampler
 #' @param head The number of graphs to consider
 #' @param ... Further arguments, currently unused
-#' @S3method top sampler
+#' @export
 #' @method top sampler
 top.sampler <- function(x, head = 10, ...){
   count <- get("count", envir = environment(x))
@@ -425,7 +425,7 @@ top.sampler <- function(x, head = 10, ...){
 #' @param x A sampler
 #' @param head The number of graphs to consider
 #' @param ... Further arguments, currently unused
-#' @S3method gp sampler
+#' @export
 #' @method gp sampler
 gp.sampler <- function(x, head = 10000, ...){
   count <- get("count", envir = environment(x))

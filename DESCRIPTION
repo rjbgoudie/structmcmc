@@ -55,3 +55,4 @@ Collate:
     'structmcmc.R'
     'utils.R'
     'utils.rjbg.R'
+RoxygenNote: 7.1.0

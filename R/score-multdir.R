@@ -25,7 +25,7 @@ fastid <- function(id){
 #' @param x The hyperparameters to test.
 #'
 #' @return A logical of length 1.
-#' @S3method is.valid hyp
+#' @export
 #' @method is.valid hyp
 #' @seealso \code{\link{logScoreMultDir}}
 is.valid.hyp <- function(x){
@@ -190,7 +190,7 @@ logScoreMultDir <- function(x, ...){
 #' @return A numeric vector of length 1, giving the log marginal likelihood.
 #'   The environment 'cache' will also be updated because its scope is
 #'   global.
-#' @S3method logScoreMultDir bn
+#' @export
 #' @method logScoreMultDir bn
 #' @seealso \code{\link{logScoreMultDir}},
 #'   \code{\link{logScoreMultDir.bn.list}}
@@ -309,7 +309,7 @@ logScoreMultDirOffline <- function(x,
 #' @return A numeric vector of length 1, giving the log marginal likelihood.
 #'   The environment 'cache' will also be updated because its scope is
 #'   global.
-#' @S3method logScoreMultDir bn.list
+#' @export
 #' @method logScoreMultDir bn.list
 #' @seealso \code{\link{logScoreMultDir}}, \code{\link{logScoreMultDir.bn}},
 #'   \code{\link{logScoreMultDirOffline}},

@@ -43,7 +43,7 @@ epmx <- function(x, ...){
 #' @param ... Further arguments (unused)
 #'
 #' @return An object of class "epmx", a matrix of the form described above.
-#' @S3method epmx bnpostmcmc.list
+#' @export
 #' @method epmx bnpostmcmc.list
 #' @seealso \code{\link{epmx}}, \code{\link{splom.epmx}},
 #'   \code{\link{splom.bnpostmcmc.list}}
@@ -105,7 +105,7 @@ epmx.bnpostmcmc.list <- epmx.list <- function(x,
 #' @param ... Further arguments (unused)
 #'
 #' @return An object of class "epmx", a matrix of the form described above.
-#' @S3method epmx samplers
+#' @export
 #' @method epmx samplers
 #' @seealso \code{\link{epmx}}, \code{\link{splom.epmx}},
 #'   \code{\link{splom.bnpostmcmc.list}}
@@ -148,7 +148,7 @@ epmx.samplers <- function(x,
 #' @param ... Further arguments (unused)
 #'
 #' @return An object of class "epmx", a matrix of the form described above.
-#' @S3method epmx sampler
+#' @export
 #' @method epmx sampler
 #' @seealso \code{\link{bnpostmcmc.list}}, \code{\link{epmx}},
 #'   \code{\link{splom.epmx}}, \code{\link{splom.bnpostmcmc.list}}
@@ -219,7 +219,7 @@ convertEPMatrixToColumns <- function(epl, numberOfNodes, verbose){
 #' @param ... Further arguments (unused)
 #'
 #' @return An object of class "epmx", a matrix of the form described above.
-#' @S3method epmx bnpostmcmc
+#' @export
 #' @method epmx bnpostmcmc
 #' @seealso \code{\link{bnpostmcmc.list}}, \code{\link{epmx}},
 #'   \code{\link{splom.epmx}}, \code{\link{splom.bnpostmcmc.list}}
@@ -259,7 +259,7 @@ cummean <- function(x, ...){
 #' @param ... Further arguments (unused)
 #'
 #' @return A matrix of the same dimension as x, with the cumulative values.
-#' @S3method cummean matrix
+#' @export
 #' @method cummean matrix
 #' @seealso \code{\link{cummean}}
 cummean.matrix <- function(x, ...){
@@ -286,12 +286,10 @@ cumep <- function(x, ...){
 #'
 #' @param x ...
 #' @param ... Further arguments passed to method
-#' @S3method cumep bnpostmcmc.list
-#' @S3method cumep list
-#' @method cumep bnpostmcmc.list
+#' @export
 #' @method cumep list
 #' @seealso \code{\link{cumep}}
-cumep.bnpostmcmc.list <- cumep.list <- function(x, ...){
+cumep.list <- function(x, ...){
 
   res <- epmx(x, ...)
   at <- attributes(res)
@@ -301,13 +299,16 @@ cumep.bnpostmcmc.list <- cumep.list <- function(x, ...){
   res
 }
 
+#' @method cumep bnpostmcmc.list
+cumep.bnpostmcmc.list <- cumep.list
+
 #' Cumulative edge probabilities.
 #'
 #' method description
 #'
 #' @param x ...
 #' @param ... Further arguments passed to method
-#' @S3method cumep samplers
+#' @export
 #' @method cumep samplers
 #' @seealso \code{\link{cumep}}
 cumep.samplers <- function(x, ...){
@@ -341,7 +342,7 @@ mwmean <- function(x, ...){
 #' @param ... Further arguments (unused)
 #'
 #' @return A matrix of the same dimension as x, with the moving window values.
-#' @S3method mwmean matrix
+#' @export
 #' @method mwmean matrix
 #' @seealso \code{\link{mwmean}}
 mwmean.matrix <- function(x, window, ...){
@@ -369,12 +370,10 @@ mwep <- function(x, ...){
 #' @param x ...
 #' @param window ...
 #' @param ... Further arguments passed to method
-#' @S3method mwep bnpostmcmc.list
-#' @S3method mwep list
-#' @method mwep bnpostmcmc.list
+#' @export
 #' @method mwep list
 #' @seealso \code{\link{mwep}}
-mwep.bnpostmcmc.list <- mwep.list <- function(x, window = 10, ...){
+mwep.list <- function(x, window = 10, ...){
   res <- epmx(x, ...)
   at <- attributes(res)
   res <- lapply(res, mwmean, window)
@@ -383,6 +382,9 @@ mwep.bnpostmcmc.list <- mwep.list <- function(x, window = 10, ...){
   res
 }
 
+#' @method mwep bnpostmcmc.list
+mwep.bnpostmcmc.list <- mwep.list
+
 #' Moving window edge probabilities.
 #'
 #' method description
@@ -390,7 +392,7 @@ mwep.bnpostmcmc.list <- mwep.list <- function(x, window = 10, ...){
 #' @param x ...
 #' @param window ...
 #' @param ... Further arguments passed to method
-#' @S3method mwep samplers
+#' @export
 #' @method mwep samplers
 #' @seealso \code{\link{mwep}}
 mwep.samplers <- function(x, window = 10, ...){
@@ -413,7 +415,7 @@ mwep.samplers <- function(x, window = 10, ...){
 #'   all pairs.
 #'
 #' @return A scatter plot matrix.
-#' @S3method splom epmx
+#' @export
 #' @method splom epmx
 #' @seealso \code{\link{epmx}}
 splom.epmx <- function(x, subset = NULL){
@@ -436,7 +438,7 @@ splom.epmx <- function(x, subset = NULL){
 #'   value \code{NULL} displays all pairs.
 #'
 #' @return An \code{xyplot}.
-#' @S3method xyplot epmx
+#' @export
 #' @method xyplot epmx
 #' @seealso \code{\link{epmx}}
 xyplot.epmx <- function(x, subset = NULL){
@@ -457,7 +459,7 @@ xyplot.epmx <- function(x, subset = NULL){
 #'
 #' @return A \code{data.frame}, with a column \code{which} that denotes
 #'   the sampler, a \code{.index} column indicating the original row.
-#' @S3method as.data.frame epmx
+#' @export
 #' @method as.data.frame epmx
 #' @seealso \code{\link{epmx}}
 as.data.frame.epmx <- function(x, subset, plottype = "xyplot"){
@@ -662,9 +664,7 @@ epmxPlotInternal <- function(x, subset, plottype = "xyplot"){
 #' @param start ...
 #' @param end ...
 #' @param plot ...
-#' @S3method splom bnpostmcmc.list
-#' @S3method splom list
-#' @method splom bnpostmcmc.list
+#' @export
 #' @method splom list
 #' @seealso \code{\link{epmx}}, \code{\link{splom.epmx}}, \code{\link{splom}}
 splom.bnpostmcmc.list <- splom.list <- function(x, start = 1, end, plot = F){
@@ -734,7 +734,10 @@ splom.bnpostmcmc.list <- splom.list <- function(x, start = 1, end, plot = F){
   )
 }
 
-# # @S3method dotplot gp
+#' @method splom bnpostmcmc.list
+splom.bnpostmcmc.list <- splom.list
+
+# # @export
 # xyplot.gp <- function(samples, tabulated = NULL, rank = NULL, ...){
 #   if (is.null(tabulated)){
 #     tabulated <- tabulate.samples(samples, prettyPrint = T)
@@ -832,7 +835,7 @@ gelman <- function(x, ...){
 #' @param ... Further arguments, currently unused
 #'
 #' @return An object of class \code{gelman.diag}
-#' @S3method gelman samplers
+#' @export
 #' @method gelman samplers
 #' @seealso Computation performed using \code{\link[coda]{gelman.diag}}.
 gelman.samplers <- function(x, names = "nEdges", transform = NULL, ...){

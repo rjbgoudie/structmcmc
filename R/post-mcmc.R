@@ -83,7 +83,7 @@ bnpostmcmc.list <- function(...){
 #' @param x An object of class 'bnpostmcmc'
 #' @param ... Further arguments passed to method
 #' @return The number of samples in x
-#' @S3method length bnpostmcmc
+#' @export
 #' @method length bnpostmcmc
 #' @seealso \code{\link{bnpostmcmc}}.
 length.bnpostmcmc <- function(x, ...){
@@ -112,7 +112,7 @@ length.bnpostmcmc <- function(x, ...){
 #'   if head > 1:
 #'     an object of class 'bn.list' containing a list of the equally most-
 #'     commonly encountered graphs
-#' @S3method top bnpostmcmc
+#' @export
 #' @method top bnpostmcmc
 #' @seealso \code{\link{top}}
 top.bnpostmcmc <- function(x, head = 10, ...){
@@ -151,7 +151,7 @@ top.bnpostmcmc <- function(x, head = 10, ...){
 #'   OR an object of class 'bn.list' containing a list of the equally most-
 #'   commonly encountered graphs (if two or more were equally most-
 #'   commonly) encountered
-#' @S3method map bnpostmcmc
+#' @export
 #' @method map bnpostmcmc
 #' @seealso \code{\link{map}}
 map.bnpostmcmc <- function(x, ...){
@@ -197,7 +197,7 @@ map.bnpostmcmc <- function(x, ...){
 #' @return A vector of length at least head (if head is finite), giving the
 #'   logScoreMultDir() of the graphs, or all the graphs encountered during
 #'   MCMC if head == Inf.
-#' @S3method logScoreMultDir bnpostmcmc
+#' @export
 #' @method logScoreMultDir bnpostmcmc
 #' @seealso \code{\link{logScoreMultDir}}
 logScoreMultDir.bnpostmcmc <- function(x, sampler, data,
@@ -248,7 +248,7 @@ logScoreMultDir.bnpostmcmc <- function(x, sampler, data,
 #' @param pretty ...
 #' @param levels ...
 #' @param ... Further arguments (unused)
-#' @S3method gp bnpostmcmc
+#' @export
 #' @method gp bnpostmcmc
 #' @seealso \code{\link{gp}}, \code{\link{gp.bnpostmcmc.list}}
 gp.bnpostmcmc <- function(x, start, end, nbin = 1,
@@ -319,7 +319,7 @@ gp.bnpostmcmc <- function(x, start, end, nbin = 1,
 #'
 #' @param x ...
 #' @param ... Further arguments passed to method
-#' @S3method gp bnpostmcmc.list
+#' @export
 #' @method gp bnpostmcmc.list
 #' @seealso \code{\link{gp}}, \code{\link{gp.bnpostmcmc}}
 gp.bnpostmcmc.list <- function(x, ...){
@@ -350,7 +350,7 @@ gp.bnpostmcmc.list <- function(x, ...){
 #'   if nbin > 1:
 #'     A list of class ep.list, containing matrices as described above for
 #'     each of the nbin bins into which the parental.list was split
-#' @S3method ep bnpostmcmc
+#' @export
 #' @method ep bnpostmcmc
 #' @seealso \code{\link{ep}}, \code{\link{ep.bnpostmcmc.list}}
 #' @examples
@@ -415,7 +415,7 @@ ep.bnpostmcmc <- function(x, nbin = 1, start, end, method = "et",
 #'           "flatten", or ep.table() for method = "tabulate"
 #' @return A matrix of class 'ep' with entry (i,j) containing the probability
 #'   of an edge from node i --> j
-#' @S3method ep sampler
+#' @export
 #' @method ep sampler
 #' @seealso \code{\link{ep}}, \code{\link{ep.bnpostmcmc.list}}
 #' @examples
@@ -460,7 +460,7 @@ ep.sampler <- function(x, start, end, verbose = F, ...){
 #' @param start ...
 #' @param end ...
 #' @param ... further arguments
-#' @S3method ep bnpostmcmc.list
+#' @export
 #' @method ep bnpostmcmc.list
 #' @seealso \code{\link{ep}}, \code{\link{ep.bnpostmcmc}}
 #' @examples
